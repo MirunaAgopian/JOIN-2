@@ -2,17 +2,17 @@ let userObj = [
     {
         name: "Benjamin",
         mail: "benjamin@test.de",
-        password: "Ben123"
+        password: "test"
     },
     {
-        name: "Anna",
-        mail: "anna@example.com",
-        password: "Anna456"
+        name: "Miruna",
+        mail: "miruna@test.de",
+        password: "test"
     },
     {
-        name: "Max",
-        mail: "max@web.de",
-        password: "Max789"
+        name: "Patrick",
+        mail: "patrick@test.de",
+        password: "test"
     }
 ];
 
