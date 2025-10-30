@@ -1,0 +1,25 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    scroll-behavior: smooth;
+    font-family: 'Cormorant Garamond';
+    color: black;
+    scrollbar-gutter: stable; 
+    font-family: 'Inter';
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/inter-v20-latin-regular.woff2') format('woff2');
+}
+
+a {
+    text-decoration: none;
+}
+
+.d-none {
+    display: none;
+}

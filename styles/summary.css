@@ -1,0 +1,86 @@
+header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 20px 0;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1440px;
+    position: relative;
+}
+
+nav p {
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.user-help-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+}
+
+.user-help-container img {
+    height: 28px;
+    width: 28px;
+    cursor: pointer;
+}
+
+.user-help-container img:hover {
+    height: 32px;
+    width: 32px;
+}
+
+.nav-user-btn {
+    border-radius: 50%;
+    height: 56px;
+    width: 56px;
+    cursor: pointer;
+    color: #29ABE2;
+    font-weight: 800;
+    font-size: 20px;
+    background-color: white;
+    border: 3px solid #2a3647;
+}
+
+.nav-user-btn:hover {
+    background-color: #e1e6ec;
+}
+
+.nav-user-btn.active {
+    background-color: #e1e6ec;
+}
+
+.desktop-submenu {
+    position: absolute;
+    top: 76px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #2a3647;
+    height: 150px;
+    width: 160px;
+    border-radius: 20px 0 20px 20px;
+}
+
+.desktop-submenu a {
+    color: #CDCDCD;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 10px;
+    transition: 100ms ease-in-out;
+    width: 90%;
+}
+
+.desktop-submenu a:hover {
+    background-color: #2a3d59;
+}
