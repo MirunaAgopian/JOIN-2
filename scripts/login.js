@@ -26,21 +26,33 @@ let elementRev = {
 }
 
 elementRev.email.addEventListener("change", () => {
-    validEmail = checkValidEmail(elementRev.email.value);
-    if (validEmail == true){
-        elementRev.loginStatus.innerHTML="";
-    } else {
-        elementRev.loginStatus.innerHTML="please enter valid Email";
-    }
+    emailCheck();
 });
 
+elementRev.password.addEventListener("focus", () => {
+    elementRev.password.classList.remove("inputFail");
+    elementRev.password.classList.add("inputFocus");
+});
 
+elementRev.password.addEventListener("blur", () => {
+    elementRev.password.classList.remove("inputFocus");
+});
+
+elementRev.email.addEventListener("focus", () => {
+    elementRev.email.classList.remove("inputFail");
+    elementRev.email.classList.add("inputFocus");
+});
+
+elementRev.email.addEventListener("blur", () => {
+    emailCheck();
+    elementRev.email.classList.remove("inputFocus");
+});
 /** 
  * start of Login Seassion
  */
 
 function userLogin() {
-    if (validEmail == false) {return;};
+    if (validEmail == false) { return; };
 
     let selUser = userObj.find(user =>
         user.mail.toLowerCase() === elementRev.email.value.toLowerCase() &&
@@ -52,10 +64,23 @@ function userLogin() {
         localStorage.setItem("loggedInUser", JSON.stringify(selUser));
         sessionStorage.setItem("loggedInUser", JSON.stringify(selUser));
     } else {
+        resetLoginElemnts();
         alert("Ungültige E-Mail oder Passwort.");
+        elementRev.email.classList.add("inputFail");
+        elementRev.password.classList.add("inputFail");
     }
     activeUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
 
+}
+
+function emailCheck() {
+    validEmail = checkValidEmail(elementRev.email.value);
+    if (validEmail == true) {
+        elementRev.loginStatus.innerHTML = "";
+    } else {
+        elementRev.email.classList.add("inputFail");
+        elementRev.loginStatus.innerHTML = "please enter valid Email";
+    }
 }
 
 /**
@@ -73,4 +98,13 @@ function checkValidEmail(email) {
  */
 function userGuestLogin() {
     alert("Guest Login");
+}
+
+/** Reset all classes for Status Change */
+function resetLoginElemnts() {
+    elementRev.email.classList.remove("inputFail");
+    elementRev.email.classList.remove("inputFocus");
+
+    elementRev.password.classList.remove("inputFail");
+    elementRev.password.classList.remove("inputFocus");
 }
