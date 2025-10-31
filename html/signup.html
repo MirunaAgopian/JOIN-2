@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <link rel="shortcut icon" href="../assets/img/join_logo.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../styles/fonts.css">
+    <link rel="stylesheet" href="../styles/signup.css">
+    <script src="../scripts/firebase.js"></script>
+    <script src="../scripts/signup.js"></script>
+</head>
+<body>
+    <div class="signup-container">
+        <header>
+            <img src="../assets/img/join_logo.svg" alt="join logo">
+        </header>
+        <div class="user-form-container">
+            <div class="headline-container">
+                <div class="btn-arrow-container">
+                    <div class="btn-arrow-left">
+                        <a href="./login.html">
+                            <img class="img-arrow-left" src="../assets/img/arrow_left_line_default.svg" alt="blue arrow button">
+                        </a>
+                    </div>
+                </div>
+                <div class="headline-box">
+                    <span>Sign up</span>
+                    <hr class="headline-underline">
+                </div>
+            </div>
+            <form onsubmit="createUser(); return false">
+                <input type="text" required placeholder="Name" class="bg-input bg-img-name" id="create_name">
+                <input type="mail" required placeholder="Email" class="bg-input bg-img-mail" id="create_mail">
+                <input type="password" required placeholder="Password" class="bg-input bg-img-lock" id="create_pw">
+                <input type="password" required placeholder="Confirm Password" class="bg-input bg-img-lock" id="create_confirm_pw">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
