@@ -1,7 +1,15 @@
 :root {
   --mainColor: #2a3647;
   --mainColorHover: #29ABE2;
-  ;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 16px;
 }
 
 .loginContent {
@@ -15,6 +23,12 @@
   background-color: white;
   box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
   max-width: 652px;
+}
+
+.loginTitle {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 32px;
 }
 
 .headerContent {
@@ -39,19 +53,14 @@
 }
 
 .inputLogin {
-  border: solid 1px #d1d1d1;
+  padding: 14px 20px;
+  font-size: 18px;
+  border: 1px solid #d1d1d1;
   border-radius: 10px;
-  padding: 12px 21px;
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 22px 22px;
-  font-size: 20px;
-  font-weight: 400;
-  cursor: pointer;
-  outline: none;
   background-color: white;
-  padding: 12px 21px;
-  width: 422px;
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 22px 22px;
 }
 
 .inputFail {
@@ -70,7 +79,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: calc(100dvh - 240px);
+  height: calc(100dvh - 320px);
 }
 
 .headerContent {
@@ -91,7 +100,7 @@
 }
 
 .btn {
-  border: solid 1px var(--maincolor);
+  border: solid 1px var(--mainColor);
   border-radius: 8px;
   padding: 10px 12px;
   transition: ease-in-out 125ms;
@@ -114,4 +123,36 @@
 .btnSecondary {
   background: white;
   color: var(--mainColor);
+}
+
+.btnSecondary:hover {
+  border: 2px solid #29ABE2;
+  box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.loginInputs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.loginFooter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginFooter a {
+  text-align: center;
+  color: #a8a8a8;
+  text-decoration: none;
+  cursor: pointer;
+  width: 112px;
+}
+
+.lblSignUp {
+  unicode-bidi: isolate;
+  font-weight: 400;
+  font-size: 20px;
 }

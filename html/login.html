@@ -16,7 +16,7 @@
             <img src="../assets/img/join_logo.svg" alt="Join Logo" class="logo">
         </div>
         <div class="signUp">
-            <span>not a Join user?</span>
+            <span class="lblSignUp">not a Join user?</span>
             <button class="btn btnPrimary">sign up</button>
         </div>
 
@@ -24,10 +24,12 @@
 
     <main class="mainContent">
         <div class="loginContent">
-            <h1>Log in</h1>
-            <input id="txtEMail" type="email" placeholder="Email" class="inputLogin formMailIcon">
+            <h1 class="loginTitle">Log in</h1>
 
-            <input id="txtPassword" type="password" placeholder="Password" class="inputLogin formPassIcon">
+            <div class="loginInputs">
+                <input id="txtEMail" type="email" placeholder="Email" class="inputLogin formMailIcon">
+                <input id="txtPassword" type="password" placeholder="Password" class="inputLogin formPassIcon">
+            </div>
 
             <div id="loginStatus"></div>
             <div class="btnLoginContent">
@@ -36,6 +38,14 @@
             </div>
         </div>
     </main>
+
+    <footer>
+        <div class="loginFooter">
+            <a href="#"> Privacy Policy</a>
+            <a href="#">Legal notice</a>
+
+        </div>
+    </footer>
 </body>
 
 </html>
