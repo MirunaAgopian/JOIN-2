@@ -11,10 +11,10 @@
     <script src="../scripts/signup.js"></script>
 </head>
 <body>
-    <div class="signup-container">
-        <header>
-            <img src="../assets/img/join_logo.svg" alt="join logo">
-        </header>
+    <header>
+        <img src="../assets/img/join_logo.svg" alt="join logo">
+    </header>
+    <main class="signup-container">
         <div class="user-form-container">
             <div class="headline-container">
                 <div class="btn-arrow-container">
@@ -34,8 +34,14 @@
                 <input type="mail" required placeholder="Email" class="bg-input bg-img-mail" id="create_mail">
                 <input type="password" required placeholder="Password" class="bg-input bg-img-lock" id="create_pw">
                 <input type="password" required placeholder="Confirm Password" class="bg-input bg-img-lock" id="create_confirm_pw">
+
+                <div class="check-policy-container">
+                    <div id="checkbox" class="checkbox-unchecked"></div>
+                    <span>I accept the <a href="#">Privacy policy</a></span>
+                </div>
             </form>
+            
         </div>
-    </div>
+    </main>
 </body>
 </html>

@@ -5,12 +5,17 @@ body{
 }
 
 .signup-container{
-    min-height: 100vh;
+    min-height: calc(100vh - 200px);
     max-width: 1440px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 header{
+    /* width: 100%; */
+    display: flex;
     padding-left: 80px;
     padding-top: 80px;
 }
@@ -21,16 +26,22 @@ header img{
 }
 
 .user-form-container{
-    padding: 32px;
+    padding: 48px;
+    width: 500px;
     background-color: white;
     border-radius: 30px;
     font-family: 'MyInter';
     box-shadow: 0px 0.1px 3px rgb(208, 208, 208);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
 }
 
 .headline-container{
+    width: 100%;
     display: flex;
-    gap: 32px;
+    gap: 115px;
 }
 
 .headline-container span{
@@ -79,6 +90,7 @@ input::placeholder{
 }
 
 .bg-input{
+    width: 420px;
     padding: 14px 20px;
     font-size: 18px;
     border: 1px solid #e8e7e7;
@@ -98,4 +110,51 @@ input::placeholder{
 
 .bg-img-lock{
     background-image: url('../assets/img/lock.svg');
+}
+
+.check-policy-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+}
+
+.check-policy-container span{
+    color: #A8A8A8;
+    font-size: 16px;
+}
+
+.check-policy-container a{
+    font-size: 16px;
+    text-decoration: none;
+    color: #29ABE2;
+}
+
+.checkbox-unchecked{
+    height: 32px;
+    width: 32px;
+    background-image: url('../assets/img/check_button_unchecked.svg');
+    background-repeat: no-repeat;
+    background-position: left 0px center;
+    background-size: 24px 24px;
+}
+
+.checkbox-unchecked:hover{
+    cursor: pointer;
+    background-image: url('../assets/img/check_button_hover_disable.svg');
+}
+
+.checkbox-checked{
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+    background-image: url('../assets/img/check_button_checked.svg');
+    background-repeat: no-repeat;
+    background-position: left 0px center;
+    background-size: 24px 24px;
+}
+
+.checkbox-checked:hover{
+    cursor: pointer;
+    background-image: url('../assets/img/check_button_hover_checked.svg');
 }
