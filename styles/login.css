@@ -3,6 +3,10 @@
   --mainColorHover: #29ABE2;
 }
 
+body{
+  background: #F6F7F8;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -153,8 +157,15 @@
 }
 
 .lblSignUp {
+
   font-weight: 400;
   font-size: 20px;
+}
+
+.signup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .btnLoginContent {
@@ -202,4 +213,39 @@
 
 .d-block {
   display: block;
+}
+
+.onlyMobile {
+  display: none;
+}
+
+.onlyDesktop {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .onlyMobile {
+    display: block;
+  }
+
+  .onlyDesktop {
+    display: none;
+  }
+
+  .inputLogin {
+    width: 364px;
+  }
+
+  .loginContent {
+    max-width: 396px;
+  }
+
+  .mobileBodyStart {
+    background-color: #2A3647;
+  }
+
+  .btnLoginContent{
+    flex-direction: column;
+  }
+
 }

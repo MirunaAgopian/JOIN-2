@@ -45,11 +45,13 @@ async function onloadFunc() {
 
 function animateLogo() {
     elementLoginRev.splashLogo.classList.add('animate');
+    document.body.classList.add("mobileBodyStart");
 
     elementLoginRev.splashLogo.addEventListener('transitionend', () => {
         setTimeout(() => {
             elementLoginRev.splashLogo.classList.add('d-None');
             elementLoginRev.pageContent.classList.remove('d-None');
+            document.body.classList.remove("mobileBodyStart");
         }, 200);
     }, { once: true });
 }
