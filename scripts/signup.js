@@ -6,17 +6,23 @@ function acceptPolicy(){
         document.getElementById('checkbox').classList.remove('checkbox-unchecked');
         document.getElementById('checkbox').classList.add('checkbox-checked');
         policyAccepted = true;
+        document.getElementById('btn_signup').disabled = false;
     }else{
         document.getElementById('checkbox').classList.remove('checkbox-checked');
         document.getElementById('checkbox').classList.add('checkbox-unchecked');
         policyAccepted = false;
+        document.getElementById('btn_signup').disabled = true;
     }
 }
 
 async function createUser(){
-    let userData = getInput();
-    await createArrayOfUsers();
-    await checkNewUser(userData, joinUsers);
+    if (policyAccepted) {
+        let userData = getInput();
+        await createArrayOfUsers();
+        await checkNewUser(userData, joinUsers);
+    }else{
+        document.getElementById('create_pw').focus();
+    }
 }
 
 function getInput(){
