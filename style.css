@@ -16,10 +16,15 @@
   src: url('./assets/fonts/inter-v20-latin-regular.woff2') format('woff2');
 }
 
+.d-none {
+    display: none;
+}
+
 a {
     text-decoration: none;
 }
 
-.d-none {
-    display: none;
+h1 {
+    font-size: 60px;
+    font-weight: 700;
 }
