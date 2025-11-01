@@ -43,20 +43,16 @@ async function onloadFunc() {
     animateLogo();
 }
 
-/** animation for Logo */
 function animateLogo() {
-  elementLoginRev.splashLogo.classList.add('animate');
+    elementLoginRev.splashLogo.classList.add('animate');
 
-  elementLoginRev.splashLogo.addEventListener('transitionend', () => {
-    setTimeout(() => {
-      elementLoginRev.splashLogo.classList.add('d-None');
-      elementLoginRev.pageContent.classList.remove('d-None');
-    }, 200); // z.B. 200ms Verzögerung
-  }, { once: true });
+    elementLoginRev.splashLogo.addEventListener('transitionend', () => {
+        setTimeout(() => {
+            elementLoginRev.splashLogo.classList.add('d-None');
+            elementLoginRev.pageContent.classList.remove('d-None');
+        }, 200);
+    }, { once: true });
 }
-
-
-
 
 /** loaad all useres are storred in Database
  * @param {string} path ky of the first Level of database

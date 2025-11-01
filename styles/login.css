@@ -163,7 +163,7 @@
   justify-content: center;
 }
 
-#loginStatus{
+#loginStatus {
   width: 100%;
   text-align: center;
   color: #E60026;
@@ -180,7 +180,7 @@
 }
 
 .logoSplash.animate {
-  top: 64px;
+  top: 88px;
   left: 64px;
   transform: translate(0, 0);
 }
@@ -196,11 +196,10 @@
   height: 122px;
 }
 
-
 .d-None {
   display: none;
 }
 
-.d-block{
+.d-block {
   display: block;
 }
