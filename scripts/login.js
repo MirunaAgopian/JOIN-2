@@ -7,7 +7,9 @@ const BASE_URL = 'https://remotestorage-162fc-default-rtdb.europe-west1.firebase
 let elementLoginRev = {
     email: document.getElementById("txtEMail"),
     password: document.getElementById("txtPassword"),
-    loginStatus: document.getElementById("loginStatus")
+    loginStatus: document.getElementById("loginStatus"),
+    splashLogo: document.querySelector('.logoSplash'),
+    pageContent: document.getElementById('pageContent')
 }
 // ############################# event Listener for Objects of Login ####################
 elementLoginRev.email.addEventListener("change", () => {
@@ -38,7 +40,23 @@ elementLoginRev.email.addEventListener("blur", () => {
 /** Start function when the page is loading */
 async function onloadFunc() {
     userObj = await getAllUsers("joinUsers");
+    animateLogo();
 }
+
+/** animation for Logo */
+function animateLogo() {
+  elementLoginRev.splashLogo.classList.add('animate');
+
+  elementLoginRev.splashLogo.addEventListener('transitionend', () => {
+    setTimeout(() => {
+      elementLoginRev.splashLogo.classList.add('d-None');
+      elementLoginRev.pageContent.classList.remove('d-None');
+    }, 200); // z.B. 200ms Verzögerung
+  }, { once: true });
+}
+
+
+
 
 /** loaad all useres are storred in Database
  * @param {string} path ky of the first Level of database
@@ -84,7 +102,7 @@ function rightUserLogin(selUser) {
     alert(`Willkommen, ${selUser.name}!`);
     localStorage.setItem("loggedInUser", JSON.stringify(selUser.name));
     sessionStorage.setItem("loggedInUser", JSON.stringify(selUser.name));
-    window.location.href='./mriuna-summary.html';
+    window.location.href = './mriuna-summary.html';
 }
 
 /** wrong User and Passwort have been entered */

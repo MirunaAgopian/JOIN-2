@@ -169,3 +169,38 @@
   color: #E60026;
   gap: 16px;
 }
+
+.logoSplash {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  transition: top 1s ease-in-out, left 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.logoSplash.animate {
+  top: 64px;
+  left: 64px;
+  transform: translate(0, 0);
+}
+
+.logoSplashImg {
+  width: 275px;
+  height: 330px;
+  transition: width 1s ease-in-out, height 1s ease-in-out;
+}
+
+.logoSplash.animate .logoSplashImg {
+  width: 100px;
+  height: 122px;
+}
+
+
+.d-None {
+  display: none;
+}
+
+.d-block{
+  display: block;
+}
