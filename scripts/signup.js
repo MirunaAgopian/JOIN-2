@@ -44,6 +44,7 @@ async function createArrayOfUsers(){
 }
 
 function fillArrayOfUsers(objKeysArr, usersObj){
+    joinUsers = [];
     let keysArr = objKeysArr;
     let amountOfUsers = objKeysArr.length;
     for (let index = 0; index < amountOfUsers; index++) {
