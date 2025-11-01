@@ -13,6 +13,8 @@ nav {
     width: 100%;
     max-width: 1440px;
     position: relative;
+    padding-left: 150px;
+    padding-right: 8px;
 }
 
 nav p {
@@ -62,7 +64,7 @@ nav p {
 .desktop-submenu {
     position: absolute;
     top: 76px;
-    right: 0;
+    right: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -88,13 +90,13 @@ nav p {
 
 aside {
     background-color: #2a3647;
+    padding: 60px 0;
     width: 200px;
-    padding: 80px 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
@@ -114,21 +116,33 @@ aside a, p {
     flex-direction: column;
     gap: 16px;
     width: 100%;
-    border: 2px solid red;
-    padding: 16px 0;
-    /* here I need to do the :hover */
 }
 
 .sidebar-menu-elements {
     display: flex;
     align-items: center;
-    gap: 12px; 
+    gap: 20px; 
+    width: 100%;              
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 32px;
 }
 
 .sidebar-menu-elements img{
     height: 32px;
     width: 32px;
 }
+
+
+.sidebar-menu-elements:hover {
+    background-color: #2a3d59;
+}
+
+.sidebar-menu-elements.active {
+    background-color: #091931;
+    color: white;
+}
+
 
 .legal-notice-container {
     display: flex;
@@ -140,4 +154,13 @@ aside a, p {
 .legal-notice-container a:hover {
     color: #29ABE2;
     font-size: 17px;
+}
+
+
+/* Media queries */
+
+@media (max-width: 1600px){
+    nav {
+        padding-left: 250px;
+    }
 }
