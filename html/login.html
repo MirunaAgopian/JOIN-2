@@ -10,14 +10,14 @@
     <script src="../scripts/login.js" defer></script>
 </head>
 
-<body>
+<body onload="onloadFunc()">
     <header class="headerContent">
         <div class="logo">
             <img src="../assets/img/join_logo.svg" alt="Join Logo" class="logo">
         </div>
         <div class="signUp">
             <span class="lblSignUp">not a Join user?</span>
-            <button class="btn btnPrimary">sign up</button>
+            <button type="button" class="btn btnPrimary" onclick="window.location.href='./signup.html'">sign up</button>
         </div>
 
     </header>
@@ -25,17 +25,19 @@
     <main class="mainContent">
         <div class="loginContent">
             <h1 class="loginTitle">Log in</h1>
+            <form onsubmit="userLogin()" id="loginForm">
+                <div class="loginInputs">
+                    <input id="txtEMail" type="email" placeholder="Email" required class="inputLogin formMailIcon">
+                    <input id="txtPassword" type="password" placeholder="Password" required
+                        class="inputLogin formPassIcon">
+                </div>
 
-            <div class="loginInputs">
-                <input id="txtEMail" type="email" placeholder="Email" class="inputLogin formMailIcon">
-                <input id="txtPassword" type="password" placeholder="Password" class="inputLogin formPassIcon">
-            </div>
-
-            <div id="loginStatus"></div>
-            <div class="btnLoginContent">
-                <button id="btnLogin" onclick="userLogin()" class="btn btnPrimary">Login</button>
-                <button id="btnGuestLogin" onclick="userGuestLogin()" class="btn btnSecondary">Guest Login</button>
-            </div>
+                <div id="loginStatus"></div>
+                <div class="btnLoginContent">
+                    <button type="button" id="btnLogin" onclick="userLogin()" class="btn btnPrimary">Login</button>
+                    <button type="button" id="btnGuestLogin" onclick="userGuestLogin()" class="btn btnSecondary">Guest Login</button>
+                </div>
+            </form>
         </div>
     </main>
 

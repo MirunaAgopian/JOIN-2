@@ -1,110 +1,129 @@
-let userObj = [
-    {
-        name: "Benjamin",
-        mail: "benjamin@test.de",
-        password: "test"
-    },
-    {
-        name: "Miruna",
-        mail: "miruna@test.de",
-        password: "test"
-    },
-    {
-        name: "Patrick",
-        mail: "patrick@test.de",
-        password: "test"
-    }
-];
+let userObj = [];
 
-let activeUser;
 let validEmail = false;
-
-let elementRev = {
+/** const with Link for the Database */
+const BASE_URL = 'https://remotestorage-162fc-default-rtdb.europe-west1.firebasedatabase.app/';
+/** Object with all html Objects for Login */
+let elementLoginRev = {
     email: document.getElementById("txtEMail"),
     password: document.getElementById("txtPassword"),
     loginStatus: document.getElementById("loginStatus")
 }
-
-elementRev.email.addEventListener("change", () => {
+// ############################# event Listener for Objects of Login ####################
+elementLoginRev.email.addEventListener("change", () => {
     emailCheck();
 });
 
-elementRev.password.addEventListener("focus", () => {
-    elementRev.password.classList.remove("inputFail");
-    elementRev.password.classList.add("inputFocus");
+elementLoginRev.password.addEventListener("focus", () => {
+    elementLoginRev.password.classList.remove("inputFail");
+    elementLoginRev.password.classList.add("inputFocus");
 });
 
-elementRev.password.addEventListener("blur", () => {
-    elementRev.password.classList.remove("inputFocus");
+elementLoginRev.password.addEventListener("blur", () => {
+    elementLoginRev.password.classList.remove("inputFocus");
 });
 
-elementRev.email.addEventListener("focus", () => {
-    elementRev.email.classList.remove("inputFail");
-    elementRev.email.classList.add("inputFocus");
+elementLoginRev.email.addEventListener("focus", () => {
+    elementLoginRev.email.classList.remove("inputFail");
+    elementLoginRev.email.classList.add("inputFocus");
 });
 
-elementRev.email.addEventListener("blur", () => {
+elementLoginRev.email.addEventListener("blur", () => {
     emailCheck();
-    elementRev.email.classList.remove("inputFocus");
+    elementLoginRev.email.classList.remove("inputFocus");
 });
-/** 
- * start of Login Seassion
- */
 
+// ########################## functions ####################
+
+/** Start function when the page is loading */
+async function onloadFunc() {
+    userObj = await getAllUsers("joinUsers");
+}
+
+/** loaad all useres are storred in Database
+ * @param {string} path ky of the first Level of database
+ * @returns json of the reqest  */
+async function getAllUsers(path = '') {
+    let response = await fetch(BASE_URL + path + '.json');
+    let responseToJson = await response.json();
+
+    return responseToJson;
+}
+
+/**  start of Login Seassion  */
 function userLogin() {
     if (validEmail == false) { return; };
 
-    let selUser = userObj.find(user =>
-        user.mail.toLowerCase() === elementRev.email.value.toLowerCase() &&
-        user.password === elementRev.password.value
-    );
+    let selUser = null;
+    selUser = checkUserDatabase(selUser);
 
-    if (selUser && selUser.password === elementRev.password.value) {
-        alert(`Willkommen, ${selUser.name}!`);
-        localStorage.setItem("loggedInUser", JSON.stringify(selUser));
-        sessionStorage.setItem("loggedInUser", JSON.stringify(selUser));
+    if (selUser) {
+        rightUserLogin(selUser);
     } else {
-        resetLoginElemnts();
-        alert("Ungültige E-Mail oder Passwort.");
-        elementRev.email.classList.add("inputFail");
-        elementRev.password.classList.add("inputFail");
+        wrongUserLogin()
     }
-    activeUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
-
 }
 
+/** check if User is part of Database
+ * @param {Object} selUser selected User  */
+function checkUserDatabase(selUser) {
+    for (const userId in userObj) {
+        const user = userObj[userId];
+        if (
+            user.mail.toLowerCase() === elementLoginRev.email.value.toLowerCase() &&
+            user.password === elementLoginRev.password.value
+        ) {
+            return user;
+        }
+    }
+}
+
+/** correct User and Password have been entered 
+ * @param {Object} selUser selected User */
+function rightUserLogin(selUser) {
+    alert(`Willkommen, ${selUser.name}!`);
+    localStorage.setItem("loggedInUser", JSON.stringify(selUser.name));
+    sessionStorage.setItem("loggedInUser", JSON.stringify(selUser.name));
+    window.location.href='./mriuna-summary.html';
+}
+
+/** wrong User and Passwort have been entered */
+function wrongUserLogin() {
+    resetLoginElemnts();
+    elementLoginRev.loginStatus.innerHTML = "Check your email and password. Please try again.";
+    elementLoginRev.email.classList.add("inputFail");
+    elementLoginRev.password.classList.add("inputFail");
+}
+
+/** Check if email is Valid. If wrong format input of LoginPage and give input */
 function emailCheck() {
-    validEmail = checkValidEmail(elementRev.email.value);
+    validEmail = checkValidEmail(elementLoginRev.email.value);
     if (validEmail == true) {
-        elementRev.loginStatus.innerHTML = "";
+        elementLoginRev.loginStatus.innerHTML = "";
     } else {
-        elementRev.email.classList.add("inputFail");
-        elementRev.loginStatus.innerHTML = "please enter valid Email";
+        elementLoginRev.email.classList.add("inputFail");
+        elementLoginRev.loginStatus.innerHTML = "please enter valid Email";
     }
 }
 
-/**
- * Check if the email is valid
+/** Check if the email Regex is valid
  * @param {string} email - Email address
- * @returns {boolean} - True if valid, false otherwise
- */
+ * @returns {boolean} - True if valid, false otherwise  */
 function checkValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
 
-/**
- * Guest User Login
- */
+/** Guest User Login  */
 function userGuestLogin() {
     alert("Guest Login");
 }
 
 /** Reset all classes for Status Change */
 function resetLoginElemnts() {
-    elementRev.email.classList.remove("inputFail");
-    elementRev.email.classList.remove("inputFocus");
+    elementLoginRev.email.classList.remove("inputFail");
+    elementLoginRev.email.classList.remove("inputFocus");
 
-    elementRev.password.classList.remove("inputFail");
-    elementRev.password.classList.remove("inputFocus");
+    elementLoginRev.password.classList.remove("inputFail");
+    elementLoginRev.password.classList.remove("inputFocus");
 }

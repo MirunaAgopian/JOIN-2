@@ -57,6 +57,7 @@
   font-size: 18px;
   border: 1px solid #d1d1d1;
   border-radius: 10px;
+  width: 420px;
   background-color: white;
   background-repeat: no-repeat;
   background-position: right 12px center;
@@ -102,7 +103,7 @@
 .btn {
   border: solid 1px var(--mainColor);
   border-radius: 8px;
-  padding: 10px 12px;
+  padding: 15px 24px;
   transition: ease-in-out 125ms;
   cursor: pointer;
 }
@@ -133,7 +134,7 @@
 .loginInputs {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 32px;
   margin-bottom: 32px;
 }
 
@@ -152,7 +153,19 @@
 }
 
 .lblSignUp {
-  unicode-bidi: isolate;
   font-weight: 400;
   font-size: 20px;
+}
+
+.btnLoginContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#loginStatus{
+  width: 100%;
+  text-align: center;
+  color: #E60026;
+  gap: 16px;
 }
