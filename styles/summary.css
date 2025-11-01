@@ -15,9 +15,9 @@ nav {
     width: 100%;
     max-width: 1440px;
     position: relative;
-    padding-left: 150px;
     padding-right: 8px;
     border: 1px solid blue;
+    margin-left: 80px;
 }
 
 nav p {
@@ -162,20 +162,22 @@ aside a, p {
 }
 
 /* Main styling*/
+
 main {
-    background-color: #f6f7f8;
+    display: flex;
+    justify-content: center;
 }
 
 .main-content {
-    margin-left: 240px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
     max-width: 1440px;
-    padding: 30px 0;
-    gap: 100px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-left: 80px;
     border: 1px solid red;
 }
 
@@ -203,7 +205,7 @@ main {
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    padding-right: 150px;
+    border: 2px solid green;
 }
 
 .stats {
@@ -211,17 +213,23 @@ main {
     flex-direction: column;
     gap: 40px;
     width: 40%;
+    border: 1px solid pink;
+}
+
+.greeting {
+    border: 1px solid pink;
 }
 
 .greeting p {
     font-size: 47px;
     color: #2A3647;
+    padding-right: 20px;
+    font-weight: 500;
 }
 
 .to-do {
     display: flex;
     justify-content: space-between;
-    gap: 24px;
 }
 
 .to-do-container, .done-container {
@@ -373,8 +381,77 @@ h4 {
 
 /* Media queries */
 
-@media (max-width: 1600px){
-    nav {
-        padding-left: 250px;
+@media (max-width: 1800px){
+   nav,
+   .main-content {
+    margin-left: 200px;
+    padding-left: 20px;
+   }
+}
+
+@media (max-width: 1500px) {
+    .stats {
+        width: 50%;
     }
 }
+
+@media (max-width: 1300px) {
+    .stats {
+        width: 60%;
+    }
+}
+
+@media (max-width: 1200px) {
+    .greeting {
+        display: none;
+    }
+
+    .stats {
+        width: 80%;
+    }
+
+    .page-info {
+        padding-right: 20px;
+    }
+}
+
+@media (max-width: 900px) {
+    .stats {
+        width: 100%;
+    }
+}
+
+@media (max-width: 850px) {
+    aside {
+        display: none;
+    }
+
+    .page-title {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 24px;
+    }
+
+    .divider-line {
+        width: 90px;    
+        height: 4px;
+    }
+
+    .stats {
+        width: 80%;
+        justify-content: center;
+    }
+
+    nav, .main-content {
+        margin-left: 0;
+    }
+
+    nav p {
+        display: none;
+    }
+}
+
+/* to do
+- add active class for aside <a> elements when clicked
+- add mobile navbar
+*/
