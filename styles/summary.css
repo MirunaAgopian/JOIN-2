@@ -16,8 +16,13 @@ nav {
     max-width: 1440px;
     position: relative;
     padding-right: 8px;
-    border: 1px solid blue;
     margin-left: 80px;
+}
+
+.mobile-navbar-logo {
+    width: 32px;
+    height: 39px;
+    display: none;
 }
 
 nav p {
@@ -78,7 +83,28 @@ nav p {
     border-radius: 20px 0 20px 20px;
 }
 
-.desktop-submenu a {
+.mobile-submenu {
+    position: absolute;
+    top: 76px;
+    right: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #2a3647;
+    height: 185px;
+    width: 160px;
+    border-radius: 20px 0 20px 20px;
+    transform: translateX(110%);
+    transition: transform 125ms ease-in-out;
+    z-index: 1000;
+}
+
+.mobile-submenu.open {
+  transform: translateX(0);
+}
+
+.desktop-submenu a, .mobile-submenu a {
     color: #CDCDCD;
     font-size: 16px;
     font-weight: 400;
@@ -87,10 +113,11 @@ nav p {
     width: 90%;
 }
 
-.desktop-submenu a:hover {
+.desktop-submenu a:hover, .mobile-submenu a:hover {
     background-color: #2a3d59;
     transform: scale(1.015);
 }
+
 /* Aside styling */
 aside {
     background-color: #2a3647;
@@ -205,7 +232,6 @@ main {
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    border: 2px solid green;
 }
 
 .stats {
@@ -213,11 +239,6 @@ main {
     flex-direction: column;
     gap: 40px;
     width: 40%;
-    border: 1px solid pink;
-}
-
-.greeting {
-    border: 1px solid pink;
 }
 
 .greeting p {
@@ -437,9 +458,12 @@ h4 {
         height: 4px;
     }
 
-    .stats {
-        width: 80%;
+    .page-info {
         justify-content: center;
+    }
+
+    .stats {
+        width: 100%;
     }
 
     nav, .main-content {
@@ -449,6 +473,24 @@ h4 {
     nav p {
         display: none;
     }
+
+    .mobile-navbar-logo {
+        display: block;
+    }
+
+    .help-btn {
+        display: none;
+    }
+
+    .desktop-submenu {
+        display: none;
+    }
+}
+
+@media (min-width: 851px) {
+  .mobile-submenu {
+    display: none !important;
+  }
 }
 
 /* to do
