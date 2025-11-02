@@ -212,6 +212,7 @@ main {
     align-items: center;
     gap: 16px;
     width: 100%;
+    padding-bottom: 40px;
 }
 
 .divider-line {
@@ -520,6 +521,76 @@ footer {
 
     .page-title span {
     font-size: 24px;
+    }
+
+    h2 {
+        font-size: 56px;
+    }
+
+    h3 {
+        font-size: 17px;
+    }
+
+    h4 {
+        font-size: 14px;
+    }
+
+    #datum {
+        font-size: 16px;
+    }
+
+    .datum-container span {
+        font-size: 14px;
+    }
+
+    .to-do-container, .done-container {
+        padding: 24px 30px;
+    }
+}
+
+@media (max-width:450px) {
+    .icon-wrapper, .urgent-icon-wrapper {
+        height: 48px;
+        width: 48px;
+    }
+
+    .edit-icon, 
+    .done-icon,
+    .urgent-icon {
+        height: 32px;
+        width: 32px;
+    }
+
+   .datum-container {
+    display: block;
+   }
+
+   .to-do-container, .done-container {
+        padding: 16px 10px;
+    }
+
+    h2 {
+        font-size: 40px;
+    }
+
+    h3 {
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 12px;
+    }
+}
+
+@media(max-width: 350px) {
+    .urgent-icon-wrapper {
+        height: 45px;
+        width: 80px;
+    }
+
+    .urgent-icon {
+        height: 28px;
+        width: 28px;
     }
 }
 
