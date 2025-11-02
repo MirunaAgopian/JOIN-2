@@ -188,6 +188,7 @@ body{
   transform: translate(-50%, -50%);
   z-index: 9999;
   transition: top 1s ease-in-out, left 1s ease-in-out, transform 1s ease-in-out;
+  max-width: 980px;
 }
 
 .logoSplash.animate {
