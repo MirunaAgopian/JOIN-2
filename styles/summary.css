@@ -205,7 +205,6 @@ main {
     padding-top: 30px;
     padding-bottom: 30px;
     margin-left: 80px;
-    border: 1px solid red;
 }
 
 .page-title {
@@ -369,6 +368,23 @@ h4 {
     width: 100%;
 }
 
+footer {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2a3647;
+    padding: 20px 8px;
+}
+
+.footer-menu-elements {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
 /* Hover effects */
 
 .to-do-container:hover,
@@ -485,6 +501,10 @@ h4 {
     .desktop-submenu {
         display: none;
     }
+
+    footer {
+        display: flex;
+    }
 }
 
 @media (min-width: 851px) {
@@ -493,7 +513,18 @@ h4 {
   }
 }
 
+@media(max-width:550px) {
+    h1 {
+        font-size: 47px;
+    }
+
+    .page-title span {
+    font-size: 24px;
+    }
+}
+
 /* to do
 - add active class for aside <a> elements when clicked
 - add mobile navbar
+- add footer and js-functionalities for footer
 */
