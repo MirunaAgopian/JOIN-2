@@ -108,4 +108,31 @@ function closeSignupDialog(element){
 
 async function timeout(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
-} 
+}
+
+function toggleType(id){
+    let inputField = document.getElementById(id);
+    changeIconIfActive(inputField);
+    changeType(inputField);
+}
+
+function changeIconIfActive(inputField){
+    if(document.activeElement == inputField){
+        inputField.classList.remove('bg-img-lock');
+        inputField.classList.add('bg-img-invisible');
+    }
+}
+
+function changeType(inputField){
+    if((document.activeElement == inputField) && (inputField.value != '')){
+        if(inputField.type == "password"){
+            inputField.type = "text";
+            inputField.classList.remove('bg-img-invisible');
+            inputField.classList.add('bg-img-visible');
+        }else{
+            inputField.type = "password";
+            inputField.classList.remove('bg-img-visible');
+            inputField.classList.add('bg-img-invisible');
+        }
+    }
+}

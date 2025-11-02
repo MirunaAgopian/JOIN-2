@@ -94,11 +94,16 @@ input::placeholder{
     width: 420px;
     padding: 14px 20px;
     font-size: 18px;
+    color: black;
     border: 1px solid #e8e7e7;
     border-radius: 10px;
     background-repeat: no-repeat;
     background-position: right 12px center;
     background-size: 22px 22px;
+}
+
+.bg-input:focus{
+    outline: 1px solid #29ABE2;
 }
 
 .bg-img-name{
@@ -111,6 +116,14 @@ input::placeholder{
 
 .bg-img-lock{
     background-image: url('../assets/img/lock.svg');
+}
+
+.bg-img-visible{
+    background-image: url('../assets/img/visibility_on.svg');
+}
+
+.bg-img-invisible{
+    background-image: url('../assets/img/visibility_off.svg');
 }
 
 .check-policy-container{
