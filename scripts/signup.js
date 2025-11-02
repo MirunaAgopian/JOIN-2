@@ -16,13 +16,9 @@ function acceptPolicy(){
 }
 
 async function createUser(){
-    if (policyAccepted) {
-        let userData = getInput();
-        await createArrayOfUsers();
-        await checkNewUser(userData, joinUsers);
-    }else{
-        document.getElementById('create_pw').focus();
-    }
+    let userData = getInput();
+    await createArrayOfUsers();
+    await checkNewUser(userData, joinUsers);
 }
 
 function getInput(){
@@ -75,7 +71,6 @@ async function checkNewUser(userObj, userArr){
     let userExistance = false;
     for (let index = 0; index < amountOfUsers; index++) {
         if((userArr[index].name == userObj.name) && (userArr[index].mail == userObj.mail) && (userArr[index].password == userObj.password)){
-            alert('Benutzer schon vorhanden');
             clearInputs();
             userExistance = true;
             break;
@@ -84,11 +79,33 @@ async function checkNewUser(userObj, userArr){
     if(userExistance == false){
         await postUserInDatabase(userObj);
         clearInputs();
+    }else{
+        await openSignupDialog('User already exists');
     }
 }
 
 async function postUserInDatabase(newUserObj){
     await postData('/joinUsers', newUserObj);
-    alert('Du hast dich erfolgreich registriert');
-    // window.location.href = '../index.html';
+    await openSignupDialog('You Signed Up successfully');
 }
+
+async function openSignupDialog(text){
+    const contentDialogRef = document.getElementById('signupDialog');
+    contentDialogRef.innerHTML = '';
+    contentDialogRef.innerHTML = getDialogMsgTemplate(text);
+    contentDialogRef.showModal();
+    contentDialogRef.classList.add('opened');
+    await timeout(1500);
+    closeSignupDialog(contentDialogRef);
+}
+
+function closeSignupDialog(element){
+    const contentDialogRef = element;
+    contentDialogRef.close();
+    contentDialogRef.classList.remove('opened');
+    window.location.href = '../index.html';
+}
+
+async function timeout(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
+} 
