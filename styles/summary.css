@@ -172,7 +172,14 @@ aside a, p {
 
 .sidebar-menu-elements.active {
     background-color: #091931;
+}
+
+.sidebar-menu-elements.active p {
     color: white;
+}
+
+.sidebar-menu-elements.active img {
+    filter: brightness(0) invert(1);
 }
 
 
@@ -386,6 +393,21 @@ footer {
     cursor: pointer;
 }
 
+.footer-menu-elements.active {
+  background-color: #091931;
+  padding: 16px;
+  border-radius: 20px;
+}
+
+.footer-menu-elements.active p {
+    color: white;
+}
+
+.footer-menu-elements.active img {
+  filter: brightness(0) invert(1);
+}
+
+
 /* Hover effects */
 
 .to-do-container:hover,
@@ -597,4 +619,5 @@ footer {
 /* to do
 - add active class for aside and footer <a> elements when clicked
 - add footer and js-functionalities for footer
+- is mobile-submenu .open by default onload???
 */

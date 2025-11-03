@@ -41,7 +41,7 @@
           >
         </div>
         <!-- Submenu, mobile version -->
-        <div id="mobile_submenu" class="mobile-submenu open">
+        <div id="mobile_submenu" class="mobile-submenu">
           <a href="help.html" aria-label="Opens Help section">Help</a>
           <a href="legal-notice.html" aria-label="Opens Legal Notice section"
             >Legal Notice</a
@@ -64,28 +64,48 @@
         alt="The logo of the app JOIN"
       />
       <div class="sidebar-components">
-        <a href="mriuna-summary.html" class="sidebar-menu-elements">
+        <a
+          id="summary_tab_pc"
+          href="summary.html"
+          class="sidebar-menu-elements"
+          onclick="setDesktopTabFocus('summary')"
+        >
           <img
             src="../assets/img/summary.svg"
             alt="icon leading to the summary page"
           />
           <p>Summary</p>
         </a>
-        <a href="#" class="sidebar-menu-elements">
+        <a
+          id="add_task_tab_pc"
+          href="#"
+          class="sidebar-menu-elements"
+          onclick="setDesktopTabFocus('task')"
+        >
           <img
             src="../assets/img/add_task.svg"
             alt="icon leading to the add task page"
           />
           <p>Add Task</p>
         </a>
-        <a href="#" class="sidebar-menu-elements">
+        <a
+          id="board_tab_pc"
+          href="#"
+          class="sidebar-menu-elements"
+          onclick="setDesktopTabFocus('board')"
+        >
           <img
             src="../assets/img/board.svg"
             alt="icon leading to the board page"
           />
           <p>Board</p>
         </a>
-        <a href="#" class="sidebar-menu-elements">
+        <a
+          id="contacts_tab_pc"
+          href="#"
+          class="sidebar-menu-elements"
+          onclick="setDesktopTabFocus('contacts')"
+        >
           <img
             src="../assets/img/contacts.svg"
             alt="icon leading to the contacts page"
@@ -173,34 +193,54 @@
       </section>
     </main>
     <footer>
-        <a href="mriuna-summary.html" class="footer-menu-elements">
-          <img
-            src="../assets/img/summary.svg"
-            alt="icon leading to the summary page"
-          />
-          <p>Summary</p>
-        </a>
-        <a href="#" class="footer-menu-elements">
-          <img
-            src="../assets/img/add_task.svg"
-            alt="icon leading to the add task page"
-          />
-          <p>Add Task</p>
-        </a>
-        <a href="#" class="footer-menu-elements">
-          <img
-            src="../assets/img/board.svg"
-            alt="icon leading to the board page"
-          />
-          <p>Board</p>
-        </a>
-        <a href="#" class="footer-menu-elements">
-          <img
-            src="../assets/img/contacts.svg"
-            alt="icon leading to the contacts page"
-          />
-          <p>Contacts</p>
-        </a>
+      <a
+        id="summary_tab_mobile"
+        href="summary.html"
+        class="footer-menu-elements"
+        onclick="setMobileTabFocus('summary')"
+      >
+        <img
+          src="../assets/img/summary.svg"
+          alt="icon leading to the summary page"
+        />
+        <p>Summary</p>
+      </a>
+      <a
+        id="add_task_tab_mobile"
+        href="#"
+        class="footer-menu-elements"
+        onclick="setMobileTabFocus('task')"
+      >
+        <img
+          src="../assets/img/add_task.svg"
+          alt="icon leading to the add task page"
+        />
+        <p>Add Task</p>
+      </a>
+      <a
+        id="board_tab_mobile"
+        href="#"
+        class="footer-menu-elements"
+        onclick="setMobileTabFocus('board')"
+      >
+        <img
+          src="../assets/img/board.svg"
+          alt="icon leading to the board page"
+        />
+        <p>Board</p>
+      </a>
+      <a
+        id="contacts_tab_mobile"
+        href="#"
+        class="footer-menu-elements"
+        onclick="setMobileTabFocus('contacts')"
+      >
+        <img
+          src="../assets/img/contacts.svg"
+          alt="icon leading to the contacts page"
+        />
+        <p>Contacts</p>
+      </a>
     </footer>
     <script src="../scripts/summary.js"></script>
   </body>

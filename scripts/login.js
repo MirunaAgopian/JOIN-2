@@ -100,7 +100,7 @@ function rightUserLogin(selUser) {
     alert(`Willkommen, ${selUser.name}!`);
     localStorage.setItem("loggedInUser", JSON.stringify(selUser.name));
     sessionStorage.setItem("loggedInUser", JSON.stringify(selUser.name));
-    window.location.href = './mriuna-summary.html';
+    window.location.href = './summary.html';
 }
 
 /** wrong User and Passwort have been entered */
