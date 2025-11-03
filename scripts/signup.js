@@ -136,3 +136,43 @@ function changeType(inputField){
         }
     }
 }
+
+function changeIcon(id){
+    let inputField = document.getElementById(id);
+    if((inputField.type == "password") && (inputField.value == '')){
+        inputField.classList.remove('bg-img-invisible');
+        inputField.classList.add('bg-img-lock');
+    }else if((inputField.type == "text") && (inputField.value == '')){
+        inputField.classList.remove('bg-img-visible');
+        inputField.classList.add('bg-img-lock');
+    }else if((inputField.type == "text") && (inputField.value != '')){
+        inputField.type = "password";
+        inputField.classList.remove('bg-img-visible');
+        inputField.classList.add('bg-img-invisible');
+    }   
+}
+
+function checkMailInput(){
+    let mailInput = document.getElementById('create_mail');
+    let mailValid = checkValidEmail(String(mailInput.value));
+    if((mailValid == false) && (mailInput.value != '')){
+        mailInput.classList.add('bg-invalid-input');
+    }
+}
+
+function checkValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function clearBorderClass(id){
+    document.getElementById(id).classList.remove('bg-invalid-input');
+}
+
+function checkPassword(){
+    let password = document.getElementById('create_pw');
+    let confirmPassword = document.getElementById('create_confirm_pw');
+    if(password.value != confirmPassword.value){
+        confirmPassword.classList.add('bg-invalid-input');
+    }
+}

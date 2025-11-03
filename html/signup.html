@@ -33,9 +33,17 @@
             </div>
             <form onsubmit="createUser(); return false">
                 <input type="text" required placeholder="Name" class="bg-input bg-img-name" id="create_name">
-                <input type="mail" required placeholder="Email" class="bg-input bg-img-mail" id="create_mail">
-                <input type="password" required placeholder="Password" class="bg-input bg-img-lock" id="create_pw" onclick="toggleType('create_pw')">
-                <input type="password" required placeholder="Confirm Password" class="bg-input bg-img-lock" id="create_confirm_pw">
+                <div>
+                    <input type="mail" required placeholder="Email" class="bg-input bg-img-mail" id="create_mail" onclick="clearBorderClass('create_mail')" onblur="checkMailInput()">
+                    <span class="info-input">Invalid mail</span>
+                </div>
+                <input type="password" required placeholder="Password" class="bg-input bg-img-lock" id="create_pw"
+                    onclick="toggleType('create_pw')" onblur="changeIcon('create_pw')">
+                <div>
+                    <input type="password" required placeholder="Confirm Password" class="bg-input bg-img-lock" id="create_confirm_pw"
+                        onclick="toggleType('create_confirm_pw'); clearBorderClass('create_confirm_pw')" onblur="changeIcon('create_confirm_pw'); checkPassword()">
+                    <span class="info-input">Password does not match</span>
+                </div>
 
                 <div class="check-policy-container">
                     <div id="checkbox" class="checkbox-unchecked" onclick="acceptPolicy()"></div>
