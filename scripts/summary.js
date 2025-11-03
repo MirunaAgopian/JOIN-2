@@ -17,12 +17,6 @@ function toggleMobileSubmenu(){
     mobileSubmenu.classList.toggle('open');
 }
 
-function checkCurrentUrl(){
-    let urlMap = {
-        
-    }
-}
-
 function setDesktopTabFocus(tab){
     let asideTabs = document.querySelectorAll('.sidebar-menu-elements');
     asideTabs.forEach(t => t.classList.remove('active'));
@@ -48,3 +42,20 @@ function setMobileTabFocus(tab){
     const activeTab = document.getElementById(idMap[tab]);
     if(activeTab) activeTab.classList.add('active');
 }
+
+function checkCurrentUrl(){
+    const path = window.location.pathname;
+    let urlMap = {
+        '/html/summary.html': 'summary',
+        '/html/add-task.html': 'task',
+        '/html/board.html': 'board',
+        '/html/contacts.html': 'contacts'
+    }
+    const tabKey = urlMap[path];
+    if(tabKey) {
+        setDesktopTabFocus(tabKey);
+        setMobileTabFocus(tabKey);
+    }
+}
+
+window.addEventListener('DOMContentLoaded', checkCurrentUrl);
