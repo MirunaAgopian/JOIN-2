@@ -1,3 +1,15 @@
+/**
+ *  Initializes tab highlighting based on the current URL once the DOM is fully loaded.
+ * This ensures the correct tab is marked active when the page is first rendered.
+ */
+window.addEventListener('DOMContentLoaded', checkCurrentUrl);
+
+/**
+ * Toggles the submenu based on the current viewport width.
+ * Calls the desktop submenu toggle if the width is greater than 850px,
+ * otherwise calls the mobile submenu toggle.
+ * @function toggleMobileSubmenu
+ */
 function toggleSubmenu (){
     let viewPortWidth = window.innerWidth;
     if(viewPortWidth > 850){
@@ -7,16 +19,33 @@ function toggleSubmenu (){
     }  
 }
 
+/**
+ * Toggles the desktop submenu by adding or removing the 'd-none 'CSS class
+ * Targets the DOM element with the ID 'submenu'
+ * @function toggleDesktopSubmenu
+ */
 function toggleDesktopSubmenu(){
     let desktopSubmenu = document.getElementById('submenu');
     desktopSubmenu.classList.toggle('d-none');
 }
 
+/**
+ * Toggles the mobile submenu by adding or removing the 'open' CSS class
+ * Targets the DOM element with the ID 'mobile_submenu'
+ * @function toggleMobileSubmenu
+ */
 function toggleMobileSubmenu(){
     let mobileSubmenu = document.getElementById('mobile_submenu');
     mobileSubmenu.classList.toggle('open');
 }
 
+/**
+ * Sets focus on a specific desktop tab by toggling the 'active' CSS class.
+ * Removes 'active' from all elements with the class 'sidebar-menu-elements',
+ * then adds 'active' to the tab element corresponding to the given key.
+ * @function setDesktopTabFocus
+ * @param {string} tab - The key identifying the tab to activate ('summary', 'task', 'board', or 'contacts').
+ */
 function setDesktopTabFocus(tab){
     let asideTabs = document.querySelectorAll('.sidebar-menu-elements');
     asideTabs.forEach(t => t.classList.remove('active'));
@@ -30,6 +59,13 @@ function setDesktopTabFocus(tab){
     if(activeTab) activeTab.classList.add('active');
 }
 
+/**
+ * Sets focus on a specific mobile tab by toggling the 'active' CSS class.
+ * Removes 'active' from all elements with the class 'footer-menu-elements',
+ * then adds 'active' to the tab element corresponding to the given key.
+ * @function setMobileTabFocus
+ * @param {string} tab - The key identifying the tab to activate ('summary', 'task', 'board', or 'contacts').
+ */
 function setMobileTabFocus(tab){
     let footerTabs = document.querySelectorAll('.footer-menu-elements');
     footerTabs.forEach(t => t.classList.remove('active'));
@@ -43,13 +79,19 @@ function setMobileTabFocus(tab){
     if(activeTab) activeTab.classList.add('active');
 }
 
+/**
+ * Checks the current URL path and activates the corresponding desktop and mobile tab.
+ * Extracts the filename from the current window location and maps it to a tab key.
+ * If a matching tab key is found, it sets focus on both desktop and mobile tabs.
+ * @function checkCurrentUrl
+ */
 function checkCurrentUrl(){
-    const path = window.location.pathname;
+    const path = window.location.pathname.split('/').pop();
     let urlMap = {
-        '/html/summary.html': 'summary',
-        '/html/add-task.html': 'task',
-        '/html/board.html': 'board',
-        '/html/contacts.html': 'contacts'
+        'summary.html': 'summary',
+        'add-task.html': 'task',
+        'board.html': 'board',
+        'contacts.html': 'contacts'
     }
     const tabKey = urlMap[path];
     if(tabKey) {
@@ -58,4 +100,8 @@ function checkCurrentUrl(){
     }
 }
 
-window.addEventListener('DOMContentLoaded', checkCurrentUrl);
+//to do:
+//fix the rebellious footer
+//write the function for the overlay on mobile devices
+//write the GDPR for the app
+//write the logout function as per Part 1 - User Story 3
