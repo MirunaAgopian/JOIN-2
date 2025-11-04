@@ -121,9 +121,3 @@ function greet(){
         toggleOverlay(false);
     }
 }
-
-//to do:
-//fix the rebellious footer
-//write the function for the overlay on mobile devices
-//write the GDPR for the app
-//write the logout function as per Part 1 - User Story 3

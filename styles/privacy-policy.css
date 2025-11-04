@@ -1,0 +1,83 @@
+body.privacy-policy p:not(:is(aside p)):not(:is(footer p)) {
+  color: black;
+  line-height: 20px;
+  text-align: justify;
+}
+
+.padding {
+    padding-bottom: 20px;
+}
+
+.privacy-policy-header {
+    padding: 24px 0;
+}
+
+h2 {
+    font-size: 32px;
+    text-align: left;
+    padding: 16px 0;
+}
+
+h3 {
+    font-size: 28px;
+    text-align: left;
+    padding: 16px 0;
+    color: black;
+}
+
+h4 {
+    font-size: 24px;
+    text-align: left;
+    padding: 16px 0;
+    color: black;
+}
+
+.title-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.arrow-left {
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    padding-top: 40px;
+    padding-left: 240px;
+    padding-right: 40px;
+    padding-bottom: 40px;
+}
+
+.lists {
+    line-height: 30px;
+}
+
+.blue {
+    color: blue;
+}
+
+@media(max-width: 850px){
+    main {
+        padding-left: 40px;
+        padding-bottom: 120px;
+    }
+}
+
+@media(max-width: 400px){
+    main {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+/* To do: */
+/* kontent-begrenzung */
+/* arrow left should only be visible on mobile devices */
+/* fix line break at Website refers to JOIN, accessible from https://join-1340.developerakademie.net/html/login.html */
+
+
