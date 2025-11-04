@@ -127,12 +127,20 @@ nav p {
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 400ms ease-in-out;
 }
 
 .mobile-overlay p {
     font-size: 36px;
     color: #2A3647;
     text-align: center;
+}
+
+.mobile-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 /* Aside styling */

@@ -100,6 +100,28 @@ function checkCurrentUrl(){
     }
 }
 
+function toggleOverlay(show){
+    let overlay = document.getElementById('mobile_overlay');
+    if(show) {
+        overlay.classList.add('active');
+    } else {
+        overlay.classList.remove('active');
+    }
+}
+
+function greet(){
+    let viewPortWidth = window.innerWidth;
+    const isMobile = viewPortWidth < 850;
+    if(isMobile) {
+        toggleOverlay(true);
+        setTimeout(() => {
+            toggleOverlay(false);
+        }, 3000);
+    } else {
+        toggleOverlay(false);
+    }
+}
+
 //to do:
 //fix the rebellious footer
 //write the function for the overlay on mobile devices
