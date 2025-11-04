@@ -14,9 +14,9 @@ nav {
     align-items: center;
     width: 100%;
     max-width: 1440px;
-    position: relative;
     padding-right: 8px;
     margin-left: 80px;
+    position: relative;
 }
 
 .mobile-navbar-logo {
@@ -84,8 +84,8 @@ nav p {
 }
 
 .mobile-submenu {
-    position: absolute;
-    top: 76px;
+    position: fixed;
+    top: 95px;
     right: 8px;
     display: flex;
     flex-direction: column;
@@ -227,8 +227,9 @@ main {
     width: 100%;
     max-width: 1440px;
     padding-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 120px;
     margin-left: 80px;
+    margin-bottom: 20px;
 }
 
 .page-title {
@@ -399,6 +400,9 @@ footer {
     align-items: center;
     background-color: #2a3647;
     padding: 20px 8px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 .footer-menu-elements {
