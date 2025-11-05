@@ -413,6 +413,35 @@ footer {
   background-image: url('../assets/img/checkbox_dark.svg');
 }
 
+.main-content p {
+    color: black;
+    line-height: 20px;
+    text-align: justify;
+}
+
+.main-content h1 {
+    font-size: 61px;
+}
+
+.main-content h3 {
+    font-size: 27px;
+    padding-top: 32px;
+}
+
+.main-content h5 {
+    font-size: 18px;
+    padding-top: 24px;
+}
+
+.main-content li{
+    font-size: 16px;
+}
+
+.main-content a{
+    color: #29ABE2;
+
+}
+
 /* Media queries */
 
 @media (max-width: 1800px){

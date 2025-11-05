@@ -1,7 +1,7 @@
 :root {
   --mainColor: #2a3647;
   --mainColorHover: #29ABE2;
-  --maxWidth: 1896px;
+  --maxWidth: 1440x;
 }
 
 body {
@@ -31,9 +31,13 @@ body {
 }
 
 .loginTitle {
-  font-size: 48px;
-  font-weight: bold;
-  margin-bottom: 32px;
+  font-weight: 700;
+  font-size: 61px;
+  margin-bottom: 16px;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .headline-underline {
@@ -42,13 +46,14 @@ body {
 }
 
 .headerContent {
-  height: 120px;
-  position: relative;
-  max-width: 1920px;
+  height: 240px;
+  max-width: var(--maxWidth);
   margin-right: auto;
   margin-left: auto;
+  position: relative;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   padding: 64px 64px 0 64px;
   background: unset;
   box-shadow: unset;
@@ -74,6 +79,10 @@ body {
   background-size: 22px 22px;
 }
 
+#txtPassword {
+  margin-top: 30px;
+}
+
 .inputFail {
   border: 1px solid #E60026;
 }
@@ -93,15 +102,7 @@ body {
   height: calc(100dvh - 320px);
 }
 
-.headerContent {
-  height: 240px;
-  max-width: var(--maxWidth);
-  margin-right: auto;
-  margin-left: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+
 
 .logo {
   width: 100px;
@@ -144,8 +145,7 @@ body {
 .loginInputs {
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  margin-bottom: 32px;
+  padding: 16px 16px 5px 16px;
 }
 
 .loginFooter {
@@ -163,7 +163,6 @@ body {
 }
 
 .lblSignUp {
-
   font-weight: 400;
   font-size: 20px;
 }
@@ -178,13 +177,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 32px;
 }
 
 #loginStatus {
   width: 100%;
   text-align: center;
   color: #E60026;
-  gap: 16px;
+  font-weight: 400;
+  font-size: 14px;
+  padding-top: 2px;
+  padding-bottom: 12px;
 }
 
 .logoSplash {
@@ -260,6 +263,27 @@ body {
 
   .btnLoginContent {
     flex-direction: column;
+  }
+
+  .headerContent {
+    height: 120px;
+  }
+
+  .headerContent img {
+    height: 64px;
+    width: 78px;
+  }
+
+  .mainContent {
+    height: calc(100vh - 256px);
+  }
+
+  .signUp {
+    padding-top: 32px;
+  }
+
+  .loginFooter {
+    height: 128px;
   }
 
 }

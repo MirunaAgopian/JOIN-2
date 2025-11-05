@@ -14,7 +14,7 @@
         }
 
         function checkActiveUser() {
-            if (localStorage.getItem('loggedInUser')) {
+            if (sessionStorage.getItem('loggedInUser')) {
                 window.location.href = 'html/summary.html';
             } else {
                 window.location.href = '/html/login.html';

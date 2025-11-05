@@ -97,8 +97,6 @@ function checkUserDatabase(selUser) {
 /** correct User and Password have been entered 
  * @param {Object} selUser selected User */
 function rightUserLogin(selUser) {
-    alert(`Willkommen, ${selUser.name}!`);
-    localStorage.setItem("loggedInUser", JSON.stringify(selUser.name));
     sessionStorage.setItem("loggedInUser", JSON.stringify(selUser.name));
     window.location.href = './summary.html';
 }
@@ -132,7 +130,8 @@ function checkValidEmail(email) {
 
 /** Guest User Login  */
 function userGuestLogin() {
-    alert("Guest Login");
+        sessionStorage.setItem("loggedInUser", JSON.stringify("Guest"));
+    window.location.href = './summary.html';
 }
 
 /** Reset all classes for Status Change */
@@ -143,3 +142,5 @@ function resetLoginElemnts() {
     elementLoginRev.password.classList.remove("inputFail");
     elementLoginRev.password.classList.remove("inputFocus");
 }
+
+
