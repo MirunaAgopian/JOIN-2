@@ -268,8 +268,8 @@ function checkMailInput(){
 /**
  * This subfunction of checkMailInput() checks if the input is a valid mail
  * 
- * @param {boolean} email - Feedback of mail check 
- * @returns 
+ * @param {string} email - includes the mail for check 
+ * @returns - returns a boolean feedback if the mail is valid
  */
 function checkValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -277,9 +277,10 @@ function checkValidEmail(email) {
 }
 
 /**
+ * This function disable the info text and border design of input fields if focus is on
  * 
- * @param {*} idInput 
- * @param {*} idInfo 
+ * @param {string} idInput - Id name of input field
+ * @param {string} idInfo - Id name of info container 
  */
 function clearBorderClass(idInput, idInfo){
     document.getElementById(idInput).classList.remove('bg-invalid-input');
@@ -287,6 +288,10 @@ function clearBorderClass(idInput, idInfo){
     document.getElementById(idInfo).classList.add('invisible');
 }
 
+/**
+ * This function is used to check the content of input fields of type password an set the global variable passwordConfirmed
+ * 
+ */
 function checkPassword(){
     passwordConfirmed = false;
     let password = document.getElementById('create_pw');
