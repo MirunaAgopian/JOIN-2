@@ -4,13 +4,30 @@ body.privacy-policy p:not(:is(aside p)):not(:is(footer p)) {
   text-align: justify;
 }
 
+
 .padding {
     padding-bottom: 20px;
 }
 
-.privacy-policy-header {
+.privacy-policy-title {
     padding: 24px 0;
+    justify-self: flex-start;
 }
+
+.title-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.arrow-left {
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+    display: none;
+}
+
 
 h2 {
     font-size: 32px;
@@ -32,25 +49,15 @@ h4 {
     color: black;
 }
 
-.title-arrow {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.arrow-left {
-    height: 32px;
-    width: 32px;
-    cursor: pointer;
-}
-
-main {
-    display: flex;
-    flex-direction: column;
-    padding-top: 40px;
-    padding-left: 240px;
-    padding-right: 40px;
-    padding-bottom: 40px;
+.main-content {
+  width: 100%;
+  max-width: 1440px;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .lists {
@@ -64,7 +71,12 @@ main {
 @media(max-width: 850px){
     main {
         padding-left: 40px;
+        padding-right: 40px;
         padding-bottom: 120px;
+    }
+
+    .arrow-left {
+        display: block;
     }
 }
 
@@ -74,10 +86,5 @@ main {
         padding-right: 16px;
     }
 }
-
-/* To do: */
-/* kontent-begrenzung */
-/* arrow left should only be visible on mobile devices */
-/* fix line break at Website refers to JOIN, accessible from https://join-1340.developerakademie.net/html/login.html */
 
 
