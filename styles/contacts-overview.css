@@ -1,0 +1,20 @@
+.contactID {
+    display: flex;
+    cursor: pointer;
+}
+
+.contactID:hover {
+    background-color: gray;
+}
+
+.contactAvater {
+    width: 42px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    border: #fff 2px solid;
+    background-color: blue;
+}
