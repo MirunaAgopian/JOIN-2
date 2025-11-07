@@ -6,7 +6,11 @@
     <title>Join - Add Contacts</title>
     <link rel="icon" href="../assets/img/join_logo.svg" />
     <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../styles/fonts.css">
     <link rel="stylesheet" href="../styles/summary.css" />
+    <link rel="stylesheet" href="../styles/contacts.css">
+    <script src="../scripts/firebase.js"></script>
+    <script src="../scripts/contacts.js"></script>
   </head>
   <body>
     <header>
@@ -119,7 +123,54 @@
       </div>
     </aside>
     <main>
-        <h1>Main Content comes here</h1>
+      <dialog id="add_contact_dialog">
+        <div class="add-contact-container">
+          <div class="add-contact-left-box">
+            <div class="left-box-content">
+              <img src="../assets/img/join_logo_white.svg" alt="join logo in white">
+              <span class="span-add">Add contact</span>
+              <span class="span-team">Tasks are better with a team!</span>
+              <hr class="add-contact-underline">
+            </div>
+          </div>
+          <div class="add-contact-right-box">
+            <div class="btn-close-container">
+              <div class="btn-close-box">
+                <img src="../assets/img/close_btn.svg" alt="cross as close button">
+              </div>
+            </div>
+            <div class="right-box-container">
+              <div class="person-container">
+                <img src="../assets/img/person_icon.svg" alt="person icon">
+              </div>
+              <form onsubmit="createContact(); return false" autocomplete="off">
+                <input type="text" required placeholder="Name" class="bg-input bg-img-name" id="add_name">
+                <input type="text" required placeholder="Email" class="bg-input bg-img-mail" id="add_mail">
+                <input type="tel" required placeholder="Phone" class="bg-input bg-img-phone" id="add_phone">
+              </form>
+            </div>
+          </div>
+        </div>
+      </dialog>
+      
+      <div class="contacts-container">
+        <div id="contacts_list" class="contacts-list">
+          <button id="btn_add_contact" class="btn-add-contact">
+            <div class="btn-add-contact-box">
+              <span>Add new contact</span>
+              <img src="../assets/img/add_person_icon.svg" alt="add person icon">
+            </div>
+          </button>
+        </div>
+        <div class="contacts-content">
+          <div id="head_contacts" class="head-contacts">
+            <span class="head-description">Contacts</span>
+            <div class="line"></div>
+            <span class="aside-description">Better with a team</span>
+          </div>
+          <button onclick="openDialogAddContact()">add contact</button>
+        </div>
+      </div>
     </main>
     <footer>
       <a
