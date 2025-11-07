@@ -53,7 +53,7 @@ function setDesktopTabFocus(tab){
         summary: 'summary_tab_pc',
         task: 'add_task_tab_pc',
         board: 'board_tab_pc',
-        contacts: 'contacts_tab_pc'
+        contacts: 'contacts_tab_pc',
     };
     const activeTab = document.getElementById(idMap[tab]);
     if(activeTab) activeTab.classList.add('active');

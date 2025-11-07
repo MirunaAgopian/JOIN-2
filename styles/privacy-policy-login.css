@@ -1,0 +1,57 @@
+header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 40px 0;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: white;
+}
+
+
+footer {
+    display: none;
+    gap: 8px;
+}
+
+.policies-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    padding: 14px 0;
+}
+
+.policies-container a {
+    color: #cdcdcd;
+}
+
+.policies-container.active {
+    background-color: #091931;
+    padding: 16px;
+    border-radius: 20px;
+    color: white;
+}
+
+@media(max-width: 850px) {
+    header {
+        padding: 20px 0;
+    }
+
+    footer {
+        display: flex;
+    }
+}
+
+@media(max-width: 550px) {
+    .policies-container {
+        width: 100%;
+    }
+
+    .sidebar-menu-elements {
+        width: 44%;
+        padding-left: 0;
+        gap: 2px;
+    }
+}
+
+/* to do: function for .active onclick in help.js */

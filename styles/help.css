@@ -72,4 +72,14 @@ li {
     .main-content {
         padding-bottom: 100px;
     }
+
+    .arrow-left {
+    position: sticky;
+}
+}
+
+@media(max-width: 450px) {
+    li {
+    padding-left: 20px;
+}
 }
