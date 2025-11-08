@@ -30,7 +30,9 @@ function checkCurrentUrl() {
   const path = window.location.pathname.split('/').pop();
   let urlMap = {
     'privacy-policy-login.html' : 'privacyPolicy',
-    'legal-notice-login.html': 'legalNotice'
+    'legal-notice-login.html': 'legalNotice',
+    'privacy-policy.html': 'privacyPolicy',
+    'legal-notice.html': 'legalNotice'
   }
   const tabKey = urlMap[path];
   if(tabKey) {

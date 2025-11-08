@@ -7,8 +7,8 @@
     <link rel="icon" href="../assets/img/join_logo.svg" />
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../styles/summary.css" />
+    <link rel="stylesheet" href="../styles/privacy-policy.css">
   </head>
-
   <body>
     <header>
       <nav>
@@ -115,8 +115,20 @@
         </a>
       </div>
       <div class="legal-notice-container">
-        <a href="privacy-policy.html">Privacy Policy</a>
-        <a href="legal-notice.html">Legal Notice</a>
+        <a
+          onclick="setPolicyFocusTabPc('privacyPolicy')"
+          id="privacy_policy_pc"
+          class="legal-notice-elements"
+          href="privacy-policy.html"
+          >Privacy Policy</a
+        >
+        <a
+          onclick="setPolicyFocusTabPc('legalNotice')"
+          id="legal_notice_pc"
+          class="legal-notice-elements"
+          href="legal-notice.html"
+          >Legal Notice</a
+        >
       </div>
     </aside>
     <main>
@@ -274,5 +286,6 @@
       </a>
     </footer>
     <script src="../scripts/summary.js"></script>
+    <script src="../scripts/help.js"></script>
   </body>
 </html>

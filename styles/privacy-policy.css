@@ -60,6 +60,20 @@ h4 {
   word-break: break-word;
 }
 
+.legal-notice-elements.active {
+    background-color: #091931;
+    padding: 8px 20px;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+}
+
+.legal-notice-container a.active {
+    font-size: 16px;
+    color: #cdcdcd;
+}
+
+
 .lists {
     line-height: 30px;
 }
