@@ -482,6 +482,11 @@ footer {
     .stats {
         width: 50%;
     }
+
+    .main-content {
+        transform: scale(0.9);
+        margin-top: 80px;
+    }
 }
 
 @media (max-width: 1300px) {
@@ -520,7 +525,9 @@ footer {
     }
 
     .main-content {
-        margin-bottom: 150px;
+        margin-bottom: 20px;
+        margin-top: 0;
+        transform: scale(0.7);
     }
 
     .page-title {
@@ -540,14 +547,6 @@ footer {
 
     .stats {
         width: 100%;
-    }
-
-    .page-info, .page-title {
-        transform: scale(0.8);
-    }
-
-    .page-title {
-        padding-bottom: 0;
     }
 
     nav, .main-content {
@@ -572,18 +571,23 @@ footer {
 
     footer {
         display: flex;
+        padding: 8px 0;
     }
-}
 
-@media (min-width: 851px) {
-  .mobile-submenu {
-    display: none !important;
-  }
+    .footer-menu-elements {
+        transform: scale(0.8);
+    }
 }
 
 @media(max-width:550px) {
     h1 {
         font-size: 47px;
+    }
+
+    .main-content {
+        margin-bottom: 0;
+        margin-top: 80px;
+        transform: scale(0.8);
     }
 
     .page-title span {

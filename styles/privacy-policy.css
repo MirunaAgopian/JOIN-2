@@ -58,6 +58,7 @@ h4 {
   align-items: flex-start;
   overflow-wrap: break-word;
   word-break: break-word;
+  z-index: -1;
 }
 
 .legal-notice-elements.active {
@@ -82,13 +83,17 @@ h4 {
     color: blue;
 }
 
-@media(max-width: 850px){
-    main {
-        padding-left: 40px;
-        padding-right: 40px;
-        padding-bottom: 120px;
+@media(max-width: 1500px) {
+    .main-content {
+        transform: scale(1);
+        margin-top: 100px;
     }
+}
 
+@media(max-width: 850px){
+    .main-content {
+        margin-bottom: 100px;
+    }
     .arrow-left {
         display: block;
     }
