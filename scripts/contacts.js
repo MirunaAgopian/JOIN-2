@@ -4,10 +4,13 @@ function openDialogAddContact(){
     contentDialogContactRef.classList.add('dialogOpened');
 }
 
-function closeDialogAddContact(){
+async function closeDialogAddContact(){
     const contentDialogContactRef = document.getElementById('add_contact_dialog');
+    contentDialogContactRef.classList.add('dialogClosed');
+    await timeout(600);
     contentDialogContactRef.close();
     contentDialogContactRef.classList.remove('dialogOpened');
+    contentDialogContactRef.classList.remove('dialogClosed');
 }
 
 function changeColorHover(){

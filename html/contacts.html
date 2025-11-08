@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../styles/summary.css" />
     <link rel="stylesheet" href="../styles/contacts.css">
     <script src="../scripts/firebase.js"></script>
+    <script src="../scripts/signup.js"></script>
     <script src="../scripts/contacts.js"></script>
   </head>
   <body>
@@ -135,7 +136,7 @@
           </section>
           <section class="add-contact-right-box">
             <div class="btn-close-container">
-              <div class="btn-close-box">
+              <div class="btn-close-box" onclick="closeDialogAddContact()">
                 <img src="../assets/img/close_btn.svg" alt="cross as close button">
               </div>
             </div>
@@ -149,7 +150,7 @@
                 <input type="tel" required placeholder="Phone" class="bg-input bg-img-phone" id="add_phone">
                 <div class="form-ctrl-container">
                   <div id="btn_cancel" class="btn-cancel" onmouseover="changeColorHover()" onmouseout="changeColorOut()"
-                  onmousedown="changeColorDown()">
+                  onmousedown="changeColorDown()" onclick="closeDialogAddContact()">
                     <span id="cancel_span">Cancel</span>
                     <img id="cancel_img" src="../assets/img/cancel_x.svg" alt="check symbol">
                   </div>
