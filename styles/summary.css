@@ -6,6 +6,7 @@ header {
     padding: 20px 0;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
     background-color: white;
+    position: fixed;
 }
 
 nav {
@@ -235,9 +236,7 @@ main {
     align-items: center;
     width: 100%;
     max-width: 1440px;
-    padding-top: 30px;
-    padding-bottom: 120px;
-    margin-left: 80px;
+    margin-top: 150px;
     margin-bottom: 20px;
 }
 
@@ -512,8 +511,16 @@ footer {
 }
 
 @media (max-width: 850px) {
+    header {
+        z-index: 100;
+    }
+
     aside {
         display: none;
+    }
+
+    .main-content {
+        margin-bottom: 150px;
     }
 
     .page-title {
@@ -533,6 +540,14 @@ footer {
 
     .stats {
         width: 100%;
+    }
+
+    .page-info, .page-title {
+        transform: scale(0.8);
+    }
+
+    .page-title {
+        padding-bottom: 0;
     }
 
     nav, .main-content {
