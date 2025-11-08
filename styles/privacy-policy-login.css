@@ -31,18 +31,17 @@ footer {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 14px 0;
 }
 
 .policies-container a {
     color: #cdcdcd;
 }
 
-.policies-container.active {
+.footer-policy-links.active {
     background-color: #091931;
-    padding: 16px;
+    padding: 16px ;
     border-radius: 20px;
-    color: white;
+    color: #cdcdcd;
 }
 
 @media(max-width: 850px) {
@@ -55,7 +54,7 @@ footer {
     }
 }
 
-@media(max-width: 550px) {
+@media(max-width: 600px) {
     .policies-container {
         width: 100%;
     }
@@ -67,4 +66,24 @@ footer {
     }
 }
 
-/* to do: function for .active onclick in help.js*/
+@media(max-width: 410px) {
+    footer {
+        font-size: 14px;
+    }
+
+    .sidebar-menu-elements {
+        width:35%;
+    }
+
+    .policies-container {
+        padding: 12px 8px;
+    }
+}
+
+@media(max-width: 360px) {
+
+    .footer-policy-links.active {
+        text-align: center;
+        padding: 12px 8px;
+    }
+}

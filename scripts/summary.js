@@ -1,6 +1,7 @@
 /**
- *  Initializes tab highlighting based on the current URL once the DOM is fully loaded.
+ * Initializes tab highlighting based on the current URL once the DOM is fully loaded.
  * This ensures the correct tab is marked active when the page is first rendered.
+ * This also prevents that the .active class is beind removed due to page reload.
  */
 window.addEventListener('DOMContentLoaded', checkCurrentUrl);
 

@@ -15,6 +15,17 @@ function setPolicyFocusTabPc(tab) {
   if(activeTab) activeTab.classList.add('active');
 }
 
+function setPolicyFocusTabMobile(tab){
+  let activeTabs = document.querySelectorAll('.footer-policy-links');
+  activeTabs.forEach(t => t.classList.remove('active'));
+  let idMap = {
+    privacyPolicy : 'privacy_policy_mobile',
+    legalNotice: 'legal_notice_mobile'
+  }
+  const activeTab = document.getElementById(idMap[tab]);
+  if(activeTab) activeTab.classList.add('active');
+}
+
 function checkCurrentUrl() {
   const path = window.location.pathname.split('/').pop();
   let urlMap = {
@@ -24,5 +35,6 @@ function checkCurrentUrl() {
   const tabKey = urlMap[path];
   if(tabKey) {
     setPolicyFocusTabPc(tabKey);
+    setPolicyFocusTabMobile(tabKey);
   }
 }
