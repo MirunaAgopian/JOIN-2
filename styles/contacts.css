@@ -21,21 +21,21 @@ main{
     /* border-top: 1px solid rgb(224, 222, 222); */
 }
 
-.btn-add-contact{
+.btn-contact{
     padding: 12px 16px;
     background-color: #2A3647;
     border: none;
     border-radius: 10px;
 }
 
-.btn-add-contact:hover{
+.btn-contact:hover{
     cursor: pointer;
     background-color: #29ABE2;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
     transform: translateY(-1px);
 }
 
-.btn-add-contact:active{
+.btn-contact:active{
     background-color: #091931;
     transform: translateY(0);
 }
@@ -80,7 +80,7 @@ main{
 }
 
 dialog{
-    min-width: 1003px;
+    min-width: 1131px;
     border: none;
     border-radius: 30px;
     padding: 0;
@@ -134,14 +134,17 @@ dialog{
 }
 
 .right-box-container{
+    padding-left: 64px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 64px;
 }
 
 .btn-close-container{
     display: flex;
     justify-content: end;
+    padding-bottom: 50px;
 }
 
 .btn-close-box{
@@ -166,6 +169,7 @@ dialog{
     width: 120px;
     height: 120px;
     border-radius: 100px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -213,4 +217,51 @@ input::placeholder{
 
 .bg-img-phone{
     background-image: url('../assets/img/phone_receptor.svg');
+}
+
+.form-ctrl-container{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    gap: 16px;
+}
+
+.btn-cancel{
+    color: #2A3647;
+    border: 1px solid #2A3647;
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-cancel:hover{
+    cursor: pointer;
+    border-color: #29ABE2;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    transform: translateY(-1px);
+}
+
+.btn-cancel:active{
+    border-color: #091931;
+    transform: translateY(0);
+}
+
+.btn-cancel span{
+    color: #2A3647;
+    font-size: 21px;
+}
+
+.btn-contact{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-contact span{
+    font-size: 21px;
+    font-weight: bold;
+    color: white;
 }

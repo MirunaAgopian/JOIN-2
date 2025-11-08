@@ -125,15 +125,15 @@
     <main>
       <dialog id="add_contact_dialog">
         <div class="add-contact-container">
-          <div class="add-contact-left-box">
+          <section class="add-contact-left-box">
             <div class="left-box-content">
               <img src="../assets/img/join_logo_white.svg" alt="join logo in white">
               <span class="span-add">Add contact</span>
               <span class="span-team">Tasks are better with a team!</span>
               <hr class="add-contact-underline">
             </div>
-          </div>
-          <div class="add-contact-right-box">
+          </section>
+          <section class="add-contact-right-box">
             <div class="btn-close-container">
               <div class="btn-close-box">
                 <img src="../assets/img/close_btn.svg" alt="cross as close button">
@@ -147,15 +147,26 @@
                 <input type="text" required placeholder="Name" class="bg-input bg-img-name" id="add_name">
                 <input type="text" required placeholder="Email" class="bg-input bg-img-mail" id="add_mail">
                 <input type="tel" required placeholder="Phone" class="bg-input bg-img-phone" id="add_phone">
+                <div class="form-ctrl-container">
+                  <div id="btn_cancel" class="btn-cancel" onmouseover="changeColorHover()" onmouseout="changeColorOut()"
+                  onmousedown="changeColorDown()">
+                    <span id="cancel_span">Cancel</span>
+                    <img id="cancel_img" src="../assets/img/cancel_x.svg" alt="check symbol">
+                  </div>
+                  <button class="btn-contact">
+                    <span>Create Contact</span>
+                    <img src="../assets/img/check.svg" alt="check symbol">
+                  </button>
+                </div>
               </form>
             </div>
-          </div>
+          </section>
         </div>
       </dialog>
       
-      <div class="contacts-container">
+      <section class="contacts-container">
         <div id="contacts_list" class="contacts-list">
-          <button id="btn_add_contact" class="btn-add-contact">
+          <button id="btn_add_contact" class="btn-contact">
             <div class="btn-add-contact-box">
               <span>Add new contact</span>
               <img src="../assets/img/add_person_icon.svg" alt="add person icon">
@@ -170,7 +181,7 @@
           </div>
           <button onclick="openDialogAddContact()">add contact</button>
         </div>
-      </div>
+      </section>
     </main>
     <footer>
       <a
