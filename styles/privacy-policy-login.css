@@ -13,11 +13,24 @@ footer {
     gap: 8px;
 }
 
+.aside-policy-links.active {
+    background-color: #091931;
+    padding: 8px 20px;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+}
+
+.legal-notice-container a.active {
+    font-size: 16px;
+    color: #cdcdcd;
+}
+
 .policies-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 80%;
+    width: 100%;
     padding: 14px 0;
 }
 

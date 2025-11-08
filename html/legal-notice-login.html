@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="../styles/summary.css" />
   <link rel="stylesheet" href="../styles/legal-notice-login.css" />
+  <link rel="stylesheet" href="../styles/privacy-policy-login.css">
 </head>
 
 <body>
@@ -18,19 +19,35 @@
       </nav>
   </header>
 
-  <aside>
-    <img class="sidebar-logo" src="../assets/img/join_logo_white.svg" alt="The logo of the app JOIN" />
-    <div class="sidebar-components">
-      <a href="login.html" class="sidebar-menu-elements">
-        <img src="../assets/img/login.svg" alt="goto login Page" />
-        <p>Log In</p>
-      </a>
-    </div>
-    <div class="legal-notice-container">
-      <a href="privacy-policy-login.html">Privacy Policy</a>
-      <a href="legal-notice-login.html">Legal Notice</a>
-    </div>
-  </aside>
+   <aside>
+      <img
+        class="sidebar-logo"
+        src="../assets/img/join_logo_white.svg"
+        alt="The logo of the app JOIN"
+      />
+      <div class="sidebar-components">
+        <a href="login.html" class="sidebar-menu-elements">
+          <img src="../assets/img/login.svg" alt="Go to login Page" />
+          <p>Log In</p>
+        </a>
+      </div>
+      <div class="legal-notice-container">
+        <a
+          onclick="setPolicyFocusTabPc('privacyPolicy')"
+          id="privacy_policy_pc"
+          class="aside-policy-links"
+          href="privacy-policy-login.html"
+          >Privacy Policy</a
+        >
+        <a
+          onclick="setPolicyFocusTabPc('legalNotice')"
+          id="legal_notice_pc"
+          class="aside-policy-links"
+          href="legal-notice-login.html"
+          >Legal Notice</a
+        >
+      </div>
+    </aside>
   <main>
     <div class="main-content">
       <h1>Legal Notice</h1>
@@ -114,6 +131,7 @@
     </div>
   </main>
   <script src="../scripts/summary.js"></script>
+  <script src="../scripts/help.js"></script>
 </body>
 
 </html>

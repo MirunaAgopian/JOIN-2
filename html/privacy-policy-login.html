@@ -34,10 +34,20 @@
         </a>
       </div>
       <div class="legal-notice-container">
-        <a id="privacy_policy" class="aside-policy-links" href="privacy-policy-login.html"
+        <a
+          onclick="setPolicyFocusTabPc('privacyPolicy')"
+          id="privacy_policy_pc"
+          class="aside-policy-links"
+          href="privacy-policy-login.html"
           >Privacy Policy</a
         >
-        <a id="legal_notice" class="aside-policy-links" href="legal-notice-login.html">Legal Notice</a>
+        <a
+          onclick="setPolicyFocusTabPc('legalNotice')"
+          id="legal_notice_pc"
+          class="aside-policy-links"
+          href="legal-notice-login.html"
+          >Legal Notice</a
+        >
       </div>
     </aside>
     <main>
@@ -503,11 +513,12 @@
         <a class="footer-policy-links" href="privacy-policy-login.html"
           >Privacy Policy</a
         >
-        <a class="footer-policy-links" href="legal-notice-login.html">Legal Notice</a>
+        <a class="footer-policy-links" href="legal-notice-login.html"
+          >Legal Notice</a
+        >
       </div>
     </footer>
     <script src="../scripts/summary.js"></script>
     <script src="../scripts/help.js"></script>
   </body>
 </html>
-
