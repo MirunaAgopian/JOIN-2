@@ -6,6 +6,7 @@ body{
 main{
     justify-content: unset;
     padding-left: 200px;
+    overflow-x: hidden;
 }
 
 .contacts-container{
@@ -84,12 +85,27 @@ dialog{
     border: none;
     border-radius: 30px;
     padding: 0;
-    position: relative;
+    position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(100%, -50%);
+    /* transform: translateX(150%) translateY(-50%); */
 }
 
+.dialogOpened{
+    transform: translateX(-50%) translateY(-50%);
+    transition: all 0.5s ease-in;
+}
+
+dialog::backdrop{
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.dialogOpened::backdrop{
+    opacity: 1;
+    transition: all 0.25s ease-in;
+}
 .add-contact-container{
     display: flex;
     flex-direction: row;

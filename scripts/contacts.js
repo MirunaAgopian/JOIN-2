@@ -1,6 +1,13 @@
 function openDialogAddContact(){
     const contentDialogContactRef = document.getElementById('add_contact_dialog');
     contentDialogContactRef.showModal();
+    contentDialogContactRef.classList.add('dialogOpened');
+}
+
+function closeDialogAddContact(){
+    const contentDialogContactRef = document.getElementById('add_contact_dialog');
+    contentDialogContactRef.close();
+    contentDialogContactRef.classList.remove('dialogOpened');
 }
 
 function changeColorHover(){
