@@ -58,7 +58,6 @@ h4 {
   align-items: flex-start;
   overflow-wrap: break-word;
   word-break: break-word;
-  z-index: -1;
 }
 
 .legal-notice-elements.active {
