@@ -5,6 +5,14 @@
  */
 window.addEventListener('DOMContentLoaded', checkCurrentUrl);
 
+document.addEventListener('DOMContentLoaded', () => {
+    const storedUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+    if(storedUser) {
+        greet(storedUser === "Guest" ? null : storedUser);
+        sessionStorage.removeItem("loggedInUser");
+    }
+});
+
 /**
  * Toggles the submenu based on the current viewport width.
  * Calls the desktop submenu toggle if the width is greater than 850px,

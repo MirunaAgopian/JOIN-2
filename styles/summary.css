@@ -500,7 +500,7 @@ footer {
     }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1230px) {
     .greeting {
         display: none;
     }
