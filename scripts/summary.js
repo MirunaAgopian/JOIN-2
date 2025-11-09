@@ -101,6 +101,14 @@ function checkCurrentUrl(){
     }
 }
 
+function getGreetingWord(){
+    const hours = new Date().getHours();
+    if(hours >= 6 && hours < 12) return 'morning';
+    if(hours >= 12 && hours < 18) return 'afternoon';
+    if(hours >= 18 && hours < 23) return 'evening';
+    return 'night';
+} 
+
 function toggleOverlay(show){
     let overlay = document.getElementById('mobile_overlay');
     if(show) {
@@ -110,24 +118,45 @@ function toggleOverlay(show){
     }
 }
 
-function greetGuest(){
-    let viewPortWidth = window.innerWidth;
-    const isMobile = viewPortWidth < 851;
-    if(isMobile) {
-        toggleOverlay(true);
-        setTimeout(() => {
-            toggleOverlay(false);
-        }, 3000);
+function setOverlayTimeout(duration = 3000) {
+    toggleOverlay(true);
+    setTimeout(() => toggleOverlay(false), duration);
+}
+
+function greetOnPC(username = null) {
+    const greeting = getGreetingWord();
+    document.getElementById('greeting_word').innerHTML = greeting;
+    if(username) {
+        document.getElementById('username').innerHTML = username;
+        document.getElementById('punctuation').innerHTML = ',';
     } else {
-        toggleOverlay(false);
+        document.getElementById('username').innerHTML = '';
+        document.getElementById('punctuation').innerHTML = '!';
     }
 }
 
-function setGreetingTime(){
-    const actualTime = new Date();
-    return new Intl.DateTimeFormat('de-DE', {
-                hour: '2-digit', 
-                minute: '2-digit'
-        }).format(noteDate);
-} 
+function greetOnMobile(username = null) {
+  const isMobile = window.innerWidth < 851;
+  if (isMobile) {
+    const greeting = getGreetingWord();
+    let message;
+    if (username) {
+      message = `Good ${greeting}, ${username}`;
+    } else {
+      message = `Good ${greeting}!`;
+    }
+    document.getElementById('mobile_greeting').innerHTML = message;
+    setOverlayTimeout();
+  } else {
+    toggleOverlay(false);
+  }
+}
 
+function greet(username = null){
+    let viewPortWidth = window.innerWidth;
+    if(viewPortWidth > 850) {
+        greetOnPC(username);
+    } else {
+        greetOnMobile(username);
+    }
+}

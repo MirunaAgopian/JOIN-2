@@ -7,6 +7,7 @@ header {
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
     background-color: white;
     position: fixed;
+    z-index: 20;
 }
 
 nav {
@@ -122,7 +123,7 @@ nav p {
 /* Styling of the mobile overlay */
 .mobile-overlay {
     position: absolute;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     background-color: #f6f7f8;
     display: flex;
@@ -131,6 +132,8 @@ nav p {
     opacity: 0;
     pointer-events: none;
     transition: opacity 400ms ease-in-out;
+    z-index: 10;
+    pointer-events: none;
 }
 
 .mobile-overlay p {
@@ -157,6 +160,7 @@ aside {
     top: 0;
     left: 0;
     height: 100vh;
+    z-index: 30;
 }
 
 aside a, p {
@@ -227,6 +231,7 @@ aside a, p {
 main {
     display: flex;
     justify-content: center;
+    position: relative;
 }
 
 .main-content {
@@ -411,6 +416,7 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+    z-index: 20;
 }
 
 .footer-menu-elements {
