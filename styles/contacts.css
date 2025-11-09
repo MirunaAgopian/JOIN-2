@@ -80,7 +80,7 @@ main{
     font-weight: 400;
 }
 
-dialog{
+.dialog-contact{
     min-width: 1131px;
     border: none;
     border-radius: 30px;
@@ -285,4 +285,37 @@ input::placeholder{
     font-size: 21px;
     font-weight: bold;
     color: white;
+}
+
+.dialog-msg{
+    background-color: #2A3647;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 0.1px 3px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 80%;
+    left: 50%;
+    transform: translateX(300%) translateY(0px);
+}
+
+.dialog-msg span{
+    font-family: 'MyInter';
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
+}
+
+.msg-opened{
+    transform: translateX(0px) translateY(0px);
+    transition: all 0.25s ease-in;
+}
+
+.dialog-msg::backdrop{
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.msg-opened::backdrop{
+    opacity: 1;
+    transition: all 0.25s ease-in;
 }

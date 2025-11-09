@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../styles/summary.css" />
     <link rel="stylesheet" href="../styles/contacts.css">
     <script src="../scripts/firebase.js"></script>
+    <script src="../scripts/templates.js"></script>
     <script src="../scripts/signup.js"></script>
     <script src="../scripts/contacts.js"></script>
   </head>
@@ -164,10 +165,13 @@
           </section>
         </div>
       </dialog>
+      <dialog id="msg_contact_dialog" class="dialog-msg">
+        
+      </dialog>
       
       <section class="contacts-container">
         <div id="contacts_list" class="contacts-list">
-          <button id="btn_add_contact" class="btn-contact">
+          <button id="btn_add_contact" class="btn-contact" onclick="openDialogAddContact()">
             <div class="btn-add-contact-box">
               <span>Add new contact</span>
               <img src="../assets/img/add_person_icon.svg" alt="add person icon">
@@ -180,7 +184,7 @@
             <div class="line"></div>
             <span class="aside-description">Better with a team</span>
           </div>
-          <button onclick="openDialogAddContact()">add contact</button>
+          <button onclick="openContactMsgDialog('Contact succesfully created')">add contact</button>
         </div>
       </section>
     </main>

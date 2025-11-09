@@ -133,3 +133,13 @@ function getRandomColor(){
     }
     return color;
 }
+
+async function openContactMsgDialog(text){
+    const contentDialogRef = document.getElementById('msg_contact_dialog');
+    contentDialogRef.innerHTML = '';
+    contentDialogRef.innerHTML = getDialogMsgTemplate(text);
+    contentDialogRef.showModal();
+    contentDialogRef.classList.add('msg-opened');
+    await timeout(1500);
+    // closeSignupDialog(contentDialogRef);
+}

@@ -1,3 +1,2 @@
 function getDialogMsgTemplate(text){
-    return `<span>${text}</span>`;
-}
+    return `<span>${text}</span>`;}
