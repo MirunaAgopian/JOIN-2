@@ -1,10 +1,13 @@
 .contactID {
     display: flex;
     cursor: pointer;
+    border-radius: 10px;
+    background-color: #fff;
 }
 
 .contactID:hover {
-    background-color: gray;
+    background-color:  #2A3647;
+;
 }
 
 .contactAvater {
@@ -16,5 +19,12 @@
     justify-content: center;
     color: #fff;
     border: #fff 2px solid;
-    background-color: blue;
+}
+
+.contact-name{
+    color: black;
+}
+
+.contact-email{
+    color: #007CEE;
 }

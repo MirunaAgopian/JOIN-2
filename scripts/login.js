@@ -97,7 +97,7 @@ function checkUserDatabase(selUser) {
 /** correct User and Password have been entered 
  * @param {Object} selUser selected User */
 function rightUserLogin(selUser) {
-    sessionStorage.setItem("loggedInUser", JSON.stringify(selUser.name));
+    sessionStorage.setItem("loggedInUser", selUser.name);
     window.location.href = './summary.html';
 }
 
@@ -120,17 +120,9 @@ function emailCheck() {
     }
 }
 
-/** Check if the email Regex is valid
- * @param {string} email - Email address
- * @returns {boolean} - True if valid, false otherwise  */
-function checkValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
 /** Guest User Login  */
 function userGuestLogin() {
-        sessionStorage.setItem("loggedInUser", JSON.stringify("Guest"));
+    sessionStorage.setItem("loggedInUser", "Guest");
     window.location.href = './summary.html';
 }
 

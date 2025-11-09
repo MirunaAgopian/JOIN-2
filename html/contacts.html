@@ -9,12 +9,15 @@
     <link rel="stylesheet" href="../styles/fonts.css">
     <link rel="stylesheet" href="../styles/summary.css" />
     <link rel="stylesheet" href="../styles/contacts.css">
+    <link rel="stylesheet" href="../styles/contacts-overview.css">
+    <script src="../script.js" defr></script>
     <script src="../scripts/firebase.js"></script>
     <script src="../scripts/templates.js"></script>
     <script src="../scripts/signup.js"></script>
     <script src="../scripts/contacts.js"></script>
+    <script src="../scripts/contacts-overview.js" defer></script>
   </head>
-  <body>
+  <body onload="onloadFuncContact()">
     <header>
       <nav>
         <img
@@ -177,6 +180,7 @@
               <img src="../assets/img/add_person_icon.svg" alt="add person icon">
             </div>
           </button>
+          <div id="contactsList-content"></div>
         </div>
         <div class="contacts-content">
           <div id="head_contacts" class="head-contacts">
