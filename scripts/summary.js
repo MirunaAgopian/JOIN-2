@@ -110,9 +110,9 @@ function toggleOverlay(show){
     }
 }
 
-function greet(){
+function greetGuest(){
     let viewPortWidth = window.innerWidth;
-    const isMobile = viewPortWidth < 850;
+    const isMobile = viewPortWidth < 851;
     if(isMobile) {
         toggleOverlay(true);
         setTimeout(() => {
@@ -122,3 +122,12 @@ function greet(){
         toggleOverlay(false);
     }
 }
+
+function setGreetingTime(){
+    const actualTime = new Date();
+    return new Intl.DateTimeFormat('de-DE', {
+                hour: '2-digit', 
+                minute: '2-digit'
+        }).format(noteDate);
+} 
+
