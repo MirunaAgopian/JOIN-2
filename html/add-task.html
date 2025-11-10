@@ -7,6 +7,7 @@
     <link rel="icon" href="../assets/img/join_logo.svg" />
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../styles/summary.css" />
+    <link rel="stylesheet" href="../styles/add-task.css" />
   </head>
   <body>
     <header>
@@ -36,7 +37,10 @@
             aria-label="Opens Privacy Policy section"
             >Privacy Policy</a
           >
-          <a onclick="logOut()" href="#" aria-label="Logs the user out of the application"
+          <a
+            onclick="logOut()"
+            href="#"
+            aria-label="Logs the user out of the application"
             >Log out</a
           >
         </div>
@@ -51,7 +55,10 @@
             aria-label="Opens Privacy Policy section"
             >Privacy Policy</a
           >
-          <a onclick="logOut()" href="#" aria-label="Logs the user out of the application"
+          <a
+            onclick="logOut()"
+            href="#"
+            aria-label="Logs the user out of the application"
             >Log out</a
           >
         </div>
@@ -119,7 +126,93 @@
       </div>
     </aside>
     <main>
-        <h1>Main Content comes here</h1>
+      <section class="main-content">
+        <h1>Add Task</h1>
+        <section class="page-container">
+          <section class="task-container">
+            <div class="field-description">
+              <label for="task_title"
+                >Title<span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="task_title"
+                required
+                placeholder="Enter a title"
+              />
+            </div>
+            <div class="field-description">
+              <label for="task_description">Description</label>
+              <textarea
+                name="description"
+                id="task_description"
+                placeholder="Enter a description"
+              ></textarea>
+            </div>
+            <div class="field-description">
+              <label for="due_date"
+                >Due date<span class="required">*</span></label
+              >
+              <input type="date" id="due_date" required />
+            </div>
+          </section>
+          <div class="separation-bar"></div>
+          <section class="priority-container">
+            <div class="field-description">
+              <span>Priority</span>
+              <div class="priority-stages">
+                <div class="txt-img">
+                  <span>Urgent</span>
+                  <img src="" alt="two arrows pointing up" />
+                </div>
+                <div class="txt-img">
+                  <span>Medium</span>
+                  <img src="" alt="two horizontal lines" />
+                </div>
+                <div class="txt-img">
+                  <span>Low</span>
+                  <img src="" alt="two arrows pointing down" />
+                </div>
+              </div>
+            </div>
+            <div class="field-description">
+              <label for="assigned_to">Assigned to</label>
+              <select name="person" id="assigned_to">
+                <option value="">Select contacts to assign</option>
+              </select>
+            </div>
+            <div class="field-description">
+              <label for="category">Category</label>
+              <select name="category" id="category">
+                <option value="">Select task category</option>
+              </select>
+            </div>
+            <div class="field-description">
+              <label for="subtask">Subtasks</label>
+              <input type="text" id="subtask" placeholder="Add new subtask" />
+            </div>
+          </section>
+        </section>
+        <section class="bottom-container">
+          <p><span class="required">*</span>This field is required</p>
+          <div class="buttons">
+            <button>
+              Clear
+              <img
+                src="../assets/img/cancel_x.svg"
+                alt="an x mark attached to the button to clear the input from the task field"
+              />
+            </button>
+            <button>
+              Create Task
+              <img
+                src="../assets/img/check.svg"
+                alt="a button indicating to save the task typed into the input field"
+              />
+            </button>
+          </div>
+        </section>
+      </section>
     </main>
     <footer>
       <a

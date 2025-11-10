@@ -5,22 +5,6 @@
  */
 window.addEventListener('DOMContentLoaded', checkCurrentUrl);
 
-document.addEventListener('DOMContentLoaded', () => {
-    const storedUser = sessionStorage.getItem('loggedInUser');
-    const overlay = document.getElementById('mobile_overlay');
-    if (!storedUser) {
-       overlay.classList.remove('active');
-       return;
-    }
-    if (window.innerWidth <= 850) {
-        greet(storedUser === "Guest" ? null : storedUser);
-        sessionStorage.removeItem("loggedInUser");
-    } else {
-        greet(storedUser === "Guest" ? null : storedUser);
-        overlay.classList.remove('active');
-    }
-});
-
 /**
  * Toggles the submenu based on the current viewport width.
  * Calls the desktop submenu toggle if the width is greater than 850px,
@@ -114,65 +98,5 @@ function checkCurrentUrl(){
     if(tabKey) {
         setDesktopTabFocus(tabKey);
         setMobileTabFocus(tabKey);
-    }
-}
-
-function getGreetingWord(){
-    const hours = new Date().getHours();
-    if(hours >= 6 && hours < 12) return 'Good morning';
-    if(hours >= 12 && hours < 18) return 'Good afternoon';
-    if(hours >= 18 && hours < 23) return 'Good evening';
-    return 'night';
-} 
-
-function toggleOverlay(show){
-    let overlay = document.getElementById('mobile_overlay');
-    if(show) {
-        overlay.classList.add('active');
-    } else {
-        overlay.classList.remove('active');
-    }
-}
-
-function setOverlayTimeout(duration = 3000) {
-    toggleOverlay(true);
-    setTimeout(() => toggleOverlay(false), duration);
-}
-
-function greetOnPC(username = null) {
-    const greeting = getGreetingWord();
-    document.getElementById('greeting_word').innerHTML = greeting;
-    if(username) {
-        document.getElementById('username').innerHTML = username;
-        document.getElementById('punctuation').innerHTML = ',';
-    } else {
-        document.getElementById('username').innerHTML = '';
-        document.getElementById('punctuation').innerHTML = '!';
-    }
-}
-
-function greetOnMobile(username = null) {
-  const isMobile = window.innerWidth < 851;
-  if (isMobile) {
-    const greeting = getGreetingWord();
-    let message;
-    if (username) {
-      message = `${greeting}, <span class='mobile-username'>${username}</span>`;
-    } else {
-      message = `${greeting}!`;
-    }
-    document.getElementById('mobile_greeting').innerHTML = message;
-    setOverlayTimeout();
-  } else {
-    toggleOverlay(false);
-  }
-}
-
-function greet(username = null){
-    let viewPortWidth = window.innerWidth;
-    if(viewPortWidth > 850) {
-        greetOnPC(username);
-    } else {
-        greetOnMobile(username);
     }
 }

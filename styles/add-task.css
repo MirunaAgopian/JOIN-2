@@ -1,0 +1,48 @@
+.main-content {
+    border: 1px solid green;
+    color: black;
+}
+
+nav {
+    border: 1px solid blue;
+}
+
+.required {
+    color: red;
+    vertical-align: super;
+}
+
+.page-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.task-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid red;
+}
+
+.separation-bar {
+    height: 200px;
+    width: 2px;
+    background-color: #D1D1D1;
+    border-radius: 2px;
+}
+
+.priority-container {
+    border: 1px solid red;
+}
+
+.priority-stages {
+    display: flex;
+}
+
+.bottom-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
