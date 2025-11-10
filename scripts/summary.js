@@ -6,10 +6,18 @@
 window.addEventListener('DOMContentLoaded', checkCurrentUrl);
 
 document.addEventListener('DOMContentLoaded', () => {
-    const storedUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-    if(storedUser) {
+    const storedUser = sessionStorage.getItem('loggedInUser');
+    const overlay = document.getElementById('mobile_overlay');
+    if (!storedUser) {
+       overlay.classList.remove('active');
+       return;
+    }
+    if (window.innerWidth <= 850) {
         greet(storedUser === "Guest" ? null : storedUser);
         sessionStorage.removeItem("loggedInUser");
+    } else {
+        greet(storedUser === "Guest" ? null : storedUser);
+        overlay.classList.remove('active');
     }
 });
 
@@ -111,9 +119,9 @@ function checkCurrentUrl(){
 
 function getGreetingWord(){
     const hours = new Date().getHours();
-    if(hours >= 6 && hours < 12) return 'morning';
-    if(hours >= 12 && hours < 18) return 'afternoon';
-    if(hours >= 18 && hours < 23) return 'evening';
+    if(hours >= 6 && hours < 12) return 'Good morning';
+    if(hours >= 12 && hours < 18) return 'Good afternoon';
+    if(hours >= 18 && hours < 23) return 'Good evening';
     return 'night';
 } 
 
@@ -149,9 +157,9 @@ function greetOnMobile(username = null) {
     const greeting = getGreetingWord();
     let message;
     if (username) {
-      message = `Good ${greeting}, ${username}`;
+      message = `${greeting}, <span class='mobile-username'>${username}</span>`;
     } else {
-      message = `Good ${greeting}!`;
+      message = `${greeting}!`;
     }
     document.getElementById('mobile_greeting').innerHTML = message;
     setOverlayTimeout();
