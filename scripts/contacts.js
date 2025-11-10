@@ -1,4 +1,8 @@
 let joinContacts = [];
+const colorContacts = ['#FF7A00', '#9327FF' , '#FF745E', '#FFC701', '#FFE62B',
+    '#FF5EB3', '#00BEE8', '#FFA35E', '#0038FF', '#FF4646',
+    '#6E52FF', '#1FD7C1', '#FC71FF', '#C3FF2B', '#FFBB2B'
+];
 
 function openDialogAddContact(){
     const contentDialogContactRef = document.getElementById('add_contact_dialog');
@@ -13,6 +17,12 @@ async function closeDialogAddContact(){
     contentDialogContactRef.close();
     contentDialogContactRef.classList.remove('dialogOpened');
     contentDialogContactRef.classList.remove('dialogClosed');
+}
+
+function closeDialogAfterCreatedContact(){
+    const contentDialogContactRef = document.getElementById('add_contact_dialog');
+    contentDialogContactRef.close();
+    contentDialogContactRef.classList.remove('dialogOpened');
 }
 
 function changeColorHover(){
@@ -98,7 +108,8 @@ async function checkNewContact(contactObj, contactsArr){
         clearInputFields();
     }
     else{
-        alert('Kontakt schon vorhanden');
+        // alert('Kontakt schon vorhanden');
+        await openContactMsgDialog('Contact already in list');
     }
 }
 
@@ -111,7 +122,8 @@ function clearInputFields(){
 async function postContactInDatabse(dataObj){
     let contactFirebaseObj = createFirebaseObj(dataObj);
     await postData('/contacts', contactFirebaseObj);
-    alert('Kontakt hinzugefügt');
+    // alert('Kontakt hinzugefügt');
+    await openContactMsgDialog('Contact succesfully created');
 }
 
 function createFirebaseObj(contactObj){
@@ -126,20 +138,28 @@ function createFirebaseObj(contactObj){
 }
 
 function getRandomColor(){
-    let hexDigits = '0123456789ABCDEF';
-    let color = '#';
-    for (let index = 0; index < 6; index++) {
-        color += hexDigits[Math.floor(Math.random() * 16)];
-    }
+    let color = '';
+    let randomNumber = Math.floor(Math.random() * 15);
+    color = colorContacts[randomNumber];
     return color;
 }
 
 async function openContactMsgDialog(text){
+    closeDialogAfterCreatedContact();
     const contentDialogRef = document.getElementById('msg_contact_dialog');
     contentDialogRef.innerHTML = '';
     contentDialogRef.innerHTML = getDialogMsgTemplate(text);
     contentDialogRef.showModal();
     contentDialogRef.classList.add('msg-opened');
-    await timeout(1500);
-    // closeSignupDialog(contentDialogRef);
+    await timeout(1000);
+    await closeContactMsgDialog(contentDialogRef);
+}
+
+async function closeContactMsgDialog(element){
+    const contentDialogRef = element;
+    contentDialogRef.classList.add('msg-closed');
+    await timeout(1000);
+    contentDialogRef.close();
+    contentDialogRef.classList.remove('msg-opened');
+    contentDialogRef.classList.remove('msg-closed');
 }

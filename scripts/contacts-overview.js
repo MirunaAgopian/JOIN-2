@@ -76,7 +76,7 @@ function renderContactLetter(letter) {
  */
 function renderContactInfo(user) {
     return `
-    <div class="contactID" onclick="showName('${user.name}')">
+    <div class="contactID" onclick="showName('${user.mail}')">
         <div class="contactAvater" style="background-color: ${user.color}">
             ${getUserItem(user.name)}
         </div>
@@ -88,6 +88,6 @@ function renderContactInfo(user) {
   `;
 }
 
-function showName(name){
-    alert(name);
+function showName(mail){
+    alert(mail);
 }
