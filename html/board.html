@@ -1,177 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Join - Board</title>
-    <link rel="icon" href="../assets/img/join_logo.svg" />
-    <link rel="stylesheet" href="../style.css" />
-    <link rel="stylesheet" href="../styles/summary.css" />
-  </head>
-  <body>
-    <header>
-      <nav>
-        <img
-          class="mobile-navbar-logo"
-          src="../assets/img/join_logo.svg"
-          alt="The logo of the application"
-        />
-        <p>Kanban Projekt Management Tool</p>
-        <div class="user-help-container">
-          <a href="help.html" aria-label="Opens Help section"
-            ><img
-              class="help-btn"
-              src="../assets/img/help_btn.svg"
-              alt="a help button displaying a question mark"
-          /></a>
-          <button class="nav-user-btn" onclick="toggleSubmenu()">G</button>
-        </div>
-        <!-- Submenu, desktop version -->
-        <div id="submenu" class="desktop-submenu d-none">
-          <a href="legal-notice.html" aria-label="Opens Legal Notice section"
-            >Legal Notice</a
-          >
-          <a
-            href="privacy-policy.html"
-            aria-label="Opens Privacy Policy section"
-            >Privacy Policy</a
-          >
-          <a onclick="logOut()" href="#" aria-label="Logs the user out of the application"
-            >Log out</a
-          >
-        </div>
-        <!-- Submenu, mobile version -->
-        <div id="mobile_submenu" class="mobile-submenu">
-          <a href="help.html" aria-label="Opens Help section">Help</a>
-          <a href="legal-notice.html" aria-label="Opens Legal Notice section"
-            >Legal Notice</a
-          >
-          <a
-            href="privacy-policy.html"
-            aria-label="Opens Privacy Policy section"
-            >Privacy Policy</a
-          >
-          <a onclick="logOut()" href="#" aria-label="Logs the user out of the application"
-            >Log out</a
-          >
-        </div>
-      </nav>
-    </header>
-    <aside>
-      <img
-        class="sidebar-logo"
-        src="../assets/img/join_logo_white.svg"
-        alt="The logo of the app JOIN"
-      />
-      <div class="sidebar-components">
-        <a
-          id="summary_tab_pc"
-          href="summary.html"
-          class="sidebar-menu-elements"
-          onclick="setDesktopTabFocus('summary')"
-        >
-          <img
-            src="../assets/img/summary.svg"
-            alt="icon leading to the summary page"
-          />
-          <p>Summary</p>
-        </a>
-        <a
-          id="add_task_tab_pc"
-          href="add-task.html"
-          class="sidebar-menu-elements"
-          onclick="setDesktopTabFocus('task')"
-        >
-          <img
-            src="../assets/img/add_task.svg"
-            alt="icon leading to the add task page"
-          />
-          <p>Add Task</p>
-        </a>
-        <a
-          id="board_tab_pc"
-          href="board.html"
-          class="sidebar-menu-elements"
-          onclick="setDesktopTabFocus('board')"
-        >
-          <img
-            src="../assets/img/board.svg"
-            alt="icon leading to the board page"
-          />
-          <p>Board</p>
-        </a>
-        <a
-          id="contacts_tab_pc"
-          href="contacts.html"
-          class="sidebar-menu-elements"
-          onclick="setDesktopTabFocus('contacts')"
-        >
-          <img
-            src="../assets/img/contacts.svg"
-            alt="icon leading to the contacts page"
-          />
-          <p>Contacts</p>
-        </a>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join - Board</title>
+  <link rel="icon" href="../assets/img/join_logo.svg" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../styles/summary.css" />
+  <link rel="stylesheet" href="../styles/board.css">
+  <script src="../scripts/board.js" defer></script>
+</head>
+
+<body onload="onloadFuncBoard()">
+  <header>
+    <nav>
+      <img class="mobile-navbar-logo" src="../assets/img/join_logo.svg" alt="The logo of the application" />
+      <p>Kanban Projekt Management Tool</p>
+      <div class="user-help-container">
+        <a href="help.html" aria-label="Opens Help section"><img class="help-btn" src="../assets/img/help_btn.svg"
+            alt="a help button displaying a question mark" /></a>
+        <button class="nav-user-btn" onclick="toggleSubmenu()">G</button>
       </div>
-      <div class="legal-notice-container">
-        <a href="privacy-policy.html">Privacy Policy</a>
-        <a href="legal-notice.html">Legal Notice</a>
+      <!-- Submenu, desktop version -->
+      <div id="submenu" class="desktop-submenu d-none">
+        <a href="legal-notice.html" aria-label="Opens Legal Notice section">Legal Notice</a>
+        <a href="privacy-policy.html" aria-label="Opens Privacy Policy section">Privacy Policy</a>
+        <a onclick="logOut()" href="#" aria-label="Logs the user out of the application">Log out</a>
       </div>
-    </aside>
-    <main>
-        <h1>Main Content comes here</h1>
-    </main>
-    <footer>
-      <a
-        id="summary_tab_mobile"
-        href="summary.html"
-        class="footer-menu-elements"
-        onclick="setMobileTabFocus('summary')"
-      >
-        <img
-          src="../assets/img/summary.svg"
-          alt="icon leading to the summary page"
-        />
+      <!-- Submenu, mobile version -->
+      <div id="mobile_submenu" class="mobile-submenu">
+        <a href="help.html" aria-label="Opens Help section">Help</a>
+        <a href="legal-notice.html" aria-label="Opens Legal Notice section">Legal Notice</a>
+        <a href="privacy-policy.html" aria-label="Opens Privacy Policy section">Privacy Policy</a>
+        <a onclick="logOut()" href="#" aria-label="Logs the user out of the application">Log out</a>
+      </div>
+    </nav>
+  </header>
+  <aside>
+    <img class="sidebar-logo" src="../assets/img/join_logo_white.svg" alt="The logo of the app JOIN" />
+    <div class="sidebar-components">
+      <a id="summary_tab_pc" href="summary.html" class="sidebar-menu-elements" onclick="setDesktopTabFocus('summary')">
+        <img src="../assets/img/summary.svg" alt="icon leading to the summary page" />
         <p>Summary</p>
       </a>
-      <a
-        id="add_task_tab_mobile"
-        href="add-task.html"
-        class="footer-menu-elements"
-        onclick="setMobileTabFocus('task')"
-      >
-        <img
-          src="../assets/img/add_task.svg"
-          alt="icon leading to the add task page"
-        />
+      <a id="add_task_tab_pc" href="add-task.html" class="sidebar-menu-elements" onclick="setDesktopTabFocus('task')">
+        <img src="../assets/img/add_task.svg" alt="icon leading to the add task page" />
         <p>Add Task</p>
       </a>
-      <a
-        id="board_tab_mobile"
-        href="board.html"
-        class="footer-menu-elements"
-        onclick="setMobileTabFocus('board')"
-      >
-        <img
-          src="../assets/img/board.svg"
-          alt="icon leading to the board page"
-        />
+      <a id="board_tab_pc" href="board.html" class="sidebar-menu-elements" onclick="setDesktopTabFocus('board')">
+        <img src="../assets/img/board.svg" alt="icon leading to the board page" />
         <p>Board</p>
       </a>
-      <a
-        id="contacts_tab_mobile"
-        href="contacts.html"
-        class="footer-menu-elements"
-        onclick="setMobileTabFocus('contacts')"
-      >
-        <img
-          src="../assets/img/contacts.svg"
-          alt="icon leading to the contacts page"
-        />
+      <a id="contacts_tab_pc" href="contacts.html" class="sidebar-menu-elements"
+        onclick="setDesktopTabFocus('contacts')">
+        <img src="../assets/img/contacts.svg" alt="icon leading to the contacts page" />
         <p>Contacts</p>
       </a>
-    </footer>
-    <script src="../scripts/summary.js"></script>
-    <script src="../script.js"></script>
-  </body>
+    </div>
+    <div class="legal-notice-container">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="legal-notice.html">Legal Notice</a>
+    </div>
+  </aside>
+  <main>
+    <div class="mainContent">
+      <div class="boardHeader">
+        <h1>Board</h1>
+        <div class="searchBoard">
+          <div>
+            <input type="search" oninput="processChanges()" id="searchBoard" placeholder="Find Task">
+          </div>
+          <button type="button">
+            <span class="btn-text">Add task</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="board-Content">
+        <section id="toDo" class="column">
+          <div class="columnHeader">
+            <h2>To do</h2>
+            <button>+</button>
+          </div>
+          <div class="drag-area" id="boardToDo" ondrop="moveTo('boardToDo')" ondragleave="removeHighlight('boardToDo')"
+            ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event); highlight('boardToDo')">
+            
+          </div>
+        </section>
+
+        <section id="inProgress" class="column">
+          <div class="columnHeader">
+            <h2>In progress</h2>
+            <button>+</button>
+          </div>
+          <div class="drag-area" id="boardProgress" ondrop="moveTo('boardProgress')"
+            ondragleave="removeHighlight('boardProgress')" ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event); highlight('boardProgress')">
+          </div>
+        </section>
+
+        <section id="Feedback" class="column">
+          <div class="columnHeader">
+            <h2>Await Feedback</h2>
+            <button>+</button>
+          </div>
+          <div class="drag-area" id="boardFeedback" ondrop="moveTo('boardFeedback')"
+            ondragleave="removeHighlight('boardFeedback')" ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event); highlight('boardFeedback')">
+          </div>
+        </section>
+
+        <section id="Done" class="column">
+          <div class="columnHeader">
+            <h2>Done</h2>
+          </div>
+          <div class="drag-area" id="boardDone" ondrop="moveTo('boardDone')" ondragleave="removeHighlight('boardDone')"
+            ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event); highlight('boardDone')"></div>
+        </section>
+      </div>
+
+    </div>
+  </main>
+  <footer>
+    <a id="summary_tab_mobile" href="summary.html" class="footer-menu-elements" onclick="setMobileTabFocus('summary')">
+      <img src="../assets/img/summary.svg" alt="icon leading to the summary page" />
+      <p>Summary</p>
+    </a>
+    <a id="add_task_tab_mobile" href="add-task.html" class="footer-menu-elements" onclick="setMobileTabFocus('task')">
+      <img src="../assets/img/add_task.svg" alt="icon leading to the add task page" />
+      <p>Add Task</p>
+    </a>
+    <a id="board_tab_mobile" href="board.html" class="footer-menu-elements" onclick="setMobileTabFocus('board')">
+      <img src="../assets/img/board.svg" alt="icon leading to the board page" />
+      <p>Board</p>
+    </a>
+    <a id="contacts_tab_mobile" href="contacts.html" class="footer-menu-elements"
+      onclick="setMobileTabFocus('contacts')">
+      <img src="../assets/img/contacts.svg" alt="icon leading to the contacts page" />
+      <p>Contacts</p>
+    </a>
+  </footer>
+  <!-- <script src="../scripts/summary.js"></script>  -->
+  <script src="../script.js"></script>
+</body>
+
 </html>
