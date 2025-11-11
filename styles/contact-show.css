@@ -1,0 +1,38 @@
+.contact-head{
+    padding-top: 32px;
+    display: flex;
+    align-items: center;
+    gap: 54px;
+}
+
+.contact-circle{
+    height: 120px;
+    width: 120px;
+    border: 2px solid white;
+    border-radius: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-circle span{
+    color: white;
+    font-size: 47px;
+    font-weight: 500;
+}
+
+.name-line{
+    font-size: 47px;
+    font-weight: 500;
+}
+
+.contact-box{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.contact-ctrl-box{
+    display: flex;
+    gap: 16px;
+}

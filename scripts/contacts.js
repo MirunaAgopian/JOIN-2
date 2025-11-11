@@ -163,3 +163,26 @@ async function closeContactMsgDialog(element){
     contentDialogRef.classList.remove('msg-opened');
     contentDialogRef.classList.remove('msg-closed');
 }
+
+async function showClickedContact(mail){
+    await createArrayOfContacts();
+    let amountOfContacts = joinContacts.length;
+    let contactObj = {};
+    for (let index = 0; index < amountOfContacts; index++) {
+        if(mail == joinContacts[index].mail){
+            contactObj = joinContacts[index];
+            break;
+        }
+    }
+    if(contactObj.mail != ''){
+        renderContact(contactObj);
+    }else{
+        alert('contact not found');
+    }
+}
+
+function renderContact(contactObj){
+    const contentContactRef = document.getElementById('contact_container');
+    let nameInitials = getUserItem(contactObj.name);
+    contentContactRef.innerHTML = getTemplateShowContact(contactObj, nameInitials);
+}
