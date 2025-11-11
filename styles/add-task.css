@@ -1,11 +1,8 @@
-.main-content {
-    border: 1px solid green;
-    color: black;
+.main-content h1 {
+    align-self: flex-start;
+    margin: 20px 0;
 }
 
-nav {
-    border: 1px solid blue;
-}
 
 .required {
     color: red;
@@ -16,33 +13,150 @@ nav {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    font-size: 24px;
+    gap: 40px;
+    padding: 20px 0;
+    margin-right: 20px;
 }
 
-.task-container {
+.task-container, .priority-container {
     display: flex;
+    flex: 1;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid red;
+    gap: 20px;
+}
+
+.field-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 8px;
+}
+
+.field-description input{
+    border: 1px solid #D1D1D1;
+    padding: 10px 8px;
+    border-radius: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.field-description textarea {
+    border: 1px solid #D1D1D1;
+    padding: 20px 8px;
+    border-radius: 10px;
+    font-size: 24px;
+    resize: none;
+    cursor: pointer;
+    height: 200px;
+}
+
+select {
+    border: 1px solid #D1D1D1;
+    padding: 10px 8px;
+    border-radius: 10px;
+    font-size: 24px;
+    cursor: pointer;
 }
 
 .separation-bar {
-    height: 200px;
+    height: 100%;
     width: 2px;
     background-color: #D1D1D1;
     border-radius: 2px;
 }
 
-.priority-container {
-    border: 1px solid red;
-}
-
 .priority-stages {
     display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.txt-img {
+    border: 1px solid #D1D1D1;
+    border-radius: 10px;
+    padding: 16px 10px;
+    background-color: white;
+    cursor: pointer;
+    flex: 1;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.urgent-img {
+    background-image: url(../assets/img/prio_urgent.svg);
+}
+
+.medium-img {
+    background-image: url(../assets/img/prio_medium.svg);
+}
+
+.low-img {
+    background-image: url(../assets/img/prio_low.svg);
+}
+
+.prio-img {
+    height: 24px;
+    width: 32px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .bottom-container {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    font-size: 20px;
+    margin-top: 80px;
+    margin-right: 20px;
+}
+
+.bottom-container p {
+    color: black;
+}
+
+/* Hover effects and box styling */
+.txt-img:hover {
+    box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.2);
+}
+
+.txt-img.urgent.active {
+    background-color: #ff3d00;
+}
+
+.txt-img.urgent.active span {
+    color: white;
+}
+
+.urgent-img.active {
+    background-image: url(../assets/img/prio_urgent_white.svg);
+}
+
+.txt-img.medium.active {
+    background-color: #ffa800;
+}
+
+.txt-img.medium.active span {
+    color: white;
+}
+
+.medium-img.active {
+    background-image: url(../assets/img/prio_medium_white.svg);
+}
+
+.txt-img.low.active {
+    background-color: #7ae229;
+}
+
+.txt-img.low.active span {
+    color: white;
+}
+
+.low-img.active {
+    background-image: url(../assets/img/prio_low_white.svg);
 }

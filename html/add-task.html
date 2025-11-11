@@ -161,17 +161,17 @@
             <div class="field-description">
               <span>Priority</span>
               <div class="priority-stages">
-                <div class="txt-img">
+                <div onclick="setPrioColor(this)" class="txt-img urgent">
                   <span>Urgent</span>
-                  <img src="" alt="two arrows pointing up" />
+                  <div class="urgent-img prio-img"></div>
                 </div>
-                <div class="txt-img">
+                <div onclick="setPrioColor(this)" class="txt-img medium">
                   <span>Medium</span>
-                  <img src="" alt="two horizontal lines" />
+                  <div class="medium-img prio-img"></div>
                 </div>
-                <div class="txt-img">
+                <div onclick="setPrioColor(this)" class="txt-img low">
                   <span>Low</span>
-                  <img src="" alt="two arrows pointing down" />
+                  <div class="low-img prio-img"></div>
                 </div>
               </div>
             </div>
@@ -182,7 +182,7 @@
               </select>
             </div>
             <div class="field-description">
-              <label for="category">Category</label>
+              <label for="category">Category<span class="required">*</span></label>
               <select name="category" id="category">
                 <option value="">Select task category</option>
               </select>
@@ -266,5 +266,6 @@
     </footer>
     <script src="../scripts/summary.js"></script>
     <script src="../script.js"></script>
+    <script src="../scripts/add-task.js"></script>
   </body>
 </html>
