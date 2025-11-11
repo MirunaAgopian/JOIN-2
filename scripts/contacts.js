@@ -124,6 +124,7 @@ async function postContactInDatabse(dataObj){
     await postData('/contacts', contactFirebaseObj);
     // alert('Kontakt hinzugefügt');
     await openContactMsgDialog('Contact succesfully created');
+    onloadFuncContact();
 }
 
 function createFirebaseObj(contactObj){
@@ -185,4 +186,38 @@ function renderContact(contactObj){
     const contentContactRef = document.getElementById('contact_container');
     let nameInitials = getUserItem(contactObj.name);
     contentContactRef.innerHTML = getTemplateShowContact(contactObj, nameInitials);
+}
+
+function changeImgHover(id){
+    const contentImgRef = document.getElementById(id);
+    if(id == 'btn_edit'){
+        contentImgRef.src = '../assets/img/edit_contact_hover.svg';
+    }else if(id == 'btn_delete'){
+        contentImgRef.src = '../assets/img/delete_contact_hover.svg';
+    }
+}
+
+function changeImgOut(id){
+    const contentImgRef = document.getElementById(id);
+    if(id == 'btn_edit'){
+        contentImgRef.src = '../assets/img/edit_contact.svg';
+    }else if(id == 'btn_delete'){
+        contentImgRef.src = '../assets/img/delete_contact.svg';
+    }
+}
+
+async function deleteContact(mail){
+    let contactDeleted = false;
+    let contactsResponse = await getAllUsers('/contacts');
+    let contactsKeysArr = Object.keys(contactsResponse);
+    for (let index = 0; index < contactsKeysArr.length; index++) {
+        if((contactsResponse[contactsKeysArr[index]].mail) == mail){
+            await deleteData(`/contacts/${contactsKeysArr[index]}`);
+            contactDeleted = true;
+            break;
+        }
+    }
+    if(contactDeleted){
+        window.location.reload();
+    }
 }

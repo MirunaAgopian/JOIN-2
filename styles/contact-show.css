@@ -1,3 +1,9 @@
+.contact-show-design{
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
 .contact-head{
     padding-top: 32px;
     display: flex;
@@ -35,4 +41,35 @@
 .contact-ctrl-box{
     display: flex;
     gap: 16px;
+}
+
+.btn-contact-ctrl{
+    cursor: pointer;
+}
+
+.contact-info-span{
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.contact-data-container{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.bold-line{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.mail-info-box{
+    font-size: 16px;
+    font-weight: 400;
+    color: #007CEE;
+}
+
+.phone-info-box{
+    font-size: 16px;
+    font-weight: 400;
 }
