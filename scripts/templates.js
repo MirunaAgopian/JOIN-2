@@ -44,7 +44,7 @@ function getTemplateEditDialog(obj, initials){
                         <div class="person-container" style="background-color:${obj.color}">
                             <span class="edit-initials">${initials}</span>
                         </div>
-                        <form onsubmit="editContact(); return false" autocomplete="off">
+                        <form onsubmit="saveChangedData('${obj.mail}'); return false" autocomplete="off">
                             <input type="text" required placeholder="Name" class="bg-input bg-img-name" id="edit_name" value='${obj.name}'>
                             <input type="text" required placeholder="Email" class="bg-input bg-img-mail" id="edit_mail" value='${obj.mail}'>
                             <input type="tel" required placeholder="Phone" class="bg-input bg-img-phone" id="edit_phone" value='${obj.phone}'>

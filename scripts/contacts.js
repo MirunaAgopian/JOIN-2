@@ -262,3 +262,43 @@ function renderEditDialog(mail, initials){
     contentEditDialogRef.innerHTML = getTemplateEditDialog(obj, initials);
     openDialogEditContact();
 }
+
+async function saveChangedData(mail){
+    let contactChanged = false;
+    let contactsResponse = await getAllUsers('/contacts');
+    let contactsKeysArr = Object.keys(contactsResponse);
+    for (let index = 0; index < contactsKeysArr.length; index++) {
+        if(contactsResponse[contactsKeysArr[index]].mail == mail){
+            let changedObj = getInputFieldsEditDialog();
+            changedObj.color = contactsResponse[contactsKeysArr[index]].color;
+            await putData(`contacts/${contactsKeysArr[index]}`, changedObj);
+            contactChanged = true;
+            break;
+        }
+    }
+    if(contactChanged){
+        let dialog = document.getElementById('edit_contact_dialog');
+        dialog.close();
+        dialog.classList.remove('dialogOpened');
+        window.location.reload();
+    }
+}
+
+function getInputFieldsEditDialog(){
+    let name = document.getElementById('edit_name').value;
+    let mail = document.getElementById('edit_mail').value;
+    let phone = document.getElementById('edit_phone').value;
+
+    let inputData = createContactEditObj(name, mail, phone);
+    return inputData;
+}
+
+function createContactEditObj(name, mail, phone){
+    let contactObj = {
+        "name" : name,
+        "mail" : mail,
+        "phone" : phone,
+        "color" : ''
+    };
+    return contactObj;
+}
