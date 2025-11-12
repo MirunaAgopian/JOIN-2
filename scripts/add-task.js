@@ -10,3 +10,5 @@ function setPrioColor(element) {
   if (clickedIcon) clickedIcon.classList.add('active');
 }
 
+
+
