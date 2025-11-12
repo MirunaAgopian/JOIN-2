@@ -49,7 +49,7 @@ function getTemplateEditDialog(obj, initials){
                             <input type="text" required placeholder="Email" class="bg-input bg-img-mail" id="edit_mail" value='${obj.mail}'>
                             <input type="tel" required placeholder="Phone" class="bg-input bg-img-phone" id="edit_phone" value='${obj.phone}'>
                             <div class="form-ctrl-container">
-                                <div id="btn_delete" class="btn-delete" onclick="deleteContactOnDialog('${obj.mail}')">
+                                <div class="btn-delete" onclick="deleteContactOnDialog('${obj.mail}')">
                                     <span>Delete</span>
                                 </div>
                                 <button class="btn-contact">
