@@ -25,6 +25,21 @@ function closeDialogAfterCreatedContact(){
     contentDialogContactRef.classList.remove('dialogOpened');
 }
 
+function openDialogEditContact(){
+    const contentEditContactRef = document.getElementById('edit_contact_dialog');
+    contentEditContactRef.showModal();
+    contentEditContactRef.classList.add('dialogOpened');
+}
+
+async function closeDialogEditContact(){
+    const contentEditContactRef = document.getElementById('edit_contact_dialog');
+    contentEditContactRef.classList.add('dialogClosed'); 
+    await timeout(600);
+    contentEditContactRef.close();
+    contentEditContactRef.classList.remove('dialogOpened');
+    contentEditContactRef.classList.remove('dialogClosed');
+}
+
 function changeColorHover(){
     const contentImageRef = document.getElementById('cancel_img');
     const contentSpanRef = document.getElementById('cancel_span');
@@ -220,4 +235,30 @@ async function deleteContact(mail){
     if(contactDeleted){
         window.location.reload();
     }
+}
+
+async function deleteContactOnDialog(mail){
+    let contactDeleted = false;
+    let contactsResponse = await getAllUsers('/contacts');
+    let contactsKeysArr = Object.keys(contactsResponse);
+    for (let index = 0; index < contactsKeysArr.length; index++) {
+        if((contactsResponse[contactsKeysArr[index]].mail) == mail){
+            await deleteData(`/contacts/${contactsKeysArr[index]}`);
+            contactDeleted = true;
+            break;
+        }
+    }
+    if(contactDeleted){
+        let dialog = document.getElementById('edit_contact_dialog');
+        dialog.close();
+        dialog.classList.remove('dialogOpened');
+        window.location.reload();
+    }
+}
+
+function renderEditDialog(mail, initials){
+    let obj = joinContacts.find(c => c.mail == mail);
+    const contentEditDialogRef = document.getElementById('edit_contact_dialog');
+    contentEditDialogRef.innerHTML = getTemplateEditDialog(obj, initials);
+    openDialogEditContact();
 }

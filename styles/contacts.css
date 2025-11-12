@@ -122,6 +122,7 @@ dialog::backdrop{
 }
 
 .left-box-content{
+    min-height: 225px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -323,4 +324,42 @@ input::placeholder{
 .msg-opened::backdrop{
     opacity: 1;
     transition: all 0.25s ease-in;
+}
+
+.btn-delete{
+    padding: 12px 16px;
+    border: 1px solid #2A3647;
+    border-radius: 10px;
+}
+
+.btn-delete span{
+    color: #2A3647;
+    font-size: 21px;
+    font-weight: 400;
+}
+
+.btn-delete:hover{
+    cursor: pointer;
+    border-color: #29ABE2;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    transform: translateY(-1px);
+}
+
+.btn-delete span:hover{
+    color: #29ABE2;
+}
+
+.btn-contact:active{
+    border-color: #091931;
+    transform: translateY(0);
+}
+
+.btn-delete span:active{
+    color: #091931;
+}
+
+.edit-initials{
+    font-size: 47px;
+    font-weight: 500;
+    color: white;
 }
