@@ -16,11 +16,23 @@ main{
 
 .contacts-list{
     background-color: #FFFFFF;
-    padding-top: 120px;
+    padding-top: 0px;
     padding-left: 32px;
     padding-right: 32px;
     /* border-top: 1px solid rgb(224, 222, 222); */
     overflow-y: auto;
+    max-height: calc(100vh - 96px);
+    position: fixed;
+    top: 96px;
+}
+
+.btn-add-contact-container{
+    padding-top: 50px;
+    padding-bottom: 16px;
+    padding-right: 16px;
+    position: fixed;
+    background-color: white;
+    z-index: 10;
 }
 
 .btn-contact{
@@ -56,7 +68,7 @@ main{
 
 .contacts-content{
     padding-top: 180px;
-    padding-left: 40px;
+    padding-left: 400px;
 }
 
 .head-contacts{
