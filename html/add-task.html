@@ -185,6 +185,8 @@
               <label for="category">Category<span class="required">*</span></label>
               <select name="category" id="category">
                 <option value="">Select task category</option>
+                <option value="technical-task">Technical task</option>
+                <option value="user-story">User story</option>
               </select>
             </div>
             <div class="field-description">
@@ -196,14 +198,14 @@
         <section class="bottom-container">
           <p><span class="required">*</span>This field is required</p>
           <div class="buttons">
-            <button>
+            <button onclick="clearTaskInput()">
               Clear
               <img
                 src="../assets/img/cancel_x.svg"
                 alt="an x mark attached to the button to clear the input from the task field"
               />
             </button>
-            <button>
+            <button onclick="addTask()">
               Create Task
               <img
                 src="../assets/img/check.svg"
