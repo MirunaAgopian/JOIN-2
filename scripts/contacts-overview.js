@@ -63,7 +63,10 @@ function renderContacts(bookObj) {
  * @returns {string} HTML string for the group heading.
  */
 function renderContactLetter(letter) {
-    let output = `<h5 class="capitalLatter">${letter}</h5>`;
+    let output =`<div class="capitalLatter">
+                    <h5>${letter}</h5>
+                    <hr class="hr-underline">
+                </div>`;
 
     return output;
 }

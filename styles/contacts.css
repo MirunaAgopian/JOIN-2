@@ -20,6 +20,7 @@ main{
     padding-left: 32px;
     padding-right: 32px;
     /* border-top: 1px solid rgb(224, 222, 222); */
+    overflow-y: auto;
 }
 
 .btn-contact{
