@@ -51,6 +51,9 @@ function clearTaskInput(){
 
 function addTask(){
   let task = getTaskInput();
+  if(!checkIfTaskIsValid(task)){
+    return;
+  }
   tasks.push(task);
   uploadTaskToFirebase('tasks', task)
   .then(res => {
@@ -61,6 +64,23 @@ function addTask(){
     console.error('Upload failed:', err)
   });
 }
+
+function checkIfTaskIsValid(task){
+  if(!task.title){
+    return false;
+  }
+  if(!task.date){
+    return false;
+  }
+  if(!task.category){
+    return false;
+  }
+  return true;
+}
+
+//here I need to add my own alerts + set the medium-prio as selected by default
+//then I need to upload the contacts into assigned to
+//then I need to create the ovelays for the add task (task created succesfully + mobile overlay)
 
 async function uploadTaskToFirebase(path='', task={}) {
   let response = await fetch( BASE_URL + path + '.json', {
