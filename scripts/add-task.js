@@ -81,6 +81,7 @@ function checkIfTaskIsValid(task){
 //here I need to add my own alerts + set the medium-prio as selected by default
 //then I need to upload the contacts into assigned to
 //then I need to create the ovelays for the add task (task created succesfully + mobile overlay)
+//then I need to create the ul at subtasks + buttons
 
 async function uploadTaskToFirebase(path='', task={}) {
   let response = await fetch( BASE_URL + path + '.json', {

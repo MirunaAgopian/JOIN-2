@@ -277,3 +277,35 @@ button {
     }
 }
 
+@media(max-width:650px){
+    .page-container {
+        flex-direction: column;
+    }
+
+    .bottom-container {
+        margin-bottom: 150px;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .buttons:nth-child(2){
+        align-self: flex-end;
+        width: 60%;
+    }
+}
+
+@media(max-width: 450px){
+    .buttons:nth-child(2) {
+        width: 85%;
+    }
+
+    .txt-img {
+        padding: 14px 4px;
+    }
+
+    .prio-img {
+        height: 18px;
+        width: 16px;
+    }
+}
+
