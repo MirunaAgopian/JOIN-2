@@ -13,7 +13,11 @@
     padding-left: 18px;
 }
 
-.contactID:hover {
+.contactID-hover {
+    background: linear-gradient(to top, #F0F0F0, #F9F9F9);
+}
+
+.contactID-activated{
     background-color:  #2A3647;
 }
 
@@ -30,6 +34,10 @@
 
 .contact-name{
     color: black;
+}
+
+.contact-name-override{
+    color: white !important;
 }
 
 .contact-email{

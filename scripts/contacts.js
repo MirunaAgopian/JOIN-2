@@ -3,6 +3,7 @@ const colorContacts = ['#FF7A00', '#9327FF' , '#FF745E', '#FFC701', '#FFE62B',
     '#FF5EB3', '#00BEE8', '#FFA35E', '#0038FF', '#FF4646',
     '#6E52FF', '#1FD7C1', '#FC71FF', '#C3FF2B', '#FFBB2B'
 ];
+let activatedContact = 0;
 
 function openDialogAddContact(){
     const contentDialogContactRef = document.getElementById('add_contact_dialog');
@@ -187,11 +188,13 @@ async function showClickedContact(mail){
     for (let index = 0; index < amountOfContacts; index++) {
         if(mail == joinContacts[index].mail){
             contactObj = joinContacts[index];
+            activatedContact = index + 1;
             break;
         }
     }
     if(contactObj.mail != ''){
         renderContact(contactObj);
+        showActivatedContactInList(joinContacts, activatedContact);
     }else{
         alert('contact not found');
     }
@@ -301,4 +304,38 @@ function createContactEditObj(name, mail, phone){
         "color" : ''
     };
     return contactObj;
+}
+
+function showActivatedContactInList(contactArr, contactNumber){
+    let id = 0;
+    if((contactNumber == 0)){
+        for (let index = 0; index < contactArr.length; index++) {
+            id = index + 1;
+            document.getElementById('id_' + id).classList.remove('contactID-activated');
+            document.getElementById('spanId_' + id).classList.remove('contact-name-override');
+        }
+    }else{
+        for (let index = 1; index <= contactArr.length; index++) {
+            if(contactNumber == index){
+                document.getElementById('id_' + index).classList.remove('contactID-hover');
+                document.getElementById('id_' + index).classList.add('contactID-activated');
+                document.getElementById('spanId_' + index).classList.add('contact-name-override');
+            }else{
+                document.getElementById('id_' + index).classList.remove('contactID-activated');
+                document.getElementById('spanId_' + index).classList.remove('contact-name-override');
+            }
+        }
+    }
+}
+
+function changeBackgroundIfNotActivated(id){
+    if(id != activatedContact){
+        document.getElementById('id_' + id).classList.add('contactID-hover');
+    }
+}
+
+function changeBackgroundOut(id){
+    if(id != activatedContact){
+        document.getElementById('id_' + id).classList.remove('contactID-hover');
+    }
 }

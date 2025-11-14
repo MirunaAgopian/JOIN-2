@@ -12,9 +12,11 @@ let elementContactRev = {
 async function onloadFuncContact() {
     const ALL_USER = await getAllUsers("contacts");
     contactList = createAddressBook(ALL_USER);
+    let arrOfContacts = createArrayForIdInContactList(ALL_USER);
+    activatedContact = 0;
     elementContactRev.contacts.innerHTML = "";
 
-    renderContacts(contactList); 
+    renderContacts(contactList, arrOfContacts); 
 }
 
 /**
@@ -44,7 +46,7 @@ function createAddressBook(usersObj) {
  * Renders the contact list grouped by initial letters into the DOM.
  * @param {Object} bookObj - The structured address book object.
  */
-function renderContacts(bookObj) {
+function renderContacts(bookObj, contactsArr) {
     const addressBook = bookObj.addressBook;
 
     Object.keys(addressBook)
@@ -52,7 +54,8 @@ function renderContacts(bookObj) {
         .forEach(letter => {
             elementContactRev.contacts.innerHTML += renderContactLetter(letter);
             addressBook[letter].forEach(user => {
-                elementContactRev.contacts.innerHTML += renderContactInfo(user);
+                let id = findArrIndexOfUser(user, contactsArr);
+                elementContactRev.contacts.innerHTML += renderContactInfo(user, id);
             });
         });
 }
@@ -71,20 +74,26 @@ function renderContactLetter(letter) {
     return output;
 }
 
+function createArrayForIdInContactList(userResponse){
+    let keysArr = Object.keys(userResponse);
+    fillArrayOfContacts(keysArr, userResponse);
+    return joinContacts;
+}
+
 /**
  * Generates HTML markup for an individual contact entry.
  * Includes avatar initials, name, and email, and sets up a click handler.
  * @param {Object} user - USer Object
  * @returns {string} HTML string for the contact entry.
  */
-function renderContactInfo(user) {
+function renderContactInfo(user, id) {
     return `
-    <div class="contactID" onclick="showClickedContact('${user.mail}')">
+    <div id="id_${id}" class="contactID" onmouseover="changeBackgroundIfNotActivated(${id})" onmouseout="changeBackgroundOut(${id})" onclick="showClickedContact('${user.mail}')">
         <div class="contactAvater" style="background-color: ${user.color}">
             ${getUserItem(user.name)}
         </div>
         <div class="contact-entry">
-            <span class="contact-name">${user.name}</span><br>
+            <span id="spanId_${id}" class="contact-name">${user.name}</span><br>
             <span class="contact-email">${user.mail}</span>
         </div>
     </div>
@@ -93,4 +102,15 @@ function renderContactInfo(user) {
 
 function showName(mail){
     alert(mail);
+}
+
+function findArrIndexOfUser(user, arrOfContacts){
+    let id = 0;
+    for (let index = 0; index < arrOfContacts.length; index++) {
+        if(user.mail == arrOfContacts[index].mail){
+            id = index + 1;
+            break;
+        }
+    }
+    return id;
 }
