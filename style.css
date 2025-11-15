@@ -32,3 +32,7 @@ h1 {
     font-size: 60px;
     font-weight: 700;
 }
+
+ul {
+    list-style-type: none;
+}

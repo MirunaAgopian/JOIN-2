@@ -177,12 +177,21 @@
             </div>
             <div class="field-description">
               <label for="assigned_to">Assigned to</label>
-              <select name="person" id="assigned_to">
-                <option value="">Select contacts to assign</option>
-              </select>
+              <div class="dropdown" id="assigned_to">
+                <span>Select contacts to assign</span>
+                <button onclick="toggleContactList()">
+                  <span id="dropdown_arrow" class="dropdown-arrow"></span>
+                </button>
+              </div>
+              <div id="contact_list" class="contacts-list d-none">
+                <ul id="contact_ul"></ul>
+              </div>
+              <div id="contact_icons" class="contacts-icons"></div>
             </div>
             <div class="field-description">
-              <label for="category">Category<span class="required">*</span></label>
+              <label for="category"
+                >Category<span class="required">*</span></label
+              >
               <select name="category" id="category">
                 <option value="">Select task category</option>
                 <option value="technical-task">Technical task</option>
@@ -269,5 +278,8 @@
     <script src="../scripts/summary.js"></script>
     <script src="../script.js"></script>
     <script src="../scripts/add-task.js"></script>
+    <script src="../scripts/contacts-overview.js"></script>
+    <script src="../scripts/firebase.js"></script>
+    <script src="../scripts/contacts.js"></script>
   </body>
 </html>

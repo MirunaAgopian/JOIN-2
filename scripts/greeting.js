@@ -5,17 +5,17 @@
  * @param {string|null} storedUser - The username stored in sessionStorage, or "Guest" if not logged in.
  */
 document.addEventListener('DOMContentLoaded', () => {
-    const storedUser = sessionStorage.getItem('loggedInUser');
+    const storedUserName = sessionStorage.getItem('loggedInUser');
     const overlay = document.getElementById('mobile_overlay');
-    if (!storedUser) {
+    if (!storedUserName) {
        overlay.classList.remove('active');
        return;
     }
     if (window.innerWidth <= 850) {
-        greet(storedUser === "Guest" ? null : storedUser);
+        greet(storedUserName === "Guest" ? null : storedUserName);
         sessionStorage.removeItem("loggedInUser");
     } else {
-        greet(storedUser === "Guest" ? null : storedUser);
+        greet(storedUserName === "Guest" ? null : storedUserName);
         overlay.classList.remove('active');
     }
 });
