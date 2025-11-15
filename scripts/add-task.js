@@ -1,7 +1,6 @@
 let tasks = [];
 let selectedPriority = null;
-// const BASE_URL =
-//   "https://remotestorage-162fc-default-rtdb.europe-west1.firebasedatabase.app/";
+let selectedContacts = new Set();
 
 function setPrioColor(element) {
   const containers = document.querySelectorAll(".txt-img");
@@ -32,7 +31,7 @@ function getTaskInput() {
     description: document.getElementById("task_description").value.trim(),
     date: document.getElementById("due_date").value.trim(),
     priority: selectedPriority,
-    assignedTo: document.getElementById("assigned_to").value,
+    assignedTo: Array.from(selectedContacts),
     category: document.getElementById("category").value,
     subtasks: document.getElementById("subtask").value.trim(),
   };
@@ -43,9 +42,14 @@ function clearTaskInput() {
   document.getElementById("task_description").value = "";
   document.getElementById("due_date").value = "";
   document.getElementById("assigned_to").value = "";
+  document.getElementById("contact_icons").innerHTML = "";
   document.getElementById("category").value = "";
   document.getElementById("subtask").value = "";
   selectPriority = null;
+  selectedContacts.clear();
+  document
+    .querySelectorAll(".checkbox.checked")
+    .forEach((cb) => cb.classList.remove("checked"));
   document
     .querySelectorAll(".txt-img")
     .forEach((c) => c.classList.remove("active"));
@@ -84,9 +88,10 @@ function checkIfTaskIsValid(task) {
 }
 
 //here I need to add my own alerts + set the medium-prio as selected by default
-//then I need to upload the contacts into assigned to
+//then I need to upload the loggedInUser
 //then I need to create the ovelays for the add task (task created succesfully + mobile overlay)
 //then I need to create the ul at subtasks + buttons
+//I should also make sure that the checkes items remain checked when I toggle the contact list
 
 async function uploadTaskToFirebase(path = "", task = {}) {
   let response = await fetch(BASE_URL + path + ".json", {
@@ -102,33 +107,39 @@ async function uploadTaskToFirebase(path = "", task = {}) {
 
 //** Gets the contacts from server
 window.onload = async () => {
-  await createArrayOfContacts(); 
+  await createArrayOfContacts();
   console.log("Contacts loaded:", joinContacts);
 };
 
 function getContactList(contact, initials, isCurrentUser = false) {
   return `<li>
               <div class='username'>
-                <span class='contact-circle' style='background-color:${contact.color}'>${initials}</span>
-                <span>${contact.name}${isCurrentUser ? " (You)" : "" }</span> 
+                <span class='contact-circle' style='background-color:${
+                  contact.color
+                }'>${initials}</span>
+                <span>${contact.name}${isCurrentUser ? " (You)" : ""}</span> 
               </div>  
-                <div class='checkbox'></div>
+                <div onclick='setCheckMark(this, "${
+                  contact.mail
+                }")' class='checkbox'></div>
             </li>`;
 }
 
-async function showContactList(){
-    let container = document.getElementById('contact_ul');
-    container.innerHTML = '';
-    const {loggedInUser, sortedContacts } = checkForLoggedInUser();
-    sortedContacts.forEach(contact => {
+async function showContactList() {
+  let container = document.getElementById("contact_ul");
+  container.innerHTML = "";
+  const { loggedInUser, sortedContacts } = checkForLoggedInUser();
+  sortedContacts.forEach((contact) => {
     let initials = getUserItem(contact.name);
-    const isCurrentUser = loggedInUser && contact.mail.toLowerCase() === loggedInUser.mail.toLowerCase();
+    const isCurrentUser =
+      loggedInUser &&
+      contact.mail.toLowerCase() === loggedInUser.mail.toLowerCase();
     container.innerHTML += getContactList(contact, initials, isCurrentUser);
   });
 }
 
-function checkForLoggedInUser(){
-  const userData = sessionStorage.getItem('loggedInUser');
+function checkForLoggedInUser() {
+  const userData = sessionStorage.getItem("loggedInUser");
   const loggedInUser = userData ? JSON.parse(userData) : null;
   const sortedContacts = [...joinContacts].sort((a, b) => {
     if (loggedInUser && a.mail === loggedInUser.mail) return -1;
@@ -139,28 +150,47 @@ function checkForLoggedInUser(){
   return { loggedInUser, sortedContacts };
 }
 
-
-function toggleContactList(){
-  let list = document.getElementById('contact_list');
-  let dropdown = document.getElementById('assigned_to');
-  let arrow = document.getElementById('dropdown_arrow');
-  list.classList.toggle('d-none');
-  dropdown.classList.toggle('active');
-  arrow.classList.toggle('active');
+function toggleContactList() {
+  let list = document.getElementById("contact_list");
+  let dropdown = document.getElementById("assigned_to");
+  let arrow = document.getElementById("dropdown_arrow");
+  let icons = document.getElementById("contact_icons");
+  list.classList.toggle("d-none");
+  dropdown.classList.toggle("active");
+  arrow.classList.toggle("active");
+  if (list.classList.contains("d-none")) {
+    icons.classList.remove("d-none");
+  } else {
+    icons.classList.add("d-none");
+  }
   showContactList();
 }
 
-
-
-// Pt mai tarziu
-
-function getContactAvatar(contact, initials){
+function getContactAvatar(contact, initials) {
   return `<div class="contact-circle" style="background-color:${contact.color}">
               <span>${initials}</span>
-          </div>`
+          </div>`;
 }
 
-// function showContactAvatar(){
-// }
+function showContactAvatar() {
+  let container = document.getElementById("contact_icons");
+  container.innerHTML = "";
+  joinContacts.forEach((contact) => {
+    if (selectedContacts.has(contact.mail)) {
+      let initials = getUserItem(contact.name);
+      container.innerHTML += getContactAvatar(contact, initials);
+    }
+  });
+}
 
+function setCheckMark(element, mail) {
+  element.classList.toggle("checked");
 
+  if (element.classList.contains("checked")) {
+    selectedContacts.add(mail);
+  } else {
+    selectedContacts.delete(mail);
+  }
+
+  showContactAvatar();
+}

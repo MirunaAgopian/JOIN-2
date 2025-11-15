@@ -183,10 +183,10 @@
                   <span id="dropdown_arrow" class="dropdown-arrow"></span>
                 </button>
               </div>
+              <div id="contact_icons" class="contacts-icons d-none"></div>
               <div id="contact_list" class="contacts-list d-none">
                 <ul id="contact_ul"></ul>
               </div>
-              <div id="contact_icons" class="contacts-icons"></div>
             </div>
             <div class="field-description">
               <label for="category"
@@ -209,10 +209,7 @@
           <div class="buttons">
             <button onclick="clearTaskInput()">
               Clear
-              <img
-                src="../assets/img/cancel_x.svg"
-                alt="an x mark attached to the button to clear the input from the task field"
-              />
+              <div class="clear-btn"></div>
             </button>
             <button onclick="addTask()">
               Create Task

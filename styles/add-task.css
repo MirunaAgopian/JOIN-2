@@ -199,6 +199,14 @@ select {
     margin-right: 16px;
 }
 
+.checkbox.checked {
+    background-image: url(../assets/img/check_button_checked.svg);
+}
+
+.contacts-icons {
+    display: flex;
+}
+
 .bottom-container {
     display: flex;
     justify-content: space-between;
@@ -231,6 +239,14 @@ button {
 
 .buttons button:first-child{
     background-color: white;
+}
+
+.clear-btn {
+    background-image: url(../assets/img/cancel_x.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 24px;
+    width: 24px;
 }
 
 .buttons button:nth-child(2){
@@ -284,6 +300,10 @@ button {
     box-shadow: 2px 2px 6px 2px rgba(0, 0, 0, 0.2);
     color: #29abe2;
     border: 1px solid #29abe2;
+}
+
+.buttons button:first-child:hover .clear-btn{
+    background-image: url(../assets/img/cancel_x_hover.svg);
 }
 
 .buttons button:nth-child(2):hover {
