@@ -1,14 +1,42 @@
-let todos = [
-    { id: 0, title: 'Putzen</br>abc', category: 'boardToDo', position: 0 },
-    { id: 1, title: 'Kochen', category: 'boardToDo', position: 1 },
-    { id: 2, title: 'Einkaufen', category: 'boardProgress', position: 0 },
-    { id: 3, title: 'Papierkram', category: 'boardDone', position: 0 }
-];
-
+let todos = [];
 let currentDraggedElement = null;
 
-function onloadFuncBoard() {
+
+
+async function onloadFuncBoard() {
+
+    const ALL_TASKS = await getAllUsers('tasks');
+    todos = getTaskArr(ALL_TASKS);
+
     updateHTML();
+}
+
+function getTaskArr(usersObj) {
+    const arr = [];
+
+    for (const [key, value] of Object.entries(usersObj)) {
+        let statusValue = "";
+        if (value.hasOwnProperty("status")) {
+            statusValue = value.status;
+        }
+        else {
+            statusValue = "boardToDo"
+        }
+
+        arr.push({
+            id: key,
+            title: value.title,
+            description: value.description,
+            category: value.category,
+            date: value.date,
+            priority: value.priority,
+            subtasks: value.subtasks,
+            assignedTo: value.assignedTo,
+            status: statusValue
+        });
+    }
+
+    return arr;
 }
 
 /**
@@ -24,31 +52,40 @@ function updateHTML() {
 
 /**
  * Rendert alle Aufgaben einer bestimmten Kategorie in den entsprechenden Bereich.
- * @param {string} category - Die Kategorie der Aufgaben ('open', 'closed', 'backup').
+ * @param {string} status - Die Kategorie der Aufgaben ('open', 'closed', 'backup').
  */
-function renderTodos(category) {
-    const container = document.getElementById(category);
-    const filtered = todos.filter(t => t.category === category);
+function renderTodos(status) {
+    const container = document.getElementById(status);
+    const filtered = todos.filter(t => t.status === status);
 
     if (filtered.length != 0) {
         container.innerHTML = ``;
         for (const todo of filtered) {
-            container.innerHTML += generateTodoHTML(todo);
+            container.innerHTML += renderTask(todo);
         }
-        container.innerHTML += `<div draggable="false" id="Preview-${category}" class="previewTask" style="display: none; height: 42px;">Preview</div> `;
+        container.innerHTML += `<div draggable="false" id="Preview-${status}" class="previewTask" style="display: none; height: 42px;">Preview</div> `;
     } else {
-        container.innerHTML = `<div draggable="false" id="noEntry-${category}" class="noEntry">no Entry</div>
-        <div draggable="false" id="Preview-${category}" class="previewTask" style="display: none; height: 42px;">Preview</div>`;
+        container.innerHTML = `<div draggable="false" id="noEntry-${status}" class="noEntry">no Entry</div>
+        <div draggable="false" id="Preview-${status}" class="previewTask" style="display: none; height: 42px;">Preview</div>`;
     }
 }
+
 
 /**
  * Generiert das HTML für eine einzelne Aufgabe.
  * @param {{id: number, title: string, category: string}} todo - Das Aufgabenobjekt.
  * @returns {string} - Das HTML-Element als String.
  */
-function generateTodoHTML(todo) {
-    return `<div draggable="true" id="toDo${todo.id}" ondragstart="startDragging(${todo.id})" class="todo">${todo.title}</div>`;
+function renderTask(todo) {
+    return `<div draggable="true" id="toDo${todo.id}" ondragstart="startDragging('${todo.id}')" class="todo">
+                <div class="taskStatus ${todo.category}">${todo.category}</div>
+                <div class="title"> ${todo.title}</div>
+                <div class="description"> ${todo.description}</div>
+                <div class="subtasks"> ${todo.subtasks}</div>
+                <div>
+                    ${getUserItem(todo.assignedTo)}, <img src="../assets/img/prio_${todo.priority}.svg">
+                </div>
+            </div>`;
 }
 
 /**
@@ -57,41 +94,56 @@ function generateTodoHTML(todo) {
  */
 function startDragging(id) {
     currentDraggedElement = id;
+
+    const original = document.getElementById("toDo" + id);
+    if (!original) return;
+
+    // Unsichtbar machen
+    original.classList.add("hideTaskContent");
+
 }
+
 
 /**
  * Erlaubt das Ablegen eines Elements im Drop-Bereich.
  * @param {DragEvent} ev - Das DragEvent-Objekt.
  */
-function allowDrop(ev) {
+function allowDrop(ev, id) {
+    //console.log(ev);
     ev.preventDefault();
+    document.getElementById(id).classList.add('drag-area-highlight');
+    //console.log ("highlight: " + id);
 }
 
 /**
  * Verschiebt die aktuell gezogene Aufgabe in eine neue Kategorie.
  * @param {string} category - Die Zielkategorie ('open', 'closed', 'backup').
  */
-function moveTo(category) {
-    if (currentDraggedElement !== undefined) {
-        todos[currentDraggedElement].category = category;
+async function moveTo(category) {
+    const taskIndex = todos.findIndex(t => t.id == currentDraggedElement);
+    if (taskIndex !== -1) {
+        // Status im Array ändern
+        todos[taskIndex].status = category;
+
+        // Datenbank aktualisieren
+        await putData('tasks/' + todos[taskIndex].id, todos[taskIndex]);
+
+        // Frontend neu rendern
         updateHTML();
     }
 }
 
-/**
- * Hebt den Drop-Bereich visuell hervor.
- * @param {string} id - Die ID des Drop-Bereichs.
- */
-function highlight(id) {
-    document.getElementById(id).classList.add('drag-area-highlight');
-}
+
 
 /**
  * Entfernt die visuelle Hervorhebung des Drop-Bereichs.
  * @param {string} id - Die ID des Drop-Bereichs.
  */
 function removeHighlight(id) {
-    document.getElementById(id).classList.remove('drag-area-highlight');
+    // document.getElementById(id).classList.remove('drag-area-highlight');
+    const previewElement = document.getElementById("Preview-" + id);
+    //console.log ("remove highlight: " + id);
+    //previewElement.style.display = "none";
 }
 
 function renderTaskPreview(event) {

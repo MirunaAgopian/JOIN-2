@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="../styles/summary.css" />
   <link rel="stylesheet" href="../styles/board.css">
+  <script src="../scripts/firebase.js" defer></script>
   <script src="../scripts/board.js" defer></script>
 </head>
 
@@ -84,8 +85,8 @@
             <button>+</button>
           </div>
           <div class="drag-area" id="boardToDo" ondrop="moveTo('boardToDo')" ondragleave="removeHighlight('boardToDo')"
-            ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event); highlight('boardToDo')">
-            
+            ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event, 'boardToDo')">
+
           </div>
         </section>
 
@@ -95,7 +96,8 @@
             <button>+</button>
           </div>
           <div class="drag-area" id="boardProgress" ondrop="moveTo('boardProgress')"
-            ondragleave="removeHighlight('boardProgress')" ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event); highlight('boardProgress')">
+            ondragleave="removeHighlight('boardProgress')" ondragenter="renderTaskPreview(event)"
+            ondragover="allowDrop(event, 'boardProgress')">
           </div>
         </section>
 
@@ -105,7 +107,8 @@
             <button>+</button>
           </div>
           <div class="drag-area" id="boardFeedback" ondrop="moveTo('boardFeedback')"
-            ondragleave="removeHighlight('boardFeedback')" ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event); highlight('boardFeedback')">
+            ondragleave="removeHighlight('boardFeedback')" ondragenter="renderTaskPreview(event)"
+            ondragover="allowDrop(event, 'boardFeedback')">
           </div>
         </section>
 
@@ -114,7 +117,7 @@
             <h2>Done</h2>
           </div>
           <div class="drag-area" id="boardDone" ondrop="moveTo('boardDone')" ondragleave="removeHighlight('boardDone')"
-            ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event); highlight('boardDone')"></div>
+            ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event, 'boardDone')"></div>
         </section>
       </div>
 
