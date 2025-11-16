@@ -176,7 +176,7 @@
               </div>
             </div>
             <div class="field-description">
-              <label for="assigned_to">Assigned to</label>
+              <span>Assigned to</span>
               <div class="dropdown" id="assigned_to">
                 <span>Select contacts to assign</span>
                 <button onclick="toggleContactList()">
@@ -189,18 +189,33 @@
               </div>
             </div>
             <div class="field-description">
-              <label for="category"
-                >Category<span class="required">*</span></label
-              >
-              <select name="category" id="category">
-                <option value="">Select task category</option>
-                <option value="technical-task">Technical task</option>
-                <option value="user-story">User story</option>
-              </select>
+              <span>Category<span class="required">*</span></span>
+              <div id="category_dropdown" class="dropdown">
+                <span id="selected_category">Select task category</span>
+                <button onclick="toggleCategories()">
+                  <span
+                    id="category_dropdown_arrow"
+                    class="dropdown-arrow"
+                  ></span>
+                </button>
+              </div>
+              <div id="category_list" class="category-list d-none">
+                <ul id="categories">
+                  <li onclick="selectCategory(this)">Technical task</li>
+                  <li onclick="selectCategory(this)">User story</li>
+                </ul>
+              </div>
             </div>
             <div class="field-description">
               <label for="subtask">Subtasks</label>
-              <input type="text" id="subtask" placeholder="Add new subtask" />
+              <div id="subtask_wrapper" class="subtask-wrapper">
+                <input onclick="toggleSubtask()" id="subtask" type="text" placeholder="Add new subtask" />
+                <div id="subtask_actions" class="subtask-actions">
+                  <div class="subtask-close-btn" title="Cancel"></div>
+                  <div class="subtask-btn-divider"></div>
+                  <div class="subtask-submit-btn" title="Add"></div>
+                </div>
+              </div>
             </div>
           </section>
         </section>
