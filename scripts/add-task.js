@@ -32,7 +32,7 @@ function getTaskInput() {
     date: document.getElementById("due_date").value.trim(),
     priority: selectedPriority,
     assignedTo: Array.from(selectedContacts),
-    category: document.getElementById("category").value,
+    category: document.getElementById("selected_category").textContent.trim(),
     subtasks: document.getElementById("subtask").value.trim(),
   };
 }
@@ -43,7 +43,7 @@ function clearTaskInput() {
   document.getElementById("due_date").value = "";
   document.getElementById("assigned_to").value = "";
   document.getElementById("contact_icons").innerHTML = "";
-  document.getElementById("category").value = "";
+  document.getElementById("selected_category").textContent = "Select task category";
   document.getElementById("subtask").value = "";
   selectPriority = null;
   selectedContacts.clear();
@@ -194,3 +194,32 @@ function setCheckMark(element, mail) {
 
   showContactAvatar();
 }
+
+
+function toggleCategories(){
+  let list = document.getElementById('category_list');
+  let arrow = document.getElementById('category_dropdown_arrow');
+  let dropdown = document.getElementById('category_dropdown');
+  let placeholder = document.getElementById('selected_category');
+  list.classList.toggle('d-none');
+  arrow.classList.toggle('active');
+  dropdown.classList.toggle('active');
+  if(!list.classList.contains('d-none')){
+    placeholder.textContent = 'Select task category';
+  }
+}
+
+function selectCategory(item){
+  let placeholder = document.getElementById('selected_category');
+  placeholder.textContent = item.textContent;
+  toggleCategories();
+}
+
+function toggleSubtask(){
+  let wrapper = document.getElementById('subtask_wrapper');
+  let buttons = document.getElementById('subtask_actions');
+  wrapper.classList.toggle('active');
+  buttons.classList.toggle('active');
+}
+
+//I need to fix the border issue of the .active input on dropdown
