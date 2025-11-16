@@ -215,11 +215,31 @@ function selectCategory(item){
   toggleCategories();
 }
 
-function toggleSubtask(){
-  let wrapper = document.getElementById('subtask_wrapper');
-  let buttons = document.getElementById('subtask_actions');
-  wrapper.classList.toggle('active');
-  buttons.classList.toggle('active');
+function activateSubtask() {
+  document.getElementById('subtask').classList.add('active');
+  document.getElementById('subtask_actions').classList.add('active');
 }
 
-//I need to fix the border issue of the .active input on dropdown
+function deactivateSubtask(event) {
+  if (event.relatedTarget && event.relatedTarget.closest('#subtask_actions')) {
+    return;
+  }
+  document.getElementById('subtask').classList.remove('active');
+  document.getElementById('subtask_actions').classList.remove('active');
+}
+
+function getAddedTasks(text){
+  return `<li>${text}</li>`;
+}
+
+function addSubtask(){
+  console.log('Add subtask button clicked');
+  
+  let input = document.getElementById('subtask');
+  let list = document.getElementById('subtask_list');
+  let inputValue = input.value.trim();
+  if(inputValue !== '') {
+    list.innerHTML += getAddedTasks(inputValue);
+    input.value = ''; 
+  }
+}

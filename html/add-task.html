@@ -206,15 +206,25 @@
                 </ul>
               </div>
             </div>
-            <div class="field-description">
+            <div class="subtask-field-description">
               <label for="subtask">Subtasks</label>
               <div id="subtask_wrapper" class="subtask-wrapper">
-                <input onclick="toggleSubtask()" id="subtask" type="text" placeholder="Add new subtask" />
+                <input
+                  id="subtask"
+                  class="subtask-input"
+                  type="text"
+                  placeholder="Add new subtask"
+                  onfocus="activateSubtask()"
+                  onblur="deactivateSubtask(event)"
+                />
                 <div id="subtask_actions" class="subtask-actions">
-                  <div class="subtask-close-btn" title="Cancel"></div>
+                  <button class="subtask-close-btn" title="Cancel" type="button"></button>
                   <div class="subtask-btn-divider"></div>
-                  <div class="subtask-submit-btn" title="Add"></div>
+                  <button onclick="addSubtask()" class="subtask-submit-btn" title="Add" type="button"></button>
                 </div>
+              </div>
+              <div class="added-tasks">
+                <ul id="subtask_list"></ul>
               </div>
             </div>
           </section>

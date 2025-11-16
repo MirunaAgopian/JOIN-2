@@ -44,6 +44,7 @@
     cursor: pointer;
 }
 
+
 .field-description textarea {
     border: 1px solid #D1D1D1;
     padding: 20px 8px;
@@ -229,6 +230,30 @@ select {
     display: flex;
 }
 
+.subtask-field-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 8px;
+}
+
+.subtask-input {
+    border: 1px solid #D1D1D1;
+    padding: 10px 8px;
+    border-radius: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.subtask-field-description .subtask-input.active {
+    border: 2px solid #29abe2;
+}
+
+.subtask-input:focus{
+    outline: none;
+}
+
 .subtask-wrapper {
     display: flex;
     justify-content: space-between; 
@@ -237,9 +262,6 @@ select {
     width: 100%;
 }
 
-.subtask-wrapper.active {
-    border: 2px solid #29abe2;
-}
 
 #subtask {
     width: 100%;
@@ -267,9 +289,11 @@ select {
     background-image: url(../assets/img/cancel_x.svg);
     background-repeat: no-repeat;
     background-size: contain;
-    height: 24px;
-    width: 24px;
+    height: 16px;
+    width: 16px;
     cursor: pointer;
+    background-color: white;
+    border: none;
 }
 
 .subtask-btn-divider {
@@ -283,9 +307,11 @@ select {
     background-image: url(../assets/img/check_dark.svg);
     background-repeat: no-repeat;
     background-size: contain;
-    height: 24px;
-    width: 24px;
+    height: 16px;
+    width: 16px;
     cursor: pointer;
+    background-color: white;
+    border: none;
 }
 
 .bottom-container {
@@ -436,7 +462,8 @@ button {
     }
 
     .field-description input, 
-    .field-description textarea {
+    .field-description textarea,
+    .subtask-field-description input {
         font-size: 20px;
     }
 
@@ -470,7 +497,8 @@ button {
     }
 
     .field-description input, 
-    .field-description textarea {
+    .field-description textarea,
+    .subtask-field-description input {
         font-size: 16px;
     }
 
