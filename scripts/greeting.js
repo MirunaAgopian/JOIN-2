@@ -5,7 +5,7 @@
  * @param {string|null} storedUser - The username stored in sessionStorage, or "Guest" if not logged in.
  */
 document.addEventListener('DOMContentLoaded', () => {
-    const storedUserName = sessionStorage.getItem('loggedInUser');
+    const storedUserName = JSON.parse(sessionStorage.getItem('loggedInUser'))?.name;
     const overlay = document.getElementById('mobile_overlay');
     if (!storedUserName) {
        overlay.classList.remove('active');

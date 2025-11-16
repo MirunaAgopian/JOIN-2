@@ -97,7 +97,14 @@ function checkUserDatabase(selUser) {
 /** correct User and Password have been entered 
  * @param {Object} selUser selected User */
 function rightUserLogin(selUser) {
-    sessionStorage.setItem("loggedInUser", selUser.name);
+    const ACTUAL_USER = {
+        name: selUser.name,
+        mail: selUser.mail
+    };
+
+    sessionStorage.setItem("loggedInUser", JSON.stringify(ACTUAL_USER));
+
+    //sessionStorage.setItem("loggedInUser", selUser.name);
     window.location.href = './summary.html';
 }
 
@@ -122,7 +129,12 @@ function emailCheck() {
 
 /** Guest User Login  */
 function userGuestLogin() {
-    sessionStorage.setItem("loggedInUser", "Guest");
+        const ACTUAL_USER = {
+        name: "Guest",
+        mail: "guest@test.de"
+    };
+
+    sessionStorage.setItem("loggedInUser", JSON.stringify(ACTUAL_USER));
     window.location.href = './summary.html';
 }
 
