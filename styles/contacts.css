@@ -4,6 +4,8 @@ body{
 }
 
 main{
+    /* max-width: 1440px;
+    margin: 0 auto; */
     justify-content: unset;
     padding-left: 200px;
     overflow-x: hidden;
