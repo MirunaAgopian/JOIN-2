@@ -1,0 +1,265 @@
+.dialog-contact{
+    min-width: 1131px;
+    border: none;
+    border-radius: 30px;
+    padding: 0;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(100%, -50%);
+    /* transform: translateX(150%) translateY(-50%); */
+}
+
+.dialogOpened{
+    transform: translateX(-50%) translateY(-50%);
+    transition: all 0.5s ease-in;
+}
+
+.dialogClosed{
+    transform: translateX(150%) translateY(-50%);
+    transition: all 0.5s ease-in;
+}
+
+dialog::backdrop{
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.dialogOpened::backdrop{
+    opacity: 1;
+    transition: all 0.25s ease-in;
+}
+.add-contact-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.add-contact-left-box{
+    background-color: #2A3647;
+    padding: 150px 32px;
+}
+
+.left-box-content{
+    min-height: 225px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.left-box-content img{
+    width: 55px;
+    height: 66px;
+}
+
+.add-contact-underline{
+    border: 2px solid #29ABE2;
+    width: 100px;
+}
+
+.span-add{
+    color: white;
+    font-size: 61px;
+    font-weight: bold;
+}
+
+.span-team{
+    color: white;
+    font-size: 27px;
+    font-weight: 400;
+}
+
+.add-contact-right-box{
+    padding-top: 40px;
+    padding-right: 16px;
+}
+
+.right-box-container{
+    padding-left: 64px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 64px;
+}
+
+.btn-close-container{
+    display: flex;
+    justify-content: end;
+    padding-bottom: 50px;
+}
+
+.btn-close-box{
+    border-radius: 50px;
+    padding-top: 4px;
+    padding-right: 4px;
+    padding-left: 4px;
+}
+
+.btn-close-box:hover{
+    cursor: pointer;
+    background-color: #EEEEEE;
+}
+
+.btn-close-box img{
+    height: 24px;
+    width: 24px;
+}
+
+.person-container{
+    background-color: #EEEEEE;
+    width: 120px;
+    height: 120px;
+    border-radius: 100px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.person-container img{
+    height: 64px;
+    width: 64px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
+
+input::placeholder{
+    opacity: 0.4;
+}
+
+.bg-input{
+    width: 420px;
+    padding: 14px 20px;
+    font-size: 18px;
+    color: black;
+    border: 1px solid #e8e7e7;
+    border-radius: 10px;
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 22px 22px;
+}
+
+.bg-input:focus{
+    outline: 1px solid #29ABE2;
+}
+
+.bg-img-name{
+    background-image: url('../assets/img/person_icon.svg');
+}
+
+.bg-img-mail{
+    background-image: url('../assets/img/mail.svg');
+}
+
+.bg-img-phone{
+    background-image: url('../assets/img/phone_receptor.svg');
+}
+
+.form-ctrl-container{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    gap: 16px;
+}
+
+.btn-cancel{
+    color: #2A3647;
+    border: 1px solid #2A3647;
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-cancel:hover{
+    cursor: pointer;
+    border-color: #29ABE2;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    transform: translateY(-1px);
+}
+
+.btn-cancel:active{
+    border-color: #091931;
+    transform: translateY(0);
+}
+
+.btn-cancel span{
+    color: #2A3647;
+    font-size: 21px;
+}
+
+.dialog-msg{
+    background-color: #2A3647;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 0.1px 3px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 80%;
+    left: 50%;
+    transform: translateX(300%) translateY(0px);
+}
+
+.dialog-msg span{
+    font-family: 'MyInter';
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
+}
+
+.msg-opened{
+    transform: translateX(0px) translateY(0px);
+    transition: all 0.25s ease-in;
+}
+
+.msg-closed{
+    transform: translateX(500%) translateY(0px);
+    transition: all 0.5s ease-in;
+}
+
+.dialog-msg::backdrop{
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.msg-opened::backdrop{
+    opacity: 1;
+    transition: all 0.25s ease-in;
+}
+
+.btn-delete{
+    padding: 12px 16px;
+    border: 1px solid #2A3647;
+    border-radius: 10px;
+}
+
+.btn-delete span{
+    color: #2A3647;
+    font-size: 21px;
+    font-weight: 400;
+}
+
+.btn-delete:hover{
+    cursor: pointer;
+    border-color: #29ABE2;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    transform: translateY(-1px);
+}
+
+.btn-delete span:hover{
+    color: #29ABE2;
+}
+
+.btn-delete span:active{
+    color: #091931;
+}
+
+.edit-initials{
+    font-size: 47px;
+    font-weight: 500;
+    color: white;
+}
