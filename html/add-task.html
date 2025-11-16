@@ -218,13 +218,21 @@
                   onblur="deactivateSubtask(event)"
                 />
                 <div id="subtask_actions" class="subtask-actions">
-                  <button class="subtask-close-btn" title="Cancel" type="button"></button>
+                  <button onclick="clearSubtaskInput()" class="subtask-close-btn" title="Cancel" type="button"></button>
                   <div class="subtask-btn-divider"></div>
                   <button onclick="addSubtask()" class="subtask-submit-btn" title="Add" type="button"></button>
                 </div>
               </div>
               <div class="added-tasks">
-                <ul id="subtask_list"></ul>
+                <ul id="subtask_list">
+                  <!-- <li class="subtask-list">${text}
+          <div class='subtask-element-img-wrapper'>
+          <button class='subtask-edit-btn' title="Edit"></button>
+          <div class='subtask-btn-divider-secondary'></div>
+          <button class='subtask-delete-btn' title="Delete"></button>
+          <div>
+          </li> -->
+                </ul>
               </div>
             </div>
           </section>

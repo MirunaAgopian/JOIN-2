@@ -221,7 +221,7 @@ function activateSubtask() {
 }
 
 function deactivateSubtask(event) {
-  if (event.relatedTarget && event.relatedTarget.closest('#subtask_actions')) {
+  if (event && event.relatedTarget && event.relatedTarget.closest('#subtask_actions')) {
     return;
   }
   document.getElementById('subtask').classList.remove('active');
@@ -229,12 +229,17 @@ function deactivateSubtask(event) {
 }
 
 function getAddedTasks(text){
-  return `<li>${text}</li>`;
+  return `<li class="subtask-list">
+              <span>${text}</span>
+              <div class='subtask-element-img-wrapper'>
+                <button class='subtask-edit-btn' title="Edit"></button>
+                <div class='subtask-btn-divider-secondary'></div>
+                <button class='subtask-delete-btn' title="Delete"></button>
+              </div>
+          </li>`;
 }
 
 function addSubtask(){
-  console.log('Add subtask button clicked');
-  
   let input = document.getElementById('subtask');
   let list = document.getElementById('subtask_list');
   let inputValue = input.value.trim();
@@ -242,4 +247,15 @@ function addSubtask(){
     list.innerHTML += getAddedTasks(inputValue);
     input.value = ''; 
   }
+  clearSubtaskInput();
 }
+
+function clearSubtaskInput() {
+  let input = document.getElementById('subtask');
+  input.value = '';
+  deactivateSubtask();
+}
+
+// for tomorrow to be continued with the functionalities on 
+//<button class='subtask-edit-btn' title="Edit"></button> and
+//<button class='subtask-delete-btn' title="Delete"></button>
