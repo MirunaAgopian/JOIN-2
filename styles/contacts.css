@@ -110,3 +110,45 @@ main{
     border-color: #091931;
     transform: translateY(0);
 }
+
+@media(max-width:1180px){
+    .contacts-content{
+        padding-left: 280px;
+    }
+
+    .line{
+        height: 50px;
+        border-left: 2px solid #29ABE2;
+    }
+
+    .head-contacts{
+        gap: 12px;
+    }
+
+    .head-description{
+        font-size: 42px;
+    }
+
+    .aside-description{
+        font-size: 18px;
+    }
+
+    .contacts-list{
+        padding-left: 16px;
+        padding-right: 12px;
+    }
+
+    .btn-contact span{
+        font-size: 16px;
+    }
+
+    .btn-contact img{
+        width: 24px;
+        height: 24px;
+    }
+
+    .btn-add-contact-container{
+        padding-left: 8px;
+        padding-right: 10px;
+    }
+}

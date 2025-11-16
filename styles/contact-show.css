@@ -73,3 +73,23 @@
     font-size: 16px;
     font-weight: 400;
 }
+
+@media(max-width:1180px){
+    .contact-head{
+        gap: 24px;
+    }
+
+    .contact-circle{
+        height: 80px;
+        width: 80px;
+        border-radius: 50px;
+    }
+
+    .contact-circle span{
+        font-size: 32px;
+    }
+
+    .name-line{
+        font-size: 32px;
+    }
+}
