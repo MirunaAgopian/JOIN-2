@@ -13,8 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (window.innerWidth <= 850) {
         greet(storedUserName === "Guest" ? null : storedUserName);
-        // This line stays in here untill we fix the issue with the loggedInUser
-        //who does not appear in contacts, without this line the functon showContactList() does not work
         sessionStorage.removeItem("loggedInUser");
     } else {
         greet(storedUserName === "Guest" ? null : storedUserName);

@@ -9,6 +9,10 @@
     vertical-align: super;
 }
 
+.alert {
+    color: red;
+}
+
 .page-container {
     display: flex;
     justify-content: space-between;
@@ -44,6 +48,13 @@
     cursor: pointer;
 }
 
+.field-description.active input {
+    border: 2px solid #29abe2;
+}
+
+.field-description.alert input {
+    border: 1px solid red;
+}
 
 .field-description textarea {
     border: 1px solid #D1D1D1;

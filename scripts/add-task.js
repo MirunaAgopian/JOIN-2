@@ -26,18 +26,73 @@ function selectPriority(element) {
 }
 
 function getTaskInput() {
+  const subtaskElements = document.querySelectorAll('#subtask_list .subtask-text');
+  const subtasks = Array.from(subtaskElements).map(el => el.textContent.trim());
   return {
     title: document.getElementById("task_title").value.trim(),
     description: document.getElementById("task_description").value.trim(),
-    date: document.getElementById("due_date").value.trim(),
+    date: getFormattedDate(),
     priority: selectedPriority,
     assignedTo: Array.from(selectedContacts),
     category: document.getElementById("selected_category").textContent.trim(),
-    subtasks: document.getElementById("subtask").value.trim(),
+    subtasks: subtasks
   };
 }
+//To be continued later
+//here I need to add my own alerts
+//I sould add a function that prevents the user from selecting a past date in the calender
+//then I need to create the ovelays for the add task (task created succesfully + mobile overlay)
+
+function getFormattedDate(){
+  let rawDate = document.getElementById('due_date').value;
+  if(!rawDate) return '';
+  let formattedDate = new Date(rawDate);
+  return new Intl.DateTimeFormat('de-DE', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  }).format(formattedDate);
+}
+
+function getAlert(){
+  return `<span class='alert'>This field is required</span>`;
+}
+
+function handleFocus(event){
+  let fieldDescription = event.target.closest('.field-description');
+  let alertContainer = fieldDescription.querySelector('.alert-container');
+  alertContainer.innerHTML = getAlert();
+  fieldDescription.classList.add('alert');
+}
+
+function handleInput(event){
+  let fieldDescription = event.target.closest('.field-description');
+  let alertContainer = fieldDescription.querySelector('.alert-container');
+  if(event.target.value.trim() !== ''){
+    alertContainer.innerHTML = '';
+    fieldDescription.classList.add('active');
+  } else {
+    alertContainer.innerHTML = getAlert();
+    fieldDescription.classList.remove('active');
+    fieldDescription.classList.add('alert');
+  }
+}
+
+function handleBlur(event){
+  let fieldDescription = event.target.closest('.field-description');
+  let alertContainer = fieldDescription.querySelector('.alert-container');
+  alertContainer.innerHTML = '';
+  fieldDescription.classList.remove('alert', 'active');
+}
+// in progress ...........................
 
 function clearTaskInput() {
+  resetBasicFields();
+  resetCheckboxesAndPriorityVisuals();
+  resetAllSubtasks();
+}
+
+function resetBasicFields(){
   document.getElementById("task_title").value = "";
   document.getElementById("task_description").value = "";
   document.getElementById("due_date").value = "";
@@ -45,17 +100,25 @@ function clearTaskInput() {
   document.getElementById("contact_icons").innerHTML = "";
   document.getElementById("selected_category").textContent = "Select task category";
   document.getElementById("subtask").value = "";
-  selectPriority = null;
   selectedContacts.clear();
-  document
-    .querySelectorAll(".checkbox.checked")
-    .forEach((cb) => cb.classList.remove("checked"));
-  document
-    .querySelectorAll(".txt-img")
-    .forEach((c) => c.classList.remove("active"));
-  document
-    .querySelectorAll(".prio-img")
-    .forEach((icon) => icon.classList.remove("active"));
+}
+
+function resetCheckboxesAndPriorityVisuals(){
+  document.querySelectorAll(".checkbox.checked").forEach(cb => cb.classList.remove("checked"));
+  document.querySelectorAll(".txt-img").forEach(c => c.classList.remove("active"));
+  document.querySelectorAll(".prio-img").forEach(icon => icon.classList.remove("active"));
+  const mediumContainer = document.querySelector(".txt-img.medium");
+  const mediumIcon = document.querySelector(".medium-img.prio-img");
+  if (mediumContainer && mediumIcon) {
+    mediumContainer.classList.add("active");
+    mediumIcon.classList.add("active");
+    selectedPriority = "medium";
+}
+}
+
+function resetAllSubtasks(){
+  const subtaskList = document.getElementById("subtask_list");
+  subtaskList.innerHTML = "";
 }
 
 function addTask() {
@@ -86,12 +149,6 @@ function checkIfTaskIsValid(task) {
   }
   return true;
 }
-
-//here I need to add my own alerts + set the medium-prio as selected by default
-//then I need to upload the loggedInUser
-//then I need to create the ovelays for the add task (task created succesfully + mobile overlay)
-//then I need to create the ul at subtasks + buttons
-//I should also make sure that the checkes items remain checked when I toggle the contact list
 
 async function uploadTaskToFirebase(path = "", task = {}) {
   let response = await fetch(BASE_URL + path + ".json", {

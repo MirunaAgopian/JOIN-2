@@ -135,11 +135,15 @@
                 >Title<span class="required">*</span></label
               >
               <input
+                onfocus="handleFocus(event)"
+                oninput="handleInput(event)"
+                onblur="handleBlur(event)"
                 type="text"
                 id="task_title"
                 required
                 placeholder="Enter a title"
               />
+              <div class="alert-container"></div>
             </div>
             <div class="field-description">
               <label for="task_description">Description</label>
@@ -153,7 +157,15 @@
               <label for="due_date"
                 >Due date<span class="required">*</span></label
               >
-              <input type="date" id="due_date" required />
+              <input
+                onfocus="handleFocus(event)"
+                oninput="handleInput(event)"
+                onblur="handleBlur(event)"
+                type="date"
+                id="due_date"
+                required
+              />
+              <div class="alert-container"></div>
             </div>
           </section>
           <div class="separation-bar"></div>
@@ -218,9 +230,19 @@
                   onblur="deactivateSubtask(event)"
                 />
                 <div id="subtask_actions" class="subtask-actions">
-                  <button onclick="clearSubtaskInput()" class="subtask-close-btn" title="Cancel" type="button"></button>
+                  <button
+                    onclick="clearSubtaskInput()"
+                    class="subtask-close-btn"
+                    title="Cancel"
+                    type="button"
+                  ></button>
                   <div class="subtask-btn-divider"></div>
-                  <button onclick="addSubtask()" class="subtask-submit-btn" title="Add" type="button"></button>
+                  <button
+                    onclick="addSubtask()"
+                    class="subtask-submit-btn"
+                    title="Add"
+                    type="button"
+                  ></button>
                 </div>
               </div>
               <div class="added-tasks">
