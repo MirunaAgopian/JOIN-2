@@ -2,10 +2,18 @@ let todos = [];
 let currentDraggedElement = null;
 let contactUser = {};
 let startStatusColumn = "";
-
+let boardPos = {
+    boardToDo: {},
+    boardProgress: {},
+    boardFeedback: {},
+    boardDone: {}
+};
+let boardColumMoves = {
+    enter: "",
+    leave: ""
+}
 
 async function onloadFuncBoard() {
-
     const ALL_TASKS = await getAllUsers('tasks');
     todos = getTaskArr(ALL_TASKS);
 
@@ -13,19 +21,50 @@ async function onloadFuncBoard() {
     contactUser = getUserData(ALL_USER);
 
     updateHTML();
+    renderActiveAvatar();
+}
+
+async function processChanges() {
+    const ALL_TASKS = await getAllUsers('tasks');
+    const searchValue = document.getElementById("searchBoard").value.toLowerCase();
+
+    if (searchValue.length > 2) {
+        const allTodos = getTaskArr(ALL_TASKS);
+        todos = allTodos.filter(t =>
+            t.title.toLowerCase().includes(searchValue) ||
+            t.description.toLowerCase().includes(searchValue)
+        );
+    } else {
+        todos = getTaskArr(ALL_TASKS);
+    }
+
+    updateHTML();
+}
+
+
+
+function renderActiveAvatar() {
+    const storedUserName = JSON.parse(sessionStorage.getItem('loggedInUser'))?.name;
+    const avatarRev = document.getElementById("activeAvatar");
+
+    // check if everything is available
+    if (!avatarRev) { return; }
+
+    if (!storedUserName) {
+        avatarRev.innerHTML = "G";
+        return;
+    }
+
+    //generate Avatar
+    avatarRev.innerHTML = getUserItem(storedUserName);
 }
 
 function getTaskArr(usersObj) {
     const arr = [];
 
     for (const [key, value] of Object.entries(usersObj)) {
-        let statusValue = "";
-        if (value.hasOwnProperty("status")) {
-            statusValue = value.status;
-        }
-        else {
-            statusValue = "boardToDo"
-        }
+        let statusValue = checkStatus(value);
+        let posValue = checkPosition(value, statusValue);
 
         arr.push({
             id: key,
@@ -33,29 +72,49 @@ function getTaskArr(usersObj) {
             description: value.description,
             category: value.category,
             date: value.date,
+            pos: posValue,
             priority: value.priority,
             subtasks: value.subtasks,
             assignedTo: value.assignedTo,
             status: statusValue
         });
+        boardPos[statusValue][key] = posValue;
     }
 
     return arr;
 }
 
+function checkPosition(value, statusValue) {
+    if (value.hasOwnProperty("pos")) {
+        return value.pos;
+    }
+    else {
+        return Object.keys(boardPos[statusValue]).length;
+    }
+}
+
+function checkStatus(value) {
+    if (value.hasOwnProperty("status")) {
+        return value.status;
+    }
+    else {
+        return "boardToDo";
+    }
+}
+
 function getUserData(usersObj) {
-  const USERS_ARRAY = Object.values(usersObj);
+    const USERS_ARRAY = Object.values(usersObj);
 
-  const USERS = {};
+    const USERS = {};
 
-  for (const user of USERS_ARRAY) {
-    USERS[user.mail] = {
-      name: user.name,
-      color: user.color
-    };
-  }
+    for (const user of USERS_ARRAY) {
+        USERS[user.mail] = {
+            name: user.name,
+            color: user.color
+        };
+    }
 
-  return USERS;
+    return USERS;
 }
 
 /**
@@ -89,14 +148,13 @@ function renderTodos(status) {
     }
 }
 
-
 /**
  * Generiert das HTML für eine einzelne Aufgabe.
  * @param {{id: number, title: string, category: string}} todo - Das Aufgabenobjekt.
  * @returns {string} - Das HTML-Element als String.
  */
 function renderTask(todo) {
-    return `<div draggable="true" id="toDo${todo.id}" ondragstart="startDragging('${todo.id}', '${todo.status}')" class="todo">
+    return `<div draggable="true" id="toDo${todo.id}" ondragstart="startDragging('${todo.id}', '${todo.status}')" ondragend="stopDragging('${todo.id}')" class="todo">
                 <div class="taskStatus ${todo.category}">${todo.category}</div>
                 <div class="taskTitle"> ${todo.title}</div>
                 <div class="taskDescription"> ${todo.description}</div>
@@ -108,7 +166,7 @@ function renderTask(todo) {
 }
 
 function assignedUserAvatar(user) {
-    if (user == null) return ""; 
+    if (user == null) return "";
 
     const users = Array.isArray(user) ? user : [user];
 
@@ -125,23 +183,31 @@ function assignedUserAvatar(user) {
     return output;
 }
 
-
-
 /**
  * Setzt die aktuell gezogene Aufgabe anhand ihrer ID.
  * @param {number} id - Die ID der gezogenen Aufgabe.
  */
 function startDragging(id, columnName) {
     currentDraggedElement = id;
-
     startStatusColumn = columnName;
 
-    return;
     const original = document.getElementById("toDo" + id);
     if (!original) return;
 
-    // Unsichtbar machen
-    original.classList.add("hideTaskContent");
+    // Unsichtbar machen (falls gewünscht)
+    //original.classList.add("hideTaskContent");
+
+    // NEU: Rotation um 5°
+    original.classList.add("dragging");
+    original.style.setProperty("--task-transform", "rotate(5deg)");
+}
+
+function stopDragging(id) {
+    const original = document.getElementById("toDo" + id);
+    if (!original) return;
+
+    original.classList.remove("dragging");
+    original.style.removeProperty("--task-transform");
 }
 
 /**
@@ -171,26 +237,28 @@ async function moveTo(targetColumn) {
     }
 }
 
-/**
- * Entfernt die visuelle Hervorhebung des Drop-Bereichs.
- * @param {string} id - Die ID des Drop-Bereichs.
- */
-function removeHighlight(id) {
-    // document.getElementById(id).classList.remove('drag-area-highlight');
-    const previewElement = document.getElementById("Preview-" + id);
-    //console.log ("remove highlight: " + id);
-    //previewElement.style.display = "none";
-}
-
 function renderTaskPreview(event) {
     const targetColumn = event.currentTarget.id;
     const TASK_ID = document.getElementById("toDo" + currentDraggedElement);
     const previewElement = document.getElementById("Preview-" + targetColumn);
 
-    if(targetColumn == startStatusColumn){return;}
+    if (targetColumn == startStatusColumn) { return; }
 
     if (previewElement && TASK_ID) {
         previewElement.style.display = "block";
         previewElement.style.height = TASK_ID.offsetHeight + "px";
     }
+}
+
+function removePreview(columnId) {
+    const container = document.getElementById(columnId);
+    const preview = container.querySelector(".previewTask");
+    boardColumMoves.leave = columnId;
+    return;
+    if (preview) {
+        preview.remove();
+    }
+
+    // Optional: Highlight entfernen
+    container.classList.remove("drag-over");
 }

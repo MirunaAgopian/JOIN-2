@@ -10,7 +10,7 @@
 }
 
 body {
-    padding: 20px;
+    /* padding: 20px;*/
 }
 
 h2 {
@@ -23,6 +23,7 @@ h2 {
     width: 256px;
     gap: 32px;
     margin-right: 64px;
+    display: flex;
     flex-direction: column;
     min-width: 250px;
 }
@@ -190,4 +191,63 @@ h2 {
     color: #a8a8a8;
     line-height: 1.4;
     pointer-events: none;
+}
+
+.todo {
+    transition: transform 120ms ease;
+    transform: var(--task-transform, none);
+
+}
+
+.todo.dragging {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    scale: 0.9;
+}
+
+@media (max-width: 768px) {
+    .onlyMobile {
+        display: block;
+    }
+
+    .onlyDesktop {
+        display: none;
+    }
+
+    #board-Content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 32px;
+        overflow-x: hidden;
+        width: 100%;
+    }
+
+    .column {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .columnHeader {
+        margin-bottom: 8px;
+        flex: none;
+    }
+
+    .drag-area {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 12px;
+        min-height: auto;
+    }
+
+    .todo {
+        min-width: 200px;
+        flex-shrink: 0
+    }
+
+    .mainContent {
+        margin-left: 0;
+    }
 }

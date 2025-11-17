@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="../styles/summary.css" />
   <link rel="stylesheet" href="../styles/board.css">
+  <script src="../script.js" defr></script>
+  <script src="../scripts/summary.js" defr></script>
   <script src="../scripts/firebase.js" defer></script>
   <script src="../scripts/board.js" defer></script>
 </head>
@@ -21,7 +23,7 @@
       <div class="user-help-container">
         <a href="help.html" aria-label="Opens Help section"><img class="help-btn" src="../assets/img/help_btn.svg"
             alt="a help button displaying a question mark" /></a>
-        <button class="nav-user-btn" onclick="toggleSubmenu()">G</button>
+        <button class="nav-user-btn" id="activeAvatar" onclick="toggleSubmenu()">G</button>
       </div>
       <!-- Submenu, desktop version -->
       <div id="submenu" class="desktop-submenu d-none">
@@ -84,9 +86,9 @@
             <h2>To do</h2>
             <button>+</button>
           </div>
-          <div class="drag-area" id="boardToDo" ondrop="moveTo('boardToDo')" ondragleave="removeHighlight('boardToDo')"
+          <div class="drag-area" id="boardToDo" ondrop="moveTo('boardToDo')"
+            ondragleave="removePreview('boardToDo')"
             ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event, 'boardToDo')">
-
           </div>
         </section>
 
@@ -96,8 +98,8 @@
             <button>+</button>
           </div>
           <div class="drag-area" id="boardProgress" ondrop="moveTo('boardProgress')"
-            ondragleave="removeHighlight('boardProgress')" ondragenter="renderTaskPreview(event)"
-            ondragover="allowDrop(event, 'boardProgress')">
+            ondragleave="removePreview('boardProgress')"
+            ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event, 'boardProgress')">
           </div>
         </section>
 
@@ -107,8 +109,8 @@
             <button>+</button>
           </div>
           <div class="drag-area" id="boardFeedback" ondrop="moveTo('boardFeedback')"
-            ondragleave="removeHighlight('boardFeedback')" ondragenter="renderTaskPreview(event)"
-            ondragover="allowDrop(event, 'boardFeedback')">
+            ondragleave="removePreview('boardFeedback')"
+            ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event, 'boardFeedback')">
           </div>
         </section>
 
@@ -116,7 +118,8 @@
           <div class="columnHeader">
             <h2>Done</h2>
           </div>
-          <div class="drag-area" id="boardDone" ondrop="moveTo('boardDone')" ondragleave="removeHighlight('boardDone')"
+          <div class="drag-area" id="boardDone" ondrop="moveTo('boardDone')"
+            ondragleave="removePreview('boardDone')"
             ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event, 'boardDone')"></div>
         </section>
       </div>
@@ -143,7 +146,7 @@
     </a>
   </footer>
   <!-- <script src="../scripts/summary.js"></script>  -->
-  <script src="../script.js"></script>
+
 </body>
 
 </html>
