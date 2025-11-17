@@ -148,6 +148,8 @@
             <div class="field-description">
               <label for="task_description">Description</label>
               <textarea
+                onfocus="handleTextarea(true)"
+                onblur = "handleTextarea(false)"
                 name="description"
                 id="task_description"
                 placeholder="Enter a description"

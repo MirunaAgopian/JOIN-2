@@ -13,6 +13,14 @@
     color: red;
 }
 
+input:focus {
+  outline: none;
+}
+
+textarea:focus {
+    outline:none;
+}
+
 .page-container {
     display: flex;
     justify-content: space-between;
@@ -64,6 +72,10 @@
     resize: none;
     cursor: pointer;
     height: 200px;
+}
+
+textarea.active {
+    border: 2px solid #29abe2;
 }
 
 select {

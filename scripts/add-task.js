@@ -31,7 +31,7 @@ function getTaskInput() {
   return {
     title: document.getElementById("task_title").value.trim(),
     description: document.getElementById("task_description").value.trim(),
-    date: getFormattedDate(),
+    date: document.getElementById('due_date').value.trim(),
     priority: selectedPriority,
     assignedTo: Array.from(selectedContacts),
     category: document.getElementById("selected_category").textContent.trim(),
@@ -39,20 +39,17 @@ function getTaskInput() {
   };
 }
 //To be continued later
-//here I need to add my own alerts
 //I sould add a function that prevents the user from selecting a past date in the calender
 //then I need to create the ovelays for the add task (task created succesfully + mobile overlay)
 
-function getFormattedDate(){
-  let rawDate = document.getElementById('due_date').value;
-  if(!rawDate) return '';
-  let formattedDate = new Date(rawDate);
-  return new Intl.DateTimeFormat('de-DE', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
-  }).format(formattedDate);
-}
+window.onload = function() {
+  const dueDateInput = document.getElementById("due_date");
+  const today = new Date();
+  const todayISO = today.toISOString().split("T")[0];
+  dueDateInput.setAttribute("min", todayISO);
+};
+
+// in progress
 
 function getAlert(){
   return `<span class='alert'>This field is required</span>`;
@@ -70,6 +67,7 @@ function handleInput(event){
   let alertContainer = fieldDescription.querySelector('.alert-container');
   if(event.target.value.trim() !== ''){
     alertContainer.innerHTML = '';
+    fieldDescription.classList.remove('alert');
     fieldDescription.classList.add('active');
   } else {
     alertContainer.innerHTML = getAlert();
@@ -84,7 +82,15 @@ function handleBlur(event){
   alertContainer.innerHTML = '';
   fieldDescription.classList.remove('alert', 'active');
 }
-// in progress ...........................
+
+function handleTextarea(isActive){
+  let textarea = document.getElementById('task_description');
+  if(isActive){
+    textarea.classList.add('active');
+  } else {
+    textarea.classList.remove('active');
+  }
+}
 
 function clearTaskInput() {
   resetBasicFields();
