@@ -112,6 +112,7 @@ window.onload = async () => {
 };
 
 function getContactList(contact, initials, isCurrentUser = false) {
+   const isChecked = selectedContacts.has(contact.mail);
   return `<li>
               <div class='username'>
                 <span class='contact-circle' style='background-color:${
@@ -119,9 +120,8 @@ function getContactList(contact, initials, isCurrentUser = false) {
                 }'>${initials}</span>
                 <span>${contact.name}${isCurrentUser ? " (You)" : ""}</span> 
               </div>  
-                <div onclick='setCheckMark(this, "${
-                  contact.mail
-                }")' class='checkbox'></div>
+                <div onclick='setCheckMark(this, "${contact.mail}")' 
+                class='checkbox ${isChecked ? "checked" : ""}'></div>
             </li>`;
 }
 

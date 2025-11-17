@@ -524,6 +524,11 @@ button {
     border-radius: 50%;
 }
 
+.checkbox:hover {
+    height: 32px;
+    width: 32px;
+}
+
 .subtask-close-btn:hover,
 .subtask-submit-btn:hover {
     background-color: #EEEEEE;
