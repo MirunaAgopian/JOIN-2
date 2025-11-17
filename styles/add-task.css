@@ -370,26 +370,51 @@ select {
     border-radius: 2px;
 }
 
-.subtask-edit-btn,
-.subtask-delete-btn,
-.subtask-btn-divider-secondary {
-  visibility: hidden;
+.subtask-edit-list {
+    background-color: white;
+    border-bottom: 1px solid #29abe2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
 }
 
-.subtask-list:hover {
-    background-color: #EEEEEE;
+.subtask-edit-btn-wrapper {
+    display: flex;
+    gap: 4px;
+    display: flex;
+    align-items: center;
 }
 
-.subtask-list:hover .subtask-edit-btn,
-.subtask-list:hover .subtask-delete-btn,
-.subtask-list:hover .subtask-btn-divider-secondary {
-  visibility: visible;
+.subtask-save-btn {
+    background-image: url(../assets/img/subtask_check.svg);
+    background-size: 24px 24px;
+    width: 24px;
+    height: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    background-color: white;
 }
 
-.subtask-edit-btn:hover,
-.subtask-delete-btn:hover {
-  background-size: 32px 32px;
+.subtask-delete-btn-secondary {
+    background-image: url(../assets/img/subtask_delete_btn.svg);
+    background-size: 24px 24px;
+    width: 24px;
+    height: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    background-color: white;
 }
+
+.subtask-btn-divider-tertiary {
+    height: 24px;
+    width: 2px;
+    background-color: #D1D1D1;
+    border-radius: 2px;
+}
+
 
 .bottom-container {
     display: flex;
@@ -437,6 +462,11 @@ button {
     background-color: #2A3647;
     color: white;
     font-weight: 800;
+}
+
+.subtask-edit[contenteditable="true"]:focus {
+  outline: none;
+  border: none; 
 }
 
 /* Hover effects and box styling */
@@ -514,6 +544,34 @@ button {
     color: white;
     background-color: #29abe2;
     border: 1px solid #29abe2;
+}
+
+.subtask-edit-btn,
+.subtask-delete-btn,
+.subtask-btn-divider-secondary {
+  visibility: hidden;
+}
+
+.subtask-list:hover {
+    background-color: #EEEEEE;
+}
+
+.subtask-list:hover .subtask-edit-btn,
+.subtask-list:hover .subtask-delete-btn,
+.subtask-list:hover .subtask-btn-divider-secondary {
+  visibility: visible;
+}
+
+.subtask-edit-btn:hover,
+.subtask-delete-btn:hover {
+  background-size: 32px 32px;
+}
+
+.subtask-save-btn:hover,
+.subtask-delete-btn-secondary:hover {
+    background-color: #EEEEEE;
+    border-radius: 50%;
+    background-size: 28px 28px;
 }
 
 /* Media queries */

@@ -230,12 +230,20 @@ function deactivateSubtask(event) {
 
 function getAddedTasks(text){
   return `<li class="subtask-list">
-              <span>${text}</span>
+              <span class='subtask-text'>${text}</span>
               <div class='subtask-element-img-wrapper'>
-                <button class='subtask-edit-btn' title="Edit"></button>
+                <button onclick='openEditingEnvironment(this)' class='subtask-edit-btn' title="Edit"></button>
                 <div class='subtask-btn-divider-secondary'></div>
-                <button class='subtask-delete-btn' title="Delete"></button>
+                <button onclick='deleteAddedSubtask(this)' class='subtask-delete-btn' title="Delete"></button>
               </div>
+          </li>
+          <li class='subtask-edit-list d-none'>
+            <span class="subtask-edit" contenteditable='true'></span>
+            <div class="subtask-edit-btn-wrapper">
+              <button onclick='deleteAddedSubtask(this)' class='subtask-delete-btn-secondary' title="Delete"></button>
+              <div class='subtask-btn-divider-tertiary'></div>
+              <button onclick='saveEditedSubtask(this)' class="subtask-save-btn" title="save"></button>
+            </div>
           </li>`;
 }
 
@@ -256,6 +264,55 @@ function clearSubtaskInput() {
   deactivateSubtask();
 }
 
-// for tomorrow to be continued with the functionalities on 
-//<button class='subtask-edit-btn' title="Edit"></button> and
-//<button class='subtask-delete-btn' title="Delete"></button>
+function deleteAddedSubtask(button){
+  let li = button.closest('li');
+  if(li.classList.contains('subtask-list')){
+    let editLi = li.nextElementSibling;
+    li.remove();
+    if(editLi && editLi.classList.contains('subtask-edit-list')){
+       editLi.remove();
+    }
+  }
+  else if(li.classList.contains('subtask-edit-list')){
+    let normalLi = li.previousElementSibling;
+    li.remove();
+    if(normalLi && normalLi.classList.contains('subtask-list')) {
+      normalLi.remove();
+    }
+  }
+}
+
+function openEditingEnvironment(button){
+  let normalLi = button.closest('.subtask-list');
+  let editLi = normalLi.nextElementSibling;
+  let textSpan = normalLi.querySelector('.subtask-text');
+  let editSpan = editLi.querySelector('.subtask-edit');
+  editSpan.textContent = textSpan.textContent;
+  normalLi.classList.add('d-none');
+  editLi.classList.remove('d-none');
+  editSpan.focus();
+  placeCaretAtEnd(editSpan);
+}
+
+function placeCaretAtEnd(el) {
+  el.focus();
+  if (typeof window.getSelection != "undefined"
+      && typeof document.createRange != "undefined") {
+    let range = document.createRange();
+    range.selectNodeContents(el);
+    range.collapse(false);
+    let sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+}
+
+function saveEditedSubtask(button){
+  let editLi = button.closest('.subtask-edit-list');
+  let normalLi = editLi.previousElementSibling;
+  let editSpan = editLi.querySelector('.subtask-edit');
+  let textSpan = normalLi.querySelector('.subtask-text');
+  textSpan.textContent = editSpan.textContent;
+  editLi.classList.add('d-none');
+  normalLi.classList.remove('d-none');
+}
