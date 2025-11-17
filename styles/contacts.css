@@ -154,3 +154,20 @@ main{
         padding-right: 10px;
     }
 }
+
+@media(max-width:850px){
+    .contacts-content{
+        display: none;
+
+    }
+
+    .contacts-list{
+        width: 100%;
+        left: 0px;
+        max-height: calc(100vh - 198px);
+    }
+
+    .btn-add-contact-container{
+        display: none;
+    }
+}
