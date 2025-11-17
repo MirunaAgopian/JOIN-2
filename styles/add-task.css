@@ -21,6 +21,24 @@ textarea:focus {
     outline:none;
 }
 
+.add-task-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgb(209,209,209, 0.1);
+}
+
+.overlay-img-text {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.board-icon {
+    height: 32px;
+    width: 32px;
+}
+
 .page-container {
     display: flex;
     justify-content: space-between;
@@ -647,6 +665,12 @@ button {
 @media(max-width: 1050px) {
     .buttons {
         width: 40%;
+    }
+}
+
+@media(max-width: 850px) {
+    .bottom-container {
+        margin-bottom: 150px;
     }
 }
 

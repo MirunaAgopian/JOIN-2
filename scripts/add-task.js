@@ -155,6 +155,23 @@ function checkIfTaskIsValid(task) {
   }
   return true;
 }
+// in progress ...
+function redirectUser(){
+  let container = document.getElementById('overlay_container');
+  container.innerHTML = getRedirectTemplate();
+  window.location.href = './board.html'
+}
+
+function getRedirectTemplate(){
+  return `<div class="add-task-overlay">
+            <div class="overlay-img-text">
+              <span>Task added to board</span>
+              <img class ='board-icon' src="/assets/img/board.svg" alt="the logo of the board tab">
+            </div>
+          </div>`;
+}
+
+//in progress
 
 async function uploadTaskToFirebase(path = "", task = {}) {
   let response = await fetch(BASE_URL + path + ".json", {
