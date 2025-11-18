@@ -2,6 +2,16 @@ let tasks = [];
 let selectedPriority = null;
 let selectedContacts = new Set();
 
+/**
+ * Loads contacts from the server and initializes the due date input.
+ * Ensures the due date cannot be set to a past date.
+ */
+window.onload = async () => {
+  await createArrayOfContacts();
+  console.log("Contacts loaded:", joinContacts);
+  setDateStart();
+};
+
 function setPrioColor(element) {
   const containers = document.querySelectorAll(".txt-img");
   containers.forEach((c) => {
@@ -38,19 +48,13 @@ function getTaskInput() {
     subtasks: subtasks
   };
 }
-//To be continued later
-//I sould add a function that prevents the user from selecting 
-//a past date in the calender
 
-
-window.onload = function() {
+function setDateStart() {
   const dueDateInput = document.getElementById("due_date");
   const today = new Date();
   const todayISO = today.toISOString().split("T")[0];
   dueDateInput.setAttribute("min", todayISO);
 };
-
-// in progress
 
 function getAlert(){
   return `<span class='alert'>This field is required</span>`;
@@ -186,12 +190,6 @@ async function uploadTaskToFirebase(path = "", task = {}) {
   let responseAsJson = await response.json();
   return responseAsJson;
 }
-
-//** Gets the contacts from server
-window.onload = async () => {
-  await createArrayOfContacts();
-  console.log("Contacts loaded:", joinContacts);
-};
 
 function getContactList(contact, initials, isCurrentUser = false) {
    const isChecked = selectedContacts.has(contact.mail);
