@@ -135,7 +135,12 @@
         <div class="add-contact-container">
           <section class="add-contact-left-box">
             <div class="left-box-content">
-              <img src="../assets/img/join_logo_white.svg" alt="join logo in white">
+              <div class="btn-close-container-top">
+                <div class="btn-close-box-top" onclick="closeDialogAddContact()">
+                  <img class="close-img" src="../assets/img/close_btn_white.svg" alt="cross as close button">
+                </div>
+              </div>
+              <img class="join-img" src="../assets/img/join_logo_white.svg" alt="join logo in white">
               <span class="span-add">Add contact</span>
               <span class="span-team">Tasks are better with a team!</span>
               <hr class="add-contact-underline">
@@ -186,7 +191,12 @@
               </div>
             </button>
           </div>
-          <div id="contactsList-content" class="contactlist-content"></div>
+          <div class="contactlist-container">
+            <div id="contactsList-content" class="contactlist-content"></div>
+            <div id="add_contact_mobile" class="add-contact-mobile">
+              <img src="../assets/img/add_person_icon.svg" alt="circle button with add person icon">
+            </div>
+          </div>
         </div>
         <div class="contacts-content">
           <div id="head_contacts" class="head-contacts">

@@ -46,7 +46,7 @@ dialog::backdrop{
     gap: 16px;
 }
 
-.left-box-content img{
+.join-img{
     width: 55px;
     height: 66px;
 }
@@ -262,4 +262,107 @@ input::placeholder{
     font-size: 47px;
     font-weight: 500;
     color: white;
+}
+
+.btn-close-container-top{
+    display: none;
+}
+
+@media(max-width:1180px){
+    .dialog-contact{
+        min-width: 800px;
+    }
+
+    .span-add{
+        font-size: 48px;
+    }
+
+    .span-team{
+        font-size: 18px;
+    }
+
+    .right-box-container{
+        padding-left: 24px;
+        gap: 24px;
+    }
+
+    .person-container{
+        width: 80px;
+        height: 80px;
+    }
+
+    .person-container img{
+        height: 32px;
+        width: 32px;
+    }
+
+    .btn-cancel span{
+        font-size: 16px;
+    }
+
+    .edit-initials{
+        font-size: 32px;
+    }
+
+    .btn-delete span{
+        font-size: 16px;
+    }
+}
+
+@media(max-width:850px){
+    .dialog-contact{
+        min-width: unset;
+        height: calc(100vh - 198px);
+    }
+
+    .add-contact-container{
+        flex-direction: column;
+    }
+
+    .join-img{
+        display: none;
+    }
+
+    .add-contact-left-box{
+        padding: 32px 32px;
+    }
+
+    .add-contact-right-box{
+        padding-top: 0px;
+        padding-right: 0px;
+    }
+
+    .add-contact-underline{
+        margin-bottom: 32px;
+    }
+
+    .btn-close-container{
+        display: none;
+    }
+
+    .btn-close-container-top{
+        display: flex;
+        justify-content: end;
+        padding-bottom: 40px;
+    }
+
+    .btn-close-box-top{
+        border-radius: 50px;
+        padding-top: 4px;
+        padding-right: 4px;
+        padding-left: 4px;
+    }   
+
+    .btn-close-box-top:hover{
+        cursor: pointer;
+    }
+
+    .btn-close-box-top:active{
+        background-color: #29ABE2;
+    }
+
+    .close-img{
+        height: 18px;
+        width: 18px;
+    }
 }
