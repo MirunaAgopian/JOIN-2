@@ -87,8 +87,8 @@
             <button>+</button>
           </div>
           <div class="drag-area" id="boardToDo" ondrop="moveTo('boardToDo')"
-            ondragleave="removePreview('boardToDo')"
-            ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event, 'boardToDo')">
+            ondragleave="removePreview('boardToDo', event)" ondragenter="renderTaskPreview(event)"
+            ondragover="allowDrop(event, 'boardToDo')">
           </div>
         </section>
 
@@ -98,8 +98,8 @@
             <button>+</button>
           </div>
           <div class="drag-area" id="boardProgress" ondrop="moveTo('boardProgress')"
-            ondragleave="removePreview('boardProgress')"
-            ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event, 'boardProgress')">
+            ondragleave="removePreview('boardProgress', event)" ondragenter="renderTaskPreview(event)"
+            ondragover="allowDrop(event, 'boardProgress')">
           </div>
         </section>
 
@@ -109,8 +109,8 @@
             <button>+</button>
           </div>
           <div class="drag-area" id="boardFeedback" ondrop="moveTo('boardFeedback')"
-            ondragleave="removePreview('boardFeedback')"
-            ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event, 'boardFeedback')">
+            ondragleave="removePreview('boardFeedback', event)" ondragenter="renderTaskPreview(event)"
+            ondragover="allowDrop(event, 'boardFeedback')">
           </div>
         </section>
 
@@ -119,8 +119,8 @@
             <h2>Done</h2>
           </div>
           <div class="drag-area" id="boardDone" ondrop="moveTo('boardDone')"
-            ondragleave="removePreview('boardDone')"
-            ondragenter="renderTaskPreview(event)" ondragover="allowDrop(event, 'boardDone')"></div>
+            ondragleave="removePreview('boardDone', event)" ondragenter="renderTaskPreview(event)"
+            ondragover="allowDrop(event, 'boardDone')"></div>
         </section>
       </div>
 
@@ -145,7 +145,8 @@
       <p>Contacts</p>
     </a>
   </footer>
-  <!-- <script src="../scripts/summary.js"></script>  -->
+
+
 
 </body>
 

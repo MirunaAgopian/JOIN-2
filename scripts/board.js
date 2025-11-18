@@ -8,11 +8,11 @@ let boardPos = {
     boardFeedback: {},
     boardDone: {}
 };
-let boardColumMoves = {
-    enter: "",
-    leave: ""
-}
 
+/**
+ * Loads tasks and contacts from the database, initializes the board,
+ * and renders the UI.
+ */
 async function onloadFuncBoard() {
     const ALL_TASKS = await getAllUsers('tasks');
     todos = getTaskArr(ALL_TASKS);
@@ -24,6 +24,10 @@ async function onloadFuncBoard() {
     renderActiveAvatar();
 }
 
+/**
+ * Processes search input and updates the task list accordingly.
+ * Filters tasks if the search string has not enought characters.
+ */
 async function processChanges() {
     const ALL_TASKS = await getAllUsers('tasks');
     const searchValue = document.getElementById("searchBoard").value.toLowerCase();
@@ -41,13 +45,13 @@ async function processChanges() {
     updateHTML();
 }
 
-
-
+/** 
+ *Renders the active user's avatar based on sessionStorage data.
+ * */
 function renderActiveAvatar() {
     const storedUserName = JSON.parse(sessionStorage.getItem('loggedInUser'))?.name;
     const avatarRev = document.getElementById("activeAvatar");
 
-    // check if everything is available
     if (!avatarRev) { return; }
 
     if (!storedUserName) {
@@ -55,10 +59,14 @@ function renderActiveAvatar() {
         return;
     }
 
-    //generate Avatar
     avatarRev.innerHTML = getUserItem(storedUserName);
 }
 
+/**
+ * Converts a user object into an array of task objects with status and position.
+ * @param {Object} usersObj - Object containing tasks keyed by ID.
+ * @returns {Array<Object>} Array of task objects.
+ */
 function getTaskArr(usersObj) {
     const arr = [];
 
@@ -84,6 +92,12 @@ function getTaskArr(usersObj) {
     return arr;
 }
 
+/**
+ * Determines the position of a task within its status column.
+ * @param {Object} value - Task object.
+ * @param {string} statusValue - The status column name.
+ * @returns {number} Position index within the column.
+ */
 function checkPosition(value, statusValue) {
     if (value.hasOwnProperty("pos")) {
         return value.pos;
@@ -93,6 +107,11 @@ function checkPosition(value, statusValue) {
     }
 }
 
+/**
+ * Determines the status bzw. column of a task. If no status is set, the Task will get Status "To Do"
+ * @param {Object} value - Task object.
+ * @returns {string} Status column name.
+ */
 function checkStatus(value) {
     if (value.hasOwnProperty("status")) {
         return value.status;
@@ -102,6 +121,11 @@ function checkStatus(value) {
     }
 }
 
+/**
+ * get all User who are assigned to the task and get their name and Avatar Color from database according to theri email adress and
+ * @param {Object} usersObj - Object containing user data.
+ * @returns {Object} Map of users keyed by email with name and color.
+ */
 function getUserData(usersObj) {
     const USERS_ARRAY = Object.values(usersObj);
 
@@ -139,12 +163,14 @@ function renderTodos(status) {
     if (filtered.length != 0) {
         container.innerHTML = ``;
         for (const todo of filtered) {
-            container.innerHTML += renderTask(todo);
+            container.innerHTML += renderTask(todo, status);
         }
         container.innerHTML += `<div draggable="false" id="Preview-${status}" class="previewTask" style="display: none; height: 42px;">Preview</div> `;
     } else {
         container.innerHTML = `<div draggable="false" id="noEntry-${status}" class="noEntry">no Entry</div>
-        <div draggable="false" id="Preview-${status}" class="previewTask" style="display: none; height: 42px;">Preview</div>`;
+        <div draggable="false" id="Preview-${status}" class="previewTask" style="display: none; height: 42px;">Preview</div>
+        
+ `;
     }
 }
 
@@ -153,18 +179,134 @@ function renderTodos(status) {
  * @param {{id: number, title: string, category: string}} todo - Das Aufgabenobjekt.
  * @returns {string} - Das HTML-Element als String.
  */
-function renderTask(todo) {
+function renderTask(todo, status) {
     return `<div draggable="true" id="toDo${todo.id}" ondragstart="startDragging('${todo.id}', '${todo.status}')" ondragend="stopDragging('${todo.id}')" class="todo">
+                <div class="boardMoveToIcon onlyMobile" onclick="openBoardMoveToOverlay(event)">
+                    <img src="../assets/img/swap_horiz.svg" alt="Move To Icon">
+                </div>
+
+                ${renderMobileMoveAction(todo, status)}
+
                 <div class="taskStatus ${todo.category}">${todo.category}</div>
                 <div class="taskTitle"> ${todo.title}</div>
                 <div class="taskDescription"> ${todo.description}</div>
-                <div class="subtasks"> ${todo.subtasks}</div>
+                <div class="subtasks"> ${setProgress(todo.subtasks)}</div>
                 <div class="taskFooter">
                     ${assignedUserAvatar(todo.assignedTo)} <img src="../assets/img/prio_${todo.priority}.svg">
                 </div>
             </div>`;
 }
 
+/**
+ * generate the html Tag for the Progress Bar of an Subtask for an task
+ * @param {Object} subtasks 
+ * @returns the render html Tag of the Progress
+ */
+function setProgress(subtasks) {
+    let subDone = "1";
+    let subTotal = subtasks.length;
+
+    if (subTotal == null) {
+        return `no subtasks`;
+    }
+
+    return `<div class="processBarContainer">
+                <div class="progress">
+                    <div class="progressBar" style="width: ${(subDone / subTotal) * 100}%"></div>
+                </div>
+                <span class="progressLabel">${subDone}/${subTotal} Subtasks</span>
+            </div> `;
+}
+
+/**
+ * render html Tag of the Overlay for the possibile Moveactions of the Status bzw. Column in Mobile View
+ * @param {Object} todo Object of the Database
+ * @param {String} status the actual bzw. column of the task
+ * @returns render html Tag for the possibility status Colum are availaible for the actual Task
+ */
+function renderMobileMoveAction(todo, status) {
+    let output = "";
+    let moveTaskUp = null;
+    let moveTaskDown = null;
+
+    switch (status) {
+        case 'boardToDo':
+            moveTaskUp = null;
+            moveTaskDown = 'boardProgress';
+            break;
+        case 'boardProgress':
+            moveTaskUp = 'boardToDo';
+            moveTaskDown = 'boardFeedback';
+            break;
+        case 'boardFeedback':
+            moveTaskUp = 'boardProgress';
+            moveTaskDown = 'boardDone';
+            break;
+        case 'boardDone':
+            moveTaskUp = 'boardFeedback';
+            moveTaskDown = null;
+            break;
+    }
+
+    output = `<div class="boardMoveToOverlay" onclick="event.stopPropagation()">
+                <div class="boardMoveToHeadline onlyMobile">Move To</div>
+                <div class="boardMoveToOverlayButtons">`;
+    if (moveTaskUp != null) {
+        output += `<div class="boardMoveToButtonContent"
+           onclick="event.stopPropagation(); changeBoardStatus('${todo.id}', '${moveTaskUp}')"><img
+             src="../assets/img/arrow_upward.svg" alt="arrow up">${moveTaskUp}</div>`;
+    }
+    if (moveTaskDown != null) {
+        output += `<div class="boardMoveToButtonContent"
+           onclick="event.stopPropagation(); changeBoardStatus('${todo.id}', '${moveTaskDown}')"><img
+             src="../assets/img/arrow_downward.svg" alt="arrow down">${moveTaskDown}</div>`;
+
+
+        output += `</div></div>`;
+        return output;
+    }
+}
+
+/**
+ * cheanges the the status bzw. Column of an task by the overlay Menu in mobile View
+ * @param {String} id ID bzw key of Element in Firebase Database
+ * @param {*String} targetColumn target Column where the Task will be moved
+ * @returns 
+ */
+async function changeBoardStatus(id, targetColumn) {
+    const task = todos.find(t => t.id === id);
+    if (!task) return;
+
+    task.status = targetColumn;
+
+    await putData('tasks/' + id, task);
+
+    updateHTML();
+}
+
+/**
+ * shows or hide the Overlay Move Dialog of an Task in Mobile View
+ * @param {Event} event 
+ */
+function openBoardMoveToOverlay(event) {
+    event.stopPropagation();
+
+    const todo = event.currentTarget.closest('.todo');
+    const overlay = todo.querySelector('.boardMoveToOverlay');
+    overlay.style.display = overlay.style.display === 'flex' ? 'none' : 'flex';
+}
+
+document.addEventListener('click', () => {
+    document.querySelectorAll('.boardMoveToOverlay').forEach(overlay => {
+        overlay.style.display = 'none';
+    });
+});
+
+/**
+ * Generates avatar HTML for assigned users.
+ * @param {string|string[]} user - Email(s) of assigned users.
+ * @returns {string} HTML string of avatar elements.
+ */
 function assignedUserAvatar(user) {
     if (user == null) return "";
 
@@ -173,7 +315,7 @@ function assignedUserAvatar(user) {
     let output = `<div class="AvatarArray">`;
     for (let i = 0; i < users.length; i++) {
         const contact = contactUser[users[i]];
-        if (!contact) continue; // falls kein Eintrag vorhanden ist
+        if (!contact) continue; 
 
         output += `<div class="contactAvater" style="background-color:${contact.color}"> 
                       ${getUserItem(contact.name)} 
@@ -184,8 +326,9 @@ function assignedUserAvatar(user) {
 }
 
 /**
- * Setzt die aktuell gezogene Aufgabe anhand ihrer ID.
+ * set the global Value for the current dragging task and rotate the the dragging Task
  * @param {number} id - Die ID der gezogenen Aufgabe.
+ * @param {name } columnName name of the actual Column
  */
 function startDragging(id, columnName) {
     currentDraggedElement = id;
@@ -194,14 +337,14 @@ function startDragging(id, columnName) {
     const original = document.getElementById("toDo" + id);
     if (!original) return;
 
-    // Unsichtbar machen (falls gewünscht)
-    //original.classList.add("hideTaskContent");
-
-    // NEU: Rotation um 5°
     original.classList.add("dragging");
     original.style.setProperty("--task-transform", "rotate(5deg)");
 }
 
+/**
+ * Stops dragging and resets the dragged element's style.
+ * @param {string} id - Task ID.
+ */
 function stopDragging(id) {
     const original = document.getElementById("toDo" + id);
     if (!original) return;
@@ -226,13 +369,10 @@ function allowDrop(ev, id) {
 async function moveTo(targetColumn) {
     const taskIndex = todos.findIndex(t => t.id == currentDraggedElement);
     if (taskIndex !== -1) {
-        // Status im Array ändern
         todos[taskIndex].status = targetColumn;
 
-        // Datenbank aktualisieren
         await putData('tasks/' + todos[taskIndex].id, todos[taskIndex]);
 
-        // Frontend neu rendern
         updateHTML();
     }
 }
@@ -250,15 +390,17 @@ function renderTaskPreview(event) {
     }
 }
 
-function removePreview(columnId) {
+function removePreview(columnId, ev) {
     const container = document.getElementById(columnId);
-    const preview = container.querySelector(".previewTask");
-    boardColumMoves.leave = columnId;
-    return;
-    if (preview) {
-        preview.remove();
+
+    if (ev.relatedTarget && container.contains(ev.relatedTarget)) {
+        return;
     }
 
-    // Optional: Highlight entfernen
-    container.classList.remove("drag-over");
+    const preview = container.querySelector(".previewTask");
+    if (preview) preview.style.display = "none";
+
+    container.classList.remove("drag-area-highlight");
 }
+
+

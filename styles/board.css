@@ -196,12 +196,20 @@ h2 {
 .todo {
     transition: transform 120ms ease;
     transform: var(--task-transform, none);
-
+    position: relative;
 }
 
 .todo.dragging {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
     scale: 0.9;
+}
+
+.onlyMobile {
+    display: none;
+}
+
+.onlyDesktop {
+    display: block;
 }
 
 @media (max-width: 768px) {
@@ -243,11 +251,83 @@ h2 {
     }
 
     .todo {
-        min-width: 200px;
+        width: 252px;
         flex-shrink: 0
     }
 
     .mainContent {
         margin-left: 0;
     }
+}
+
+.boardMoveToIcon {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+}
+
+
+.boardMoveToOverlay {
+    background-color: #2A3647;
+    color: hsl(0, 0%, 100%);
+    width: 106px;
+    height: 113px;
+    border-radius: 0px 20px 20px 20px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    position: absolute;
+    top: 16px;
+    right: -30px;
+    z-index: 1;
+    padding-inline: 15px;
+}
+
+.boardMoveToHeadline {
+    width: 90px;
+    padding-left: 9px;
+}
+
+.boardMoveToOverlayButtons {
+    width: 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.boardMoveToButtonContent {
+    display: flex;
+    gap: 8px;
+}
+
+.processBarContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 5px;
+}
+
+.progress {
+    max-width: 128px;
+    width: 100%;
+    height: 8px;
+    background: rgb(242, 244, 247);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.progressBar {
+    height: 100%;
+    background: rgb(59, 130, 246);
+    border-radius: inherit;
+    transition: width 0.3s;
+}
+
+.progressLabel {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgb(0, 0, 0);
 }
