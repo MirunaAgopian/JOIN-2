@@ -29,7 +29,7 @@ function getTemplateEditDialog(obj, initials){
     return `<div class="add-contact-container">
                 <section class="add-contact-left-box">
                     <div class="left-box-content">
-                        <img src="../assets/img/join_logo_white.svg" alt="join logo in white">
+                        <img class="join-img" src="../assets/img/join_logo_white.svg" alt="join logo in white">
                         <span class="span-add">Edit contact</span>
                         <hr class="add-contact-underline">
                     </div>

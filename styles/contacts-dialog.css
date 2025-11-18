@@ -274,7 +274,7 @@ input::placeholder{
     }
 
     .span-add{
-        font-size: 48px;
+        font-size: 36px;
     }
 
     .span-team{
@@ -311,7 +311,7 @@ input::placeholder{
 
 @media(max-width:850px){
     .dialog-contact{
-        min-width: unset;
+        min-width: 300px;
         height: calc(100vh - 198px);
     }
 
@@ -324,7 +324,7 @@ input::placeholder{
     }
 
     .add-contact-left-box{
-        padding: 32px 32px;
+        padding: 16px 16px;
     }
 
     .add-contact-right-box{
@@ -343,7 +343,7 @@ input::placeholder{
     .btn-close-container-top{
         display: flex;
         justify-content: end;
-        padding-bottom: 40px;
+        padding-bottom: 50px;
     }
 
     .btn-close-box-top{
@@ -362,7 +362,44 @@ input::placeholder{
     }
 
     .close-img{
-        height: 18px;
-        width: 18px;
+        height: 16px;
+        width: 16px;
+    }
+
+    .right-box-container{
+        padding-top: 90px;
+        padding-left: 16px;
+        padding-right: 16px;
+        flex-direction: column;
+    }
+
+    .form-ctrl-container{
+        justify-content: center;
+    }
+
+    .btn-cancel{
+        display: none;
+    }
+
+    .person-container{
+        border: 3px solid white;
+        width: 120px;
+        height: 120px;
+        position: fixed;
+        top: 37%;
+
+    }
+
+    .person-container img{
+        height: 64px;
+        width: 64px;
+    }
+
+    .bg-input{
+        width: 100%;
+    }
+
+    .left-box-content{
+        min-height: 300px;
     }
 }
