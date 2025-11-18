@@ -22,16 +22,29 @@ textarea:focus {
 }
 
 .add-task-overlay {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    background-color: rgb(209,209,209, 0.1);
+    width: 100%;
+    height: 100%;
+    z-index: 500;
+    background-color: rgb(209,209,209, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .overlay-img-text {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 32px;
+    background-color: #2a3647;
+    padding: 16px 30px;
+    border-radius: 10px;
+}
+
+.overlay-img-text span {
+    color: #CDCDCD;
 }
 
 .board-icon {

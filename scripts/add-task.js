@@ -39,8 +39,9 @@ function getTaskInput() {
   };
 }
 //To be continued later
-//I sould add a function that prevents the user from selecting a past date in the calender
-//then I need to create the ovelays for the add task (task created succesfully + mobile overlay)
+//I sould add a function that prevents the user from selecting 
+//a past date in the calender
+
 
 window.onload = function() {
   const dueDateInput = document.getElementById("due_date");
@@ -141,6 +142,7 @@ function addTask() {
     .catch((err) => {
       console.error("Upload failed:", err);
     });
+    redirectUser();
 }
 
 function checkIfTaskIsValid(task) {
@@ -155,11 +157,13 @@ function checkIfTaskIsValid(task) {
   }
   return true;
 }
-// in progress ...
+
 function redirectUser(){
   let container = document.getElementById('overlay_container');
   container.innerHTML = getRedirectTemplate();
-  window.location.href = './board.html'
+  setTimeout(() => {
+    window.location.href = './board.html'
+  }, 1500);
 }
 
 function getRedirectTemplate(){
@@ -170,8 +174,6 @@ function getRedirectTemplate(){
             </div>
           </div>`;
 }
-
-//in progress
 
 async function uploadTaskToFirebase(path = "", task = {}) {
   let response = await fetch(BASE_URL + path + ".json", {
