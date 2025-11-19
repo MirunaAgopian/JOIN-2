@@ -74,3 +74,24 @@ async function getAllUsers(path=''){
 
     return responseToJson;
 }
+
+/**
+ * Updates specific fields of a record in the database using HTTP PATCH.
+ * Only the provided keys in the data object will be modified, 
+ * leaving all other fields of the record unchanged.
+ *
+ * @param {string} path - The relative path in the database (e.g., "tasks/123").
+ * @param {Object} data - Key-value pairs to update (e.g., {status: "boardDone", pos: 2}).
+ * @returns {Promise<void>} - Resolves when the update request has completed.
+ */
+async function patchData(path = '', data = {}) {
+  try {
+    await fetch(BASE_URL + path + '.json', {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+  } catch (err) {
+    console.error("patchData Error:", err);
+  }
+}

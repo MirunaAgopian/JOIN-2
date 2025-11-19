@@ -9,6 +9,8 @@ let boardPos = {
     boardDone: {}
 };
 
+let desiredPos = null;
+
 /**
  * Loads tasks and contacts from the database, initializes the board,
  * and renders the UI.
@@ -158,21 +160,24 @@ function updateHTML() {
  */
 function renderTodos(status) {
     const container = document.getElementById(status);
-    const filtered = todos.filter(t => t.status === status);
+    const filtered = todos.filter(t => t.status === status)
+        .sort((a, b) => a.pos - b.pos);
 
-    if (filtered.length != 0) {
-        container.innerHTML = ``;
+    if (filtered.length > 0) {
+        container.innerHTML = "";
         for (const todo of filtered) {
             container.innerHTML += renderTask(todo, status);
         }
-        container.innerHTML += `<div draggable="false" id="Preview-${status}" class="previewTask" style="display: none; height: 42px;">Preview</div> `;
+        container.innerHTML += `<div draggable="false" id="Preview-${status}" 
+            class="previewTask" style="display:none;height:42px;">Preview</div>`;
     } else {
-        container.innerHTML = `<div draggable="false" id="noEntry-${status}" class="noEntry">no Entry</div>
-        <div draggable="false" id="Preview-${status}" class="previewTask" style="display: none; height: 42px;">Preview</div>
-        
- `;
+        container.innerHTML = `<div draggable="false" id="noEntry-${status}" 
+            class="noEntry">no Entry</div>
+            <div draggable="false" id="Preview-${status}" 
+            class="previewTask" style="display:none;height:42px;">Preview</div>`;
     }
 }
+
 
 /**
  * Generiert das HTML für eine einzelne Aufgabe.
@@ -315,7 +320,7 @@ function assignedUserAvatar(user) {
     let output = `<div class="AvatarArray">`;
     for (let i = 0; i < users.length; i++) {
         const contact = contactUser[users[i]];
-        if (!contact) continue; 
+        if (!contact) continue;
 
         output += `<div class="contactAvater" style="background-color:${contact.color}"> 
                       ${getUserItem(contact.name)} 
@@ -357,25 +362,45 @@ function stopDragging(id) {
  * Erlaubt das Ablegen eines Elements im Drop-Bereich.
  * @param {DragEvent} ev - Das DragEvent-Objekt.
  */
-function allowDrop(ev, id) {
+function allowDrop(ev, columnId) {
     ev.preventDefault();
-    document.getElementById(id).classList.add('drag-area-highlight');
+    const container = document.getElementById(columnId);
+    const tasks = [...container.querySelectorAll(".todo:not(.dragging)")];
+    let index = tasks.length;
+    const y = ev.clientY ?? ev.touches?.[0]?.clientY;
+    for (let i = 0; i < tasks.length; i++) {
+        const rect = tasks[i].getBoundingClientRect();
+        if (y < rect.top + rect.height / 2) { index = i; break; }
+    }
+    desiredPos = index;
+    const preview = document.getElementById("Preview-" + columnId);
+    if (preview) container.insertBefore(preview, tasks[index] || null);
+    preview.style.display = "block";
 }
 
 /**
  * Verschiebt die aktuell gezogene Aufgabe in eine neue Kategorie.
  * @param {string} targetColumn - Die Zielkategorie
  */
-async function moveTo(targetColumn) {
-    const taskIndex = todos.findIndex(t => t.id == currentDraggedElement);
-    if (taskIndex !== -1) {
-        todos[taskIndex].status = targetColumn;
-
-        await putData('tasks/' + todos[taskIndex].id, todos[taskIndex]);
-
-        updateHTML();
-    }
+async function moveTo(targetColumn, ev) {
+    ev.preventDefault();
+    const idx = todos.findIndex(t => t.id == currentDraggedElement);
+    if (idx === -1) return;
+    todos[idx].status = targetColumn;
+    todos[idx].pos = desiredPos ?? todos.filter(t => t.status === targetColumn).length;
+    normalizePositions(targetColumn);
+    await putData('tasks/' + todos[idx].id, todos[idx]);
+    desiredPos = null;
+    updateHTML();
 }
+
+
+function normalizePositions(status) {
+    const arr = todos.filter(t => t.status === status).sort((a, b) => a.pos - b.pos);
+    arr.forEach((t, i) => { t.pos = i; boardPos[status][t.id] = i; putData('tasks/' + t.id, t); });
+}
+
+
 
 function renderTaskPreview(event) {
     const targetColumn = event.currentTarget.id;

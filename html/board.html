@@ -86,7 +86,7 @@
             <h2>To do</h2>
             <button>+</button>
           </div>
-          <div class="drag-area" id="boardToDo" ondrop="moveTo('boardToDo')"
+          <div class="drag-area" id="boardToDo" ondrop="moveTo('boardToDo', event)"
             ondragleave="removePreview('boardToDo', event)" ondragenter="renderTaskPreview(event)"
             ondragover="allowDrop(event, 'boardToDo')">
           </div>
@@ -97,7 +97,7 @@
             <h2>In progress</h2>
             <button>+</button>
           </div>
-          <div class="drag-area" id="boardProgress" ondrop="moveTo('boardProgress')"
+          <div class="drag-area" id="boardProgress" ondrop="moveTo('boardProgress', event)"
             ondragleave="removePreview('boardProgress', event)" ondragenter="renderTaskPreview(event)"
             ondragover="allowDrop(event, 'boardProgress')">
           </div>
@@ -108,7 +108,7 @@
             <h2>Await Feedback</h2>
             <button>+</button>
           </div>
-          <div class="drag-area" id="boardFeedback" ondrop="moveTo('boardFeedback')"
+          <div class="drag-area" id="boardFeedback" ondrop="moveTo('boardFeedback', event)"
             ondragleave="removePreview('boardFeedback', event)" ondragenter="renderTaskPreview(event)"
             ondragover="allowDrop(event, 'boardFeedback')">
           </div>
@@ -118,7 +118,7 @@
           <div class="columnHeader">
             <h2>Done</h2>
           </div>
-          <div class="drag-area" id="boardDone" ondrop="moveTo('boardDone')"
+          <div class="drag-area" id="boardDone" ondrop="moveTo('boardDone', event)"
             ondragleave="removePreview('boardDone', event)" ondragenter="renderTaskPreview(event)"
             ondragover="allowDrop(event, 'boardDone')"></div>
         </section>
