@@ -193,16 +193,17 @@
           </div>
           <div class="contactlist-container">
             <div id="contactsList-content" class="contactlist-content"></div>
-            <div id="add_contact_mobile" class="add-contact-mobile">
+            <div id="add_contact_mobile" class="add-contact-mobile" onclick="openDialogAddContact()">
               <img src="../assets/img/add_person_icon.svg" alt="circle button with add person icon">
             </div>
           </div>
         </div>
-        <div class="contacts-content">
+        <div id="contacts_content" class="contacts-content">
           <div id="head_contacts" class="head-contacts">
             <span class="head-description">Contacts</span>
             <div class="line"></div>
             <span class="aside-description">Better with a team</span>
+            <hr class="underline-mobile">
           </div>
           <!-- <button onclick="openDialogEditContact()">edit contact</button> -->
           <div id="contact_container" class="contact-show-design"></div>

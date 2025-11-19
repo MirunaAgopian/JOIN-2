@@ -29,6 +29,11 @@ function getTemplateEditDialog(obj, initials){
     return `<div class="add-contact-container">
                 <section class="add-contact-left-box">
                     <div class="left-box-content">
+                        <div id="btn_close_edit" class="btn-close-container-top">
+                            <div class="btn-close-box-top" onclick="closeDialogEditContact()">
+                                <img class="close-img" src="../assets/img/close_btn_white.svg" alt="cross as close button">
+                            </div>
+                        </div>
                         <img class="join-img" src="../assets/img/join_logo_white.svg" alt="join logo in white">
                         <span class="span-add">Edit contact</span>
                         <hr class="add-contact-underline">

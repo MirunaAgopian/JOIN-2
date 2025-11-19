@@ -93,3 +93,9 @@
         font-size: 32px;
     }
 }
+
+@media(max-width:850px){
+    .contact-head{
+        padding-top: 60px;
+    }
+}

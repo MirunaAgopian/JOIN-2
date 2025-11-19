@@ -88,10 +88,21 @@ async function showClickedContact(mail){
         }
     }
     if(contactObj.mail != ''){
+        displayContactsContentContainer();
         renderContact(contactObj);
         showActivatedContactInList(joinContacts, activatedContact);
     }else{
         alert('contact not found');
+    }
+}
+
+function displayContactsContentContainer(){
+    let contentContactRef = document.getElementById('contacts_content');
+    let contentContactslistRef = document.getElementById('contacts_list');
+    let displayValue = window.getComputedStyle(contentContactRef).display;
+    if(displayValue == 'none'){
+        contentContactslistRef.style = "display:none;";
+        contentContactRef.style = "display:block;"
     }
 }
 

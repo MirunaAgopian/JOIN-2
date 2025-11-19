@@ -402,4 +402,36 @@ input::placeholder{
     .left-box-content{
         min-height: 300px;
     }
+
+    #btn_close_edit{
+        padding-bottom: 80px !important;
+    }
+
+    .dialog-contact{
+        transform:translate(-50%, 100%);
+    }
+
+    .dialogOpened{
+        transform: translateX(-50%) translateY(-50%);
+    }
+
+    .dialogClosed{
+        transform: translateX(-50%) translateY(100%);
+    }
+
+    .dialog-msg{
+        transform: translateX(-50%) translateY(500%);
+    }   
+
+    .dialog-msg span{
+        font-size: 14px;
+    }
+
+    .msg-opened{
+        transform: translateX(-50%) translateY(0px);
+    }
+
+    .msg-closed{
+        transform: translateX(-50%) translateY(500%);
+    }
 }
