@@ -130,7 +130,7 @@
         <a href="legal-notice.html">Legal Notice</a>
       </div>
     </aside>
-    <main>
+    <main onclick="closeEditContainerMobile()">
       <dialog id="add_contact_dialog" class="dialog-contact">
         <div class="add-contact-container">
           <section class="add-contact-left-box">
@@ -199,14 +199,34 @@
           </div>
         </div>
         <div id="contacts_content" class="contacts-content">
-          <div id="head_contacts" class="head-contacts">
-            <span class="head-description">Contacts</span>
-            <div class="line"></div>
-            <span class="aside-description">Better with a team</span>
-            <hr class="underline-mobile">
+          <div class="head-container">
+            <div id="head_contacts" class="head-contacts">
+              <span class="head-description">Contacts</span>
+              <div class="line"></div>
+              <span class="aside-description">Better with a team</span>
+              <hr class="underline-mobile">
+            </div>
+            <div class="btn-back-container">
+              <div class="btn-back-left" onclick="goBackToContactsList()">
+                <img class="img-back-left" src="../assets/img/arrow_left_line_default.svg" alt="blue arrow button">
+              </div>
+            </div>
           </div>
           <!-- <button onclick="openDialogEditContact()">edit contact</button> -->
           <div id="contact_container" class="contact-show-design"></div>
+          <div class="add-contact-mobile" onclick="showEditContainerMobile(event)">
+            <img src="../assets/img/vertical_dots.svg" alt="button with 3 vertical dots">
+          </div>
+          <div id="edit_mobile_container" class="ctrl-edit-mobile-container hidden">
+            <div class="ctrl-edit-mobile">
+              <div class="btn-edit-mobile">
+                <img class="btn-contact-ctrl" src="../assets/img/edit_contact.svg" alt="edit button with pen icon">
+              </div>
+              <div class="btn-edit-mobile">
+                <img class="btn-contact-ctrl" src="../assets/img/delete_contact.svg" alt="delete button with trash icon">
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </main>

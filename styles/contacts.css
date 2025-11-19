@@ -32,7 +32,7 @@ main{
 .btn-add-contact-container{
     padding-top: 50px;
     padding-bottom: 16px;
-    padding-right: 16px;
+    padding-right: 32px;
     position: fixed;
     background-color: white;
     z-index: 10;
@@ -72,6 +72,28 @@ main{
 .contacts-content{
     padding-top: 180px;
     padding-left: 400px;
+}
+
+.head-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-back-container{
+    display: none;
+}
+
+.btn-back-left{
+    height: 32px;
+    border-radius: 50px;
+}
+
+.btn-back-left:hover{
+    cursor: pointer;
+}
+
+.btn-back-left:active{
+    background-color: #EEEEEE;
 }
 
 .head-contacts{
@@ -120,6 +142,10 @@ main{
     transform: translateY(0);
 }
 
+.hidden{
+    display: none;
+}
+
 @media(max-width:1180px){
     .contacts-content{
         padding-left: 280px;
@@ -165,8 +191,11 @@ main{
 @media(max-width:850px){
     .contacts-content{
         display: none;
+        width: 100%;
+        height: 100vh;
         padding-top: 150px;
         padding-left: 16px;
+        padding-right: 16px;
         position: fixed;
         left: 0px;
     }
@@ -191,6 +220,16 @@ main{
     }
 
     .underline-mobile{
+        display: block;
+    }
+
+    .btn-back-container{
+        display: block;
+    }
+}
+
+@media(min-width:850px){
+    .contacts-list{
         display: block;
     }
 }

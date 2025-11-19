@@ -101,9 +101,17 @@ function displayContactsContentContainer(){
     let contentContactslistRef = document.getElementById('contacts_list');
     let displayValue = window.getComputedStyle(contentContactRef).display;
     if(displayValue == 'none'){
-        contentContactslistRef.style = "display:none;";
+        contentContactslistRef.classList.add('hidden');
         contentContactRef.style = "display:block;"
     }
+}
+
+function goBackToContactsList(){
+    let contentContactRef = document.getElementById('contacts_content');
+    let contentContactslistRef = document.getElementById('contacts_list');
+    contentContactRef.style = "display:none";
+    contentContactslistRef.classList.remove('hidden');
+    window.location.reload();
 }
 
 function renderContact(contactObj){
@@ -206,4 +214,13 @@ function changeBackgroundOut(id){
     if(id != activatedContact){
         document.getElementById('id_' + id).classList.remove('contactID-hover');
     }
+}
+
+function showEditContainerMobile(event){
+    event.stopPropagation();
+    document.getElementById('edit_mobile_container').classList.remove('hidden');
+}
+
+function closeEditContainerMobile(){
+    document.getElementById('edit_mobile_container').classList.add('hidden');
 }
