@@ -7,15 +7,16 @@
   <title>Join - Board</title>
   <link rel="icon" href="../assets/img/join_logo.svg" />
   <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../styles/add-task.css">
   <link rel="stylesheet" href="../styles/summary.css" />
   <link rel="stylesheet" href="../styles/board.css">
-  <script src="../script.js" defr></script>
-  <script src="../scripts/summary.js" defr></script>
+  <script src="../script.js" defer></script>
+  <script src="../scripts/summary.js" defer></script>
   <script src="../scripts/firebase.js" defer></script>
   <script src="../scripts/board.js" defer></script>
 </head>
 
-<body onload="onloadFuncBoard()">
+<body>
   <header>
     <nav>
       <img class="mobile-navbar-logo" src="../assets/img/join_logo.svg" alt="The logo of the application" />
@@ -125,6 +126,114 @@
       </div>
 
     </div>
+
+    <dialog id="dialaogBoardTask">
+
+      <section class="main-content">
+        <h1>Change Task</h1>
+        <section class="page-container">
+          <section class="task-container">
+            <div class="field-description">
+              <label for="task_title">Title<span class="required">*</span></label>
+              <input onfocus="handleFocus(event)" oninput="handleInput(event)" onblur="handleBlur(event)" type="text"
+                id="task_title" required placeholder="Enter a title" />
+              <div class="alert-container"></div>
+            </div>
+            <div class="field-description">
+              <label for="task_description">Description</label>
+              <textarea onfocus="handleTextarea(true)" onblur="handleTextarea(false)" name="description"
+                id="task_description" placeholder="Enter a description"></textarea>
+            </div>
+            <div class="field-description">
+              <label for="due_date">Due date<span class="required">*</span></label>
+              <input onfocus="handleFocus(event)" oninput="handleInput(event)" onblur="handleBlur(event)" type="date"
+                id="due_date" required />
+              <div class="alert-container"></div>
+            </div>
+          </section>
+          <div class="separation-bar"></div>
+          <section class="priority-container">
+            <div class="field-description">
+              <span>Priority</span>
+              <div class="priority-stages">
+                <div onclick="setPrioColor(this)" class="txt-img urgent">
+                  <span>Urgent</span>
+                  <div class="urgent-img prio-img"></div>
+                </div>
+                <div onclick="setPrioColor(this)" class="txt-img medium active">
+                  <span>Medium</span>
+                  <div class="medium-img prio-img active"></div>
+                </div>
+                <div onclick="setPrioColor(this)" class="txt-img low">
+                  <span>Low</span>
+                  <div class="low-img prio-img"></div>
+                </div>
+              </div>
+            </div>
+            <div class="field-description">
+              <span>Assigned to</span>
+              <div class="dropdown" id="assigned_to">
+                <span>Select contacts to assign</span>
+                <button onclick="toggleContactList()">
+                  <span id="dropdown_arrow" class="dropdown-arrow"></span>
+                </button>
+              </div>
+              <div id="contact_icons" class="contacts-icons d-none"></div>
+              <div id="contact_list" class="contacts-list d-none">
+                <ul id="contact_ul"></ul>
+              </div>
+            </div>
+            <div class="field-description">
+              <span>Category<span class="required">*</span></span>
+              <div id="category_dropdown" class="dropdown">
+                <span id="selected_category">Select task category</span>
+                <button onclick="toggleCategories()">
+                  <span id="category_dropdown_arrow" class="dropdown-arrow"></span>
+                </button>
+              </div>
+              <div id="category_list" class="category-list d-none">
+                <ul id="categories">
+                  <li onclick="selectCategory(this)">Technical task</li>
+                  <li onclick="selectCategory(this)">User story</li>
+                </ul>
+              </div>
+            </div>
+            <div class="subtask-field-description">
+              <label for="subtask">Subtasks</label>
+              <div id="subtask_wrapper" class="subtask-wrapper">
+                <input id="subtask" class="subtask-input" type="text" placeholder="Add new subtask"
+                  onfocus="activateSubtask()" onblur="deactivateSubtask(event)" />
+                <div id="subtask_actions" class="subtask-actions">
+                  <button onclick="clearSubtaskInput()" class="subtask-close-btn" title="Cancel" type="button"></button>
+                  <div class="subtask-btn-divider"></div>
+                  <button onclick="addSubtask()" class="subtask-submit-btn" title="Add" type="button"></button>
+                </div>
+              </div>
+              <div class="added-tasks">
+                <ul id="subtask_list"></ul>
+              </div>
+            </div>
+          </section>
+        </section>
+        <section class="bottom-container">
+          <p><span class="required">*</span>This field is required</p>
+          <div class="buttons">
+            <button onclick="clearTaskInput()">
+              Clear
+              <div class="clear-btn"></div>
+            </button>
+            <button onclick="addTaskBoard()" id="addTask">
+              change Task
+              <img src="../assets/img/check.svg"
+                alt="a button indicating to save the task typed into the input field" />
+            </button>
+          </div>
+        </section>
+      </section>
+    </dialog>
+
+
+
   </main>
   <footer>
     <a id="summary_tab_mobile" href="summary.html" class="footer-menu-elements" onclick="setMobileTabFocus('summary')">
@@ -146,6 +255,10 @@
     </a>
   </footer>
 
+ 
+    <script src="../scripts/contacts-overview.js"></script>
+    <script src="../scripts/contacts.js"></script>
+ <script src="../scripts/add-task.js"></script>
 
 
 </body>

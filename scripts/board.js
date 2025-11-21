@@ -11,6 +11,28 @@ let boardPos = {
 
 let desiredPos = null;
 
+const dialogBoardTaskRev = {
+    dialog: document.getElementById("dialaogBoardTask"),
+    dialaogBoardTask: document.getElementById("dialaogBoardTask"),
+    task_title: document.getElementById("task_title"),
+    task_description: document.getElementById("task_description"),
+    due_date: document.getElementById("due_date"),
+    assigned_to: document.getElementById("assigned_to"),
+    dropdown_arrow: document.getElementById("dropdown_arrow"),
+    contact_icons: document.getElementById("contact_icons"),
+    contact_list: document.getElementById("contact_list"),
+    contact_ul: document.getElementById("contact_ul"),
+    category_dropdown: document.getElementById("category_dropdown"),
+    selected_category: document.getElementById("selected_category"),
+    category_dropdown_arrow: document.getElementById("category_dropdown_arrow"),
+    category_list: document.getElementById("category_list"),
+    categories: document.getElementById("categories"),
+    subtask_wrapper: document.getElementById("subtask_wrapper"),
+    subtask: document.getElementById("subtask"),
+    subtask_actions: document.getElementById("subtask_actions"),
+    subtask_list: document.getElementById("subtask_list")
+}
+
 /**
  * Loads tasks and contacts from the database, initializes the board,
  * and renders the UI.
@@ -185,14 +207,14 @@ function renderTodos(status) {
  * @returns {string} - Das HTML-Element als String.
  */
 function renderTask(todo, status) {
-    return `<div draggable="true" id="toDo${todo.id}" ondragstart="startDragging('${todo.id}', '${todo.status}')" ondragend="stopDragging('${todo.id}')" class="todo">
+    return `<div draggable="true" id="toDo${todo.id}" onclick="showDialogTask('${todo.id}')" ondragstart="startDragging('${todo.id}', '${todo.status}')" ondragend="stopDragging('${todo.id}')" class="todo">
                 <div class="boardMoveToIcon onlyMobile" onclick="openBoardMoveToOverlay(event)">
                     <img src="../assets/img/swap_horiz.svg" alt="Move To Icon">
                 </div>
 
                 ${renderMobileMoveAction(todo, status)}
 
-                <div class="taskStatus ${todo.category}">${todo.category}</div>
+                <div class="taskStatus ${todo.category.toLowerCase().replace(/ /g, "-")}">${todo.category}</div>
                 <div class="taskTitle"> ${todo.title}</div>
                 <div class="taskDescription"> ${todo.description}</div>
                 <div class="subtasks"> ${setProgress(todo.subtasks)}</div>
@@ -202,12 +224,31 @@ function renderTask(todo, status) {
             </div>`;
 }
 
+
+function showDialogTask(id) {
+    const todo = todos.find(t => t.id === id);
+     
+    currentDraggedElement = id;
+    dialogBoardTaskRev.dialog.showModal();
+    dialogBoardTaskRev.task_title.value = todo.title;
+    dialogBoardTaskRev.task_description.value = todo.description;
+    dialogBoardTaskRev.due_date.value = todo.date;
+    setPrioColor(document.querySelector(`.txt-img.${todo.priority}`));
+    selectCategory1(todo.category);
+}
+
+function selectCategory1(categoryText) {
+    let placeholder = document.getElementById('selected_category');
+    placeholder.textContent = categoryText;
+}
+
 /**
  * generate the html Tag for the Progress Bar of an Subtask for an task
  * @param {Object} subtasks 
  * @returns the render html Tag of the Progress
  */
 function setProgress(subtasks) {
+    if (subtasks == null) { return ""; }
     let subDone = "1";
     let subTotal = subtasks.length;
 
@@ -315,19 +356,47 @@ document.addEventListener('click', () => {
 function assignedUserAvatar(user) {
     if (user == null) return "";
 
+    const maxUser = 3;
     const users = Array.isArray(user) ? user : [user];
 
     let output = `<div class="AvatarArray">`;
-    for (let i = 0; i < users.length; i++) {
-        const contact = contactUser[users[i]];
-        if (!contact) continue;
 
-        output += `<div class="contactAvater" style="background-color:${contact.color}"> 
-                      ${getUserItem(contact.name)} 
-                   </div>`;
+    if (users.length > maxUser) {
+        for (let i = 0; i < maxUser; i++) {
+            const contact = contactUser[users[i]];
+            if (!contact) continue;
+            output += `<div class="contactAvater" style="background-color:${contact.color}"> 
+                          ${getUserItem(contact.name)} 
+                       </div>`;
+        }
+
+        const diff = users.length - maxUser;
+        output += `<div class="contactAvater" style="background-color:gray; color:white;">+${diff}</div>`;
+    } else {
+        for (let i = 0; i < users.length; i++) {
+            const contact = contactUser[users[i]];
+            if (!contact) continue;
+
+            output += `<div class="contactAvater" style="background-color:${contact.color}"> 
+                          ${getUserItem(contact.name)} 
+                       </div>`;
+        }
     }
+
     output += "</div>";
     return output;
+}
+
+async function addTaskBoard() {
+    let task = getTaskInput();
+    
+    if (!checkIfTaskIsValid(task)) {
+        return;
+    }
+
+    dialogBoardTaskRev.dialog.close()
+    await patchData('tasks/' + currentDraggedElement, task);
+    onloadFuncBoard();
 }
 
 /**
@@ -429,3 +498,6 @@ function removePreview(columnId, ev) {
 }
 
 
+document.addEventListener("DOMContentLoaded", () => {
+    onloadFuncBoard();
+});
