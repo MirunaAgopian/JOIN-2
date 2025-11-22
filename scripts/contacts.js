@@ -224,3 +224,15 @@ function showEditContainerMobile(event){
 function closeEditContainerMobile(){
     document.getElementById('edit_mobile_container').classList.add('hidden');
 }
+
+function changeIconMobile(id){
+    document.getElementById(id).src = '../assets/img/edit_contact_hover.svg';
+}
+
+function showEditDialogMobile(){
+    let name = document.getElementById('name_data').innerText;
+    let mail = document.getElementById('mail_data').innerText;
+    let initials = getUserItem(name);
+    document.getElementById('img_edit_mobile').src = '../assets/img/edit_contact.svg';
+    renderEditDialog(mail, initials);
+}

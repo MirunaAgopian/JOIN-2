@@ -198,7 +198,11 @@ main{
         padding-right: 16px;
         position: fixed;
         left: 0px;
-        overflow-y: auto;
+        overflow-y: scroll;
+    }
+
+    .contacts-content::-webkit-scrollbar {
+        display: none;
     }
 
     .contacts-list{
