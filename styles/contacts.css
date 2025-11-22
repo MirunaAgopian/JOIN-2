@@ -192,12 +192,13 @@ main{
     .contacts-content{
         display: none;
         width: 100%;
-        height: 100vh;
+        height: calc(100vh - 102px);
         padding-top: 150px;
         padding-left: 16px;
         padding-right: 16px;
         position: fixed;
         left: 0px;
+        overflow-y: auto;
     }
 
     .contacts-list{
