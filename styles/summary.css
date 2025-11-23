@@ -1,5 +1,5 @@
 /* Header styling */
-header {
+/* header {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -118,7 +118,7 @@ nav p {
 .desktop-submenu a:hover, .mobile-submenu a:hover {
     background-color: #2a3d59;
     transform: scale(1.015);
-}
+} */
 
 /* Styling of the mobile overlay */
 .mobile-overlay {
@@ -155,7 +155,7 @@ nav p {
 }
 
 /* Aside styling */
-aside {
+/* aside {
     background-color: #2a3647;
     padding: 60px 0;
     width: 200px;
@@ -231,7 +231,7 @@ aside a, p {
 .legal-notice-container a:hover {
     color: #29ABE2;
     font-size: 17px;
-}
+} */
 
 /* Main styling*/
 
@@ -420,7 +420,7 @@ h4 {
     width: 100%;
 }
 
-footer {
+/* footer {
     display: none;
     justify-content: space-between;
     align-items: center;
@@ -453,7 +453,7 @@ footer {
 
 .footer-menu-elements.active img {
   filter: brightness(0) invert(1);
-}
+} */
 
 
 /* Hover effects */
@@ -490,7 +490,7 @@ footer {
 /* Media queries */
 
 @media (max-width: 1800px){
-   nav,
+   /* nav, */
    .main-content {
     margin-left: 200px;
     padding-left: 20px;
@@ -542,13 +542,13 @@ footer {
 }
 
 @media (max-width: 850px) {
-    header {
+    /* header {
         z-index: 100;
     }
 
     aside {
         display: none;
-    }
+    } */
 
     .main-content {
         margin-top: 80px;
@@ -578,11 +578,12 @@ footer {
         width: 100%;
     }
 
-    nav, .main-content {
+    /* nav, */
+    .main-content {
         margin-left: 0;
     }
 
-    nav p {
+    /* nav p {
         display: none;
     }
 
@@ -605,7 +606,7 @@ footer {
 
     .footer-menu-elements {
         transform: scale(0.8);
-    }
+    } */
 }
 
 @media(max-width:550px) {
