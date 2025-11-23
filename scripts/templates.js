@@ -1,6 +1,19 @@
+/**
+ * This function returns the html tag with information for operator
+ * 
+ * @param {string} text - info string
+ * @returns - span tag with info for operator
+ */
 function getDialogMsgTemplate(text){
     return `<span>${text}</span>`;}
 
+/**
+ * This function ist used to show the the contact data on contacts.html if a contact is clicked on list
+ * 
+ * @param {object} obj - includes the data object of clicked contact person 
+ * @param {string} initials - includes the first characters of name and last name of clicked person 
+ * @returns - html tags for render function
+ */
 function getTemplateShowContact(obj, initials){
     return `<div class="contact-head">
                 <div class="contact-circle" style="background-color:${obj.color}">
@@ -27,6 +40,13 @@ function getTemplateShowContact(obj, initials){
             </div>`;
 }
 
+/**
+ * This function includes the html code for the edit dialog, if the edit button is clicked on indicated contact
+ * 
+ * @param {object} obj - includes the data object of showed contact person 
+ * @param {*} initials - includes the first characters of name and last name of showed person 
+ * @returns - html tags for render function
+ */
 function getTemplateEditDialog(obj, initials){
     return `<div class="add-contact-container">
                 <section class="add-contact-left-box">
