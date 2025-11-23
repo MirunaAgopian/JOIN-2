@@ -43,3 +43,20 @@ function checkValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
+
+/** 
+ *Renders the active user's avatar based on sessionStorage data.
+ * */
+function renderActiveAvatar() {
+    const storedUserName = JSON.parse(sessionStorage.getItem('loggedInUser'))?.name;
+    const avatarRev = document.getElementById("activeAvatar");
+
+    if (!avatarRev) { return; }
+
+    if (!storedUserName) {
+        avatarRev.innerHTML = "G";
+        return;
+    }
+
+    avatarRev.innerHTML = getUserItem(storedUserName);
+}
