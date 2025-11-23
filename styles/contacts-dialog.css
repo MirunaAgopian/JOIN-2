@@ -465,7 +465,7 @@ input::placeholder{
 
     form{
         width: 100%;
-        gap: 16px;
+        gap: 18px;
     }
 
     .overlay-center{
@@ -476,5 +476,9 @@ input::placeholder{
 @media(max-width:550px){
     .dialog-contact{
         min-width: 300px;
+    }
+
+    form{
+        gap: 12px;
     }
 }
