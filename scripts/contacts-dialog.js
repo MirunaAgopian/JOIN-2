@@ -1,9 +1,17 @@
+/**
+ * This function is used to open the dialog "add contact"
+ * 
+ */
 function openDialogAddContact(){
     const contentDialogContactRef = document.getElementById('add_contact_dialog');
     contentDialogContactRef.showModal();
     contentDialogContactRef.classList.add('dialogOpened');
 }
 
+/**
+ * This function close the dialog with slide effect on right side
+ * 
+ */
 async function closeDialogAddContact(){
     const contentDialogContactRef = document.getElementById('add_contact_dialog');
     contentDialogContactRef.classList.add('dialogClosed'); 

@@ -226,7 +226,11 @@ function closeEditContainerMobile(){
 }
 
 function changeIconMobile(id){
-    document.getElementById(id).src = '../assets/img/edit_contact_hover.svg';
+    if(id == 'img_edit_mobile'){
+        document.getElementById(id).src = '../assets/img/edit_contact_hover.svg';
+    }else if(id == 'img_delete_mobile'){
+        document.getElementById(id).src = '../assets/img/delete_contact_hover.svg';
+    }
 }
 
 function showEditDialogMobile(){
@@ -235,4 +239,10 @@ function showEditDialogMobile(){
     let initials = getUserItem(name);
     document.getElementById('img_edit_mobile').src = '../assets/img/edit_contact.svg';
     renderEditDialog(mail, initials);
+}
+
+function deleteContactMobileView(){
+    let mail = document.getElementById('mail_data').innerText;
+    document.getElementById('img_delete_mobile').src = '../assets/img/delete_contact.svg';
+    deleteContact(mail);
 }
