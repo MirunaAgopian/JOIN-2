@@ -33,7 +33,6 @@
 }
 
 /* Main styling*/
-
 main {
     display: flex;
     justify-content: center;
@@ -251,7 +250,6 @@ h4 {
 }
 
 /* Media queries */
-
 @media (max-width: 1800px){
    .main-content {
     margin-left: 200px;

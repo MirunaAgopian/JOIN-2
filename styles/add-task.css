@@ -1,26 +1,3 @@
-.main-content h1 {
-    align-self: flex-start;
-    margin: 20px 0;
-}
-
-
-.required {
-    color: red;
-    vertical-align: super;
-}
-
-.alert {
-    color: red;
-}
-
-input:focus {
-  outline: none;
-}
-
-textarea:focus {
-    outline:none;
-}
-
 .add-task-overlay {
     position: fixed;
     top: 0;
@@ -50,6 +27,11 @@ textarea:focus {
 .board-icon {
     height: 32px;
     width: 32px;
+}
+
+.main-content h1 {
+    align-self: flex-start;
+    margin: 20px 0;
 }
 
 .page-container {
@@ -87,14 +69,6 @@ textarea:focus {
     cursor: pointer;
 }
 
-.field-description.active input {
-    border: 2px solid #29abe2;
-}
-
-.field-description.alert input {
-    border: 1px solid red;
-}
-
 .field-description textarea {
     border: 1px solid #D1D1D1;
     padding: 20px 8px;
@@ -103,10 +77,6 @@ textarea:focus {
     resize: none;
     cursor: pointer;
     height: 200px;
-}
-
-textarea.active {
-    border: 2px solid #29abe2;
 }
 
 select {
@@ -172,10 +142,6 @@ select {
     background-color: white;
 }
 
-.dropdown.active {
-    border: 2px solid #29abe2;
-}
-
 .dropdown button {
     background-color: white;
     border: none;
@@ -192,21 +158,11 @@ select {
     width: 10px;
 }
 
-.dropdown-arrow.active {
-    transform: rotate(180deg);
-}
-
 .contacts-list {
     background-color: white;
     border: 1px solid #D1D1D1;
     padding: 8px 0;
     border-radius: 10px;
-}
-
-.contacts-list.active {
-  opacity: 1;
-  transform: translateY(0);
-  max-height: 200px; /* large enough to fit content */
 }
 
 .contacts-list ul {
@@ -300,14 +256,6 @@ select {
     cursor: pointer;
 }
 
-.subtask-field-description .subtask-input.active {
-    border: 2px solid #29abe2;
-}
-
-.subtask-input:focus{
-    outline: none;
-}
-
 .subtask-wrapper {
     display: flex;
     justify-content: space-between; 
@@ -332,13 +280,6 @@ select {
     transform: translateY(-50%);
     gap: 6px;
 }
-
-.subtask-actions.active {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .subtask-close-btn {
     background-image: url(../assets/img/cancel_x.svg);
     background-repeat: no-repeat;
@@ -517,238 +458,3 @@ button {
     color: white;
     font-weight: 800;
 }
-
-.subtask-edit[contenteditable="true"]:focus {
-  outline: none;
-  border: none; 
-}
-
-/* Hover effects and box styling */
-.txt-img:hover {
-    box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.2);
-}
-
-.txt-img.urgent.active {
-    background-color: #ff3d00;
-}
-
-.txt-img.urgent.active span {
-    color: white;
-}
-
-.urgent-img.active {
-    background-image: url(../assets/img/prio_urgent_white.svg);
-}
-
-.txt-img.medium.active {
-    background-color: #ffa800;
-}
-
-.txt-img.medium.active span {
-    color: white;
-}
-
-.medium-img.active {
-    background-image: url(../assets/img/prio_medium_white.svg);
-}
-
-.txt-img.low.active {
-    background-color: #7ae229;
-}
-
-.txt-img.low.active span {
-    color: white;
-}
-
-.low-img.active {
-    background-image: url(../assets/img/prio_low_white.svg);
-}
-
-.contacts-list li:hover {
-    background-color: #EEEEEE;
-    border-radius: 10px;
-}
-
-.category-list li:hover {
-    background-color: #EEEEEE;
-}
-
-.dropdown button:hover {
-    background-color: #EEEEEE;
-    border-radius: 50%;
-}
-
-.checkbox:hover {
-    height: 32px;
-    width: 32px;
-}
-
-.subtask-close-btn:hover,
-.subtask-submit-btn:hover {
-    background-color: #EEEEEE;
-    border-radius: 50%
-}
-
-.buttons button:first-child:hover{
-    box-shadow: 2px 2px 6px 2px rgba(0, 0, 0, 0.2);
-    color: #29abe2;
-    border: 1px solid #29abe2;
-}
-
-.buttons button:first-child:hover .clear-btn{
-    background-image: url(../assets/img/cancel_x_hover.svg);
-}
-
-.buttons button:nth-child(2):hover {
-    color: white;
-    background-color: #29abe2;
-    border: 1px solid #29abe2;
-}
-
-.subtask-edit-btn,
-.subtask-delete-btn,
-.subtask-btn-divider-secondary {
-  visibility: hidden;
-}
-
-.subtask-list:hover {
-    background-color: #EEEEEE;
-}
-
-.subtask-list:hover .subtask-edit-btn,
-.subtask-list:hover .subtask-delete-btn,
-.subtask-list:hover .subtask-btn-divider-secondary {
-  visibility: visible;
-}
-
-.subtask-edit-btn:hover,
-.subtask-delete-btn:hover {
-  background-size: 32px 32px;
-}
-
-.subtask-save-btn:hover,
-.subtask-delete-btn-secondary:hover {
-    background-color: #EEEEEE;
-    border-radius: 50%;
-    background-size: 28px 28px;
-}
-
-/* Media queries */
-
-@media(max-width: 1500px) {
-    .buttons {
-        width: 30%;
-    }
-
-    .bottom-container{
-        margin-top: 32px;
-    }
-}
-
-@media(max-width: 1220px){
-    .page-container {
-        gap: 16px;
-        font-size: 20px;
-    }
-
-    .priority-stages {
-        gap: 8px;
-    }
-
-    .field-description input, 
-    .field-description textarea,
-    .subtask-field-description input {
-        font-size: 20px;
-    }
-
-    select {
-        font-size: 20px;
-    }
-
-    .prio-img {
-        height: 20px;
-        width: 28px;
-    }
-
-    .txt-img {
-        padding: 16px 8px;
-    }
-}
-
-@media(max-width: 1050px) {
-    .buttons {
-        width: 40%;
-    }
-}
-
-@media(max-width: 850px) {
-    .bottom-container {
-        margin-bottom: 150px;
-    }
-}
-
-@media(max-width: 950px) {
-    .main-content h1 {
-        font-size: 54px;
-    }
-
-    .page-container {
-        font-size: 16px;
-    }
-
-    .field-description input, 
-    .field-description textarea,
-    .subtask-field-description input {
-        font-size: 16px;
-    }
-
-    select {
-        font-size: 16px;
-    }
-
-    .bottom-container {
-        font-size: 16px;
-    }
-
-   .buttons button {
-        padding: 12px;
-    }
-
-    .prio-img {
-        height: 18px;
-        width: 20px;
-    }
-}
-
-@media(max-width:650px){
-    .page-container {
-        flex-direction: column;
-    }
-
-    .bottom-container {
-        margin-bottom: 150px;
-        flex-direction: column;
-        gap: 18px;
-    }
-
-    .buttons:nth-child(2){
-        align-self: flex-end;
-        width: 60%;
-    }
-}
-
-@media(max-width: 450px){
-    .buttons:nth-child(2) {
-        width: 85%;
-    }
-
-    .txt-img {
-        padding: 14px 4px;
-    }
-
-    .prio-img {
-        height: 18px;
-        width: 16px;
-    }
-}
-
