@@ -69,23 +69,6 @@ async function processChanges() {
     updateHTML();
 }
 
-/** 
- *Renders the active user's avatar based on sessionStorage data.
- * */
-function renderActiveAvatar() {
-    const storedUserName = JSON.parse(sessionStorage.getItem('loggedInUser'))?.name;
-    const avatarRev = document.getElementById("activeAvatar");
-
-    if (!avatarRev) { return; }
-
-    if (!storedUserName) {
-        avatarRev.innerHTML = "G";
-        return;
-    }
-
-    avatarRev.innerHTML = getUserItem(storedUserName);
-}
-
 /**
  * Converts a user object into an array of task objects with status and position.
  * @param {Object} usersObj - Object containing tasks keyed by ID.
@@ -224,17 +207,68 @@ function renderTask(todo, status) {
             </div>`;
 }
 
+/**
+ * activate and deactivate the necessary CSS Files, which are responsible for the visibility of the dialog
+ * @param {string} theme ID of the selected CSS File
+ */
+function getCssTheme(theme) {
+    document.getElementById("cssAddTask").disabled = (theme != "cssAddTask");
+    document.getElementById("cssAddTaskBoard").disabled = (theme != "cssAddTask");
+    document.getElementById("cssEditTask").disabled = (theme != "cssEditTask");
+    document.getElementById("cssShowTask").disabled = (theme != "cssShowTask");
+}
 
+/**
+ * show the dialog to create a new Task
+ * @param {string} column name the column bzw. Status for the task
+ */
+function showDialogAddTask(column) {
+    clearTaskInput()
+    getCssTheme('cssAddTask');
+    document.getElementById('btnDialogLeftContent').innerHTML = "Cancel";
+    document.getElementById("btnDialogLeft").onclick = closeDialog;
+    document.getElementById('btnDialogRightContent').innerHTML = "Create Task";
+    document.getElementById("btnDialogRight").onclick = addDialogTask;
+    dialogBoardTaskRev.dialog.showModal();
+    startStatusColumn = column;
+}
+
+/**
+ * show the dialog with the Values of the selected Task
+ * @param {string} id ID of the task in the Database 
+ */
 function showDialogTask(id) {
     const todo = todos.find(t => t.id === id);
-     
+
+    getCssTheme('cssShowTask');
+
     currentDraggedElement = id;
     dialogBoardTaskRev.dialog.showModal();
     dialogBoardTaskRev.task_title.value = todo.title;
     dialogBoardTaskRev.task_description.value = todo.description;
     dialogBoardTaskRev.due_date.value = todo.date;
-    setPrioColor(document.querySelector(`.txt-img.${todo.priority}`));
+    document.getElementById("taskPriority").innerHTML = `${todo.priority} <img src="../assets/img/prio_${todo.priority}.svg" alt="Prirority of task">`;
+    document.getElementById("taskCategory").innerHTML = `<div class="taskStatus ${todo.category.toLowerCase().replace(/ /g, "-")}">${todo.category}</div>`;
+    document.getElementById('btnDialogLeftContent').innerHTML = "Delete";
+    document.getElementById("btnDialogLeft").onclick = deleteTask;
+    document.getElementById('btnDialogRightContent').innerHTML = "Edit";
+    document.getElementById("btnDialogRight").onclick = showDialogEdit;
     selectCategory1(todo.category);
+}
+
+/** Delete the actual Task from Database, close Dialog and update the Board  */
+async function deleteTask(){
+    await await deleteData(`/tasks/${currentDraggedElement}`);
+
+    closeDialog();
+    onloadFuncBoard();
+}
+
+/** Edit the actual Tas in Dialog */
+function showDialogEdit(){
+    getCssTheme('cssEditTask');
+    document.getElementById('btnDialogLeftContent').innerHTML = "OK";
+    document.getElementById("btnDialogLeft").onclick = editDialogTask;
 }
 
 function selectCategory1(categoryText) {
@@ -387,9 +421,25 @@ function assignedUserAvatar(user) {
     return output;
 }
 
-async function addTaskBoard() {
+/** add new Task to Databas */
+async function addDialogTask() {
     let task = getTaskInput();
-    
+
+    if (!checkIfTaskIsValid(task)) {
+        return;
+    }
+
+    task.status = startStatusColumn;
+
+    dialogBoardTaskRev.dialog.close()
+    //await patchData('tasks/' + currentDraggedElement, task);
+    onloadFuncBoard();
+}
+
+/** update task */
+async function editDialogTask() {
+    let task = getTaskInput();
+
     if (!checkIfTaskIsValid(task)) {
         return;
     }
@@ -497,6 +547,10 @@ function removePreview(columnId, ev) {
     container.classList.remove("drag-area-highlight");
 }
 
+function closeDialog(){
+    dialogBoardTaskRev.dialog.close();
+    getCssTheme('');
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     onloadFuncBoard();

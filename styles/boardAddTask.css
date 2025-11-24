@@ -1,0 +1,35 @@
+.priority-stages {
+    display: flex;
+}
+
+#taskPrirority {
+    display: none;
+}
+
+#taskCategory {
+    display: none;
+}
+
+.crate-btn {
+    background-image: url(../assets/img/check.svg);
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 8px;
+    /* Abstand zum Text */
+    vertical-align: middle;
+}
+
+#btnDialogRight{
+    width: auto;
+}
+
+.notForShow {
+    display: block;
+}
+
+#taskPriority{
+    display: none;
+}

@@ -7,10 +7,14 @@
   <title>Join - Board</title>
   <link rel="icon" href="../assets/img/join_logo.svg" />
   <link rel="stylesheet" href="../style.css" />
-  <link rel="stylesheet" href="../styles/add-task.css">
-  <link rel="stylesheet" href="../styles/summary.css" />
   <link rel="stylesheet" href="../styles/navigation.css">
+  <link rel="stylesheet" href="../styles/summary.css" />
   <link rel="stylesheet" href="../styles/board.css">
+  <link rel="stylesheet" href="../styles/add-task-interactions.css">
+  <link rel="stylesheet" href="../styles/add-task.css" id="cssAddTask" disabled>
+  <link rel="stylesheet" href="../styles/boardAddTask.css" id="cssAddTaskBoard" disabled>
+  <link rel="stylesheet" href="../styles/boardEditTask.css" id="cssEditTask" disabled>
+  <link rel="stylesheet" href="../styles/boardShowTask.css" id="cssShowTask" disabled>
   <script src="../script.js" defer></script>
   <script src="../scripts/summary.js" defer></script>
   <script src="../scripts/firebase.js" defer></script>
@@ -86,7 +90,7 @@
         <section id="toDo" class="column">
           <div class="columnHeader">
             <h2>To do</h2>
-            <button>+</button>
+            <button onclick="showDialogAddTask('boardToDo')">+</button>
           </div>
           <div class="drag-area" id="boardToDo" ondrop="moveTo('boardToDo', event)"
             ondragleave="removePreview('boardToDo', event)" ondragenter="renderTaskPreview(event)"
@@ -97,7 +101,7 @@
         <section id="inProgress" class="column">
           <div class="columnHeader">
             <h2>In progress</h2>
-            <button>+</button>
+            <button onclick="showDialogAddTask('boardProgress')">+</button>
           </div>
           <div class="drag-area" id="boardProgress" ondrop="moveTo('boardProgress', event)"
             ondragleave="removePreview('boardProgress', event)" ondragenter="renderTaskPreview(event)"
@@ -108,7 +112,7 @@
         <section id="Feedback" class="column">
           <div class="columnHeader">
             <h2>Await Feedback</h2>
-            <button>+</button>
+            <button onclick="showDialogAddTask('boardFeedback')">+</button>
           </div>
           <div class="drag-area" id="boardFeedback" ondrop="moveTo('boardFeedback', event)"
             ondragleave="removePreview('boardFeedback', event)" ondragenter="renderTaskPreview(event)"
@@ -130,18 +134,20 @@
 
     <dialog id="dialaogBoardTask">
 
-      <section class="main-content">
-        <h1>Change Task</h1>
+      <section class="main-DialogContent">
+        <div id="taskCategory"></div>
+        <h1 class="taskHeader">Add Task</h1>
+        <button id="closeDialogBtn" class="close-btn" onclick="closeDialog()">✖</button>
         <section class="page-container">
           <section class="task-container">
             <div class="field-description">
-              <label for="task_title">Title<span class="required">*</span></label>
+              <label for="task_title" class="notForShow">Title<span class="required">*</span></label>
               <input onfocus="handleFocus(event)" oninput="handleInput(event)" onblur="handleBlur(event)" type="text"
                 id="task_title" required placeholder="Enter a title" />
               <div class="alert-container"></div>
             </div>
             <div class="field-description">
-              <label for="task_description">Description</label>
+              <label for="task_description" class="notForShow">Description</label>
               <textarea onfocus="handleTextarea(true)" onblur="handleTextarea(false)" name="description"
                 id="task_description" placeholder="Enter a description"></textarea>
             </div>
@@ -153,83 +159,92 @@
             </div>
           </section>
           <div class="separation-bar"></div>
-          <section class="priority-container">
-            <div class="field-description">
-              <span>Priority</span>
-              <div class="priority-stages">
-                <div onclick="setPrioColor(this)" class="txt-img urgent">
-                  <span>Urgent</span>
-                  <div class="urgent-img prio-img"></div>
-                </div>
-                <div onclick="setPrioColor(this)" class="txt-img medium active">
-                  <span>Medium</span>
-                  <div class="medium-img prio-img active"></div>
-                </div>
-                <div onclick="setPrioColor(this)" class="txt-img low">
-                  <span>Low</span>
-                  <div class="low-img prio-img"></div>
-                </div>
-              </div>
-            </div>
-            <div class="field-description">
-              <span>Assigned to</span>
-              <div class="dropdown" id="assigned_to">
-                <span>Select contacts to assign</span>
-                <button onclick="toggleContactList()">
-                  <span id="dropdown_arrow" class="dropdown-arrow"></span>
-                </button>
-              </div>
-              <div id="contact_icons" class="contacts-icons d-none"></div>
-              <div id="contact_list" class="contacts-list d-none">
-                <ul id="contact_ul"></ul>
-              </div>
-            </div>
-            <div class="field-description">
-              <span>Category<span class="required">*</span></span>
-              <div id="category_dropdown" class="dropdown">
-                <span id="selected_category">Select task category</span>
-                <button onclick="toggleCategories()">
-                  <span id="category_dropdown_arrow" class="dropdown-arrow"></span>
-                </button>
-              </div>
-              <div id="category_list" class="category-list d-none">
-                <ul id="categories">
-                  <li onclick="selectCategory(this)">Technical task</li>
-                  <li onclick="selectCategory(this)">User story</li>
-                </ul>
-              </div>
-            </div>
-            <div class="subtask-field-description">
-              <label for="subtask">Subtasks</label>
-              <div id="subtask_wrapper" class="subtask-wrapper">
-                <input id="subtask" class="subtask-input" type="text" placeholder="Add new subtask"
-                  onfocus="activateSubtask()" onblur="deactivateSubtask(event)" />
-                <div id="subtask_actions" class="subtask-actions">
-                  <button onclick="clearSubtaskInput()" class="subtask-close-btn" title="Cancel" type="button"></button>
-                  <div class="subtask-btn-divider"></div>
-                  <button onclick="addSubtask()" class="subtask-submit-btn" title="Add" type="button"></button>
+          <div class="priority-container">
+            <section class="priority">
+              <div class="field-description">
+                <span>Priority</span>
+                <span id="taskPriority"></span>
+                <div class="priority-stages">
+                  <div onclick="setPrioColor(this)" class="txt-img urgent">
+                    <span>Urgent</span>
+                    <div class="urgent-img prio-img"></div>
+                  </div>
+                  <div onclick="setPrioColor(this)" class="txt-img medium active">
+                    <span>Medium</span>
+                    <div class="medium-img prio-img active"></div>
+                  </div>
+                  <div onclick="setPrioColor(this)" class="txt-img low">
+                    <span>Low</span>
+                    <div class="low-img prio-img"></div>
+                  </div>
                 </div>
               </div>
-              <div class="added-tasks">
-                <ul id="subtask_list"></ul>
+            </section>
+            <section class="assigned">
+              <div class="field-description">
+                <span>Assigned to</span>
+                <div class="dropdown" id="assigned_to">
+                  <span>Select contacts to assign</span>
+                  <button onclick="toggleContactList()">
+                    <span id="dropdown_arrow" class="dropdown-arrow"></span>
+                  </button>
+                </div>
+                <div id="contact_icons" class="contacts-icons d-none"></div>
+                <div id="contact_list" class="contacts-list d-none">
+                  <ul id="contact_ul"></ul>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+            <section class="category">
+              <div class="field-description">
+                <span>Category<span class="required">*</span></span>
+                <div id="category_dropdown" class="dropdown">
+                  <span id="selected_category">Select task category</span>
+                  <button onclick="toggleCategories()">
+                    <span id="category_dropdown_arrow" class="dropdown-arrow"></span>
+                  </button>
+                </div>
+                <div id="category_list" class="category-list d-none">
+                  <ul id="categories">
+                    <li onclick="selectCategory(this)">Technical task</li>
+                    <li onclick="selectCategory(this)">User story</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+            <section class="subtask">
+              <div class="subtask-field-description">
+                <label for="subtask">Subtasks</label>
+                <div id="subtask_wrapper" class="subtask-wrapper">
+                  <input id="subtask" class="subtask-input" type="text" placeholder="Add new subtask"
+                    onfocus="activateSubtask()" onblur="deactivateSubtask(event)" />
+                  <div id="subtask_actions" class="subtask-actions">
+                    <button onclick="clearSubtaskInput()" class="subtask-close-btn" title="Cancel"
+                      type="button"></button>
+                    <div class="subtask-btn-divider"></div>
+                    <button onclick="addSubtask()" class="subtask-submit-btn" title="Add" type="button"></button>
+                  </div>
+                </div>
+                <div class="added-tasks">
+                  <ul id="subtask_list"></ul>
+                </div>
+              </div>
+            </section>
         </section>
         <section class="bottom-container">
           <p><span class="required">*</span>This field is required</p>
           <div class="buttons">
-            <button onclick="clearTaskInput()">
-              Clear
+            <button id="btnDialogLeft" onclick="leftBtnAction()">
+              <span id="btnDialogLeftContent">Template</span>
               <div class="clear-btn"></div>
             </button>
-            <button onclick="addTaskBoard()" id="addTask">
-              change Task
-              <img src="../assets/img/check.svg"
-                alt="a button indicating to save the task typed into the input field" />
+            <button id="btnDialogRight" onclick="rightBtnAction()" id="addTask">
+              <span id="btnDialogRightContent">Template</span>
+              <div class="crate-btn"></div>
             </button>
           </div>
         </section>
+        </div>
       </section>
     </dialog>
 
@@ -256,10 +271,10 @@
     </a>
   </footer>
 
- 
-    <script src="../scripts/contacts-overview.js"></script>
-    <script src="../scripts/contacts.js"></script>
- <script src="../scripts/add-task.js"></script>
+
+  <script src="../scripts/contacts-overview.js"></script>
+  <script src="../scripts/contacts.js"></script>
+  <script src="../scripts/add-task.js"></script>
 
 
 </body>
