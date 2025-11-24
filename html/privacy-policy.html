@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../styles/navigation.css">
     <link rel="stylesheet" href="../styles/privacy-policy.css" />
   </head>
-  <body class="privacy-policy">
+  <body onload="renderActiveAvatar()" class="privacy-policy">
     <header>
       <nav>
         <img
@@ -26,7 +26,7 @@
               src="../assets/img/help_btn.svg"
               alt="a help button displaying a question mark"
           /></a>
-          <button class="nav-user-btn" onclick="toggleSubmenu()">G</button>
+          <button id="activeAvatar" class="nav-user-btn" onclick="toggleSubmenu()">G</button>
         </div>
         <!-- Submenu, desktop version -->
         <div id="submenu" class="desktop-submenu d-none">

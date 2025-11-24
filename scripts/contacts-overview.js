@@ -17,6 +17,7 @@ async function onloadFuncContact() {
     elementContactRev.contacts.innerHTML = "";
 
     renderContacts(contactList, arrOfContacts); 
+    renderActiveAvatar();
 }
 
 /**

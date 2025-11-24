@@ -10,6 +10,7 @@ window.onload = async () => {
   await createArrayOfContacts();
   console.log("Contacts loaded:", joinContacts);
   setDateStart();
+  renderActiveAvatar();
 };
 
 function setPrioColor(element) {
