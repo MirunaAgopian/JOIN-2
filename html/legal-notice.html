@@ -7,10 +7,11 @@
     <link rel="icon" href="../assets/img/join_logo.svg" />
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../styles/summary.css" />
-    <link rel="stylesheet" href="../styles/navigation.css">
-    <link rel="stylesheet" href="../styles/privacy-policy.css">
+    <link rel="stylesheet" href="../styles/navigation.css" />
+    <link rel="stylesheet" href="../styles/privacy-policy.css" />
+    <link rel="stylesheet" href="../styles/legal-notice.css" />
   </head>
-  <body onload="renderActiveAvatar()">
+  <body onload="renderActiveAvatar()" class="legal-notice">
     <header>
       <nav>
         <img
@@ -26,7 +27,13 @@
               src="../assets/img/help_btn.svg"
               alt="a help button displaying a question mark"
           /></a>
-          <button id="activeAvatar" class="nav-user-btn" onclick="toggleSubmenu()">G</button>
+          <button
+            id="activeAvatar"
+            class="nav-user-btn"
+            onclick="toggleSubmenu()"
+          >
+            G
+          </button>
         </div>
         <!-- Submenu, desktop version -->
         <div id="submenu" class="desktop-submenu d-none">
@@ -38,7 +45,10 @@
             aria-label="Opens Privacy Policy section"
             >Privacy Policy</a
           >
-          <a onclick="logOut()" href="#" aria-label="Logs the user out of the application"
+          <a
+            onclick="logOut()"
+            href="#"
+            aria-label="Logs the user out of the application"
             >Log out</a
           >
         </div>
@@ -53,7 +63,10 @@
             aria-label="Opens Privacy Policy section"
             >Privacy Policy</a
           >
-          <a onclick="logOut()" href="#" aria-label="Logs the user out of the application"
+          <a
+            onclick="logOut()"
+            href="#"
+            aria-label="Logs the user out of the application"
             >Log out</a
           >
         </div>
@@ -134,19 +147,31 @@
     </aside>
     <main>
       <div class="main-content">
-        <h1 style="margin-left: 300px">Legal Notice</h1>
-
+        <section class="title-arrow">
+          <h1 class="privacy-policy-title">Legal Notice</h1>
+          <a href="#"
+            ><img
+              onclick="goBack()"
+              id="left_arrow"
+              class="arrow-left"
+              src="../assets/img/arrow_left_line_default.svg"
+              alt="left arrow leading to the summary page"
+          /></a>
+        </section>
         <h3>Imprint</h3>
         <ul>
-          <li>Max Mustermann</li>
+          <li>Miruna Agopian</li>
+          <li>Patrick Schütte</li>
+          <li>Benjamin Mahalbasic</li>
+          <br />
           <li>Musterstrasse 1</li>
-          <li>12345 Musterstadt</li>
+          <li>01234 Musterstadt</li>
         </ul>
         <h5>Exploring the Board</h5>
-        <p>
-          Email:
-          <a href="mailto:mustermann@example.com">mustermann@example.com</a>
-        </p>
+        <p>Email:</p>
+        <a href="mailto:agopian.miruna@yahoo.com">agopian.miruna@yahoo.com</a>
+        <a href="mailto:patrick18685@gmail.com">patrick18685@gmail.com</a>
+        <a href="mailto:benbasic@outlook.de">benbasic@outlook.de</a>
 
         <h5>Acceptance of terms</h5>
         <p>
@@ -227,11 +252,12 @@
           use of
           <a href="http://join-1340.developerakademie.net">Join</a> and/or your
           breach of this Legal Notice.
-        </p>
-        <p>
-          For any questions or notices, please contact us at
-          <a href="mailto:mustermann@example.com">mustermann@example.com.</a>
-        </p>
+        </p> <br />
+        <p>For any questions or notices, please contact us at:</p> <br/>
+        <a href="mailto:agopian.miruna@yahoo.com">agopian.miruna@yahoo.com</a>
+        <a href="mailto:patrick18685@gmail.com">patrick18685@gmail.com</a>
+        <a href="mailto:benbasic@outlook.de">benbasic@outlook.de</a>
+        <br />
         <p>Date: 01.11.2025</p>
       </div>
       >
