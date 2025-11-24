@@ -224,7 +224,8 @@ footer {
 
 .footer-menu-elements.active {
   background-color: #091931;
-  padding: 16px;
+  height: 80px;
+  width: 100px;
   border-radius: 20px;
 }
 

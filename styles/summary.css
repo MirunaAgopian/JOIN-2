@@ -304,51 +304,45 @@ h4 {
 @media (max-width: 850px) {
     .main-content {
         margin-top: 80px;
+        margin-left: 0;
+        margin-bottom: 120px;
     }
 
     .page-title {
         flex-direction: column;
         align-items: flex-start;
-        transform: scale(0.7);
+        margin-top: 40px;
     }
 
-    .page-info {
-        transform: scale(0.7);
-        margin-top: -100px;
+    .page-title h1 {
+        font-size: 40px;
+    }
+
+    .page-info h2 {
+        font-size: 36px;
+    }
+
+    .page-title span {
+        font-size: 20px;
     }
 
     .divider-line {
-        width: 90px;    
+        width: 110px;    
         height: 4px;
-    }
-
-    .page-info {
-        justify-content: center;
+        order: 1;
     }
 
     .stats {
         width: 100%;
+        gap: 20px;
     }
 
-    .main-content {
-        margin-left: 0;
+    .to-do-container, .done-container {
+        padding: 28px 35px;
     }
 }
 
 @media(max-width:550px) {
-    h1 {
-        font-size: 47px;
-    }
-
-    .page-title {
-        transform: scale(0.8);
-        margin: 40px 0;
-    }
-
-    .page-info {
-        transform: scale(0.8);
-    }
-
     .page-title span {
     font-size: 24px;
     }
@@ -374,7 +368,11 @@ h4 {
     }
 
     .to-do-container, .done-container {
-        padding: 24px 30px;
+        padding: 24px 28px;
+    }
+
+    .done-container {
+        gap: 25px;
     }
 }
 
@@ -395,10 +393,6 @@ h4 {
     display: block;
    }
 
-   .to-do-container, .done-container {
-        padding: 16px 10px;
-    }
-
     h2 {
         font-size: 40px;
     }
@@ -410,17 +404,37 @@ h4 {
     h4 {
         font-size: 12px;
     }
+
+     .to-do-container, .done-container {
+        padding: 20px 24px;
+    }
+
 }
 
-@media(max-width: 350px) {
+@media(max-width: 380px) {
+    .to-do {
+        gap: 8px;
+    }
+
     .urgent-icon-wrapper {
-        height: 45px;
-        width: 80px;
+        height: 48px;
+        width: 52px;
     }
 
     .urgent-icon {
         height: 28px;
         width: 28px;
     }
+
+     .to-do-container, .done-container {
+        padding: 16px 10px;
+    }
+
+    .tasks .to-do-container {
+        padding: 16px 18px;
+        gap: 2px;
+    }
 }
+
+
 
