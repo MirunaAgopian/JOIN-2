@@ -34,7 +34,13 @@ body.legal-notice p:not(:is(aside p)):not(:is(footer p)){
 }
 
 @media(max-width: 850px) {
-    .main-content h1 {
+    .title-arrow {
         margin-top: 20px;
+    }
+}
+
+@media(max-width: 400px) {
+    .main-content h1 {
+        font-size: 50px;
     }
 }

@@ -78,6 +78,10 @@ footer {
     .policies-container {
         padding: 12px 8px;
     }
+
+     .privacy-policy-title {
+        font-size: 50px;
+    }
 }
 
 @media(max-width: 360px) {
