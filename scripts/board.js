@@ -246,6 +246,7 @@ function showDialogTask(id) {
     dialogBoardTaskRev.dialog.showModal();
     dialogBoardTaskRev.task_title.value = todo.title;
     dialogBoardTaskRev.task_description.value = todo.description;
+    autoResizeTextarea(dialogBoardTaskRev.task_description);
     dialogBoardTaskRev.due_date.value = todo.date;
     document.getElementById("taskPriority").innerHTML = `${todo.priority} <img src="../assets/img/prio_${todo.priority}.svg" alt="Prirority of task">`;
     document.getElementById("taskCategory").innerHTML = `<div class="taskStatus ${todo.category.toLowerCase().replace(/ /g, "-")}">${todo.category}</div>`;
@@ -254,7 +255,34 @@ function showDialogTask(id) {
     document.getElementById('btnDialogRightContent').innerHTML = "Edit";
     document.getElementById("btnDialogRight").onclick = showDialogEdit;
     selectCategory1(todo.category);
+    console.log(todo);
+    getAssignedUser(todo);
+
+    let container = document.getElementById("contact_ul");
+    contactUser.innerHTML = todo.assignedTo[0];
+
+    //selectedContacts = todo.assignedTo;
 }
+
+function autoResizeTextarea(element) {
+    element.style.height = "auto";
+    element.style.height = element.scrollHeight + 3 + "px"; 
+}
+
+function getAssignedUser(todo) {
+  for (let x = 0; x < todo.assignedTo.length; x++) {
+    // Hole das passende Element aus dem DOM
+    const element = document.querySelector(
+      `div[onclick*="${todo.assignedTo[x]}"]`
+    );
+
+    if (element) {
+      // Führe die Funktion direkt aus
+      setCheckMark(element, todo.assignedTo[x]);
+    }
+  }
+}
+
 
 /** Delete the actual Task from Database, close Dialog and update the Board  */
 async function deleteTask(){
@@ -432,7 +460,7 @@ async function addDialogTask() {
     task.status = startStatusColumn;
 
     dialogBoardTaskRev.dialog.close()
-    //await patchData('tasks/' + currentDraggedElement, task);
+    await patchData('tasks/' + currentDraggedElement, task);
     onloadFuncBoard();
 }
 

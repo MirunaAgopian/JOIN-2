@@ -146,15 +146,30 @@ button {
     width: 20%;
 }
 
-#category {
+.category {
     display: none;
 }
 
 .field-description {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    gap: 8px;
+    gap: 16px;
+    width: 100%;
 }
+
+.field-description label {
+    flex: 0 0 150px;
+    text-align: left;
+}
+
+.field-description input {
+    flex: 1;
+    pointer-events: auto;
+    padding: 8px;
+    border-radius: 4px;
+}
+
 
 .field-description span {
     display: inline-flex;
@@ -170,8 +185,8 @@ button {
     max-width: 1440px;
 }
 
-.page-container{
-        box-sizing: border-box;
+.page-container {
+    box-sizing: border-box;
     margin: 0;
     scroll-behavior: smooth;
     font-family: 'Cormorant Garamond';
@@ -181,19 +196,40 @@ button {
 }
 
 
-#dialaogBoardTask{
+#dialaogBoardTask {
     width: 525px;
 }
 
 textarea {
-  width: 100%;              /* volle Breite */
-  height: auto;             /* Höhe nicht fix */
-  overflow: hidden;         /* keine Scrollbars */
-  white-space: pre-wrap;    /* Zeilenumbruch bei langen Texten */
-  word-wrap: break-word;    /* bricht Wörter um */
-  line-height: 1.4;         /* saubere Zeilenhöhe */
+    width: 100%;
+    /* volle Breite */
+    height: auto;
+    /* Höhe nicht fix */
+    overflow: hidden;
+    /* keine Scrollbars */
+    white-space: pre-wrap;
+    /* Zeilenumbruch bei langen Texten */
+    word-wrap: break-word;
+    /* bricht Wörter um */
+    line-height: 1.4;
+    /* saubere Zeilenhöhe */
 }
 
-#btnDialogRight{
+#btnDialogRight {
     display: block;
+}
+
+.contact-circle {
+    display: flex;
+    height: 50px;
+    width: 50px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: white;
+    border: 2px solid white;
+}
+
+#assigned_to {
+    display: none;
 }

@@ -223,3 +223,66 @@ textarea {
 .medium-img {
     background-image: url(../assets/img/prio_medium.svg);
 }
+
+
+/* ######################## Objekte 1:1 aus addTask.css ######################################################*/
+.dropdown {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #D1D1D1;
+    padding: 4px 8px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.dropdown-arrow {
+    display: inline-block;
+    background-image: url(../assets/img/arrow_drop_down.svg);
+    color: black;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 10px;
+    width: 10px;
+}
+
+.contact-circle {
+    display: flex;
+    height: 50px;
+    width: 50px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: white;
+    border: 2px solid white;
+}
+
+.checkbox {
+    background-image: url(../assets/img/check_button_unchecked.svg);
+    color: black;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 30px;
+    width: 30px;
+    margin-right: 16px;
+}
+
+.checkbox.checked {
+    background-image: url(../assets/img/check_button_checked.svg);
+}
+
+
+.subtask-actions.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.subtask-actions {
+    display: none;
+    gap: 6px;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    gap: 6px;
+}

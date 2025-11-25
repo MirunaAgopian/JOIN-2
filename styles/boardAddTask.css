@@ -33,3 +33,10 @@
 #taskPriority{
     display: none;
 }
+
+.priority,
+.assigned,
+.category,
+.subtask {
+    width: 100%;
+}
