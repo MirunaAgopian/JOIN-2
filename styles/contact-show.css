@@ -1,7 +1,7 @@
 .contact-show-design{
     display: flex;
     flex-direction: column;
-    gap: 48px;
+    gap: 40px;
     padding-bottom: 16px;
 }
 
@@ -128,7 +128,7 @@
 
 @media(max-width:850px){
     .contact-head{
-        padding-top: 60px;
+        padding-top: 40px;
         gap: 12px;
     }
 
