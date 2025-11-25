@@ -45,7 +45,9 @@ function createAddressBook(usersObj) {
 
 /**
  * Renders the contact list grouped by initial letters into the DOM.
+ * 
  * @param {Object} bookObj - The structured address book object.
+ * @param {Array} contactsArr - includes all contacts from firebase 
  */
 function renderContacts(bookObj, contactsArr) {
     const addressBook = bookObj.addressBook;
@@ -75,6 +77,12 @@ function renderContactLetter(letter) {
     return output;
 }
 
+/**
+ * This function is used to creates an array of contacts from the loaded contacts object from firebase
+ * 
+ * @param {Object} userResponse - includes all loaded contacts from firebase 
+ * @returns an array of contacts
+ */
 function createArrayForIdInContactList(userResponse){
     let keysArr = Object.keys(userResponse);
     fillArrayOfContacts(keysArr, userResponse);
@@ -85,6 +93,7 @@ function createArrayForIdInContactList(userResponse){
  * Generates HTML markup for an individual contact entry.
  * Includes avatar initials, name, and email, and sets up a click handler.
  * @param {Object} user - USer Object
+ * @param {Number} id - number for id of div container
  * @returns {string} HTML string for the contact entry.
  */
 function renderContactInfo(user, id) {
@@ -101,22 +110,35 @@ function renderContactInfo(user, id) {
   `;
 }
 
+/**
+ * This function is used to change the background color in contact list on hover, if the contact is not activated
+ * 
+ * @param {Number} id - includes the correct id number from div container of contact list 
+ */
 function changeBackgroundIfNotActivated(id){
     if(id != activatedContact){
         document.getElementById('id_' + id).classList.add('contactID-hover');
     }
 }
 
+/**
+ * This function changes the background color of div container from contact in contact list, if contact is not activated
+ * 
+ * @param {*} id - includes the correct id number from div container of contact list
+ */
 function changeBackgroundOut(id){
     if(id != activatedContact){
         document.getElementById('id_' + id).classList.remove('contactID-hover');
     }
 }
 
-function showName(mail){
-    alert(mail);
-}
-
+/**
+ * This function creates an id for user to create an id for div container in contact list
+ * 
+ * @param {Object} user - includes the data of contact person 
+ * @param {Array} arrOfContacts - includes all contacts 
+ * @returns - Number for id name of div container in contact list
+ */
 function findArrIndexOfUser(user, arrOfContacts){
     let id = 0;
     for (let index = 0; index < arrOfContacts.length; index++) {
