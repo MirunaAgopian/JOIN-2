@@ -190,6 +190,7 @@ input::placeholder{
     border: unset;
     color: white;
     font-size: 21px;
+    font-family: 'MyInter';
     font-weight: bold;
     padding: 15px 24px;
     border-radius: 8px;
