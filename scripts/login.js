@@ -123,7 +123,7 @@ function emailCheck() {
         elementLoginRev.loginStatus.innerHTML = "";
     } else {
         elementLoginRev.email.classList.add("inputFail");
-        elementLoginRev.loginStatus.innerHTML = "please enter valid Email";
+        elementLoginRev.loginStatus.innerHTML = "Please enter a valid email address";
     }
 }
 
