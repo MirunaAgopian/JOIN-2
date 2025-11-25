@@ -124,7 +124,7 @@ function changeBackgroundIfNotActivated(id){
 /**
  * This function changes the background color of div container from contact in contact list, if contact is not activated
  * 
- * @param {*} id - includes the correct id number from div container of contact list
+ * @param {Number} id - includes the correct id number from div container of contact list
  */
 function changeBackgroundOut(id){
     if(id != activatedContact){

@@ -209,7 +209,8 @@ input::placeholder{
 }
 
 footer{
-    padding-bottom: 64px;
+    padding-top: 14px;
+    padding-bottom: 50px;
 }
 
 .footer-box{
