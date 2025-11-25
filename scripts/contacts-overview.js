@@ -101,6 +101,18 @@ function renderContactInfo(user, id) {
   `;
 }
 
+function changeBackgroundIfNotActivated(id){
+    if(id != activatedContact){
+        document.getElementById('id_' + id).classList.add('contactID-hover');
+    }
+}
+
+function changeBackgroundOut(id){
+    if(id != activatedContact){
+        document.getElementById('id_' + id).classList.remove('contactID-hover');
+    }
+}
+
 function showName(mail){
     alert(mail);
 }
