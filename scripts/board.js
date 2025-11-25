@@ -248,44 +248,91 @@ function showDialogTask(id) {
     dialogBoardTaskRev.task_description.value = todo.description;
     autoResizeTextarea(dialogBoardTaskRev.task_description);
     dialogBoardTaskRev.due_date.value = todo.date;
+
+    getAllSubtask(todo.subtasks);
+
+    selectedPriority = todo.priority;
     document.getElementById("taskPriority").innerHTML = `${todo.priority} <img src="../assets/img/prio_${todo.priority}.svg" alt="Prirority of task">`;
+
     document.getElementById("taskCategory").innerHTML = `<div class="taskStatus ${todo.category.toLowerCase().replace(/ /g, "-")}">${todo.category}</div>`;
+    document.getElementById('selected_category').textContent = todo.category;
+
+
     document.getElementById('btnDialogLeftContent').innerHTML = "Delete";
     document.getElementById("btnDialogLeft").onclick = deleteTask;
     document.getElementById('btnDialogRightContent').innerHTML = "Edit";
     document.getElementById("btnDialogRight").onclick = showDialogEdit;
-    selectCategory1(todo.category);
+
     console.log(todo);
     getAssignedUser(todo);
-
-    let container = document.getElementById("contact_ul");
-    contactUser.innerHTML = todo.assignedTo[0];
-
-    //selectedContacts = todo.assignedTo;
 }
 
+function getAllSubtask(subtasks){
+    if(subtasks== null){return;}
+
+    for (let index = 0; index < subtasks.length; index++) {
+        addNewSubtask(subtasks[index]);
+        
+    }
+}
+
+/** render indvidual subtask in Dialog */
+function addNewSubtask(text) {
+  // Referenz auf die Liste holen
+  const list = document.getElementById("subtask_list");
+
+  // Neues li-Element erstellen
+  const li = document.createElement("li");
+  li.classList.add("subtask-list");
+
+  // Inhalt einfügen
+  li.innerHTML = `
+    <span class="subtask-text">${text}</span>
+    <div class="subtask-element-img-wrapper">
+      <button onclick="openEditingEnvironment(this)" class="subtask-edit-btn" title="Edit"></button>
+      <div class="subtask-btn-divider-secondary"></div>
+      <button onclick="deleteAddedSubtask(this)" class="subtask-delete-btn" title="Delete"></button>
+    </div>
+  `;
+
+  // li an die Liste anhängen
+  list.appendChild(li);
+}
+
+/** Manage the size of the textarea of the description for showTask in Dialog */
 function autoResizeTextarea(element) {
     element.style.height = "auto";
-    element.style.height = element.scrollHeight + 3 + "px"; 
+    element.style.height = element.scrollHeight + 3 + "px";
 }
 
+/**
+ * For showTask in Dialog. Get all assigned user and render the Avatar
+ * @param {*} todo 
+ */
 function getAssignedUser(todo) {
-  for (let x = 0; x < todo.assignedTo.length; x++) {
-    // Hole das passende Element aus dem DOM
-    const element = document.querySelector(
-      `div[onclick*="${todo.assignedTo[x]}"]`
-    );
+    let contactRev = document.getElementById('contact_icons');
+    let output = "";
 
-    if (element) {
-      // Führe die Funktion direkt aus
-      setCheckMark(element, todo.assignedTo[x]);
+if (todo.assignedTo.length == null) {return;}
+
+    for (let index = 0; index < todo.assignedTo.length; index++) {
+        selectedContacts.add(todo.assignedTo[index]);
+        const contact = contactUser[todo.assignedTo[index]];
+        if (!contact) continue;
+
+        output += `<div class="contactAvater" style="background-color:${contact.color}"> 
+                      ${getUserItem(contact.name)} 
+                    </div>
+                    <div>${contact.name}</div>`;
     }
-  }
+
+    contactRev.classList.remove('d-none');
+    contactRev.innerHTML = output;
 }
 
 
 /** Delete the actual Task from Database, close Dialog and update the Board  */
-async function deleteTask(){
+async function deleteTask() {
     await await deleteData(`/tasks/${currentDraggedElement}`);
 
     closeDialog();
@@ -293,15 +340,10 @@ async function deleteTask(){
 }
 
 /** Edit the actual Tas in Dialog */
-function showDialogEdit(){
+function showDialogEdit() {
     getCssTheme('cssEditTask');
     document.getElementById('btnDialogLeftContent').innerHTML = "OK";
     document.getElementById("btnDialogLeft").onclick = editDialogTask;
-}
-
-function selectCategory1(categoryText) {
-    let placeholder = document.getElementById('selected_category');
-    placeholder.textContent = categoryText;
 }
 
 /**
@@ -575,7 +617,7 @@ function removePreview(columnId, ev) {
     container.classList.remove("drag-area-highlight");
 }
 
-function closeDialog(){
+function closeDialog() {
     dialogBoardTaskRev.dialog.close();
     getCssTheme('');
 }
