@@ -32,7 +32,8 @@ main{
 .btn-add-contact-container{
     padding-top: 50px;
     padding-bottom: 16px;
-    padding-right: 32px;
+    padding-right: 16px;
+    padding-left: 16px;
     position: fixed;
     background-color: white;
     z-index: 10;
@@ -144,6 +145,22 @@ main{
 
 .hidden{
     display: none;
+}
+
+.mail-info{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-span{
+    padding-left: 8px;
+    font-size: 14px;
+    color: #E60026;
+}
+
+.invalid-mail{
+    border: 1px solid #E60026 !important;
 }
 
 @media(max-width:1180px){

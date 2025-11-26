@@ -165,7 +165,11 @@
               </div>
               <form onsubmit="createContact(); return false" autocomplete="off">
                 <input type="text" required placeholder="Name" class="bg-input bg-img-name" id="add_name">
-                <input type="text" required placeholder="Email" class="bg-input bg-img-mail" id="add_mail">
+                <div class="mail-info">
+                  <input type="text" required placeholder="Email" class="bg-input bg-img-mail" id="add_mail" onfocus="fieldMailOnFocus('add_mail', 'mail_span', 'btn_contact')"
+                  onblur="checkMailOnDialog('add_mail', 'mail_span', 'btn_contact')">
+                  <span id="mail_span" class="info-span hidden">Invalid mail</span>
+                </div>
                 <input type="tel" required placeholder="Phone" class="bg-input bg-img-phone" id="add_phone">
                 <div class="form-ctrl-container">
                   <div id="btn_cancel" class="btn-cancel" onmouseover="changeColorHover()" onmouseout="changeColorOut()"
@@ -173,7 +177,7 @@
                     <span id="cancel_span">Cancel</span>
                     <img id="cancel_img" src="../assets/img/cancel_x.svg" alt="check symbol">
                   </div>
-                  <button class="btn-contact">
+                  <button id="btn_contact" class="btn-contact">
                     <span>Create Contact</span>
                     <img src="../assets/img/check.svg" alt="check symbol">
                   </button>

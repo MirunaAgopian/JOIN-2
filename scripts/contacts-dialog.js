@@ -19,6 +19,7 @@ async function closeDialogAddContact(){
     contentDialogContactRef.close();
     contentDialogContactRef.classList.remove('dialogOpened');
     contentDialogContactRef.classList.remove('dialogClosed');
+    clearInputFields();
 }
 
 /**
@@ -226,4 +227,39 @@ function closeDialogAndReloadWindow(id, cssClass){
     dialog.close();
     dialog.classList.remove(cssClass);
     window.location.reload();
+}
+
+/**
+ * This function checks the input mail if it is valid and gives a feedback if its invalid
+ * 
+ * @param {String} idInput - includes id name of input field 
+ * @param {String} idInfo - includes id name of span tag
+ * @param {String} idButton - includes id name of button tag 
+ */
+function checkMailOnDialog(idInput, idInfo, idButton){
+    let mailInput = document.getElementById(idInput);
+    let mailInfo = document.getElementById(idInfo);
+    let formButton = document.getElementById(idButton);
+    let validMail = checkValidEmail(String(mailInput.value));
+    if((validMail == false) && (mailInput.value != '')){
+        mailInput.classList.add('invalid-mail');
+        mailInfo.classList.remove('hidden');
+        formButton.disabled = true;
+    }
+}
+
+/**
+ * This function removes all classes and disable settings if the mail input field is on focus
+ * 
+ * @param {String} idInput - includes id name of input field 
+ * @param {String} idInfo - includes id name of span tag 
+ * @param {String} idButton - includes id name of button tag  
+ */
+function fieldMailOnFocus(idInput, idInfo, idButton){
+    let mailInput = document.getElementById(idInput);
+    let mailInfo = document.getElementById(idInfo);
+    let formButton = document.getElementById(idButton);
+    mailInput.classList.remove('invalid-mail');
+    mailInfo.classList.add('hidden');
+    formButton.disabled = false;
 }

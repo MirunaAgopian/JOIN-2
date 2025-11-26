@@ -79,13 +79,17 @@ function getTemplateEditDialog(obj, initials){
                         </div>
                         <form onsubmit="saveChangedData('${obj.mail}'); return false" autocomplete="off">
                             <input type="text" required placeholder="Name" class="bg-input bg-img-name" id="edit_name" value='${obj.name}'>
-                            <input type="text" required placeholder="Email" class="bg-input bg-img-mail" id="edit_mail" value='${obj.mail}'>
+                            <div class="mail-info">
+                                <input type="text" required placeholder="Email" class="bg-input bg-img-mail" id="edit_mail" value='${obj.mail}'
+                                onfocus="fieldMailOnFocus('edit_mail', 'edit_span', 'btn_edit')" onblur="checkMailOnDialog('edit_mail', 'edit_span', 'btn_edit')">
+                                <span id="edit_span" class="info-span hidden">Invalid mail</span>
+                            </div>
                             <input type="tel" required placeholder="Phone" class="bg-input bg-img-phone" id="edit_phone" value='${obj.phone}'>
                             <div class="form-ctrl-container">
                                 <div class="btn-delete" onclick="deleteContactOnDialog('${obj.mail}')">
                                     <span>Delete</span>
                                 </div>
-                                <button class="btn-contact">
+                                <button id="btn_edit" class="btn-contact">
                                     <span>Save</span>
                                     <img src="../assets/img/check.svg" alt="check symbol">
                                 </button>
