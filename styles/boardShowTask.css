@@ -202,17 +202,11 @@ button {
 
 textarea {
     width: 100%;
-    /* volle Breite */
     height: auto;
-    /* Höhe nicht fix */
     overflow: hidden;
-    /* keine Scrollbars */
     white-space: pre-wrap;
-    /* Zeilenumbruch bei langen Texten */
     word-wrap: break-word;
-    /* bricht Wörter um */
     line-height: 1.4;
-    /* saubere Zeilenhöhe */
 }
 
 #btnDialogRight {
@@ -232,4 +226,12 @@ textarea {
 
 #assigned_to {
     display: none;
+}
+
+.assignedUser{
+    display: flex;
+}
+
+.userName{
+    display: block;
 }

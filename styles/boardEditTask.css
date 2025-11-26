@@ -224,6 +224,9 @@ textarea {
     background-image: url(../assets/img/prio_medium.svg);
 }
 
+.userName{
+    display: none;
+}
 
 /* ######################## Objekte 1:1 aus addTask.css ######################################################*/
 .dropdown {
@@ -269,20 +272,4 @@ textarea {
 
 .checkbox.checked {
     background-image: url(../assets/img/check_button_checked.svg);
-}
-
-
-.subtask-actions.active {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.subtask-actions {
-    display: none;
-    gap: 6px;
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    gap: 6px;
 }

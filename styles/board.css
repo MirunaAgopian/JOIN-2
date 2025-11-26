@@ -366,3 +366,11 @@ h2 {
 #dialaogBoardTask[open] {
     transform: translateX(0);
 }
+
+.subtask-checkbox {
+    all: revert !important;
+    appearance: auto !important;
+    cursor: pointer !important;
+    width: auto !important;
+    height: auto !important;
+}
