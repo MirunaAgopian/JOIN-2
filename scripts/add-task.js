@@ -1,5 +1,5 @@
 let tasks = [];
-let selectedPriority = null;
+let selectedPriority = "medium";
 let selectedContacts = new Set();
 
 /**
@@ -38,7 +38,9 @@ function selectPriority(element) {
 
 function getTaskInput() {
   const subtaskElements = document.querySelectorAll('#subtask_list .subtask-text');
-  const subtasks = Array.from(subtaskElements).map(el => el.textContent.trim());
+  const subtasks = Array.from(subtaskElements).map((el, index) => {
+    return { task: el.textContent.trim() };
+  });
   return {
     title: document.getElementById("task_title").value.trim(),
     description: document.getElementById("task_description").value.trim(),
@@ -57,21 +59,21 @@ function setDateStart() {
   dueDateInput.setAttribute("min", todayISO);
 };
 
-function getAlert(){
+function getAlert() {
   return `<span class='alert'>This field is required</span>`;
 }
 
-function handleFocus(event){
+function handleFocus(event) {
   let fieldDescription = event.target.closest('.field-description');
   let alertContainer = fieldDescription.querySelector('.alert-container');
   alertContainer.innerHTML = getAlert();
   fieldDescription.classList.add('alert');
 }
 
-function handleInput(event){
+function handleInput(event) {
   let fieldDescription = event.target.closest('.field-description');
   let alertContainer = fieldDescription.querySelector('.alert-container');
-  if(event.target.value.trim() !== ''){
+  if (event.target.value.trim() !== '') {
     alertContainer.innerHTML = '';
     fieldDescription.classList.remove('alert');
     fieldDescription.classList.add('active');
@@ -82,16 +84,16 @@ function handleInput(event){
   }
 }
 
-function handleBlur(event){
+function handleBlur(event) {
   let fieldDescription = event.target.closest('.field-description');
   let alertContainer = fieldDescription.querySelector('.alert-container');
   alertContainer.innerHTML = '';
   fieldDescription.classList.remove('alert', 'active');
 }
 
-function handleTextarea(isActive){
+function handleTextarea(isActive) {
   let textarea = document.getElementById('task_description');
-  if(isActive){
+  if (isActive) {
     textarea.classList.add('active');
   } else {
     textarea.classList.remove('active');
@@ -104,7 +106,7 @@ function clearTaskInput() {
   resetAllSubtasks();
 }
 
-function resetBasicFields(){
+function resetBasicFields() {
   document.getElementById("task_title").value = "";
   document.getElementById("task_description").value = "";
   document.getElementById("due_date").value = "";
@@ -115,7 +117,7 @@ function resetBasicFields(){
   selectedContacts.clear();
 }
 
-function resetCheckboxesAndPriorityVisuals(){
+function resetCheckboxesAndPriorityVisuals() {
   document.querySelectorAll(".checkbox.checked").forEach(cb => cb.classList.remove("checked"));
   document.querySelectorAll(".txt-img").forEach(c => c.classList.remove("active"));
   document.querySelectorAll(".prio-img").forEach(icon => icon.classList.remove("active"));
@@ -125,10 +127,10 @@ function resetCheckboxesAndPriorityVisuals(){
     mediumContainer.classList.add("active");
     mediumIcon.classList.add("active");
     selectedPriority = "medium";
-}
+  }
 }
 
-function resetAllSubtasks(){
+function resetAllSubtasks() {
   const subtaskList = document.getElementById("subtask_list");
   subtaskList.innerHTML = "";
 }
@@ -147,7 +149,7 @@ function addTask() {
     .catch((err) => {
       console.error("Upload failed:", err);
     });
-    redirectUser();
+  redirectUser();
 }
 
 function checkIfTaskIsValid(task) {
@@ -163,7 +165,7 @@ function checkIfTaskIsValid(task) {
   return true;
 }
 
-function redirectUser(){
+function redirectUser() {
   let container = document.getElementById('overlay_container');
   container.innerHTML = getRedirectTemplate();
   setTimeout(() => {
@@ -171,7 +173,7 @@ function redirectUser(){
   }, 1500);
 }
 
-function getRedirectTemplate(){
+function getRedirectTemplate() {
   return `<div class="add-task-overlay">
             <div class="overlay-img-text">
               <span>Task added to board</span>
@@ -193,12 +195,11 @@ async function uploadTaskToFirebase(path = "", task = {}) {
 }
 
 function getContactList(contact, initials, isCurrentUser = false) {
-   const isChecked = selectedContacts.has(contact.mail);
+  const isChecked = selectedContacts.has(contact.mail);
   return `<li>
               <div class='username'>
-                <span class='contact-circle' style='background-color:${
-                  contact.color
-                }'>${initials}</span>
+                <span class='contact-circle' style='background-color:${contact.color
+    }'>${initials}</span>
                 <span>${contact.name}${isCurrentUser ? " (You)" : ""}</span> 
               </div>  
                 <div onclick='setCheckMark(this, "${contact.mail}")' 
@@ -277,7 +278,7 @@ function setCheckMark(element, mail) {
 }
 
 
-function toggleCategories(){
+function toggleCategories() {
   let list = document.getElementById('category_list');
   let arrow = document.getElementById('category_dropdown_arrow');
   let dropdown = document.getElementById('category_dropdown');
@@ -285,12 +286,12 @@ function toggleCategories(){
   list.classList.toggle('d-none');
   arrow.classList.toggle('active');
   dropdown.classList.toggle('active');
-  if(!list.classList.contains('d-none')){
+  if (!list.classList.contains('d-none')) {
     placeholder.textContent = 'Select task category';
   }
 }
 
-function selectCategory(item){
+function selectCategory(item) {
   let placeholder = document.getElementById('selected_category');
   placeholder.textContent = item.textContent;
   toggleCategories();
@@ -309,7 +310,7 @@ function deactivateSubtask(event) {
   document.getElementById('subtask_actions').classList.remove('active');
 }
 
-function getAddedTasks(text){
+function getAddedTasks(text) {
   return `<li class="subtask-list">
               <span class='subtask-text'>${text}</span>
               <div class='subtask-element-img-wrapper'>
@@ -328,13 +329,13 @@ function getAddedTasks(text){
           </li>`;
 }
 
-function addSubtask(){
+function addSubtask() {
   let input = document.getElementById('subtask');
   let list = document.getElementById('subtask_list');
   let inputValue = input.value.trim();
-  if(inputValue !== '') {
+  if (inputValue !== '') {
     list.innerHTML += getAddedTasks(inputValue);
-    input.value = ''; 
+    input.value = '';
   }
   clearSubtaskInput();
 }
@@ -345,25 +346,25 @@ function clearSubtaskInput() {
   deactivateSubtask();
 }
 
-function deleteAddedSubtask(button){
+function deleteAddedSubtask(button) {
   let li = button.closest('li');
-  if(li.classList.contains('subtask-list')){
+  if (li.classList.contains('subtask-list')) {
     let editLi = li.nextElementSibling;
     li.remove();
-    if(editLi && editLi.classList.contains('subtask-edit-list')){
-       editLi.remove();
+    if (editLi && editLi.classList.contains('subtask-edit-list')) {
+      editLi.remove();
     }
   }
-  else if(li.classList.contains('subtask-edit-list')){
+  else if (li.classList.contains('subtask-edit-list')) {
     let normalLi = li.previousElementSibling;
     li.remove();
-    if(normalLi && normalLi.classList.contains('subtask-list')) {
+    if (normalLi && normalLi.classList.contains('subtask-list')) {
       normalLi.remove();
     }
   }
 }
 
-function openEditingEnvironment(button){
+function openEditingEnvironment(button) {
   let normalLi = button.closest('.subtask-list');
   let editLi = normalLi.nextElementSibling;
   let textSpan = normalLi.querySelector('.subtask-text');
@@ -378,7 +379,7 @@ function openEditingEnvironment(button){
 function placeCaretAtEnd(el) {
   el.focus();
   if (typeof window.getSelection != "undefined"
-      && typeof document.createRange != "undefined") {
+    && typeof document.createRange != "undefined") {
     let range = document.createRange();
     range.selectNodeContents(el);
     range.collapse(false);
@@ -388,7 +389,7 @@ function placeCaretAtEnd(el) {
   }
 }
 
-function saveEditedSubtask(button){
+function saveEditedSubtask(button) {
   let editLi = button.closest('.subtask-edit-list');
   let normalLi = editLi.previousElementSibling;
   let editSpan = editLi.querySelector('.subtask-edit');
