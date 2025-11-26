@@ -1,10 +1,26 @@
+/** 
+ * Array storing all created tasks. 
+ * Each task is represented as an object with title, description, date, priority, assigned contacts, category, and subtasks.
+ */
 let tasks = [];
+
+/**
+ * Currently selected priority level for a task.
+ * Possible values: "urgent", "medium", "low", or null if none selected.
+ */
 let selectedPriority = null;
+
+/**
+ * Set of contacts assigned to the current task.
+ * Stores unique contact identifiers (e.g., email addresses).
+ */
 let selectedContacts = new Set();
 
 /**
  * Loads contacts from the server and initializes the due date input.
  * Ensures the due date cannot be set to a past date.
+ * Renders the active user avatar
+ * @async
  */
 window.onload = async () => {
   await createArrayOfContacts();
@@ -13,6 +29,13 @@ window.onload = async () => {
   renderActiveAvatar();
 };
 
+/**
+ * Sets the color according to the priority of the task
+ * Visual styles (low = green, medium = orange, urgent = red) are applied via CSS.
+ * By default, the priority is set to medium
+ * @param {HTMLElement} element - The clicked priority container element.
+ * @returns {void}
+ */
 function setPrioColor(element) {
   const containers = document.querySelectorAll(".txt-img");
   containers.forEach((c) => {
@@ -26,6 +49,12 @@ function setPrioColor(element) {
   selectedPriority = selectPriority(element);
 }
 
+/**
+ * Determines the priority level based on the CSS class of the given element.
+ *
+ * @param {HTMLElement} element - The priority element containing a class ("urgent", "medium", or "low").
+ * @returns {string} The priority level ("urgent", "medium", or "low").
+ */
 function selectPriority(element) {
   if (element.classList.contains("urgent")) {
     return "urgent";
@@ -36,6 +65,19 @@ function selectPriority(element) {
   }
 }
 
+/**
+ * Collects and returns the current task input values from the form.
+ * Extracts title, description, due date, priority, assigned contacts, category, and subtasks.
+ *  @function getTaskInput
+ * @returns {Object} Task object containing the following properties:
+ * @returns {string} return.title - The task title entered by the user.
+ * @returns {string} return.description - The task description entered by the user.
+ * @returns {string} return.date - The due date for the task (formatted as string).
+ * @returns {string|null} return.priority - The selected priority level ("urgent", "medium", "low"), or null if none selected.
+ * @returns {string[]} return.assignedTo - Array of contact identifiers (e.g., email addresses) assigned to the task.
+ * @returns {string} return.category - The selected category label for the task.
+ * @returns {string[]} return.subtasks - Array of subtasks, each represented as a trimmed string. 
+ */
 function getTaskInput() {
   const subtaskElements = document.querySelectorAll('#subtask_list .subtask-text');
   const subtasks = Array.from(subtaskElements).map(el => el.textContent.trim());
@@ -50,6 +92,12 @@ function getTaskInput() {
   };
 }
 
+/**
+ * Contols the date a user can select from the calender
+ * Ensures that users cannot select a past date by setting the minimum value
+ * to today's date in ISO format (YYYY-MM-DD).
+ * @returns {void} This function does not return a value.
+ */
 function setDateStart() {
   const dueDateInput = document.getElementById("due_date");
   const today = new Date();
@@ -57,10 +105,12 @@ function setDateStart() {
   dueDateInput.setAttribute("min", todayISO);
 };
 
-function getAlert(){
-  return `<span class='alert'>This field is required</span>`;
-}
-
+/**
+ * This function hughlights the input field once an user has cliked on it
+ * if the user does not type something in the required input field an alert is being added
+ * the alert state and non-alert state are being styled via CSS classes
+ * @param {FocusEvent} event - The focus event triggered when the user clicks on an input field.
+ */
 function handleFocus(event){
   let fieldDescription = event.target.closest('.field-description');
   let alertContainer = fieldDescription.querySelector('.alert-container');
@@ -68,6 +118,14 @@ function handleFocus(event){
   fieldDescription.classList.add('alert');
 }
 
+/**
+ * Validates user input in a form field and updates its visual state.
+ * When the user types into a required input field:
+ * - If the field contains a text, the alert message is removed and the field is marked as active.
+ * - If the field is empty, an alert message is displayed and the field is marked with an alert state.
+ * Both states are styled via CSS classes.
+ * @param {InputEvent} event - The input event triggered when the user types into a form field.
+ */
 function handleInput(event){
   let fieldDescription = event.target.closest('.field-description');
   let alertContainer = fieldDescription.querySelector('.alert-container');
@@ -82,6 +140,10 @@ function handleInput(event){
   }
 }
 
+/**
+ * Removes the CSS styling of the input field once the user has left the input field
+ * @param {FocusEvent} event - The blur event triggered when the user leaves a form field.
+ */
 function handleBlur(event){
   let fieldDescription = event.target.closest('.field-description');
   let alertContainer = fieldDescription.querySelector('.alert-container');
@@ -89,6 +151,11 @@ function handleBlur(event){
   fieldDescription.classList.remove('alert', 'active');
 }
 
+/**
+ * Toggles the active state of the task description textarea.
+ * Adds or removes the "active" CSS class.
+ * @param {boolean} isActive - Whether the textarea should be marked as active.
+ */
 function handleTextarea(isActive){
   let textarea = document.getElementById('task_description');
   if(isActive){
@@ -98,12 +165,20 @@ function handleTextarea(isActive){
   }
 }
 
+/**
+ * Clears all task input fields and resets form state.
+ * Calls helper functions to reset fields, priority visuals, and subtasks.
+ */
 function clearTaskInput() {
   resetBasicFields();
   resetCheckboxesAndPriorityVisuals();
   resetAllSubtasks();
 }
 
+/**
+ * Resets basic task form fields to their default values.
+ * Clears text inputs, category, contact icons, and selected contacts.
+ */
 function resetBasicFields(){
   document.getElementById("task_title").value = "";
   document.getElementById("task_description").value = "";
@@ -115,6 +190,10 @@ function resetBasicFields(){
   selectedContacts.clear();
 }
 
+/**
+ * Resets all checkboxes and priority visuals.
+ * Restores default priority to "medium".
+ */
 function resetCheckboxesAndPriorityVisuals(){
   document.querySelectorAll(".checkbox.checked").forEach(cb => cb.classList.remove("checked"));
   document.querySelectorAll(".txt-img").forEach(c => c.classList.remove("active"));
@@ -128,11 +207,18 @@ function resetCheckboxesAndPriorityVisuals(){
 }
 }
 
+/**
+ *  Clears all subtasks from the subtask list.
+ */
 function resetAllSubtasks(){
   const subtaskList = document.getElementById("subtask_list");
   subtaskList.innerHTML = "";
 }
 
+/**
+ * Adds a new task if valid.
+ * Collects input, validates, uploads to Firebase, clears the form, and redirects the user to the board page.
+ */
 function addTask() {
   let task = getTaskInput();
   if (!checkIfTaskIsValid(task)) {
@@ -150,6 +236,12 @@ function addTask() {
     redirectUser();
 }
 
+/**
+ * Checks if a task object has the required fields.
+ * Validates title, date, and category.
+ * @param {Object} task - The task object to validate.
+ * @returns {boolean} True if valid, false otherwise.
+ */
 function checkIfTaskIsValid(task) {
   if (!task.title) {
     return false;
@@ -163,6 +255,9 @@ function checkIfTaskIsValid(task) {
   return true;
 }
 
+/**
+ * Redirects the user to the board page once the task has been added to FireBase
+ */
 function redirectUser(){
   let container = document.getElementById('overlay_container');
   container.innerHTML = getRedirectTemplate();
@@ -171,15 +266,13 @@ function redirectUser(){
   }, 1500);
 }
 
-function getRedirectTemplate(){
-  return `<div class="add-task-overlay">
-            <div class="overlay-img-text">
-              <span>Task added to board</span>
-              <img class ='board-icon' src="/assets/img/board.svg" alt="the logo of the board tab">
-            </div>
-          </div>`;
-}
-
+/**
+ * Uploads a task object to Firebase using a POST request.
+ * @async
+ * @param {string} [path=""] - The database path where the task should be stored.
+ * @param {Object} [task={}] - The task object to upload.
+ * @returns {Promise<Object>} A promise resolving to the Firebase response JSON.
+ */
 async function uploadTaskToFirebase(path = "", task = {}) {
   let response = await fetch(BASE_URL + path + ".json", {
     method: "POST",
@@ -192,20 +285,14 @@ async function uploadTaskToFirebase(path = "", task = {}) {
   return responseAsJson;
 }
 
-function getContactList(contact, initials, isCurrentUser = false) {
-   const isChecked = selectedContacts.has(contact.mail);
-  return `<li>
-              <div class='username'>
-                <span class='contact-circle' style='background-color:${
-                  contact.color
-                }'>${initials}</span>
-                <span>${contact.name}${isCurrentUser ? " (You)" : ""}</span> 
-              </div>  
-                <div onclick='setCheckMark(this, "${contact.mail}")' 
-                class='checkbox ${isChecked ? "checked" : ""}'></div>
-            </li>`;
-}
-
+/**
+ * Shows the list of contacts on the page.
+ * First it empties the contact area, then it finds out who is logged in
+ * and organizes the contacts so the current user appears first.
+ * Finally, it adds each contact with their initials and highlights
+ * whether they are the logged-in user.
+ * @async
+ */
 async function showContactList() {
   let container = document.getElementById("contact_ul");
   container.innerHTML = "";
@@ -219,6 +306,12 @@ async function showContactList() {
   });
 }
 
+/**
+ * Retrieves the logged-in user from session storage and sorts contacts.
+ * Ensures the logged-in user appears first in the list.
+ * @returns {{loggedInUser: Object|null, sortedContacts: Object[]}}
+ * An object containing the logged-in user (or null) and the sorted contacts array.
+ */
 function checkForLoggedInUser() {
   const userData = sessionStorage.getItem("loggedInUser");
   const loggedInUser = userData ? JSON.parse(userData) : null;
@@ -231,6 +324,10 @@ function checkForLoggedInUser() {
   return { loggedInUser, sortedContacts };
 }
 
+/**
+ * Toggles the contact list via CSS classes, making it visible or hidden
+ * it also adds visuals to the dropdown arrow in the input
+ */
 function toggleContactList() {
   let list = document.getElementById("contact_list");
   let dropdown = document.getElementById("assigned_to");
@@ -247,12 +344,10 @@ function toggleContactList() {
   showContactList();
 }
 
-function getContactAvatar(contact, initials) {
-  return `<div class="contact-circle" style="background-color:${contact.color}">
-              <span>${initials}</span>
-          </div>`;
-}
-
+/**
+ * Shows the avatars of selected contacts.
+ * Clears the contact area and adds an icon with initials for each contact that has been chosen.
+ */
 function showContactAvatar() {
   let container = document.getElementById("contact_icons");
   container.innerHTML = "";
@@ -264,19 +359,25 @@ function showContactAvatar() {
   });
 }
 
+/**
+ * Marks or unmarks a contact as selected.
+ * Toggles the checkmark on the contact, updates the list of chosen contacts,
+ * and refreshes the displayed avatars.
+ */
 function setCheckMark(element, mail) {
   element.classList.toggle("checked");
-
   if (element.classList.contains("checked")) {
     selectedContacts.add(mail);
   } else {
     selectedContacts.delete(mail);
   }
-
   showContactAvatar();
 }
 
-
+/**
+ * Opens or closes the category list.
+ * Switches the dropdown and arrow on or off and shows a placeholder text when the list is opened.
+ */
 function toggleCategories(){
   let list = document.getElementById('category_list');
   let arrow = document.getElementById('category_dropdown_arrow');
@@ -290,17 +391,32 @@ function toggleCategories(){
   }
 }
 
+/**
+ * Chooses a category from the list.
+ * Updates the placeholder text with the chosen category and then closes the dropdown.
+ *  @param {HTMLElement} item - The category element that was clicked,
+ * containing the text to display as the selected category.
+ */
 function selectCategory(item){
   let placeholder = document.getElementById('selected_category');
   placeholder.textContent = item.textContent;
   toggleCategories();
 }
 
+/**
+ * Turns on the subtask input area.
+ * Highlights the field and shows the action buttons.
+ */
 function activateSubtask() {
   document.getElementById('subtask').classList.add('active');
   document.getElementById('subtask_actions').classList.add('active');
 }
 
+/**
+ * Turns off the subtask input area.
+ * Removes the highlight and hides the action buttons, unless the user is still clicking inside the actions area.
+ * @param {FocusEvent} event - The blur event when leaving the subtask field.
+ */
 function deactivateSubtask(event) {
   if (event && event.relatedTarget && event.relatedTarget.closest('#subtask_actions')) {
     return;
@@ -309,25 +425,10 @@ function deactivateSubtask(event) {
   document.getElementById('subtask_actions').classList.remove('active');
 }
 
-function getAddedTasks(text){
-  return `<li class="subtask-list">
-              <span class='subtask-text'>${text}</span>
-              <div class='subtask-element-img-wrapper'>
-                <button onclick='openEditingEnvironment(this)' class='subtask-edit-btn' title="Edit"></button>
-                <div class='subtask-btn-divider-secondary'></div>
-                <button onclick='deleteAddedSubtask(this)' class='subtask-delete-btn' title="Delete"></button>
-              </div>
-          </li>
-          <li class='subtask-edit-list d-none'>
-            <span class="subtask-edit" contenteditable='true'></span>
-            <div class="subtask-edit-btn-wrapper">
-              <button onclick='deleteAddedSubtask(this)' class='subtask-delete-btn-secondary' title="Delete"></button>
-              <div class='subtask-btn-divider-tertiary'></div>
-              <button onclick='saveEditedSubtask(this)' class="subtask-save-btn" title="save"></button>
-            </div>
-          </li>`;
-}
-
+/**
+ * Adds a new subtask to the list.
+ * Takes the text from the input field, creates a new item, clears the input, and resets the field state.
+ */
 function addSubtask(){
   let input = document.getElementById('subtask');
   let list = document.getElementById('subtask_list');
@@ -339,12 +440,21 @@ function addSubtask(){
   clearSubtaskInput();
 }
 
+/**
+ * Clears the subtask input field.
+ * Empties the text box and turns off the active state.
+ */
 function clearSubtaskInput() {
   let input = document.getElementById('subtask');
   input.value = '';
   deactivateSubtask();
 }
 
+/**
+ * Deletes a subtask from the list.
+ * Removes the chosen subtask item and its paired edit item if present.
+ * @param {HTMLElement} button - The delete button inside the subtask item.
+ */
 function deleteAddedSubtask(button){
   let li = button.closest('li');
   if(li.classList.contains('subtask-list')){
@@ -363,6 +473,12 @@ function deleteAddedSubtask(button){
   }
 }
 
+/**
+ * Switches a subtask into edit mode.
+ * Hides the normal view, shows the editable field,
+ * copies the current text into it, and places the cursor at the end.
+ * @param {HTMLElement} button - The edit button inside the subtask item.
+ */
 function openEditingEnvironment(button){
   let normalLi = button.closest('.subtask-list');
   let editLi = normalLi.nextElementSibling;
@@ -375,6 +491,11 @@ function openEditingEnvironment(button){
   placeCaretAtEnd(editSpan);
 }
 
+/**
+ * Moves the text cursor to the end of an editable element.
+ * Ensures the user can continue typing after the existing text.
+ * @param {HTMLElement} el - The editable element where the cursor should be placed.
+ */
 function placeCaretAtEnd(el) {
   el.focus();
   if (typeof window.getSelection != "undefined"
@@ -388,6 +509,12 @@ function placeCaretAtEnd(el) {
   }
 }
 
+/**
+ * Saves changes made to a subtask.
+ * Copies the edited text back into the normal subtask view,
+ * hides the edit field, and shows the updated subtask item.
+ * @param {HTMLElement} button - The save button inside the edited subtask item.
+ */
 function saveEditedSubtask(button){
   let editLi = button.closest('.subtask-edit-list');
   let normalLi = editLi.previousElementSibling;
