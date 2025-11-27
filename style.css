@@ -36,3 +36,49 @@ h1 {
 ul {
     list-style-type: none;
 }
+
+.landscape-view-warning {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px ;
+    background-color: #2a3647;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 9999;
+}
+
+.landscape-view-warning p {
+    font-size: 24px;
+    color: white !important;
+    word-wrap: break-word;
+}
+
+.device-icon {
+    height: 60px;
+    width: 60px;
+    animation: rotateDevice 2s ease-in-out infinite;
+}
+
+@keyframes rotateDevice {
+    0%   { transform: rotate(0deg); }
+    40%  { transform: rotate(0deg); }   
+    60%  { transform: rotate(90deg); }
+    80%  { transform: rotate(90deg); }
+    100% { transform: rotate(0deg); }
+}
+
+@media screen and (max-height: 480px) {
+  .landscape-view-warning p {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .landscape-view-warning {
+    padding: 10px;
+  }
+}

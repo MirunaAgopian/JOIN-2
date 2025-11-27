@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join - Add Contacts</title>
     <link rel="icon" href="../assets/img/join_logo.svg" />
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../styles/fonts.css">
     <link rel="stylesheet" href="../styles/summary.css" />
@@ -13,6 +14,7 @@
     <link rel="stylesheet" href="../styles/contacts-overview.css">
     <link rel="stylesheet" href="../styles/contact-show.css">
     <link rel="stylesheet" href="../styles/contacts-dialog.css">
+    <!-- JS files -->
     <script src="../script.js" defr></script>
     <script src="../scripts/firebase.js"></script>
     <script src="../scripts/templates.js"></script>
@@ -291,6 +293,10 @@
         <p>Contacts</p>
       </a>
     </footer>
+    <div id="orientation_warning" class="landscape-view-warning d-none">
+        <p>JOIN works best in portrait mode. Please rotate your device!</p>
+        <img class="device-icon" src="../assets/img/device_landscape.svg" alt="A tablet positioned in landscape view">
+    </div>
     <script src="../scripts/summary.js"></script>
     <script src="../script.js"></script>
   </body>

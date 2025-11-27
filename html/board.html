@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Join - Board</title>
   <link rel="icon" href="../assets/img/join_logo.svg" />
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="../styles/navigation.css">
   <link rel="stylesheet" href="../styles/summary.css" />
@@ -15,6 +16,7 @@
   <link rel="stylesheet" href="../styles/boardAddTask.css" id="cssAddTaskBoard" disabled>
   <link rel="stylesheet" href="../styles/boardEditTask.css" id="cssEditTask" disabled>
   <link rel="stylesheet" href="../styles/boardShowTask.css" id="cssShowTask" disabled>
+  <!-- JS files -->
   <script src="../script.js" defer></script>
   <script src="../scripts/summary.js" defer></script>
   <script src="../scripts/firebase.js" defer></script>
@@ -274,7 +276,10 @@
     </a>
   </footer>
 
-
+  <div id="orientation_warning" class="landscape-view-warning d-none">
+        <p>JOIN works best in portrait mode. Please rotate your device!</p>
+        <img class="device-icon" src="../assets/img/device_landscape.svg" alt="A tablet positioned in landscape view">
+    </div>
   <script src="../scripts/contacts-overview.js"></script>
   <script src="../scripts/contacts.js"></script>
   <script src="../scripts/add-task.js"></script>

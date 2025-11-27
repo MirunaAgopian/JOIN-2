@@ -8,11 +8,11 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../styles/summary.css" />
-    <link rel="stylesheet" href="../styles/navigation.css">
+    <link rel="stylesheet" href="../styles/navigation.css" />
     <link rel="stylesheet" href="../styles/add-task.css" />
-    <link rel="stylesheet" href="../styles/add-task-interactions.css">
+    <link rel="stylesheet" href="../styles/add-task-interactions.css" />
     <!-- JS files -->
-     <script src="../scripts/summary.js" defer></script>
+    <script src="../scripts/summary.js" defer></script>
     <script src="../script.js" defer></script>
     <script src="../scripts/add-task.js" defer></script>
     <script src="../scripts/templates.js" defer></script>
@@ -36,7 +36,13 @@
               src="../assets/img/help_btn.svg"
               alt="a help button displaying a question mark"
           /></a>
-          <button id="activeAvatar" class="nav-user-btn" onclick="toggleSubmenu()">G</button>
+          <button
+            id="activeAvatar"
+            class="nav-user-btn"
+            onclick="toggleSubmenu()"
+          >
+            G
+          </button>
         </div>
         <!-- Submenu, desktop version -->
         <div id="submenu" class="desktop-submenu d-none">
@@ -161,7 +167,7 @@
               <label for="task_description">Description</label>
               <textarea
                 onfocus="handleTextarea(true)"
-                onblur = "handleTextarea(false)"
+                onblur="handleTextarea(false)"
                 name="description"
                 id="task_description"
                 placeholder="Enter a description"
@@ -333,5 +339,13 @@
         <p>Contacts</p>
       </a>
     </footer>
+    <div id="orientation_warning" class="landscape-view-warning d-none">
+      <p>JOIN works best in portrait mode. Please rotate your device!</p>
+      <img
+        class="device-icon"
+        src="../assets/img/device_landscape.svg"
+        alt="A tablet positioned in landscape view"
+      />
+    </div>
   </body>
 </html>

@@ -1,5 +1,4 @@
 //  joinUsers
-
 userObj = {
     "name" : "Benjamin",
     "mail" : "benjamin@test.de",
@@ -60,3 +59,31 @@ function renderActiveAvatar() {
 
     avatarRev.innerHTML = getUserItem(storedUserName);
 }
+
+/**
+ * Detects the device view based on the orientation
+ * Shows a warning in landscape mode
+ * @param {MediaQueryListEvent} e - The event triggered when orientation changes.
+ */
+window.matchMedia("(orientation: portrait)").addEventListener('change', e => {
+    const portrait = e.matches;
+    if(portrait) {
+        showOrientationWarning(false);
+    } else {
+        showOrientationWarning(true);
+    }
+});
+
+/**
+ * Changes the visibility of the overlay via adding and removing CSS classes
+ * @param {boolean} isLandscape - if the device is in landscape mode the overlay is visible, if not it's hidden
+ */
+function showOrientationWarning(isLandscape){
+    let container = document.getElementById('orientation_warning');
+    if(isLandscape) {
+        container.classList.remove('d-none');
+    } else {
+        container.classList.add('d-none');
+    }
+}
+
