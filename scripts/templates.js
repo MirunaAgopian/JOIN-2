@@ -81,7 +81,7 @@ function getTemplateEditDialog(obj, initials){
                             <input type="text" required placeholder="Name" class="bg-input bg-img-name" id="edit_name" value='${obj.name}'>
                             <div class="mail-info">
                                 <input type="text" required placeholder="Email" class="bg-input bg-img-mail" id="edit_mail" value='${obj.mail}'
-                                onfocus="fieldMailOnFocus('edit_mail', 'edit_span', 'btn_edit')" onblur="checkMailOnDialog('edit_mail', 'edit_span', 'btn_edit')">
+                                onfocus="fieldMailOnFocus('edit_mail', 'edit_span', 'btn_edit_form')" onblur="checkMailOnDialog('edit_mail', 'edit_span', 'btn_edit_form')">
                                 <span id="edit_span" class="info-span hidden">Invalid mail</span>
                             </div>
                             <input type="tel" required placeholder="Phone" class="bg-input bg-img-phone" id="edit_phone" value='${obj.phone}'>
@@ -89,7 +89,7 @@ function getTemplateEditDialog(obj, initials){
                                 <div class="btn-delete" onclick="deleteContactOnDialog('${obj.mail}')">
                                     <span>Delete</span>
                                 </div>
-                                <button id="btn_edit" class="btn-contact">
+                                <button id="btn_edit_form" class="btn-contact">
                                     <span>Save</span>
                                     <img src="../assets/img/check.svg" alt="check symbol">
                                 </button>
