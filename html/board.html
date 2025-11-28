@@ -80,14 +80,15 @@
       <div class="boardHeader">
         <h1>Board</h1>
         <div class="searchBoard">
-          <div class="search-box">
+          <div id="search_box" class="search-box">
             <input type="search" oninput="processChanges()" id="searchBoard" placeholder="Find Task">
-            <div class="search-img">
-              <img src="../assets/img/search.svg" alt="search icon as magnifying glass">
+            <div class="search-img" onmousedown="changeImgOfSearchIcon('add', 'search_box', 'search_img')" onmouseup="changeImgOfSearchIcon('remove', 'search_box', 'search_img')">
+              <img id="search_img" src="../assets/img/search.svg" alt="search icon as magnifying glass">
             </div>
           </div>
-          <button type="button">
+          <button class="btn-add-task" type="button">
             <span class="btn-text">Add task</span>
+            <span class="btn-plus">+</span>
           </button>
         </div>
       </div>
