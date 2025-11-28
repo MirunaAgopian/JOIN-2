@@ -94,6 +94,10 @@ label {
     white-space: nowrap;
 }
 
+.color-description{
+    color: #42526E;
+}
+
 input[type="date"] {
     appearance: none;
     -webkit-appearance: none;
@@ -138,6 +142,38 @@ button {
     vertical-align: middle;
 }
 
+.header-show-task{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+}
+
+.close-btn-container{
+    padding-top: 1px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 3px;
+    border-radius: 50px;
+}
+
+.close-btn-container:hover{
+    background-color: #EEEEEE;
+    cursor: pointer;
+}
+
+.close-btn {
+    /* position: absolute; */
+    /* top: 10px; */
+    /* right: 10px; */
+    border: none;
+    /* background: transparent; */
+    font-size: 20px;
+    font-weight: lighter;
+    cursor: pointer;
+    padding: 0px;
+}
 
 .buttons {
     display: flex;
@@ -198,6 +234,8 @@ button {
 
 #dialaogBoardTask {
     width: 525px;
+    border: none;
+    border-radius: 30px;
 }
 
 textarea {
@@ -234,4 +272,9 @@ textarea {
 
 .userName{
     display: block;
+}
+
+#task_title{
+    font-size: 50px;
+    font-weight: bold;
 }

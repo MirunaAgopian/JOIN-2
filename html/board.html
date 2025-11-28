@@ -142,9 +142,13 @@
     <dialog id="dialaogBoardTask">
 
       <section class="main-DialogContent">
-        <div id="taskCategory"></div>
-        <h1 class="taskHeader">Add Task</h1>
-        <button id="closeDialogBtn" class="close-btn" onclick="closeDialog()">✖</button>
+        <div class="header-show-task">
+          <div id="taskCategory"></div>
+          <h1 class="taskHeader">Add Task</h1>
+          <div class="close-btn-container">
+            <button id="closeDialogBtn" class="close-btn" onclick="closeDialog()">x</button>
+          </div>
+        </div>
         <section class="page-container">
           <section class="task-container">
             <div class="field-description">
@@ -159,7 +163,7 @@
                 id="task_description" placeholder="Enter a description"></textarea>
             </div>
             <div class="field-description">
-              <label for="due_date">Due date<span class="required">*</span></label>
+              <label class="color-description" for="due_date">Due date:<span class="required">*</span></label>
               <input onfocus="handleFocus(event)" oninput="handleInput(event)" onblur="handleBlur(event)" type="date"
                 id="due_date" required />
               <div class="alert-container"></div>
@@ -169,7 +173,7 @@
           <div class="priority-container">
             <section class="priority">
               <div class="field-description">
-                <span>Priority</span>
+                <span class="color-description">Priority:</span>
                 <span id="taskPriority"></span>
                 <div class="priority-stages">
                   <div onclick="setPrioColor(this)" class="txt-img urgent">
@@ -189,7 +193,7 @@
             </section>
             <section class="assigned">
               <div class="field-description">
-                <span>Assigned to</span>
+                <span class="color-description">Assigned to:</span>
                 <div class="dropdown" id="assigned_to">
                   <span>Select contacts to assign</span>
                   <button onclick="toggleContactList()">
@@ -221,7 +225,7 @@
             </section>
             <section class="subtask">
               <div class="subtask-field-description">
-                <label for="subtask">Subtasks</label>
+                <label class="color-description" for="subtask">Subtasks</label>
                 <div id="subtask_wrapper" class="subtask-wrapper">
                   <input id="subtask" class="subtask-input" type="text" placeholder="Add new subtask"
                     onfocus="activateSubtask()" onblur="deactivateSubtask(event)" />
