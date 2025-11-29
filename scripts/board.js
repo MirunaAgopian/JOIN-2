@@ -1,3 +1,5 @@
+//############# global Variables ################
+
 let todos = [];
 let currentDraggedElement = null;
 let contactUser = {};
@@ -35,6 +37,7 @@ const dialogBoardTaskRev = {
     subtask_list: document.getElementById("subtask_list")
 }
 
+//############## Init & Data ##############
 /**
  * Loads tasks and contacts from the database, initializes the board,
  * and renders the UI.
@@ -49,7 +52,6 @@ async function onloadFuncBoard() {
     updateHTML();
     renderActiveAvatar();
 }
-
 /**
  * Processes search input and updates the task list accordingly.
  * Filters tasks if the search string has not enought characters.
@@ -60,14 +62,13 @@ async function processChanges() {
 
     if (searchValue.length > 2) {
         const allTodos = getTaskArr(ALL_TASKS);
-        todos = allTodos.filter(t =>
-            t.title.toLowerCase().includes(searchValue) ||
-            t.description.toLowerCase().includes(searchValue)
+        todos = allTodos.filter(todo =>
+            todo.title.toLowerCase().includes(searchValue) ||
+            todo.description.toLowerCase().includes(searchValue)
         );
     } else {
         todos = getTaskArr(ALL_TASKS);
     }
-
     updateHTML();
 }
 
@@ -97,8 +98,21 @@ function getTaskArr(usersObj) {
         });
         boardPos[statusValue][key] = posValue;
     }
-
     return arr;
+}
+
+/**
+ * Determines the status bzw. column of a task. If no status is set, the Task will get Status "To Do"
+ * @param {Object} value - Task object.
+ * @returns {string} Status column name.
+ */
+function checkStatus(value) {
+    if (value.hasOwnProperty("status")) {
+        return value.status;
+    }
+    else {
+        return "boardToDo";
+    }
 }
 
 /**
@@ -113,20 +127,6 @@ function checkPosition(value, statusValue) {
     }
     else {
         return Object.keys(boardPos[statusValue]).length;
-    }
-}
-
-/**
- * Determines the status bzw. column of a task. If no status is set, the Task will get Status "To Do"
- * @param {Object} value - Task object.
- * @returns {string} Status column name.
- */
-function checkStatus(value) {
-    if (value.hasOwnProperty("status")) {
-        return value.status;
-    }
-    else {
-        return "boardToDo";
     }
 }
 
@@ -150,6 +150,7 @@ function getUserData(usersObj) {
     return USERS;
 }
 
+//########################### Rendering #######################
 /**
  * Aktualisiert die HTML-Darstellung aller Aufgabenbereiche.
  * Wird beim Laden der Seite aufgerufen.
@@ -162,8 +163,8 @@ function updateHTML() {
 }
 
 /**
- * Rendert alle Aufgaben einer bestimmten Kategorie in den entsprechenden Bereich.
- * @param {string} status - Die Kategorie der Aufgaben ('open', 'closed', 'backup').
+ * render all task to related task/Board column
+ * @param {string} status - Categorie .
  */
 function renderTodos(status) {
     const container = document.getElementById(status);
@@ -185,11 +186,11 @@ function renderTodos(status) {
     }
 }
 
-
 /**
- * Generiert das HTML für eine einzelne Aufgabe.
- * @param {{id: number, title: string, category: string}} todo - Das Aufgabenobjekt.
- * @returns {string} - Das HTML-Element als String.
+ * Generate HTML Tag for every task in board.
+ * @param {Object} todo Task Object.
+ * @param {String} status Status bzw Colum of the board
+ * @returns {string} HTML-Tag.
  */
 function renderTask(todo, status) {
     return `<div draggable="true" id="toDo${todo.id}" onclick="showDialogTask('${todo.id}')" ondragstart="startDragging('${todo.id}', '${todo.status}')" ondragend="stopDragging('${todo.id}')" class="todo">
@@ -210,287 +211,20 @@ function renderTask(todo, status) {
 }
 
 /**
- * activate and deactivate the necessary CSS Files, which are responsible for the visibility of the dialog
- * @param {string} theme ID of the selected CSS File
+ * render the button for the overlay move display in mobile view
+ * @param {String} todoId Database ID of the selected Task
+ * @param {String} targetStatus Status bzw Colum of the target
+ * @param {String} icon icon for the button (up or down)
+ * @param {String} altText alternative Text for the button Image
+ * @returns {String} html tag for the button
  */
-function getCssTheme(theme) {
-    document.getElementById("cssAddTask").disabled = (theme != "cssAddTask");
-    document.getElementById("cssAddTaskBoard").disabled = (theme != "cssAddTask");
-    document.getElementById("cssEditTask").disabled = (theme != "cssEditTask");
-    document.getElementById("cssShowTask").disabled = (theme != "cssShowTask");
+function renderMoveButton(todoId, targetStatus, icon, altText) {
+    return `<div class="boardMoveToButtonContent"
+        onclick="event.stopPropagation(); changeBoardStatus('${todoId}', '${targetStatus}')">
+        <img src="../assets/img/${icon}" alt="${altText}">
+        ${getMobileDisplayMoveStatus(targetStatus)}
+    </div>`;
 }
-
-/**
- * show the dialog to create a new Task
- * @param {string} column name the column bzw. Status for the task
- */
-function showDialogAddTask(column) {
-    clearTaskInput()
-    getCssTheme('cssAddTask');
-    document.getElementById('btnDialogLeftContent').innerHTML = "Cancel";
-    document.getElementById("btnDialogLeft").onclick = closeDialog;
-    document.getElementById('btnDialogRightContent').innerHTML = "Create Task";
-    document.getElementById("btnDialogRight").onclick = addDialogTask;
-    dialogBoardTaskRev.dialog.showModal();
-    startStatusColumn = column;
-}
-
-/**
- * show the dialog with the Values of the selected Task
- * @param {string} id ID of the task in the Database 
- */
-function showDialogTask(id) {
-    actualToDo = todos.find(t => t.id === id);
-
-    getCssTheme('cssShowTask');
-
-    clearTaskInput();
-
-    currentDraggedElement = id;
-    dialogBoardTaskRev.dialog.showModal();
-    dialogBoardTaskRev.task_title.value = actualToDo.title;
-    dialogBoardTaskRev.task_description.value = actualToDo.description;
-    autoResizeTextarea(dialogBoardTaskRev.task_description);
-    dialogBoardTaskRev.due_date.value = actualToDo.date;
-
-    getAllSubtask(actualToDo.subtasks);
-
-    selectedPriority = actualToDo.priority;
-    document.getElementById("taskPriority").innerHTML = `${actualToDo.priority} <img src="../assets/img/prio_${actualToDo.priority}.svg" alt="Prirority of task">`;
-
-    document.getElementById("taskCategory").innerHTML = `<div class="taskStatus ${actualToDo.category.toLowerCase().replace(/ /g, "-")}">${actualToDo.category}</div>`;
-    document.getElementById('selected_category').textContent = actualToDo.category;
-
-
-    document.getElementById('btnDialogLeftContent').innerHTML = "Delete";
-    document.getElementById("btnDialogLeft").onclick = deleteTask;
-    document.getElementById('btnDialogRightContent').innerHTML = "Edit";
-    document.getElementById("btnDialogRight").onclick = showDialogEdit;
-
-    console.log(actualToDo);
-    getAssignedUser();
-}
-
-function getAllSubtask(subtasks) {
-    if (subtasks == null) { return; }
-
-    for (let index = 0; index < subtasks.length; index++) {
-        addNewSubtask(subtasks[index].task, index);
-
-    }
-}
-
-/** render indvidual subtask in Dialog */
-function addNewSubtask(text, index) {
-    // Referenz auf die Liste holen
-    const list = document.getElementById("subtask_list");
-
-    // Neues li-Element erstellen
-    const li = document.createElement("li");
-    li.classList.add("subtask-list");
-
-    // Inhalt einfügen
-    li.innerHTML = `
-    <input type="checkbox" onchange="updateSubTask(${index})" ${actualToDo.subtasks[index].checked ? "checked" : ""} class="subtask-checkbox">
-    <span class="subtask-text">${text}</span>
-    <div class="subtask-element-img-wrapper">
-      <button onclick="openEditingEnvironment(this)" class="subtask-edit-btn" title="Edit"></button>
-      <div class="subtask-btn-divider-secondary"></div>
-      <button onclick="deleteAddedSubtask(this)" class="subtask-delete-btn" title="Delete"></button>
-    </div>
-  `;
-
-    // li an die Liste anhängen
-    list.appendChild(li);
-}
-
-
-/**
- * update the Status of Subtask by clicking Checkbox
- * @param {Integer} index Array Index of Subtask
- */
-async function updateSubTask(index) {
-    let taskStatus = null;
-
-    if ("checked" in actualToDo.subtasks[index]) {
-        taskStatus = !actualToDo.subtasks[index].checked;
-    } else {
-        taskStatus = true;
-    }
-
-    await patchData(`tasks/${currentDraggedElement}/subtasks/${index}`, { checked: taskStatus });
-    actualToDo.subtasks[index].checked = taskStatus;
-
-}
-
-/** Manage the size of the textarea of the description for showTask in Dialog */
-function autoResizeTextarea(element) {
-    element.style.height = "auto";
-    element.style.height = element.scrollHeight + 3 + "px";
-}
-
-/** For showTask in Dialog. Get all assigned user and render the Avatar */
-function getAssignedUser() {
-    let contactRev = document.getElementById('contact_icons');
-    let output = "";
-
-    if (actualToDo.assignedTo.length == null) { return; }
-
-    for (let index = 0; index < actualToDo.assignedTo.length; index++) {
-        selectedContacts.add(actualToDo.assignedTo[index]);
-        const contact = contactUser[actualToDo.assignedTo[index]];
-        if (!contact) continue;
-
-        output += `<div class="assignedUser">
-                    <div class="contactAvater" style="background-color:${contact.color}"> 
-                      ${getUserItem(contact.name)} </div>
-                    <div class="userName">${contact.name}</div>
-                    </div>`;
-    }
-
-    contactRev.classList.remove('d-none');
-    contactRev.innerHTML = output;
-}
-
-
-/** Delete the actual Task from Database, close Dialog and update the Board  */
-async function deleteTask() {
-    await await deleteData(`/tasks/${currentDraggedElement}`);
-
-    closeDialog();
-    onloadFuncBoard();
-}
-
-/** Edit the actual Tas in Dialog */
-function showDialogEdit() {
-    getCssTheme('cssEditTask');
-    document.getElementById('btnDialogLeftContent').innerHTML = "OK";
-    document.getElementById("btnDialogLeft").onclick = editDialogTask;
-}
-
-/**
- * generate the html Tag for the Progress Bar of an Subtask for an task
- * @param {Object} subtasks 
- * @returns the render html Tag of the Progress
- */
-function setProgress(subtasks) {
-    if (subtasks == null) { return ""; }
-    let subTotal = subtasks.length;
-    let subDone = getSubTaskDone(subtasks); //"1";
-    
-
-    if (subTotal == null) {
-        return `no subtasks`;
-    }
-
-    return `<div class="processBarContainer">
-                <div class="progress">
-                    <div class="progressBar" style="width: ${(subDone / subTotal) * 100}%"></div>
-                </div>
-                <span class="progressLabel">${subDone}/${subTotal} Subtasks</span>
-            </div> `;
-}
-
-function getSubTaskDone(subtasks) {
-    let doneTask = 0;
-
-
-        for (let index = 0; index < subtasks.length; index++) {
-            const subtask = subtasks[index];
-
-            if (subtask && "checked" in subtask && subtask.checked === true) {
-                doneTask++;
-            }
-        }
-   
-
-    return doneTask;
-}
-
-
-/**
- * render html Tag of the Overlay for the possibile Moveactions of the Status bzw. Column in Mobile View
- * @param {Object} todo Object of the Database
- * @param {String} status the actual bzw. column of the task
- * @returns render html Tag for the possibility status Colum are availaible for the actual Task
- */
-function renderMobileMoveAction(todo, status) {
-    let output = "";
-    let moveTaskUp = null;
-    let moveTaskDown = null;
-
-    switch (status) {
-        case 'boardToDo':
-            moveTaskUp = null;
-            moveTaskDown = 'boardProgress';
-            break;
-        case 'boardProgress':
-            moveTaskUp = 'boardToDo';
-            moveTaskDown = 'boardFeedback';
-            break;
-        case 'boardFeedback':
-            moveTaskUp = 'boardProgress';
-            moveTaskDown = 'boardDone';
-            break;
-        case 'boardDone':
-            moveTaskUp = 'boardFeedback';
-            moveTaskDown = null;
-            break;
-    }
-
-    output = `<div class="boardMoveToOverlay" onclick="event.stopPropagation()">
-                <div class="boardMoveToHeadline onlyMobile">Move To</div>
-                <div class="boardMoveToOverlayButtons">`;
-    if (moveTaskUp != null) {
-        output += `<div class="boardMoveToButtonContent"
-           onclick="event.stopPropagation(); changeBoardStatus('${todo.id}', '${moveTaskUp}')"><img
-             src="../assets/img/arrow_upward.svg" alt="arrow up">${moveTaskUp}</div>`;
-    }
-    if (moveTaskDown != null) {
-        output += `<div class="boardMoveToButtonContent"
-           onclick="event.stopPropagation(); changeBoardStatus('${todo.id}', '${moveTaskDown}')"><img
-             src="../assets/img/arrow_downward.svg" alt="arrow down">${moveTaskDown}</div>`;
-
-
-        output += `</div></div>`;
-        return output;
-    }
-}
-
-/**
- * cheanges the the status bzw. Column of an task by the overlay Menu in mobile View
- * @param {String} id ID bzw key of Element in Firebase Database
- * @param {*String} targetColumn target Column where the Task will be moved
- * @returns 
- */
-async function changeBoardStatus(id, targetColumn) {
-    const task = todos.find(t => t.id === id);
-    if (!task) return;
-
-    task.status = targetColumn;
-
-    await putData('tasks/' + id, task);
-
-    updateHTML();
-}
-
-/**
- * shows or hide the Overlay Move Dialog of an Task in Mobile View
- * @param {Event} event 
- */
-function openBoardMoveToOverlay(event) {
-    event.stopPropagation();
-
-    const todo = event.currentTarget.closest('.todo');
-    const overlay = todo.querySelector('.boardMoveToOverlay');
-    overlay.style.display = overlay.style.display === 'flex' ? 'none' : 'flex';
-}
-
-document.addEventListener('click', () => {
-    document.querySelectorAll('.boardMoveToOverlay').forEach(overlay => {
-        overlay.style.display = 'none';
-    });
-});
 
 /**
  * Generates avatar HTML for assigned users.
@@ -531,7 +265,255 @@ function assignedUserAvatar(user) {
     return output;
 }
 
-/** add new Task to Databas */
+/**
+ * generate the html Tag for the Progress Bar of an Subtask for an task
+ * @param {Object} subtasks 
+ * @returns the render html Tag of the Progress
+ */
+function setProgress(subtasks) {
+    if (subtasks == null) { return ""; }
+    let subTotal = subtasks.length;
+    let subDone = getSubTaskDone(subtasks); //"1";
+
+
+    if (subTotal == null) {
+        return `no subtasks`;
+    }
+
+    return `<div class="processBarContainer">
+                <div class="progress">
+                    <div class="progressBar" style="width: ${(subDone / subTotal) * 100}%"></div>
+                </div>
+                <span class="progressLabel">${subDone}/${subTotal} Subtasks</span>
+            </div> `;
+}
+
+//################### Dialog Handling ####################
+/**
+ * Shows the dialog to create a new task.
+ * @param {string} column - The name of the column (status) where the task will be created.
+ */
+function showDialogAddTask(column) {
+    clearTaskInput()
+    getCssTheme('cssAddTask');
+    document.getElementById('btnDialogLeftContent').innerHTML = "Cancel";
+    document.getElementById("btnDialogLeft").onclick = closeDialog;
+    document.getElementById('btnDialogRightContent').innerHTML = "Create Task";
+    document.getElementById("btnDialogRight").onclick = addDialogTask;
+    dialogBoardTaskRev.dialog.showModal();
+    startStatusColumn = column;
+}
+
+/**
+ * Shows the dialog with the values of the selected task.
+ * @param {string} id - The ID of the task in the database.
+ */
+function showDialogTask(id) {
+    actualToDo = todos.find(t => t.id === id);
+
+    getCssTheme('cssShowTask');
+
+    clearTaskInput();
+
+    currentDraggedElement = id;
+    dialogBoardTaskRev.dialog.showModal();
+    dialogBoardTaskRev.task_title.value = actualToDo.title;
+    dialogBoardTaskRev.task_description.value = actualToDo.description;
+    autoResizeTextarea(dialogBoardTaskRev.task_description);
+    dialogBoardTaskRev.due_date.value = actualToDo.date;
+
+    getAllSubtask(actualToDo.subtasks);
+
+    selectedPriority = actualToDo.priority;
+    document.getElementById("taskPriority").innerHTML = `${actualToDo.priority} <img src="../assets/img/prio_${actualToDo.priority}.svg" alt="Prirority of task">`;
+
+    document.getElementById("taskCategory").innerHTML = `<div class="taskStatus ${actualToDo.category.toLowerCase().replace(/ /g, "-")}">${actualToDo.category}</div>`;
+    document.getElementById('selected_category').textContent = actualToDo.category;
+
+
+    document.getElementById('btnDialogLeftContent').innerHTML = "Delete";
+    document.getElementById("btnDialogLeft").onclick = deleteTask;
+    document.getElementById('btnDialogRightContent').innerHTML = "Edit";
+    document.getElementById("btnDialogRight").onclick = showDialogEdit;
+
+    console.log(actualToDo);
+    getAssignedUser();
+}
+
+/** 
+ * Switches the dialog into edit mode for the currently selected task.
+ */
+function showDialogEdit() {
+    getCssTheme('cssEditTask');
+    document.getElementById('btnDialogLeftContent').innerHTML = "OK";
+    document.getElementById("btnDialogLeft").onclick = editDialogTask;
+}
+
+/** close the dialog and re render the board */
+function closeDialog() {
+    dialogBoardTaskRev.dialog.close();
+    getCssTheme('');
+    onloadFuncBoard();
+}
+
+//################### Subtasks ###################
+/**
+ * Renders all subtasks of the selected task into the dialog.
+ * @param {Array<Object>} subtasks - Array of subtasks belonging to the selected task.
+ */
+function getAllSubtask(subtasks) {
+    if (subtasks == null) { return; }
+
+    for (let index = 0; index < subtasks.length; index++) {
+        addNewSubtask(subtasks[index].task, index);
+    }
+}
+
+/**
+ * Creates and appends a new subtask list item in the dialog.
+ * @param {string} text - The text of the subtask.
+ * @param {number} index - The index of the subtask in the array.
+ */
+function addNewSubtask(text, index) {
+    // Referenz auf die Liste holen
+    const list = document.getElementById("subtask_list");
+
+    // Neues li-Element erstellen
+    const li = document.createElement("li");
+    li.classList.add("subtask-list");
+
+    // Inhalt einfügen
+    li.innerHTML = `
+    <input type="checkbox" onchange="updateSubTask(${index})" ${actualToDo.subtasks[index].checked ? "checked" : ""} class="subtask-checkbox">
+    <span class="subtask-text">${text}</span>
+    <div class="subtask-element-img-wrapper">
+      <button onclick="openEditingEnvironment(this)" class="subtask-edit-btn" title="Edit"></button>
+      <div class="subtask-btn-divider-secondary"></div>
+      <button onclick="deleteAddedSubtask(this)" class="subtask-delete-btn" title="Delete"></button>
+    </div>
+  `;
+
+    list.appendChild(li);
+}
+
+/**
+ * update the Status of Subtask by clicking Checkbox
+ * @param {Integer} index Array Index of Subtask
+ */
+async function updateSubTask(index) {
+    let taskStatus = null;
+
+    if ("checked" in actualToDo.subtasks[index]) {
+        taskStatus = !actualToDo.subtasks[index].checked;
+    } else {
+        taskStatus = true;
+    }
+
+    await patchData(`tasks/${currentDraggedElement}/subtasks/${index}`, { checked: taskStatus });
+    actualToDo.subtasks[index].checked = taskStatus;
+}
+
+/**
+ * get all number of done Subtasks for the selcted Task
+ * @param {Array} subtasks all Subtasks of the selected Task
+ * @returns {Integer} the number of subtasks which are done
+ */
+function getSubTaskDone(subtasks) {
+    let doneTask = 0;
+
+    for (let index = 0; index < subtasks.length; index++) {
+        const subtask = subtasks[index];
+
+        if (subtask && "checked" in subtask && subtask.checked === true) {
+            doneTask++;
+        }
+    }
+
+    return doneTask;
+}
+
+/**
+ * Renders all assigned users of the current task into the dialog.
+ */
+function getAssignedUser() {
+    let contactRev = document.getElementById('contact_icons');
+    let output = "";
+
+    if (actualToDo.assignedTo.length == null) { return; }
+
+    for (let index = 0; index < actualToDo.assignedTo.length; index++) {
+        selectedContacts.add(actualToDo.assignedTo[index]);
+        const contact = contactUser[actualToDo.assignedTo[index]];
+        if (!contact) continue;
+
+        output += `<div class="assignedUser">
+                    <div class="contactAvater" style="background-color:${contact.color}"> 
+                      ${getUserItem(contact.name)} </div>
+                    <div class="userName">${contact.name}</div>
+                    </div>`;
+    }
+
+    contactRev.classList.remove('d-none');
+    contactRev.innerHTML = output;
+}
+
+//################ Mobile Move Overlay ###############
+/**
+ * Renders the overlay with possible move actions for a task in mobile view.
+ * @param {Object} todo - The task object from the database.
+ * @param {string} status - The current status column of the task.
+ * @returns {string} HTML markup for the move overlay.
+ */
+function renderMobileMoveAction(todo, status) {
+    let output = "";
+    let moveTasks = getMobileDisplayMoveStatusColumn(status);
+
+    output = `<div class="boardMoveToOverlay" onclick="event.stopPropagation()">
+                <div class="boardMoveToHeadline onlyMobile">Move To</div>
+                <div class="boardMoveToOverlayButtons">`;
+    if (moveTasks.moveTaskUp != null) {
+        output += renderMoveButton(todo.id, moveTasks.moveTaskUp, "arrow_upward.svg", "arrow up");
+    }
+    if (moveTasks.moveTaskDown != null) {
+        output += renderMoveButton(todo.id, moveTasks.moveTaskDown, "arrow_downward.svg", "arrow down");
+    }
+
+    output += `</div></div>`;
+    return output;
+}
+
+/**
+ * Changes the status (column) of a task via the mobile overlay menu.
+ * @param {string} id - The ID of the task in the database.
+ * @param {string} targetColumn - The target column where the task will be moved.
+ */
+async function changeBoardStatus(id, targetColumn) {
+    const task = todos.find(t => t.id === id);
+    if (!task) return;
+
+    task.status = targetColumn;
+
+    await putData('tasks/' + id, task);
+
+    updateHTML();
+}
+
+/**
+ * shows or hide the Overlay Move Dialog of an Task in Mobile View
+ * @param {Event} event 
+ */
+function openBoardMoveToOverlay(event) {
+    event.stopPropagation();
+
+    const todo = event.currentTarget.closest('.todo');
+    const overlay = todo.querySelector('.boardMoveToOverlay');
+    overlay.style.display = overlay.style.display === 'flex' ? 'none' : 'flex';
+}
+
+//############## Task Actions ####################
+/**
+ * Creates a new task from dialog input and saves it to the database.
+ */
 async function addDialogTask() {
     let task = getTaskInput();
 
@@ -546,7 +528,9 @@ async function addDialogTask() {
     onloadFuncBoard();
 }
 
-/** update task */
+/**
+ * Updates the currently selected task with dialog input and saves changes to the database.
+ */
 async function editDialogTask() {
     let task = getTaskInput();
 
@@ -560,9 +544,56 @@ async function editDialogTask() {
 }
 
 /**
- * set the global Value for the current dragging task and rotate the the dragging Task
- * @param {number} id - Die ID der gezogenen Aufgabe.
- * @param {name } columnName name of the actual Column
+ * Deletes the currently selected task from the database, closes the dialog, and refreshes the board.
+ */
+async function deleteTask() {
+    await await deleteData(`/tasks/${currentDraggedElement}`);
+
+    closeDialog();
+    onloadFuncBoard();
+}
+
+/**
+ * Returns the possible move directions (up/down) for a task based on its current status column.
+ * @param {string} status - The current status column of the task.
+ * @returns {Object} An object with properties moveTaskUp and moveTaskDown.
+ */
+function getMobileDisplayMoveStatusColumn(status) {
+    switch (status) {
+        case 'boardToDo':
+            return { moveTaskUp: null, moveTaskDown: 'boardProgress' }
+        case 'boardProgress':
+            return { moveTaskUp: 'boardToDo', moveTaskDown: 'boardFeedback' }
+        case 'boardFeedback':
+            return { moveTaskUp: 'boardProgress', moveTaskDown: 'boardDone' }
+        case 'boardDone':
+            return { moveTaskUp: 'boardFeedback', moveTaskDown: null }
+    }
+}
+
+/**
+ * Returns the display name of a status column for use in the mobile move overlay.
+ * @param {string} status - The technical name of the status column.
+ * @returns {string} The human-readable display name.
+ */
+function getMobileDisplayMoveStatus(status) {
+    switch (status) {
+        case 'boardToDo':
+            return 'To Do'
+        case 'boardProgress':
+            return 'Progress'
+        case 'boardFeedback':
+            return 'Feedback'
+        case 'boardDone':
+            return 'Done'
+    }
+}
+
+//############## Drag & Drop ###############
+/**
+ * Sets the global value for the currently dragged task and applies a rotation style.
+ * @param {string} id - The ID of the dragged task.
+ * @param {string} columnName - The name of the column the task originates from.
  */
 function startDragging(id, columnName) {
     currentDraggedElement = id;
@@ -588,8 +619,9 @@ function stopDragging(id) {
 }
 
 /**
- * Erlaubt das Ablegen eines Elements im Drop-Bereich.
- * @param {DragEvent} ev - Das DragEvent-Objekt.
+ * Allows dropping a task into a column and shows a preview placeholder.
+ * @param {DragEvent} ev - The drag event object.
+ * @param {string} columnId - The ID of the target column.
  */
 function allowDrop(ev, columnId) {
     ev.preventDefault();
@@ -608,8 +640,9 @@ function allowDrop(ev, columnId) {
 }
 
 /**
- * Verschiebt die aktuell gezogene Aufgabe in eine neue Kategorie.
- * @param {string} targetColumn - Die Zielkategorie
+ * Moves the currently dragged task into a new column.
+ * @param {string} targetColumn - The target column name.
+ * @param {Event} ev - The drop event.
  */
 async function moveTo(targetColumn, ev) {
     ev.preventDefault();
@@ -623,14 +656,19 @@ async function moveTo(targetColumn, ev) {
     updateHTML();
 }
 
-
+/**
+ * Normalizes the positions of tasks within a column after a move.
+ * @param {string} status - The status column to normalize.
+ */
 function normalizePositions(status) {
     const arr = todos.filter(t => t.status === status).sort((a, b) => a.pos - b.pos);
     arr.forEach((t, i) => { t.pos = i; boardPos[status][t.id] = i; putData('tasks/' + t.id, t); });
 }
 
-
-
+/**
+ * Displays a preview placeholder when a task is dragged into another column.
+ * @param {Event} event - The drag event.
+ */
 function renderTaskPreview(event) {
     const targetColumn = event.currentTarget.id;
     const TASK_ID = document.getElementById("toDo" + currentDraggedElement);
@@ -644,6 +682,11 @@ function renderTaskPreview(event) {
     }
 }
 
+/**
+ * Removes the preview placeholder when a task is no longer dragged over a column.
+ * @param {string} columnId - The ID of the column.
+ * @param {Event} ev - The related event.
+ */
 function removePreview(columnId, ev) {
     const container = document.getElementById(columnId);
 
@@ -657,12 +700,31 @@ function removePreview(columnId, ev) {
     container.classList.remove("drag-area-highlight");
 }
 
-function closeDialog() {
-    dialogBoardTaskRev.dialog.close();
-    getCssTheme('');
-    onloadFuncBoard();
-}
+//################### Bootstrap ################
+document.addEventListener('click', () => {
+    document.querySelectorAll('.boardMoveToOverlay').forEach(overlay => {
+        overlay.style.display = 'none';
+    });
+});
 
 document.addEventListener("DOMContentLoaded", () => {
     onloadFuncBoard();
 });
+
+//##############  utility functions ######################
+/**
+ * activate and deactivate the necessary CSS Files, which are responsible for the visibility of the dialog
+ * @param {string} theme ID of the selected CSS File
+ */
+function getCssTheme(theme) {
+    document.getElementById("cssAddTask").disabled = (theme != "cssAddTask");
+    document.getElementById("cssAddTaskBoard").disabled = (theme != "cssAddTask");
+    document.getElementById("cssEditTask").disabled = (theme != "cssEditTask");
+    document.getElementById("cssShowTask").disabled = (theme != "cssShowTask");
+}
+
+/** Manage the size of the textarea of the description for showTask in Dialog */
+function autoResizeTextarea(element) {
+    element.style.height = "auto";
+    element.style.height = element.scrollHeight + 3 + "px";
+}
