@@ -17,11 +17,16 @@
   <link rel="stylesheet" href="../styles/boardEditTask.css" id="cssEditTask" disabled>
   <link rel="stylesheet" href="../styles/boardShowTask.css" id="cssShowTask" disabled>
   <!-- JS files -->
-  <script src="../script.js" defer></script>
   <script src="../scripts/summary.js" defer></script>
+  <script src="../script.js" defer></script>
+  <script src="../scripts/add-task.js" defer></script>
+  <script src="../scripts/templates.js" defer></script>
+  <script src="../scripts/contacts-overview.js" defer></script>
   <script src="../scripts/firebase.js" defer></script>
+  <script src="../scripts/contacts.js" defer></script>
   <script src="../scripts/board.js" defer></script>
   <script src="../scripts/board-design.js" defer></script>
+
 </head>
 
 <body>
@@ -82,7 +87,8 @@
         <div class="searchBoard">
           <div id="search_box" class="search-box">
             <input type="search" oninput="processChanges()" id="searchBoard" placeholder="Find Task">
-            <div class="search-img" onmousedown="changeImgOfSearchIcon('add', 'search_box', 'search_img')" onmouseup="changeImgOfSearchIcon('remove', 'search_box', 'search_img')">
+            <div class="search-img" onmousedown="changeImgOfSearchIcon('add', 'search_box', 'search_img')"
+              onmouseup="changeImgOfSearchIcon('remove', 'search_box', 'search_img')">
               <img id="search_img" src="../assets/img/search.svg" alt="search icon as magnifying glass">
             </div>
           </div>
@@ -283,12 +289,10 @@
   </footer>
 
   <div id="orientation_warning" class="landscape-view-warning d-none">
-        <p>JOIN works best in portrait mode. Please rotate your device!</p>
-        <img class="device-icon" src="../assets/img/device_landscape.svg" alt="A tablet positioned in landscape view">
-    </div>
-  <script src="../scripts/contacts-overview.js"></script>
-  <script src="../scripts/contacts.js"></script>
-  <script src="../scripts/add-task.js"></script>
+    <p>JOIN works best in portrait mode. Please rotate your device!</p>
+    <img class="device-icon" src="../assets/img/device_landscape.svg" alt="A tablet positioned in landscape view">
+  </div>
+
 
 
 </body>

@@ -516,15 +516,17 @@ function openBoardMoveToOverlay(event) {
  */
 async function addDialogTask() {
     let task = getTaskInput();
-
-    if (!checkIfTaskIsValid(task)) {
-        return;
-    }
-
+    if (!checkIfTaskIsValid(task)) { return; }
     task.status = startStatusColumn;
-
     dialogBoardTaskRev.dialog.close()
-    await patchData('tasks/' + currentDraggedElement, task);
+    uploadTaskToFirebase("tasks", task)
+        .then((res) => {
+            console.log("Task uploaded with ID:", res.name);
+            clearTaskInput();
+        })
+        .catch((err) => {
+            console.error("Upload failed:", err);
+        });
     onloadFuncBoard();
 }
 
