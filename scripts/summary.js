@@ -21,6 +21,29 @@ function toggleSubmenu (){
 }
 
 /**
+ * Controls the visibility of the dropdown menu for desktop and mobile devices
+ * If the dropdown menu is open and the user clicks outside it, the menu closes
+ * @param {MouseEventevent} - The click event
+ */
+function handleDocumentClick(event) {
+    const avatarBtn = document.getElementById('activeAvatar');
+    const desktopSubmenu = document.getElementById('submenu');
+    const mobileSubmenu = document.getElementById('mobile_submenu');
+    if (!avatarBtn.contains(event.target) &&
+        !desktopSubmenu.contains(event.target) &&
+        !mobileSubmenu.contains(event.target)) {
+        desktopSubmenu.classList.add('d-none');
+        mobileSubmenu.classList.remove('open');
+    }
+}
+
+/**
+ * Attaches the global click handler on the whole document.
+ * Ensures that clicks anywhere on the page are passed to handleDocumentClick.
+ */
+document.addEventListener('click', handleDocumentClick);
+
+/**
  * Toggles the desktop submenu by adding or removing the 'd-none 'CSS class
  * Targets the DOM element with the ID 'submenu'
  * @function toggleDesktopSubmenu
