@@ -56,14 +56,24 @@
             <hr class="headline-underline" />
           </div>
           <form onsubmit="userLogin()" id="loginForm">
-            <div class="loginInputs">
+            <!-- <div class="loginInputs">
               <input
                 id="txtEMail"
                 type="email"
                 placeholder="Email"
                 required
                 class="inputLogin formMailIcon"
-              />
+              /> -->
+            <div class="mail-wrapper">
+                <input
+                  id="txtEMail"
+                  type="email"
+                  placeholder="Email"
+                  required
+                  class="inputLogin"
+                />
+                <span class="formMailIcon"></span>
+              </div>
               <!-- <input
                 id="txtPassword"
                 type="password"
@@ -82,8 +92,6 @@
                 <span id="togglePassword" class="toggle-icon"></span>
               </div>
             </div>
-
-
 
             <div id="loginStatus">&nbsp;</div>
             <div class="btnLoginContent">
