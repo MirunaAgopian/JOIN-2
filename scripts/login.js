@@ -9,7 +9,8 @@ let elementLoginRev = {
     password: document.getElementById("txtPassword"),
     loginStatus: document.getElementById("loginStatus"),
     splashLogo: document.querySelector('.logoSplash'),
-    pageContent: document.getElementById('pageContent')
+    pageContent: document.getElementById('pageContent'),
+    togglePassword: document.getElementById("togglePassword")
 }
 // ############################# event Listener for Objects of Login ####################
 elementLoginRev.email.addEventListener("change", () => {
@@ -19,6 +20,19 @@ elementLoginRev.email.addEventListener("change", () => {
 elementLoginRev.password.addEventListener("focus", () => {
     elementLoginRev.password.classList.remove("inputFail");
     elementLoginRev.password.classList.add("inputFocus");
+    elementLoginRev.password.classList.remove('formPassIcon');
+    elementLoginRev.password.classList.add('formPassHidden');
+    elementLoginRev.togglePassword.style.display = "block";
+});
+
+elementLoginRev.togglePassword.addEventListener("click", () => {
+  const isHidden = elementLoginRev.password.type === "password";
+  elementLoginRev.password.type = isHidden ? "text" : "password";
+  if (isHidden) {
+    elementLoginRev.togglePassword.classList.add("visible");
+  } else {
+    elementLoginRev.togglePassword.classList.remove("visible");
+  }
 });
 
 elementLoginRev.password.addEventListener("blur", () => {

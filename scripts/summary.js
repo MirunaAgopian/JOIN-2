@@ -1,5 +1,4 @@
 //------------------------- Aside&Nav - Functions ------------------------
-
 /**
  * Initializes tab highlighting based on the current URL once the DOM is fully loaded.
  * This ensures the correct tab is marked active when the page is first rendered.
@@ -169,3 +168,21 @@ function returnNumberOfTasks(toDo, done, inProgress, awaitingFeedback){
 }
 //Next to do:
 // fix the console error regarding getAllUsers()
+//write the funciton for upcoming deadline
+
+function insertNumbers(){
+    let toDo = document.getElementById('to_do');
+    let done = document.getElementById('done');
+    let inProgress = document.getElementById('in_progress');
+    let awaitingFeedback = document.getElementById('awaiting_feedback');
+    let total = document.getElementById('total');
+    let numbers = countTask();
+    toDo.innerHTML = `${numbers.toDo}`;
+    done.innerHTML = `${numbers.done}`;
+    inProgress.innerHTML = `${numbers.inProgress}`;
+    awaitingFeedback.innerHTML = `${numbers.awaitingFeedback}`;
+    total.innerHTML = `${numbers.total}`
+}
+
+// I should call insertNumbers() at onload but also take this into consideration
+//onload="renderActiveAvatar()"

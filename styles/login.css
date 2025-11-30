@@ -8,6 +8,10 @@ body {
   background: #F6F7F8;
 }
 
+input:focus {
+  outline: none;
+}
+
 .loginContent {
   display: flex;
   flex-direction: column;
@@ -64,8 +68,32 @@ body {
 
 
 .formPassIcon {
-  background-image: url(../assets/img/lock.svg);                    
+  background-image: url(../assets/img/lock.svg);                  
 }
+
+/* Added now */
+.password-wrapper {
+  position: relative;
+}
+
+.toggle-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 22px;
+  background-image: url('../assets/img/visibility_off.svg');
+  background-size: cover;
+  cursor: pointer;
+  display: none;
+}
+
+.toggle-icon.visible {
+  background-image: url('../assets/img/visibility_on.svg');
+  width: 30px;
+}
+/* end */
 
 
 form {
@@ -98,7 +126,7 @@ form {
 }
 
 .inputFocus {
-  border: 1px solid #29ABE2
+  border: 1px solid #29ABE2;
 }
 
 .mainContent {
