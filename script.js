@@ -56,7 +56,6 @@ function renderActiveAvatar() {
         avatarRev.innerHTML = "G";
         return;
     }
-
     avatarRev.innerHTML = getUserItem(storedUserName);
 }
 

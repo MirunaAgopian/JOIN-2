@@ -1,3 +1,5 @@
+//------------------------- Aside&Nav - Functions ------------------------
+
 /**
  * Initializes tab highlighting based on the current URL once the DOM is fully loaded.
  * This ensures the correct tab is marked active when the page is first rendered.
@@ -34,6 +36,7 @@ function handleDocumentClick(event) {
         !mobileSubmenu.contains(event.target)) {
         desktopSubmenu.classList.add('d-none');
         mobileSubmenu.classList.remove('open');
+        avatarBtn.classList.remove('active');
     }
 }
 
@@ -44,12 +47,20 @@ function handleDocumentClick(event) {
 document.addEventListener('click', handleDocumentClick);
 
 /**
+ * Attaches the global click handler on the whole document.
+ * Ensures that touches anywhere on the page are passed to handleDocumentClick.
+ */
+document.addEventListener('touchstart', handleDocumentClick);
+
+/**
  * Toggles the desktop submenu by adding or removing the 'd-none 'CSS class
  * Targets the DOM element with the ID 'submenu'
  * @function toggleDesktopSubmenu
  */
 function toggleDesktopSubmenu(){
     let desktopSubmenu = document.getElementById('submenu');
+    const avatarBtn = document.getElementById('activeAvatar');
+    avatarBtn.classList.toggle('active');
     desktopSubmenu.classList.toggle('d-none');
 }
 
@@ -60,6 +71,8 @@ function toggleDesktopSubmenu(){
  */
 function toggleMobileSubmenu(){
     let mobileSubmenu = document.getElementById('mobile_submenu');
+    const avatarBtn = document.getElementById('activeAvatar');
+    avatarBtn.classList.toggle('active');
     mobileSubmenu.classList.toggle('open');
 }
 
@@ -123,3 +136,36 @@ function checkCurrentUrl(){
         setMobileTabFocus(tabKey);
     }
 }
+
+//------------------------- Dynamic data summary.html ------------------------
+
+function countTask(){
+    let countToDo = 0;
+    let countDone = 0;
+    let countInProgress = 0;
+    let countAwaitingFeedback = 0;
+    for(let index = 0; index < todos.length; index++){
+        if(todos[index].status == 'boardToDo'){
+            countToDo++;
+        } else if(todos[index].status == 'boardDone'){
+            countDone++;
+        } else if(todos[index].status == 'boardProgress'){
+            countInProgress++;
+        } else if(todos[index].status == 'boardFeedback') {
+            countAwaitingFeedback++;
+        } 
+    }
+    return returnNumberOfTasks(countToDo, countDone, countInProgress, countAwaitingFeedback);
+}
+
+function returnNumberOfTasks(toDo, done, inProgress, awaitingFeedback){
+    return {
+        toDo: toDo,
+        done: done,
+        inProgress: inProgress,
+        awaitingFeedback: awaitingFeedback,
+        total: toDo + done + inProgress + awaitingFeedback
+    };
+}
+//Next to do:
+// fix the console error regarding getAllUsers()
