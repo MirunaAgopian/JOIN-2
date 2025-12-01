@@ -6,7 +6,8 @@
     padding-top: 256px;
     gap: 24px;
     padding: 24px;
-    overflow-x: auto;
+    /*overflow-x: auto;*/
+    overflow: hidden;
 }
 
 body {
@@ -27,6 +28,8 @@ h2 {
     flex-direction: column;
     min-width: 250px;
     height: 100%;
+    max-height: calc(80vh - 128px);
+    overflow: auto;
 }
 
 .columnHeader {
@@ -37,25 +40,25 @@ h2 {
     justify-content: space-between;
 }
 
-.columnHeader button{
+.columnHeader button {
     border: 2px solid #2A3647;
     border-radius: 8px;
     color: #2A3647;
     font-size: 16px;
-    font-weight:600;
+    font-weight: 600;
     padding-top: 1px;
     padding-left: 7px;
     padding-right: 7px;
     padding-bottom: 3px;
 }
 
-.columnHeader button:hover{
+.columnHeader button:hover {
     cursor: pointer;
     border-color: #29ABE2;
     color: #29ABE2;
 }
 
-.columnHeader button:active{
+.columnHeader button:active {
     border-color: #091931;
     color: #091931;
 }
@@ -66,15 +69,15 @@ h2 {
     border: 2px dashed #333;
     padding: 10px;
     border-radius: 8px;
-    transition: background-color 0.3s; */
+    transition: background-color 0.3s; 
+    overflow-y: auto;*/
     flex: 1;
-    overflow-y: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
     min-height: 60vh;
 }
 
-.drag-area::-webkit-scrollbar{
+.drag-area::-webkit-scrollbar {
     display: none;
 }
 
@@ -82,10 +85,11 @@ h2 {
     background-color: white;
     border: 1px solid #FFFF;
     border-radius: 24px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     padding: 10px;
     margin: 10px 0;
     cursor: grab;
+    max-height: 320px;
 }
 
 .mainContent {
@@ -93,11 +97,9 @@ h2 {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    /* margin-top: 128px; */
-    /* margin-left: 128px; */
+    margin-top: 128px;
+    margin-left: 220px;
     max-width: 1440px;
-    margin: 0 auto;
-    /* padding-left: 200px; */
     padding-top: 128px;
     width: 100%;
 }
@@ -220,7 +222,7 @@ h2 {
     padding-top: 14px;
 }
 
-.subtasks{
+.subtasks {
     padding-top: 16px;
 }
 
@@ -257,7 +259,7 @@ h2 {
     display: block;
 }
 
-.search-box{
+.search-box {
     display: flex;
     gap: 16px;
     align-items: center;
@@ -270,18 +272,18 @@ h2 {
     background-color: white;
 }
 
-.search-box input::placeholder{
+.search-box input::placeholder {
     opacity: 0.4;
 }
 
-.search-box input{
+.search-box input {
     font-size: 20px;
     border: none;
     border-right: 1px solid #D1D1D1;
     padding: 8px;
 }
 
-.search-img{
+.search-img {
     padding-top: 8px;
     padding-left: 8px;
     padding-right: 8px;
@@ -289,18 +291,18 @@ h2 {
     border-radius: 50px;
 }
 
-.search-img:hover{
+.search-img:hover {
     cursor: pointer;
     background-color: #EEEEEE;
 }
 
-.searchBoard{
+.searchBoard {
     display: flex;
     gap: 24px;
     align-items: center;
 }
 
-.btn-add-task{
+.btn-add-task {
     background-color: #2A3647;
     border: unset;
     padding: 1px 20px;
@@ -311,14 +313,14 @@ h2 {
     align-items: center;
 }
 
-.btn-text{
+.btn-text {
     color: white;
     font-size: 21px;
     font-family: 'Inter';
     font-weight: bold;
 }
 
-.btn-plus{
+.btn-plus {
     color: white;
     font-size: 21px;
     font-family: 'Inter';
@@ -327,25 +329,49 @@ h2 {
     padding-bottom: 4px;
 }
 
-.btn-add-task:hover{
+.btn-add-task:hover {
     cursor: pointer;
     background-color: #29ABE2;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
     transform: translateY(-1px);
 }
 
-.btn-add-task:active{
+.btn-add-task:active {
     background-color: #091931;
     transform: translateY(0);
 }
 
-@media (max-width: 768px) {
-    .onlyMobile {
-        display: block;
+@media (max-width: 1620px) {
+    .column {
+        gap: 8px;
+        margin-right: 16px;
     }
 
-    .onlyDesktop {
-        display: none;
+    .mainContent {
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 1300px) {
+    .column {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        max-height: calc(100vh - 128px);
+        overflow-y: auto;
+        overflow-x: hidden;
+        box-sizing: border-box;
+        overflow: visible;
+    }
+
+    .columnHeader {
+        margin-bottom: 8px;
+        flex: none;
+    }
+
+    .mainContent {
+        /*overflow: visible;*/
     }
 
     #board-Content {
@@ -354,18 +380,8 @@ h2 {
         gap: 32px;
         overflow-x: hidden;
         width: 100%;
-    }
-
-    .column {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        width: 100%;
-    }
-
-    .columnHeader {
-        margin-bottom: 8px;
-        flex: none;
+        overflow-y: auto;
+        max-height: 80vh;
     }
 
     .drag-area {
@@ -378,12 +394,35 @@ h2 {
     }
 
     .todo {
+        flex-shrink: 0;
         width: 252px;
-        flex-shrink: 0
+        box-sizing: border-box;
+        margin-right: 12px;
     }
 
     .mainContent {
+        padding-top: 0;
+    }
+
+    .noEntry {
+        height: 48px;
+    }
+}
+
+@media (max-width: 850px) {
+    .mainContent {
         margin-left: 0;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .onlyMobile {
+        display: block;
+    }
+
+    .onlyDesktop {
+        display: none;
     }
 }
 
