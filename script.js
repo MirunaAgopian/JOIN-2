@@ -5,6 +5,7 @@ userObj = {
     "password" : "Ben123"
 };
 
+
 /** Logot the current USer from seassion and fowerd to the login Page */
 function logOut(){
     sessionStorage.clear();

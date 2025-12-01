@@ -1,8 +1,9 @@
 let userObj = [];
-
 let validEmail = false;
+
 /** const with Link for the Database */
 const BASE_URL = 'https://remotestorage-162fc-default-rtdb.europe-west1.firebasedatabase.app/';
+
 /** Object with all html Objects for Login */
 let elementLoginRev = {
     email: document.getElementById("txtEMail"),
@@ -70,7 +71,7 @@ function animateLogo() {
     }, { once: true });
 }
 
-/** loaad all useres are storred in Database
+/** loads all useres that are stored in the database
  * @param {string} path ky of the first Level of database
  * @returns json of the reqest  */
 async function getAllUsers(path = '') {
