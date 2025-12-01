@@ -500,11 +500,8 @@ function renderMobileMoveAction(todo, status) {
 async function changeBoardStatus(id, targetColumn) {
     const task = todos.find(t => t.id === id);
     if (!task) return;
-
     task.status = targetColumn;
-
     await putData('tasks/' + id, task);
-
     updateHTML();
 }
 
