@@ -97,19 +97,19 @@ input:-webkit-autofill {
   position: absolute;
   right: 12px;
   top: 50%;
-  transform: translateY(10%);
+  transform: translateY(30%);
   width: 25px;
   height: 22px;
   background-image: url('../assets/img/visibility_off.svg');
-  background-size: cover;
   cursor: pointer;
   display: none;
+  background-repeat: no-repeat;
 }
 
 
 .toggle-icon.visible {
   background-image: url('../assets/img/visibility_on.svg');
-  width: 30px;
+  width: 25px;
 }
 /* end */
 
@@ -317,9 +317,10 @@ footer {
 @media (max-width: 768px) {
   .onlyMobile {
     display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 18px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    padding: 0 8px;
   }
 
   .onlyDesktop {
@@ -367,5 +368,11 @@ footer {
     transform: none;
     margin: 20px auto 20px; 
     width: 100%;    
+  }
+}
+
+@media(max-width: 450px) {
+  .inputLogin {
+    font-size: 16px;
   }
 }
