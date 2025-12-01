@@ -15,6 +15,8 @@ let actualToDo = null;
 
 let desiredPos = null;
 
+let isShowTaskActive = false;
+
 const dialogBoardTaskRev = {
     dialog: document.getElementById("dialaogBoardTask"),
     dialaogBoardTask: document.getElementById("dialaogBoardTask"),
@@ -309,6 +311,8 @@ function showDialogAddTask(column) {
  * @param {string} id - The ID of the task in the database.
  */
 function showDialogTask(id) {
+    isShowTaskActive = true;
+
     actualToDo = todos.find(t => t.id === id);
 
     getCssTheme('cssShowTask');
@@ -321,6 +325,8 @@ function showDialogTask(id) {
     dialogBoardTaskRev.task_description.value = actualToDo.description;
     autoResizeTextarea(dialogBoardTaskRev.task_description);
     dialogBoardTaskRev.due_date.value = actualToDo.date;
+
+    changeDOMIfShowTaskIsOpen();
 
     getAllSubtask(actualToDo.subtasks);
 
@@ -344,6 +350,8 @@ function showDialogTask(id) {
  * Switches the dialog into edit mode for the currently selected task.
  */
 function showDialogEdit() {
+    isShowTaskActive = false;
+    changeDOMIfShowTaskIsOpen();
     getCssTheme('cssEditTask');
     document.getElementById('btnDialogLeftContent').innerHTML = "OK";
     document.getElementById("btnDialogLeft").onclick = editDialogTask;
@@ -351,6 +359,8 @@ function showDialogEdit() {
 
 /** close the dialog and re render the board */
 function closeDialog() {
+    isShowTaskActive = false;
+    changeDOMIfShowTaskIsOpen();
     dialogBoardTaskRev.dialog.close();
     getCssTheme('');
     onloadFuncBoard();
@@ -729,4 +739,17 @@ function getCssTheme(theme) {
 function autoResizeTextarea(element) {
     element.style.height = "auto";
     element.style.height = element.scrollHeight + 3 + "px";
+}
+
+function changeDOMIfShowTaskIsOpen(){
+    let inputTitleRef = document.getElementById('task_title');
+    let spanTitleRef = document.getElementById('title_indication');
+    if(isShowTaskActive){
+        spanTitleRef.innerHTML = inputTitleRef.value;
+        inputTitleRef.style = "display:none;";
+        spanTitleRef.style = "display:block;"; 
+    }else{
+        spanTitleRef.style = "display:none;";
+        inputTitleRef.style = "display:block;"; 
+    }
 }

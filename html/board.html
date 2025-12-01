@@ -160,7 +160,8 @@
             <div class="field-description">
               <label for="task_title" class="notForShow">Title<span class="required">*</span></label>
               <input onfocus="handleFocus(event)" oninput="handleInput(event)" onblur="handleBlur(event)" type="text"
-                id="task_title" required placeholder="Enter a title" />
+                id="task_title" required placeholder="Enter a title" style="display: block;"/>
+              <span id="title_indication" class="title-indication" style="display: none;"></span>
               <div class="alert-container"></div>
             </div>
             <div class="field-description">
