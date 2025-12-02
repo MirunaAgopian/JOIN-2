@@ -15,8 +15,6 @@ let actualToDo = null;
 
 let desiredPos = null;
 
-let isShowTaskActive = false;
-
 const dialogBoardTaskRev = {
     dialog: document.getElementById("dialaogBoardTask"),
     dialaogBoardTask: document.getElementById("dialaogBoardTask"),
@@ -737,60 +735,4 @@ function getCssTheme(theme) {
 function autoResizeTextarea(element) {
     element.style.height = "auto";
     element.style.height = element.scrollHeight + 3 + "px";
-}
-
-function changeDOMIfShowTaskIsOpen(arrSubtasks){
-    changeDOMIndication('task_title', 'title_indication');
-    changeDOMIndication('due_date', 'date_indication');
-    changeDateFormat('date_indication');
-    hiddenInputFieldSubtask();
-    hiddenCheckboxSubtask(arrSubtasks);
-}
-
-function changeDOMIndication(idInput, idSpan){
-    let inputDOMRef = document.getElementById(idInput);
-    let spanDOMRef = document.getElementById(idSpan);
-    if(isShowTaskActive){
-        spanDOMRef.innerHTML = inputDOMRef.value;
-        inputDOMRef.style = "display:none;";
-        spanDOMRef.style = "display:block;"; 
-    }else{
-        spanDOMRef.style = "display:none;";
-        inputDOMRef.style = "display:block;"; 
-    }
-}
-
-function changeDateFormat(idSpan){
-    let date = document.getElementById(idSpan);
-    let spanContent = date.textContent.trim();
-    let [year, month, day] = spanContent.split('-');
-    let newDateFormat = `${day}/${month}/${year}`;
-    date.textContent = newDateFormat;
-}
-
-function hiddenInputFieldSubtask(){
-    let inputSubtask = document.getElementById('subtask');
-    if(isShowTaskActive){
-        inputSubtask.style = "display:none;";
-    }else{
-        inputSubtask.style = "display:block;";
-    }
-}
-
-function hiddenCheckboxSubtask(arrSub){
-    if(arrSub != null){
-        let amountOfSubtasks = arrSub.subtasks.length;
-        let isClassActive = !document.getElementById('cssAddTask').disabled;
-        for (let index = 0; index < amountOfSubtasks; index++) {
-            if(isShowTaskActive){
-                document.getElementById(`subtask_${index}`).style = "display:none;";
-                document.getElementById(`subtask_${index}`).classList.remove('subtask-checkbox');
-            }else{
-                if(isClassActive == false){
-                    document.getElementById(`subtask_${index}`).style = "display:block;";
-                    document.getElementById(`subtask_${index}`).classList.add('subtask-checkbox');
-                }
-            }
-        }
-    }
 }
