@@ -192,6 +192,7 @@ button {
     align-items: center;
     gap: 16px;
     width: 100%;
+    padding-bottom: 16px;
 }
 
 .field-description label {
@@ -268,6 +269,9 @@ textarea {
 
 .assignedUser{
     display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 12px;
 }
 
 .userName{
@@ -277,4 +281,28 @@ textarea {
 #task_title{
     font-size: 50px;
     font-weight: bold;
+}
+
+.title-indication{
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.task-priority{
+    padding-left: 92px;
+    display: flex;
+    gap: 8px;
+}
+
+#assigned_box{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.contacts-icons{
+    padding-left: 16px;
+    max-height: 150px;
+    width: 100%;
+    overflow-y: auto;
 }

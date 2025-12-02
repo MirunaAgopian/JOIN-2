@@ -172,7 +172,8 @@
             <div class="field-description">
               <label class="color-description" for="due_date">Due date:<span class="required">*</span></label>
               <input onfocus="handleFocus(event)" oninput="handleInput(event)" onblur="handleBlur(event)" type="date"
-                id="due_date" required />
+                id="due_date" required  style="display: block;"/>
+              <span id="date_indication" class="date-indication" style="display: none;"></span>
               <div class="alert-container"></div>
             </div>
           </section>
@@ -181,7 +182,7 @@
             <section class="priority">
               <div class="field-description">
                 <span class="color-description">Priority:</span>
-                <span id="taskPriority"></span>
+                <span id="taskPriority" class="task-priority"></span>
                 <div class="priority-stages">
                   <div onclick="setPrioColor(this)" class="txt-img urgent">
                     <span>Urgent</span>
@@ -199,7 +200,7 @@
               </div>
             </section>
             <section class="assigned">
-              <div class="field-description">
+              <div id="assigned_box" class="field-description">
                 <span class="color-description">Assigned to:</span>
                 <div class="dropdown" id="assigned_to">
                   <span>Select contacts to assign</span>
@@ -235,7 +236,7 @@
                 <label class="color-description" for="subtask">Subtasks</label>
                 <div id="subtask_wrapper" class="subtask-wrapper">
                   <input id="subtask" class="subtask-input" type="text" placeholder="Add new subtask"
-                    onfocus="activateSubtask()" onblur="deactivateSubtask(event)" />
+                    onfocus="activateSubtask()" onblur="deactivateSubtask(event)" style="display: block;"/>
                   <div id="subtask_actions" class="subtask-actions">
                     <button onclick="clearSubtaskInput()" class="subtask-close-btn" title="Cancel"
                       type="button"></button>
