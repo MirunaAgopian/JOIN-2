@@ -1,6 +1,4 @@
 //############# global Variables ################
-
-let todos = [];
 let currentDraggedElement = null;
 let contactUser = {};
 let startStatusColumn = "";
@@ -43,10 +41,10 @@ const dialogBoardTaskRev = {
  * and renders the UI.
  */
 async function onloadFuncBoard() {
-    const ALL_TASKS = await getAllUsers('tasks');
+    const ALL_TASKS = await loadData('tasks');
     todos = getTaskArr(ALL_TASKS);
 
-    const ALL_USER = await getAllUsers("contacts");
+    const ALL_USER = await loadData("contacts");
     contactUser = getUserData(ALL_USER);
 
     updateHTML();
@@ -57,7 +55,7 @@ async function onloadFuncBoard() {
  * Filters tasks if the search string has not enought characters.
  */
 async function processChanges() {
-    const ALL_TASKS = await getAllUsers('tasks');
+    const ALL_TASKS = await loadData('tasks');
     const searchValue = document.getElementById("searchBoard").value.toLowerCase();
 
     if (searchValue.length > 2) {
@@ -74,13 +72,13 @@ async function processChanges() {
 
 /**
  * Converts a user object into an array of task objects with status and position.
- * @param {Object} usersObj - Object containing tasks keyed by ID.
+ * @param {Object} ALL_TASKS - Object containing tasks keyed by ID.
  * @returns {Array<Object>} Array of task objects.
  */
-function getTaskArr(usersObj) {
+function getTaskArr(ALL_TASKS) {
     const arr = [];
 
-    for (const [key, value] of Object.entries(usersObj)) {
+    for (const [key, value] of Object.entries(ALL_TASKS)) {
         let statusValue = checkStatus(value);
         let posValue = checkPosition(value, statusValue);
 
@@ -340,7 +338,6 @@ function showDialogTask(id) {
     document.getElementById('btnDialogRightContent').innerHTML = "Edit";
     document.getElementById("btnDialogRight").onclick = showDialogEdit;
 
-    console.log(actualToDo);
     getAssignedUser();
 }
 
@@ -555,7 +552,7 @@ async function editDialogTask() {
  * Deletes the currently selected task from the database, closes the dialog, and refreshes the board.
  */
 async function deleteTask() {
-    await await deleteData(`/tasks/${currentDraggedElement}`);
+    await deleteData(`/tasks/${currentDraggedElement}`);
 
     closeDialog();
     onloadFuncBoard();

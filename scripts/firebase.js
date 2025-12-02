@@ -1,4 +1,5 @@
 let users = [];
+let todos = [];
 
 async function onloadFunc(){
     console.log('test');
@@ -8,7 +9,7 @@ async function onloadFunc(){
     // putData('/name',{"type" : "strawberry", "eatable" : "yes"});
     // addEditSingleUser();
 
-    let userResponse = await getAllUsers('/namen');
+    let userResponse = await loadData('/namen');
     let userKeysArr = Object.keys(userResponse);
     for (let index = 0; index < userKeysArr.length; index++) {
         users.push(
@@ -30,10 +31,21 @@ async function onloadFunc(){
 
 const BASE_URL = 'https://remotestorage-162fc-default-rtdb.europe-west1.firebasedatabase.app/';
 
+/** loads all useres that are stored in the database
+ * @param {string} path ky of the first Level of database
+ * @returns json of the reqest  */
 async function loadData(path = ''){
     let response = await fetch(BASE_URL + path + '.json');
     let responseAtJson = await response.json();
-    console.log(responseAtJson);
+   // console.log(responseAtJson);
+    return responseAtJson;
+}
+
+async function getAllUsers(path = ''){
+    let response = await fetch(BASE_URL + path + '.json');
+    let responseAtJson = await response.json();
+   // console.log(responseAtJson);
+    return responseAtJson;
 }
 
 async function postData(path='', data={}){
@@ -68,7 +80,7 @@ async function addEditSingleUser(id=44, user={"name" : "Herbert"}){
     putData(`/namen/${id}`, user);
 }
 
-async function getAllUsers(path=''){
+async function loadData1(path=''){
     let response = await fetch(BASE_URL + path + '.json');
     let responseToJson = await response.json();
 
@@ -80,8 +92,8 @@ async function getAllUsers(path=''){
  * Only the provided keys in the data object will be modified, 
  * leaving all other fields of the record unchanged.
  *
- * @param {string} path - The relative path in the database (e.g., "tasks/123").
- * @param {Object} data - Key-value pairs to update (e.g., {status: "boardDone", pos: 2}).
+ * @param {string} path - The relative path in the database 
+ * @param {Object} data - Key-value pairs to update 
  * @returns {Promise<void>} - Resolves when the update request has completed.
  */
 async function patchData(path = '', data = {}) {

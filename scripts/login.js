@@ -1,9 +1,6 @@
 let userObj = [];
 let validEmail = false;
 
-/** const with Link for the Database */
-const BASE_URL = 'https://remotestorage-162fc-default-rtdb.europe-west1.firebasedatabase.app/';
-
 /** Object with all html Objects for Login */
 let elementLoginRev = {
     email: document.getElementById("txtEMail"),
@@ -54,7 +51,7 @@ elementLoginRev.email.addEventListener("blur", () => {
 
 /** Start function when the page is loading */
 async function onloadFunc() {
-    userObj = await getAllUsers("joinUsers");
+    userObj = await loadData("joinUsers");
     animateLogo();
 }
 
@@ -69,16 +66,6 @@ function animateLogo() {
             document.body.classList.remove("mobileBodyStart");
         }, 200);
     }, { once: true });
-}
-
-/** loads all useres that are stored in the database
- * @param {string} path ky of the first Level of database
- * @returns json of the reqest  */
-async function getAllUsers(path = '') {
-    let response = await fetch(BASE_URL + path + '.json');
-    let responseToJson = await response.json();
-
-    return responseToJson;
 }
 
 /**  start of Login Seassion  */
