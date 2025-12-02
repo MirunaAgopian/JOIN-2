@@ -321,7 +321,7 @@ function showDialogTask(id) {
     dialogBoardTaskRev.dialog.showModal();
     dialogBoardTaskRev.task_title.value = actualToDo.title;
     dialogBoardTaskRev.task_description.value = actualToDo.description;
-    autoResizeTextarea(dialogBoardTaskRev.task_description);
+    // autoResizeTextarea(dialogBoardTaskRev.task_description);
     dialogBoardTaskRev.due_date.value = actualToDo.date;
 
     getAllSubtask(actualToDo.subtasks);
