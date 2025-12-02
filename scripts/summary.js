@@ -13,6 +13,12 @@
 //     return responseToJson;
 // }
 
+function onloadFunctionSummary(){
+    renderActiveAvatar();
+    insertNumbers();
+    insertPrioIcon();
+    insertUpcomingDeadline();
+}
 
 function countTask(){
     let countToDo = 0;
@@ -57,15 +63,68 @@ function insertNumbers(){
     total.innerHTML = `${numbers.total}`
 }
 
-function onloadFunctionSummary(){
-    renderActiveAvatar();
-    insertNumbers();
+function setPrioIcon(task) {
+    let background = document.getElementById('prio_icon_background');
+    let icon = document.getElementById('prio_icon');
+    let taskPriority = task.priority;
+    if(taskPriority == 'low'){
+        background.classList.add("prio-background", "low");
+        icon.classList.add("prio-background-img", "low");
+    } else if(taskPriority == 'medium'){
+        background.classList.add("prio-background", "medium");
+        icon.classList.add("prio-background-img", "medium");
+    } else if(taskPriority == 'urgent') {
+        background.classList.add('prio-background', 'urgent');
+        icon.classList.add('prio-background-img', 'urgent');
+    }
 }
-// I should call insertNumbers() at onload but also take this into consideration
-//onload="renderActiveAvatar()"
+
+function insertPrioIcon() {
+    for(let index = 0; index < todos.length; index++){
+        setPrioIcon(todos[index]);
+    }
+}
+
+function getUpcomingDeadline(){
+    let today = new Date();
+    let nextTask = null;
+    for(let index = 0; index < todos.length; index++){
+        let task = todos[index];
+        let taskDate = new Date(task.date);
+        if(task.status !== 'boardDone' && taskDate > today){
+            if(nextTask === null || taskDate < new Date(nextTask.date)){
+                nextTask = task;
+            }
+        }
+    }
+    return nextTask ? nextTask.date : null;
+} //wait for the answer of DA regadring which tasks count as deadline
+
+function changeDateFormat(){
+    let deadline = getUpcomingDeadline();
+    return new Intl.DateTimeFormat('en-US', {
+        month: 'long',
+        day: '2-digit',
+        year: 'numeric'
+    }).format(new Date(deadline));
+}
+
+function insertUpcomingDeadline(){
+    let container = document.getElementById('datum');
+    let deadline = changeDateFormat();
+    container.textContent = deadline; 
+}
+
+function insertNumberOfDeadlines(){
+    //.... to be continued
+    //...i also need to insert that status under the number according to the prio
+}
+
+function redirectToBoard(){
+    window.location.href = "./board.html"
+}
 
 //Next to do:
 // fix the console error regarding getAllUsers()
-//write the funciton for upcoming deadline
-//move al functions regarding the navigation in another file, navigation.js
-//and add nav.js to all html pages, remove summary.js from unnecesarry pages (like add-task.html)
+
+

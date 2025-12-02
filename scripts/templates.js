@@ -100,7 +100,7 @@ function getTemplateEditDialog(obj, initials){
             </div>`
 }
 
-// Template functions for Add Task
+// ------------Template functions for Add Task --------------
 
 /** This function displays an alert message if the user does not type in a requested input field
  * @returns {string} - HTML string containing a span with the alert message
