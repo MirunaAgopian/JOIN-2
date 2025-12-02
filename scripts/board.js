@@ -15,8 +15,6 @@ let actualToDo = null;
 
 let desiredPos = null;
 
-let isShowTaskActive = false;
-
 const dialogBoardTaskRev = {
     dialog: document.getElementById("dialaogBoardTask"),
     dialaogBoardTask: document.getElementById("dialaogBoardTask"),
@@ -323,12 +321,12 @@ function showDialogTask(id) {
     dialogBoardTaskRev.dialog.showModal();
     dialogBoardTaskRev.task_title.value = actualToDo.title;
     dialogBoardTaskRev.task_description.value = actualToDo.description;
-    autoResizeTextarea(dialogBoardTaskRev.task_description);
+    // autoResizeTextarea(dialogBoardTaskRev.task_description);
     dialogBoardTaskRev.due_date.value = actualToDo.date;
 
-    changeDOMIfShowTaskIsOpen();
-
     getAllSubtask(actualToDo.subtasks);
+
+    changeDOMIfShowTaskIsOpen(actualToDo);
 
     selectedPriority = actualToDo.priority;
     document.getElementById("taskPriority").innerHTML = `${actualToDo.priority} <img src="../assets/img/prio_${actualToDo.priority}.svg" alt="Prirority of task">`;
@@ -351,7 +349,7 @@ function showDialogTask(id) {
  */
 function showDialogEdit() {
     isShowTaskActive = false;
-    changeDOMIfShowTaskIsOpen();
+    changeDOMIfShowTaskIsOpen(actualToDo);
     getCssTheme('cssEditTask');
     document.getElementById('btnDialogLeftContent').innerHTML = "OK";
     document.getElementById("btnDialogLeft").onclick = editDialogTask;
@@ -360,7 +358,7 @@ function showDialogEdit() {
 /** close the dialog and re render the board */
 function closeDialog() {
     isShowTaskActive = false;
-    changeDOMIfShowTaskIsOpen();
+    changeDOMIfShowTaskIsOpen(actualToDo);
     dialogBoardTaskRev.dialog.close();
     getCssTheme('');
     onloadFuncBoard();
@@ -394,7 +392,8 @@ function addNewSubtask(text, index) {
 
     // Inhalt einfügen
     li.innerHTML = `
-    <input type="checkbox" onchange="updateSubTask(${index})" ${actualToDo.subtasks[index].checked ? "checked" : ""} class="subtask-checkbox">
+    <input id="subtask_${index}" type="checkbox" onchange="updateSubTask(${index})" ${actualToDo.subtasks[index].checked ? "checked" : ""} class="subtask-checkbox"
+    style=>
     <span class="subtask-text">${text}</span>
     <div class="subtask-element-img-wrapper">
       <button onclick="openEditingEnvironment(this)" class="subtask-edit-btn" title="Edit"></button>
@@ -736,17 +735,4 @@ function getCssTheme(theme) {
 function autoResizeTextarea(element) {
     element.style.height = "auto";
     element.style.height = element.scrollHeight + 3 + "px";
-}
-
-function changeDOMIfShowTaskIsOpen(){
-    let inputTitleRef = document.getElementById('task_title');
-    let spanTitleRef = document.getElementById('title_indication');
-    if(isShowTaskActive){
-        spanTitleRef.innerHTML = inputTitleRef.value;
-        inputTitleRef.style = "display:none;";
-        spanTitleRef.style = "display:block;"; 
-    }else{
-        spanTitleRef.style = "display:none;";
-        inputTitleRef.style = "display:block;"; 
-    }
 }
