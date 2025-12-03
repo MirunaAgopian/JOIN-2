@@ -474,7 +474,6 @@ function getAssignedUser() {
 function renderMobileMoveAction(todo, status) {
     let output = "";
     let moveTasks = getMobileDisplayMoveStatusColumn(status);
-
     output = `<div class="boardMoveToOverlay" onclick="event.stopPropagation()">
                 <div class="boardMoveToHeadline onlyMobile">Move To</div>
                 <div class="boardMoveToOverlayButtons">`;
@@ -484,7 +483,6 @@ function renderMobileMoveAction(todo, status) {
     if (moveTasks.moveTaskDown != null) {
         output += renderMoveButton(todo.id, moveTasks.moveTaskDown, "arrow_downward.svg", "arrow down");
     }
-
     output += `</div></div>`;
     return output;
 }

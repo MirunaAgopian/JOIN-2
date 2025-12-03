@@ -1,5 +1,6 @@
 let users = [];
 let todos = [];
+const BASE_URL = 'https://remotestorage-162fc-default-rtdb.europe-west1.firebasedatabase.app/';
 
 async function onloadFunc(){
     console.log('test');
@@ -18,18 +19,11 @@ async function onloadFunc(){
                 user : userResponse[userKeysArr[index]] 
             }
         );
-
-        
     }
-
     await addEditSingleUser(users[1].id, {"name":"Henri"});
     //await addEditSingleUser(id=55, {"name" : "Batzolein"});
-
     console.log(users);
-    
 }
-
-const BASE_URL = 'https://remotestorage-162fc-default-rtdb.europe-west1.firebasedatabase.app/';
 
 /** loads all useres that are stored in the database
  * @param {string} path ky of the first Level of database
