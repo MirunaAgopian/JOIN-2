@@ -1,17 +1,17 @@
 //############# global Variables ################
-let currentDraggedElement = null;
-let contactUser = {};
-let startStatusColumn = "";
-let boardPos = {
-    boardToDo: {},
-    boardProgress: {},
-    boardFeedback: {},
-    boardDone: {}
-};
+// let currentDraggedElement = null;
+// let contactUser = {};
+// let startStatusColumn = "";
+// let boardPos = {
+//     boardToDo: {},
+//     boardProgress: {},
+//     boardFeedback: {},
+//     boardDone: {}
+// };
 
-let actualToDo = null;
+// let actualToDo = null;
 
-let desiredPos = null;
+// let desiredPos = null;
 
 const dialogBoardTaskRev = {
     dialog: document.getElementById("dialaogBoardTask"),
@@ -135,16 +135,13 @@ function checkPosition(value, statusValue) {
  */
 function getUserData(usersObj) {
     const USERS_ARRAY = Object.values(usersObj);
-
     const USERS = {};
-
     for (const user of USERS_ARRAY) {
         USERS[user.mail] = {
             name: user.name,
             color: user.color
         };
     }
-
     return USERS;
 }
 
