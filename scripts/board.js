@@ -390,7 +390,8 @@ function addNewSubtask(text, index) {
     // Inhalt einfügen
     li.innerHTML = `
     <input id="subtask_${index}" type="checkbox" onchange="updateSubTask(${index})" ${actualToDo.subtasks[index].checked ? "checked" : ""} class="subtask-checkbox"
-    style=>
+    style="display:block;">
+    <div id="checkbox_container" class="checkbox-container" style="display:block;"></div>
     <span class="subtask-text">${text}</span>
     <div class="subtask-element-img-wrapper">
       <button onclick="openEditingEnvironment(this)" class="subtask-edit-btn" title="Edit"></button>

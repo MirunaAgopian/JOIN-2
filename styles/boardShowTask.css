@@ -46,19 +46,27 @@ select {
     cursor: default;
 }
 
+ul{
+    padding-left: 0px;
+}
+
 .subtask-list {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 8px 8px 8px 1.5em;
     border-radius: 10px;
-    background-color: #F5F5F5;
     position: relative;
-    font-size: 20px;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.subtask-list:hover{
+    background-color: #F5F5F5;
 }
 
 .subtask-list::before {
-    content: "•";
+    /* content: "•"; */
     position: absolute;
     left: 8px;
     top: 50%;
@@ -305,4 +313,33 @@ textarea {
     max-height: 150px;
     width: 100%;
     overflow-y: auto;
+}
+
+.checkbox-container{
+    height: 24px;
+    width: 24px;
+    background-image: url('../assets/img/check_button_unchecked.svg');
+    background-repeat: no-repeat;
+    background-position: left 0px center;
+    background-size: 24px 24px;
+}
+
+.checkbox-container:hover{
+    cursor: pointer;
+    background-image: url('../assets/img/check_button_hover_disable.svg');
+}
+
+.checkbox-checked{
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    background-image: url('../assets/img/check_button_checked.svg');
+    background-repeat: no-repeat;
+    background-position: left 0px center;
+    background-size: 24px 24px;
+}
+
+.checkbox-checked:hover{
+    cursor: pointer;
+    background-image: url('../assets/img/check_button_hover_checked.svg');
 }
