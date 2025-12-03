@@ -161,6 +161,12 @@ function insertDeadlineMessage(){
     let deadline = stripTime(new Date(deadlineString));
     let today = stripTime(new Date());
     let container = document.getElementById('deadline_message');
+    let datumContainer = document.getElementById('datum');
+     if (!deadlineString) {
+        container.innerHTML = "No upcoming deadline";
+        datumContainer.classList.add('d-none');
+        return;
+    }
     if(deadline < today) {
         container.innerHTML = "Missed deadline";
     } else if(deadline.getTime() === today.getTime()){
