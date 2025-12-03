@@ -40,78 +40,78 @@ const dialogBoardTaskRev = {
  * Loads tasks and contacts from the database, initializes the board,
  * and renders the UI.
  */
-async function onloadFuncBoard() {
-    const ALL_TASKS = await loadData('tasks');
-    todos = getTaskArr(ALL_TASKS);
+// async function onloadFuncBoard() {
+//     const ALL_TASKS = await loadData('tasks');
+//     todos = getTaskArr(ALL_TASKS);
 
-    const ALL_USER = await loadData("contacts");
-    contactUser = getUserData(ALL_USER);
+//     const ALL_USER = await loadData("contacts");
+//     contactUser = getUserData(ALL_USER);
 
-    updateHTML();
-    renderActiveAvatar();
-}
+//     updateHTML();
+//     renderActiveAvatar();
+// }
 /**
  * Processes search input and updates the task list accordingly.
  * Filters tasks if the search string has not enought characters.
  */
-async function processChanges() {
-    const ALL_TASKS = await loadData('tasks');
-    const searchValue = document.getElementById("searchBoard").value.toLowerCase();
+// async function processChanges() {
+//     const ALL_TASKS = await loadData('tasks');
+//     const searchValue = document.getElementById("searchBoard").value.toLowerCase();
 
-    if (searchValue.length > 2) {
-        const allTodos = getTaskArr(ALL_TASKS);
-        todos = allTodos.filter(todo =>
-            todo.title.toLowerCase().includes(searchValue) ||
-            todo.description.toLowerCase().includes(searchValue)
-        );
-    } else {
-        todos = getTaskArr(ALL_TASKS);
-    }
-    updateHTML();
-}
+//     if (searchValue.length > 2) {
+//         const allTodos = getTaskArr(ALL_TASKS);
+//         todos = allTodos.filter(todo =>
+//             todo.title.toLowerCase().includes(searchValue) ||
+//             todo.description.toLowerCase().includes(searchValue)
+//         );
+//     } else {
+//         todos = getTaskArr(ALL_TASKS);
+//     }
+//     updateHTML();
+// }
 
 /**
  * Converts a user object into an array of task objects with status and position.
  * @param {Object} ALL_TASKS - Object containing tasks keyed by ID.
  * @returns {Array<Object>} Array of task objects.
  */
-function getTaskArr(ALL_TASKS) {
-    const arr = [];
+// function getTaskArr(ALL_TASKS) {
+//     const arr = [];
 
-    for (const [key, value] of Object.entries(ALL_TASKS)) {
-        let statusValue = checkStatus(value);
-        let posValue = checkPosition(value, statusValue);
+//     for (const [key, value] of Object.entries(ALL_TASKS)) {
+//         let statusValue = checkStatus(value);
+//         let posValue = checkPosition(value, statusValue);
 
-        arr.push({
-            id: key,
-            title: value.title,
-            description: value.description,
-            category: value.category,
-            date: value.date,
-            pos: posValue,
-            priority: value.priority,
-            subtasks: value.subtasks,
-            assignedTo: value.assignedTo,
-            status: statusValue
-        });
-        boardPos[statusValue][key] = posValue;
-    }
-    return arr;
-}
+//         arr.push({
+//             id: key,
+//             title: value.title,
+//             description: value.description,
+//             category: value.category,
+//             date: value.date,
+//             pos: posValue,
+//             priority: value.priority,
+//             subtasks: value.subtasks,
+//             assignedTo: value.assignedTo,
+//             status: statusValue
+//         });
+//         boardPos[statusValue][key] = posValue;
+//     }
+//     return arr;
+// }
 
 /**
  * Determines the status bzw. column of a task. If no status is set, the Task will get Status "To Do"
  * @param {Object} value - Task object.
  * @returns {string} Status column name.
  */
-function checkStatus(value) {
-    if (value.hasOwnProperty("status")) {
-        return value.status;
-    }
-    else {
-        return "boardToDo";
-    }
-}
+// function checkStatus(value) {
+//     if (value.hasOwnProperty("status")) {
+//         return value.status;
+//     }
+//     else {
+//         return "boardToDo";
+//     }
+// }
 
 /**
  * Determines the position of a task within its status column.
@@ -119,31 +119,31 @@ function checkStatus(value) {
  * @param {string} statusValue - The status column name.
  * @returns {number} Position index within the column.
  */
-function checkPosition(value, statusValue) {
-    if (value.hasOwnProperty("pos")) {
-        return value.pos;
-    }
-    else {
-        return Object.keys(boardPos[statusValue]).length;
-    }
-}
+// function checkPosition(value, statusValue) {
+//     if (value.hasOwnProperty("pos")) {
+//         return value.pos;
+//     }
+//     else {
+//         return Object.keys(boardPos[statusValue]).length;
+//     }
+// }
 
 /**
  * get all User who are assigned to the task and get their name and Avatar Color from database according to theri email adress and
  * @param {Object} usersObj - Object containing user data.
  * @returns {Object} Map of users keyed by email with name and color.
  */
-function getUserData(usersObj) {
-    const USERS_ARRAY = Object.values(usersObj);
-    const USERS = {};
-    for (const user of USERS_ARRAY) {
-        USERS[user.mail] = {
-            name: user.name,
-            color: user.color
-        };
-    }
-    return USERS;
-}
+// function getUserData(usersObj) {
+//     const USERS_ARRAY = Object.values(usersObj);
+//     const USERS = {};
+//     for (const user of USERS_ARRAY) {
+//         USERS[user.mail] = {
+//             name: user.name,
+//             color: user.color
+//         };
+//     }
+//     return USERS;
+// }
 
 //########################### Rendering #######################
 /**

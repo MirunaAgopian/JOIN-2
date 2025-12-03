@@ -183,6 +183,15 @@ function checkPosition(value, statusValue) {
     }
 }
 
+function checkPosition(value, statusValue) {
+    if (value.hasOwnProperty("pos")) {
+        return value.pos;
+    }
+    else {
+        return Object.keys(boardPos[statusValue]).length;
+    }
+}
+
 function getUserData(usersObj) {
     const USERS_ARRAY = Object.values(usersObj);
     const USERS = {};
