@@ -90,17 +90,28 @@ function insertNumbers(){
 }
 
 /**
+ * Removes the time component from a Date object, leaving only the year, month, and day.
+ * This is useful when you want to compare dates by calendar day without considering
+ * hours, minutes, or seconds.
+ * @param {Date} date - the Date object to normalize
+ * @returns {date} - a new date object set to midnight (00:00:00) of the same year, month, and day.
+ */
+function stripTime(date) {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+/**
  * Finds the nearest upcoming deadline among tasks that are marked as 'urgent' and not yet completed ('boardDone').
  * Iterates to the global 'todos' array, compares task dates against today's date and returns the earliest future deadline
  * @returns {String} - the date string of the next urgent task
  */
 function getUpcomingDeadline(){
-    let today = new Date();
+    let today = stripTime(new Date());
     let nextTask = null;
     for(let index = 0; index < todos.length; index++){
         let task = todos[index];
-        let taskDate = new Date(task.date);
-        if(task.status !== 'boardDone' && task.priority == 'urgent'  && taskDate > today){
+        let taskDate = stripTime(new Date(task.date));
+        if(task.status !== 'boardDone' && task.priority == 'urgent'  && taskDate >= today){
             if(nextTask === null || taskDate < new Date(nextTask.date)){
                 nextTask = task;
             }
@@ -147,12 +158,14 @@ function insertUpcomingDeadline(){
  */
 function insertDeadlineMessage(){
     let deadlineString = getUpcomingDeadline();
-    let deadline = new Date(deadlineString);
-    let today = new Date();
+    let deadline = stripTime(new Date(deadlineString));
+    let today = stripTime(new Date());
     let container = document.getElementById('deadline_message');
     if(deadline < today) {
         container.innerHTML = "Missed deadline";
-    } else {
+    } else if(deadline.getTime() === today.getTime()){
+        container.innerHTML = "Deadline is today";
+    }else {
         container.innerHTML ="Upcoming deadline"
     }
 }
