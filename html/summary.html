@@ -8,10 +8,10 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../styles/summary.css" />
-    <link rel="stylesheet" href="../styles/navigation.css">
+    <link rel="stylesheet" href="../styles/navigation.css" />
     <!-- JS files-->
     <script src="../scripts/board.js" defer></script>
-    <script src="../scripts/login.js" defer></script>
+    <script src="../scripts/firebase.js"></script>
     <script src="../scripts/navigation.js" defer></script>
     <script src="../scripts/summary.js" defer></script>
     <script src="../script.js" defer></script>
@@ -33,7 +33,13 @@
               src="../assets/img/help_btn.svg"
               alt="a help button displaying a question mark"
           /></a>
-          <button id="activeAvatar" class="nav-user-btn" onclick="toggleSubmenu()">G</button>
+          <button
+            id="activeAvatar"
+            class="nav-user-btn"
+            onclick="toggleSubmenu()"
+          >
+            G
+          </button>
         </div>
         <!-- Submenu, desktop version -->
         <div id="submenu" class="desktop-submenu d-none">
@@ -173,22 +179,20 @@
             </div>
             <div onclick="redirectToBoard()">
               <div class="done-container">
-                <!-- In progress -->
                 <div id="prio_icon_background" class="middle-icon-wrapper">
                   <div id="prio_icon" class="middle-icon"></div>
                 </div>
                 <div class="done-container-numbers">
-                  <h2>2?</h2>
-                  <h3>Urgent?</h3>
+                  <h2 id="urgent_tasks_number">0</h2>
+                  <h3>Urgent</h3>
                 </div>
                 <div class="stats-divider-line"></div>
                 <div class="datum-container">
                   <p id="datum">November 19, 2025?</p>
-                  <span>Upcoming deadline</span>
+                  <span id="deadline_message">.....</span>
                 </div>
               </div>
             </div>
-            <!-- In progress -->
             <div class="tasks">
               <div onclick="redirectToBoard()" class="to-do-container">
                 <div class="to-do-container-numbers">
@@ -211,8 +215,10 @@
             </div>
           </div>
           <div id="pc_greeting" class="greeting">
-            <p><span id="greeting_word"></span><span id="punctuation"></span></p>
-              <span id="username"></span>
+            <p>
+              <span id="greeting_word"></span><span id="punctuation"></span>
+            </p>
+            <span id="username"></span>
           </div>
         </section>
       </section>
@@ -268,8 +274,12 @@
       </a>
     </footer>
     <div id="orientation_warning" class="landscape-view-warning d-none">
-        <p>JOIN works best in portrait mode. Please rotate your device!</p>
-        <img class="device-icon" src="../assets/img/device_landscape.svg" alt="A tablet positioned in landscape view">
+      <p>JOIN works best in portrait mode. Please rotate your device!</p>
+      <img
+        class="device-icon"
+        src="../assets/img/device_landscape.svg"
+        alt="A tablet positioned in landscape view"
+      />
     </div>
   </body>
 </html>
