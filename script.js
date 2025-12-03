@@ -50,9 +50,7 @@ function checkValidEmail(email) {
 function renderActiveAvatar() {
     const storedUserName = JSON.parse(sessionStorage.getItem('loggedInUser'))?.name;
     const avatarRev = document.getElementById("activeAvatar");
-
     if (!avatarRev) { return; }
-
     if (!storedUserName) {
         avatarRev.innerHTML = "G";
         return;

@@ -1,30 +1,36 @@
-
-//------------------------- Dynamic data summary.html ------------------------
-// /** const with Link for the Database */
-// const BASE_URL = 'https://remotestorage-162fc-default-rtdb.europe-west1.firebasedatabase.app/';
-
-// /** loads all useres that are stored in the database
-//  * @param {string} path key of the first Level of database
-//  * @returns json of the reqest  */
-// async function getAllUsers(path = '') {
-//     let response = await fetch(BASE_URL + path + '.json');
-//     let responseToJson = await response.json();
-
-//     return responseToJson;
-// }
-
-function onloadFunctionSummary(){
+/**
+ * This function initializes the summary page by fetching tasks from the server
+ * and updating the UI with task counts and deadlines
+ * @async 
+ * @returns {Promise<void>} Resolves when the summary UI has been updated
+ *  */
+async function onloadFunctionSummary(){
+    const ALL_TASKS = await loadData('tasks');
+    todos = getTaskArr(ALL_TASKS); 
     renderActiveAvatar();
     insertNumbers();
-    insertPrioIcon();
     insertUpcomingDeadline();
+    insertDeadlineMessage();
 }
 
+/**
+ * Counts tasks across all categories such as to do, done, in progress, awaiting feedback, urgent and total tasks
+ * Iterates through all tasks and increments their number depending on their status and priority
+ * Urgent tasks marked as 'done' are not being counted for the 'urgent' priority
+ * @returns {Object} - An object containing the number of tasks for each category:
+ * - {number} toDo - Tasks with status 'boardToDo'
+ * - {number} done - Tasks with status 'boardDone'
+ * - {number} inProgress - Tasks with status 'boardProgress'
+ * - {number} awaitingFeedback - Tasks with status 'boardFeedback'
+ * - {number} urgent - Tasks marked with the priority 'urgent' and not done
+ * - {number} total - Sum of all tasks across all categories, irrespective of priority
+ */
 function countTask(){
     let countToDo = 0;
     let countDone = 0;
     let countInProgress = 0;
     let countAwaitingFeedback = 0;
+    let countUrgentTasks = 0;
     for(let index = 0; index < todos.length; index++){
         if(todos[index].status == 'boardToDo'){
             countToDo++;
@@ -34,72 +40,84 @@ function countTask(){
             countInProgress++;
         } else if(todos[index].status == 'boardFeedback') {
             countAwaitingFeedback++;
-        } 
+        }
+        if(todos[index].priority == 'urgent' && todos[index].status !== 'boardDone'){
+            countUrgentTasks++;
+        }
     }
-    return returnNumberOfTasks(countToDo, countDone, countInProgress, countAwaitingFeedback);
+    return returnNumberOfTasks(countToDo, countDone, countInProgress, countAwaitingFeedback, countUrgentTasks);
 }
 
-function returnNumberOfTasks(toDo, done, inProgress, awaitingFeedback){
+/**
+ * Maps all task categories in an reusable object
+ * @param {number} toDo - number of tasks with the status 'boardToDo'
+ * @param {number} done - number of tasks with the status 'boardDone'
+ * @param {number} inProgress - number of tasks with the status 'boardProgress'
+ * @param {number} awaitingFeedback - number of tasks with the status 'boardFeedback'
+ * @param {number} urgent - number of tasks with the priority 'urgent'
+ * @returns {Object} - Object containing the number of tasks for each category and their total
+ */
+function returnNumberOfTasks(toDo, done, inProgress, awaitingFeedback, urgent){
     return {
         toDo: toDo,
         done: done,
         inProgress: inProgress,
         awaitingFeedback: awaitingFeedback,
+        urgent: urgent,
         total: toDo + done + inProgress + awaitingFeedback
     };
 }
 
+/**
+ * Updates the DOM with the number of tasks according to each category
+ * Retrieves task counts via {@link countTask} and inserts them into the corresponding HTML elements by ID.
+ * @returns {void} - this function does not return a value
+ */
 function insertNumbers(){
     let toDo = document.getElementById('to_do');
     let done = document.getElementById('done');
     let inProgress = document.getElementById('in_progress');
     let awaitingFeedback = document.getElementById('awaiting_feedback');
+    let urgentTasks = document.getElementById('urgent_tasks_number');
     let total = document.getElementById('total');
     let numbers = countTask();
     toDo.innerHTML = `${numbers.toDo}`;
     done.innerHTML = `${numbers.done}`;
     inProgress.innerHTML = `${numbers.inProgress}`;
     awaitingFeedback.innerHTML = `${numbers.awaitingFeedback}`;
+    urgentTasks.innerHTML = `${numbers.urgent}`
     total.innerHTML = `${numbers.total}`
 }
 
-function setPrioIcon(task) {
-    let background = document.getElementById('prio_icon_background');
-    let icon = document.getElementById('prio_icon');
-    let taskPriority = task.priority;
-    if(taskPriority == 'low'){
-        background.classList.add("prio-background", "low");
-        icon.classList.add("prio-background-img", "low");
-    } else if(taskPriority == 'medium'){
-        background.classList.add("prio-background", "medium");
-        icon.classList.add("prio-background-img", "medium");
-    } else if(taskPriority == 'urgent') {
-        background.classList.add('prio-background', 'urgent');
-        icon.classList.add('prio-background-img', 'urgent');
-    }
-}
-
-function insertPrioIcon() {
-    for(let index = 0; index < todos.length; index++){
-        setPrioIcon(todos[index]);
-    }
-}
-
+/**
+ * Finds the nearest upcoming deadline among tasks that are marked as 'urgent' and not yet completed ('boardDone').
+ * Iterates to the global 'todos' array, compares task dates against today's date and returns the earliest future deadline
+ * @returns {String} - the date string of the next urgent task
+ */
 function getUpcomingDeadline(){
     let today = new Date();
     let nextTask = null;
     for(let index = 0; index < todos.length; index++){
         let task = todos[index];
         let taskDate = new Date(task.date);
-        if(task.status !== 'boardDone' && taskDate > today){
+        if(task.status !== 'boardDone' && task.priority == 'urgent'  && taskDate > today){
             if(nextTask === null || taskDate < new Date(nextTask.date)){
                 nextTask = task;
             }
         }
     }
     return nextTask ? nextTask.date : null;
-} //wait for the answer of DA regadring which tasks count as deadline
+}
 
+/**
+ *Formats the upcoming deadline date returned by {@link getUpcomingDeadline}
+ *into a human-readable string (e.g., "November 01, 2025").
+
+ * Uses the Intl.DateTimeFormat API with US English locale to format
+ * the date as "Month Day, Year".
+ *
+ * @returns {string} - A formatted date string for the upcoming deadline.
+ */
 function changeDateFormat(){
     let deadline = getUpcomingDeadline();
     return new Intl.DateTimeFormat('en-US', {
@@ -109,22 +127,44 @@ function changeDateFormat(){
     }).format(new Date(deadline));
 }
 
+/**
+ * Inserts the formatted date as a deadline into the summary page DOM.
+ * Retrieves the formatted date string from {@link changeDateFormat}
+ * @returns {void} - this function does not return a value
+ */
 function insertUpcomingDeadline(){
     let container = document.getElementById('datum');
     let deadline = changeDateFormat();
     container.textContent = deadline; 
 }
 
-function insertNumberOfDeadlines(){
-    //.... to be continued
-    //...i also need to insert that status under the number according to the prio
+/**
+ * Retrieves the next urgent deadline from {@link getUpcomingDeadline}, compares it
+ * to today's date, and updates the DOM element with ID "deadline_message":
+ * - Displays "Missed deadline" if the deadline is in the past.
+ * - Displays "Upcoming deadline" if the deadline is today or in the future.
+ * @returns {void} - this function does not reurn a value
+ */
+function insertDeadlineMessage(){
+    let deadlineString = getUpcomingDeadline();
+    let deadline = new Date(deadlineString);
+    let today = new Date();
+    let container = document.getElementById('deadline_message');
+    if(deadline < today) {
+        container.innerHTML = "Missed deadline";
+    } else {
+        container.innerHTML ="Upcoming deadline"
+    }
 }
 
+/**
+ * Redirects the user to the board page where they can view all the tasks included in the board
+ * by updating the current browser location
+ * @returns {void} - This function does not return a value
+ */
 function redirectToBoard(){
     window.location.href = "./board.html"
 }
 
-//Next to do:
-// fix the console error regarding getAllUsers()
 
 

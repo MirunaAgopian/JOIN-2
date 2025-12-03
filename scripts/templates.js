@@ -7,6 +7,8 @@
 function getDialogMsgTemplate(text){
     return `<span>${text}</span>`;}
 
+// ------------Template functions for Contacts --------------//
+
 /**
  * This function ist used to show the the contact data on contacts.html if a contact is clicked on list
  * 
@@ -100,7 +102,7 @@ function getTemplateEditDialog(obj, initials){
             </div>`
 }
 
-// ------------Template functions for Add Task --------------
+// ------------Template functions for Add Task --------------//
 
 /** This function displays an alert message if the user does not type in a requested input field
  * @returns {string} - HTML string containing a span with the alert message
@@ -180,3 +182,5 @@ function getAddedTasks(text){
             </div>
           </li>`;
 }
+
+// ------------Template functions for Board --------------//

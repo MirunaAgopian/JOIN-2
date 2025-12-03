@@ -1,5 +1,6 @@
 let users = [];
 let todos = [];
+const BASE_URL = 'https://remotestorage-162fc-default-rtdb.europe-west1.firebasedatabase.app/';
 
 async function onloadFunc(){
     console.log('test');
@@ -18,18 +19,11 @@ async function onloadFunc(){
                 user : userResponse[userKeysArr[index]] 
             }
         );
-
-        
     }
-
     await addEditSingleUser(users[1].id, {"name":"Henri"});
     //await addEditSingleUser(id=55, {"name" : "Batzolein"});
-
     console.log(users);
-    
 }
-
-const BASE_URL = 'https://remotestorage-162fc-default-rtdb.europe-west1.firebasedatabase.app/';
 
 /** loads all useres that are stored in the database
  * @param {string} path ky of the first Level of database
@@ -107,3 +101,97 @@ async function patchData(path = '', data = {}) {
     console.error("patchData Error:", err);
   }
 }
+
+// Functions copied from from Board.js in order to see if data 
+//is being passed to summary.html
+let currentDraggedElement = null;
+let contactUser = {};
+let startStatusColumn = "";
+let boardPos = {
+    boardToDo: {},
+    boardProgress: {},
+    boardFeedback: {},
+    boardDone: {}
+};
+let actualToDo = null;
+let desiredPos = null;
+
+async function onloadFuncBoard() {
+    const ALL_TASKS = await loadData('tasks');
+    todos = getTaskArr(ALL_TASKS);
+    const ALL_USER = await loadData("contacts");
+    contactUser = getUserData(ALL_USER);
+    updateHTML();
+    renderActiveAvatar();
+}
+
+async function processChanges() {
+    const ALL_TASKS = await loadData('tasks');
+    const searchValue = document.getElementById("searchBoard").value.toLowerCase();
+
+    if (searchValue.length > 2) {
+        const allTodos = getTaskArr(ALL_TASKS);
+        todos = allTodos.filter(todo =>
+            todo.title.toLowerCase().includes(searchValue) ||
+            todo.description.toLowerCase().includes(searchValue)
+        );
+    } else {
+        todos = getTaskArr(ALL_TASKS);
+    }
+    updateHTML();
+}
+
+function getTaskArr(ALL_TASKS) {
+    const arr = [];
+
+    for (const [key, value] of Object.entries(ALL_TASKS)) {
+        let statusValue = checkStatus(value);
+        let posValue = checkPosition(value, statusValue);
+
+        arr.push({
+            id: key,
+            title: value.title,
+            description: value.description,
+            category: value.category,
+            date: value.date,
+            pos: posValue,
+            priority: value.priority,
+            subtasks: value.subtasks,
+            assignedTo: value.assignedTo,
+            status: statusValue
+        });
+        boardPos[statusValue][key] = posValue;
+    }
+    return arr;
+}
+
+function checkStatus(value) {
+    if (value.hasOwnProperty("status")) {
+        return value.status;
+    }
+    else {
+        return "boardToDo";
+    }
+}
+
+function checkPosition(value, statusValue) {
+    if (value.hasOwnProperty("pos")) {
+        return value.pos;
+    }
+    else {
+        return Object.keys(boardPos[statusValue]).length;
+    }
+}
+
+function getUserData(usersObj) {
+    const USERS_ARRAY = Object.values(usersObj);
+    const USERS = {};
+    for (const user of USERS_ARRAY) {
+        USERS[user.mail] = {
+            name: user.name,
+            color: user.color
+        };
+    }
+    return USERS;
+}
+
