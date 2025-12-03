@@ -335,6 +335,9 @@ function showDialogTask(id) {
     document.getElementById('btnDialogRightContent').innerHTML = "Edit";
     document.getElementById("btnDialogRight").onclick = showDialogEdit;
 
+    document.getElementById('btn_delete_task').onclick = deleteTask;
+    document.getElementById('btn_edit_task').onclick = showDialogEdit;
+
     getAssignedUser();
 }
 

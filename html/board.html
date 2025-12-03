@@ -251,7 +251,7 @@
         </section>
         <section class="bottom-container">
           <p><span class="required">*</span>This field is required</p>
-          <div class="buttons">
+          <div id="buttons_dialog" class="buttons">
             <button id="btnDialogLeft" onclick="leftBtnAction()">
               <span id="btnDialogLeftContent">Template</span>
               <div class="clear-btn"></div>
@@ -262,9 +262,11 @@
             </button>
           </div>
           <div id="task_ctrl_box" class="task-ctrl-box hidden">
-            <img id="btn_edit_task" class="btn-task-ctrl" src="../assets/img/edit_contact.svg" alt="edit button with pen icon">
+            <img id="btn_delete_task" class="btn-task-ctrl" src="../assets/img/delete_contact.svg" alt="delete button with trash icon"
+              onmouseover="changeTaskImgHover('btn_delete_task')" onmouseout="changeTaskImgOut('btn_delete_task')">
             <div class="border-line"></div>
-            <img id="btn_delete_task" class="btn-task-ctrl" src="../assets/img/delete_contact.svg" alt="delete button with trash icon">
+            <img id="btn_edit_task" class="btn-task-ctrl" src="../assets/img/edit_contact.svg" alt="edit button with pen icon"
+              onmouseover="changeTaskImgHover('btn_edit_task')" onmouseout="changeTaskImgOut('btn_edit_task')">
           </div>
         </section>
         </div>

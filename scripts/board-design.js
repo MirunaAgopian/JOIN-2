@@ -19,6 +19,7 @@ function changeDOMIfShowTaskIsOpen(arrSubtasks){
     hiddenInputFieldSubtask();
     hiddenCheckboxSubtask(arrSubtasks);
     loadCheckedCheckboxes(arrSubtasks);
+    changeCtrlButtons();
 }
 
 function changeDOMIndication(idInput, idSpan){
@@ -107,5 +108,35 @@ function loadCheckedCheckboxes(arrSub){
                 }      
             }
         }
+    }
+}
+
+function changeCtrlButtons(){
+    let dialogButtons = document.getElementById('buttons_dialog');
+    let showTaskButtons = document.getElementById('task_ctrl_box');
+    if(isShowTaskActive){
+        dialogButtons.classList.add('hidden');
+        showTaskButtons.classList.remove('hidden');
+    }else{
+        showTaskButtons.classList.add('hidden');
+        dialogButtons.classList.remove('hidden');
+    }
+}
+
+function changeTaskImgHover(id){
+    let contentImgRef = document.getElementById(id);
+    if(id == 'btn_edit_task'){
+        contentImgRef.src = '../assets/img/edit_contact_hover.svg';
+    }else if(id == 'btn_delete_task'){
+        contentImgRef.src = '../assets/img/delete_contact_hover.svg';
+    }
+}
+
+function changeTaskImgOut(id){
+    const contentImgRef = document.getElementById(id);
+    if(id == 'btn_edit_task'){
+        contentImgRef.src = '../assets/img/edit_contact.svg';
+    }else if(id == 'btn_delete_task'){
+        contentImgRef.src = '../assets/img/delete_contact.svg';
     }
 }

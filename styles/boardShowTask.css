@@ -364,8 +364,23 @@ textarea {
     width: 100%;
     display: flex;
     justify-content: end;
+    margin-top: 32px;
 }
 
 .hidden{
     display: none;
+}
+
+.task-ctrl-box{
+    display: flex;
+    gap: 8px;
+}
+
+.border-line{
+    border: unset;
+    border-left: 1px solid #D1D1D1;
+}
+
+.btn-task-ctrl{
+    cursor: pointer;
 }

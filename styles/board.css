@@ -525,3 +525,7 @@ h2 {
     width: auto !important;
     height: auto !important;
 }
+
+.hidden{
+    display: none;
+}
