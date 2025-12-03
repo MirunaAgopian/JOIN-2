@@ -1,3 +1,7 @@
+body:has(dialog[open]){
+    overflow: hidden;
+}
+
 .main-content h1 {
     align-self: flex-start;
     margin: 20px 0;
@@ -251,6 +255,10 @@ button {
     border-radius: 30px;
 }
 
+#dialaogBoardTask::-webkit-scrollbar{
+    display: none;
+}
+
 textarea {
     width: 100%;
     height: auto;
@@ -349,5 +357,15 @@ textarea {
 }
 
 .subtask-actions{
+    display: none;
+}
+
+.bottom-container{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+.hidden{
     display: none;
 }
