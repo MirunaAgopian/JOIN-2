@@ -18,6 +18,7 @@ function changeDOMIfShowTaskIsOpen(arrSubtasks){
     changeDateFormat('date_indication');
     hiddenInputFieldSubtask();
     hiddenCheckboxSubtask(arrSubtasks);
+    loadCheckedCheckboxes(arrSubtasks);
 }
 
 function changeDOMIndication(idInput, idSpan){
@@ -68,6 +69,42 @@ function hiddenCheckboxSubtask(arrSub){
                     document.getElementById(`subtask_${index}`).style = "display:block;";
                     document.getElementById(`subtask_${index}`).classList.add('subtask-checkbox');
                 }
+            }
+        }
+    }
+}
+
+async function controlCheckbox(indexSubtask){
+    let checkbox = document.getElementById(`subtask_${indexSubtask}`);
+    let checkboxImg = document.getElementById(`checkbox_${indexSubtask}`);
+    let isChecked = checkbox.checked;
+    if(isChecked){
+        checkbox.checked = false;
+        checkboxImg.classList.remove('checkbox-checked');
+        checkboxImg.classList.add('checkbox-container');
+    }else{
+        checkbox.checked = true;
+        checkboxImg.classList.remove('checkbox-container');
+        checkboxImg.classList.add('checkbox-checked');
+    }
+    await updateSubTask(indexSubtask);
+}
+
+function loadCheckedCheckboxes(arrSub){
+    if(arrSub != null){
+        let amountOfSubtasks;
+        if(arrSub.subtasks != undefined){
+            amountOfSubtasks = arrSub.subtasks.length;
+        }else{
+            amountOfSubtasks = 0;
+        }
+        let isClassActive = !document.getElementById('cssAddTask').disabled;
+        if(isClassActive == false){
+            for (let index = 0; index < amountOfSubtasks; index++) {
+                if(document.getElementById(`subtask_${index}`).checked){
+                    document.getElementById(`checkbox_${index}`).classList.remove('checkbox-container');
+                    document.getElementById(`checkbox_${index}`).classList.add('checkbox-checked');
+                }      
             }
         }
     }
