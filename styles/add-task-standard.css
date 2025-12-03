@@ -1,0 +1,291 @@
+/* === Dropdown section === */
+.dropdown {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #D1D1D1;
+    padding: 4px 8px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.dropdown button {
+    background-color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-arrow {
+    display: inline-block;
+    background-image: url(../assets/img/arrow_drop_down.svg);
+    color: black;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 10px;
+    width: 10px;
+}
+
+/* === Contact & Checkbox section === */
+.contact-circle {
+    display: flex;
+    height: 50px;
+    width: 50px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: white;
+    border: 2px solid white;
+}
+
+.checkbox {
+    background-image: url(../assets/img/check_button_unchecked.svg);
+    color: black;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 30px;
+    width: 30px;
+    margin-right: 16px;
+}
+
+.checkbox.checked {
+    background-image: url(../assets/img/check_button_checked.svg);
+}
+
+/* === Field description section === */
+.field-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 8px;
+}
+
+.field-description input {
+    border: 1px solid #D1D1D1;
+    padding: 10px 8px;
+    border-radius: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.field-description textarea {
+    border: 1px solid #D1D1D1;
+    padding: 20px 8px;
+    border-radius: 10px;
+    font-size: 24px;
+    resize: none;
+    cursor: pointer;
+    height: 200px;
+}
+
+/* === Contacts list section === */
+.contacts-list {
+    background-color: white;
+    border: 1px solid #D1D1D1;
+    padding: 8px 0;
+    border-radius: 10px;
+}
+
+.contacts-list ul {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 200px;
+    width: 100%;
+    padding-left: 0;
+}
+
+.contacts-list li {
+    padding: 8px 0;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 4px;
+}
+
+/* === Priority icons section === */
+.urgent-img {
+    background-image: url(../assets/img/prio_urgent.svg);
+}
+
+.medium-img {
+    background-image: url(../assets/img/prio_medium.svg);
+}
+
+.low-img {
+    background-image: url(../assets/img/prio_low.svg);
+}
+
+/* === Subtask section === */
+.subtask-wrapper {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.subtask-input {
+    border: 1px solid #D1D1D1;
+    padding: 10px 8px;
+    border-radius: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.subtask-actions {
+    display: none;
+    gap: 6px;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    gap: 6px;
+}
+
+.subtask-field-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 8px;
+}
+
+#subtask {
+    width: 100%;
+    padding-right: 70px;
+    box-sizing: border-box;
+}
+
+.subtask-close-btn {
+    background-image: url(../assets/img/cancel_x.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    background-color: white;
+    border: none;
+}
+
+.subtask-btn-divider {
+    height: 24px;
+    width: 2px;
+    background-color: #EEEEEE;
+    border-radius: 2px;
+}
+
+.subtask-submit-btn {
+    background-image: url(../assets/img/check_dark.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    background-color: white;
+    border: none;
+}
+
+.added-tasks ul {
+    padding-left: 0;
+}
+
+.subtask-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 8px 8px 8px 1.5em;
+    border-radius: 10px;
+    position: relative;
+}
+
+.subtask-list::before {
+   content: "•";
+   position: absolute;
+   left: 8px;
+   top: 50%;
+   transform: translateY(-50%);
+   color: black;
+}
+
+.subtask-element-img-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.subtask-edit-btn {
+    background-image: url(../assets/img/subtask_edit_btn.svg);
+    background-repeat: no-repeat;
+    background-size: 28px 28px;
+    background-position: center;
+    cursor: pointer;
+    background-color: #EEEEEE;
+    border: none;
+}
+
+.subtask-delete-btn {
+    background-image: url(../assets/img/subtask_delete_btn.svg);
+    background-repeat: no-repeat;
+    background-size: 28px 28px;
+    background-position: center;
+    cursor: pointer;
+    background-color: #EEEEEE;
+    border: none;
+}
+
+.subtask-btn-divider-secondary {
+    height: 32px;
+    width: 2px;
+    background-color: #D1D1D1;
+    border-radius: 2px;
+}
+
+.subtask-edit-list {
+    background-color: white;
+    border-bottom: 1px solid #29abe2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.subtask-edit-btn-wrapper {
+    display: flex;
+    gap: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.subtask-save-btn {
+    background-image: url(../assets/img/subtask_check.svg);
+    background-size: 24px 24px;
+    width: 24px;
+    height: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    background-color: white;
+}
+
+.subtask-delete-btn-secondary {
+    background-image: url(../assets/img/subtask_delete_btn.svg);
+    background-size: 24px 24px;
+    width: 24px;
+    height: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    background-color: white;
+}
+
+.subtask-btn-divider-tertiary {
+    height: 24px;
+    width: 2px;
+    background-color: #D1D1D1;
+    border-radius: 2px;
+}
