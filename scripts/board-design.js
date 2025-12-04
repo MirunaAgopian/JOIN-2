@@ -20,6 +20,7 @@ function changeDOMIfShowTaskIsOpen(arrSubtasks){
     hiddenCheckboxSubtask(arrSubtasks);
     loadCheckedCheckboxes(arrSubtasks);
     changeCtrlButtons();
+    disableCssClass('cssAddTaskStandard');
 }
 
 function changeDOMIndication(idInput, idSpan){
@@ -138,5 +139,13 @@ function changeTaskImgOut(id){
         contentImgRef.src = '../assets/img/edit_contact.svg';
     }else if(id == 'btn_delete_task'){
         contentImgRef.src = '../assets/img/delete_contact.svg';
+    }
+}
+
+function disableCssClass(id){
+    if(isShowTaskActive){
+        document.getElementById(id).disabled = true;
+    }else{
+        document.getElementById(id).disabled = false;
     }
 }
