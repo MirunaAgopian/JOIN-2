@@ -21,6 +21,7 @@ function changeDOMIfShowTaskIsOpen(arrSubtasks){
     loadCheckedCheckboxes(arrSubtasks);
     changeCtrlButtons();
     disableCssClass('cssAddTaskStandard');
+    disableCssClass('cssAddTaskInteractions');
 }
 
 function changeDOMIndication(idInput, idSpan){

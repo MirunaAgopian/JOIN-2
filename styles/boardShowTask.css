@@ -88,6 +88,7 @@ ul{
 
 .required {
     display: none;
+    font-size: 0px;
 }
 
 .taskHeader {
@@ -342,8 +343,8 @@ textarea {
 }
 
 .checkbox-checked{
-    height: 24px;
-    width: 24px;
+    min-height: 24px;
+    min-width: 24px;
     cursor: pointer;
     background-image: url('../assets/img/check_button_checked.svg');
     background-repeat: no-repeat;
@@ -383,4 +384,34 @@ textarea {
 
 .btn-task-ctrl{
     cursor: pointer;
+}
+
+@media(max-width:650px){
+    #dialaogBoardTask{
+        margin-left: 8px;
+        margin-right: 8px;
+        width: auto;
+        padding: 24px;
+        left: 16px;
+        right: 16px;
+    }
+
+    .title-indication{
+        font-size: 36px;
+    }
+
+    textarea{
+        font-size: 16px;
+        height: auto;
+    }
+}
+
+@media(max-width:450px){
+    .field-description label{
+        flex: 0 0 100px;
+    }
+
+    .task-priority{
+        padding-left: 42px;
+    }
 }
