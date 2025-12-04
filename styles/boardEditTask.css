@@ -24,15 +24,15 @@ select {
     border: none;
     cursor: default;
     width: 100%;
-}
+}*/
 
 .dropdown,
 .contacts-list,
 .category-list {
-    
+    width: 100%;
     font-size: 24px;
     color: #2A3647;
-}*/
+}
 
 .txt-img {
     border: 1px solid #D1D1D1;
@@ -59,6 +59,44 @@ select {
 
 .priority-stages {
     display: flex;
+    width: 100%;
+}
+
+.priority-stages .txt-img {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    gap: 6px;
+    height: 64px;
+}
+
+.header-show-task {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 16px;
+}
+
+.field-description input {
+    width: 100%;
+}
+
+.close-btn-container {
+    padding-top: 1px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 3px;
+    border-radius: 50px;
+}
+
+#dialaogBoardTask {
+    width: 525px;
+    border: none;
+    border-radius: 30px;
 }
 
 #taskPrirority {
@@ -134,7 +172,7 @@ button {
 
 .field-description {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
 }
 
@@ -190,7 +228,17 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 4px;
+    padding: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+#btnDialogLeft :hover{
+    background-color: #29abe2 !important;
+}
+
+#btnDialogLeftContent{
+    color: white;
 }
 
 #taskPriority {
@@ -210,11 +258,11 @@ textarea {
 }
 
 .close-btn {
-    position: absolute;
+    /* position: absolute;
     top: 10px;
     right: 10px;
+    background: transparent; */
     border: none;
-    /* background: transparent; */
     font-size: 20px;
     font-weight: lighter;
     cursor: pointer;
@@ -225,8 +273,47 @@ textarea {
     display: flex;
 }
 
-#task_ctrl_box{
+#task_ctrl_box {
     display: none;
 }
 
+.subtask-text {
+    flex-grow: 1;
+    text-align: left;
+}
 
+.subtask-list input[type="checkbox"] {
+    display: none !important;
+}
+
+.subtask-element-img-wrapper button {
+    aspect-ratio: 1;
+    width: 32px
+}
+
+@media (max-width: 650px) {
+    #dialaogBoardTask {
+        margin-left: 8px;
+        margin-right: 8px;
+        width: auto;
+        padding: 24px;
+        left: 16px;
+        right: 16px;
+    }
+
+    .dropdown,
+    .contacts-list,
+    .category-list,
+    .page-container {
+        font-size: 16px;
+    }
+
+    .field-description textarea {
+        height: 180px;
+            padding: 8px 2px;
+    }
+
+    .bottom-container{
+        margin-bottom: 16px !important;
+    }
+}
