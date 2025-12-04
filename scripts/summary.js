@@ -111,7 +111,7 @@ function getUpcomingDeadline(){
     for(let index = 0; index < todos.length; index++){
         let task = todos[index];
         let taskDate = stripTime(new Date(task.date));
-        if(task.status !== 'boardDone' && task.priority == 'urgent'  && taskDate >= today){
+        if(task.status !== 'boardDone' && task.priority == 'urgent'){
             if(nextTask === null || taskDate < new Date(nextTask.date)){
                 nextTask = task;
             }
