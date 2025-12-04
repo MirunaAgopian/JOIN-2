@@ -76,12 +76,12 @@ window.matchMedia("(orientation: portrait)").addEventListener('change', e => {
  * Changes the visibility of the overlay via adding and removing CSS classes
  * @param {boolean} isLandscape - if the device is in landscape mode the overlay is visible, if not it's hidden
  */
-function showOrientationWarning(isLandscape){
-    let container = document.getElementById('orientation_warning');
-    if(isLandscape) {
-        container.classList.remove('d-none');
-    } else {
-        container.classList.add('d-none');
-    }
-}
+// function showOrientationWarning(isLandscape){
+//     let container = document.getElementById('orientation_warning');
+//     if(isLandscape) {
+//         container.classList.remove('d-none');
+//     } else {
+//         container.classList.add('d-none');
+//     }
+// }
 
