@@ -50,7 +50,7 @@ select {
 }
 
 .required {
-    display: none;
+    display: none !important;
 }
 
 .taskHeader {
@@ -71,6 +71,7 @@ select {
     border: 1px solid #ccc;
     gap: 6px;
     height: 64px;
+    margin: 0 16px;
 }
 
 .header-show-task {
@@ -119,6 +120,10 @@ input[type="date"] {
 
 .notForShow {
     display: block;
+    font-weight: 400;
+    font-size: 20px;
+    color: #2a3647;
+    margin-top: 32px;
 }
 
 .crate-btn {
@@ -157,10 +162,17 @@ button {
 
 .buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
-    width: 20%;
+    width: 100%;
 }
+
+.bottom-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end; /* Inhalte nach rechts */
+}
+
 
 .category {
     display: none;
@@ -233,11 +245,12 @@ textarea {
     border-radius: 10px;
     cursor: pointer;
 }
-#btnDialogLeft :hover{
+
+#btnDialogLeft:hover {
     background-color: #29abe2 !important;
 }
 
-#btnDialogLeftContent{
+#btnDialogLeftContent {
     color: white;
 }
 
@@ -291,6 +304,14 @@ textarea {
     width: 32px
 }
 
+.color-description{
+    display: block;
+    font-weight: 400;
+    font-size: 20px;
+    color: #2a3647;
+    margin-top: 32px;
+}
+
 @media (max-width: 650px) {
     #dialaogBoardTask {
         margin-left: 8px;
@@ -310,10 +331,24 @@ textarea {
 
     .field-description textarea {
         height: 180px;
-            padding: 8px 2px;
+        padding: 8px 2px;
     }
 
-    .bottom-container{
+    .bottom-container {
         margin-bottom: 16px !important;
+    }
+
+    .priority-stages{
+
+    }
+
+    .priority-stages .txt-img{
+        margin: 0 2px;
+        height: 48px;
+        font-size: 12px;
+    }
+
+    .notForShow {
+    margin-top: 16px;
     }
 }

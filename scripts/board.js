@@ -255,14 +255,11 @@ function getAllSubtask(subtasks) {
  * @param {number} index - The index of the subtask in the array.
  */
 function addNewSubtask(text, index) {
-    // Referenz auf die Liste holen
     const list = document.getElementById("subtask_list");
 
-    // Neues li-Element erstellen
     const li = document.createElement("li");
     li.classList.add("subtask-list");
 
-    // Inhalt einfügen
     li.innerHTML = `
     <input id="subtask_${index}" type="checkbox" onchange="updateSubTask(${index})" ${actualToDo.subtasks[index].checked ? "checked" : ""} class="subtask-checkbox"
     style="display:block;">
@@ -275,7 +272,19 @@ function addNewSubtask(text, index) {
     </div>
   `;
 
+    const editLi = document.createElement("li");
+    editLi.classList.add("subtask-edit-list", "d-none");
+    editLi.innerHTML = `
+      <span class="subtask-edit" contenteditable="true"></span>
+      <div class="subtask-edit-btn-wrapper">
+        <button onclick="deleteAddedSubtask(this)" class="subtask-delete-btn-secondary" title="Delete"></button>
+        <div class="subtask-btn-divider-tertiary"></div>
+        <button onclick="saveEditedSubtask(this)" class="subtask-save-btn" title="Save"></button>
+      </div>
+    `;
+
     list.appendChild(li);
+    list.appendChild(editLi);
 }
 
 /**
