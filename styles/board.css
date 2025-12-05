@@ -329,6 +329,24 @@ main {
     transform: translateY(0);
 }
 
+.title-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-add-task-mobile {
+    background-color: #2A3647;
+    height: 40px;
+    width: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    display: none;
+    margin-right: 8px;
+}
+
 .boardMoveToIcon {
     position: absolute;
     top: 16px;
@@ -341,22 +359,27 @@ main {
     color: hsl(0, 0%, 100%);
     width: 106px;
     height: 113px;
-    border-radius: 0px 20px 20px 20px;
+    border-radius: 20px 0px 20px 20px;
     display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 16px;
     position: absolute;
-    top: 16px;
-    right: -30px;
+    top: 36px;
+    right: 20px;
     z-index: 1;
-    padding-inline: 15px;
+    padding-inline: 60px;
+}
+
+.boardMoveToOverlay p {
+    color: white;
 }
 
 .boardMoveToHeadline {
     width: 90px;
     padding-left: 9px;
+    font-size: 18px;
 }
 
 .boardMoveToOverlayButtons {
@@ -463,6 +486,10 @@ main {
         width: 100%;
     }
 
+    .columnHeader {
+        padding: 16px 0;
+    }
+
     .column {
         width: 100%;
         margin-right: 0;
@@ -494,6 +521,7 @@ main {
     .noEntry {
         height: 48px;
     }
+
 }
 
 @media(max-width: 1020px) {
@@ -502,20 +530,45 @@ main {
         flex-direction: column;
         align-items: flex-start;
         gap: 8px;
-        border: 1px solid red;
+    }
+
+    .searchBoard {
+        margin: 16px 0;
     }
 }
 
 
 @media (max-width: 850px) {
-    .btn-add-task {
-        display: none;
-    }
-/* tomorrow I need to continue from here */
     .mainContent {
         margin-left: 0;
         width: 100%;
         margin-bottom: 100px;
+    }
+
+    .btn-add-task {
+        display: none;
+    }
+
+    .btn-add-task-mobile {
+        display: flex;
+    }
+
+    .title-btn {
+        width: 100%;
+    }
+
+    .searchBoard,
+    .search-box {
+        width: 100%;
+        align-self: center;
+    }
+
+    .search-box {
+        justify-content: space-between;
+    }
+
+    .search-box input {
+        width: 90%;
     }
 
 }

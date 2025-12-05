@@ -28,7 +28,6 @@
   <script src="../scripts/board-design.js" defer></script>
   <script src="../scripts/board.js" defer></script>
 </head>
-
 <body>
   <header>
     <nav>
@@ -83,7 +82,12 @@
   <main>
     <div class="mainContent">
       <div class="boardHeader">
+        <div class="title-btn">
         <h1>Board</h1>
+          <div class="btn-add-task-mobile">
+                <span class="btn-plus">+</span>
+          </div>
+        </div>
         <div class="searchBoard">
           <div id="search_box" class="search-box">
             <input type="search" oninput="processChanges()" id="searchBoard" placeholder="Find Task">
@@ -98,7 +102,6 @@
           </button>
         </div>
       </div>
-
       <div class="board-content-main" id="board-Content">
         <section id="toDo" class="column">
           <div class="columnHeader">
@@ -110,7 +113,6 @@
             ondragover="allowDrop(event, 'boardToDo')">
           </div>
         </section>
-
         <section id="inProgress" class="column">
           <div class="columnHeader">
             <h2>In progress</h2>
@@ -121,7 +123,6 @@
             ondragover="allowDrop(event, 'boardProgress')">
           </div>
         </section>
-
         <section id="Feedback" class="column">
           <div class="columnHeader">
             <h2>Await Feedback</h2>
@@ -132,7 +133,6 @@
             ondragover="allowDrop(event, 'boardFeedback')">
           </div>
         </section>
-
         <section id="Done" class="column">
           <div class="columnHeader">
             <h2>Done</h2>
@@ -142,9 +142,7 @@
             ondragover="allowDrop(event, 'boardDone')"></div>
         </section>
       </div>
-
     </div>
-
     <dialog id="dialaogBoardTask">
       <section class="main-DialogContent">
         <div class="header-show-task">
@@ -292,7 +290,6 @@
       <p>Contacts</p>
     </a>
   </footer>
-
   <div id="orientation_warning" class="landscape-view-warning d-none">
     <p>JOIN works best in portrait mode. Please rotate your device!</p>
     <img class="device-icon" src="../assets/img/device_landscape.svg" alt="A tablet positioned in landscape view">

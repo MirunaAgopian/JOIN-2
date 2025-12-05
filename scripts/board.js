@@ -89,11 +89,11 @@ function renderTask(todo, status) {
  * @returns {String} html tag for the button
  */
 function renderMoveButton(todoId, targetStatus, icon, altText) {
-    return `<div class="boardMoveToButtonContent"
+    return `<p class="boardMoveToButtonContent"
         onclick="event.stopPropagation(); changeBoardStatus('${todoId}', '${targetStatus}')">
         <img src="../assets/img/${icon}" alt="${altText}">
         ${getMobileDisplayMoveStatus(targetStatus)}
-    </div>`;
+    </p>`;
 }
 
 /**
@@ -350,7 +350,7 @@ function renderMobileMoveAction(todo, status) {
     let output = "";
     let moveTasks = getMobileDisplayMoveStatusColumn(status);
     output = `<div class="boardMoveToOverlay" onclick="event.stopPropagation()">
-                <div class="boardMoveToHeadline onlyMobile">Move To</div>
+                <p class="boardMoveToHeadline onlyMobile">Move To</p>
                 <div class="boardMoveToOverlayButtons">`;
     if (moveTasks.moveTaskUp != null) {
         output += renderMoveButton(todo.id, moveTasks.moveTaskUp, "arrow_upward.svg", "arrow up");
