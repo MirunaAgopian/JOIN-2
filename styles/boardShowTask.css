@@ -61,8 +61,6 @@ ul{
     display: flex;
     gap: 8px;
     align-items: center;
-    /* padding: 8px 8px 8px 1.5em; */
-    padding-left: 16px;
     border-radius: 10px;
     position: relative;
     font-size: 16px;
@@ -80,6 +78,14 @@ ul{
     top: 50%;
     transform: translateY(-50%);
     color: black;
+}
+
+.subtask-list span {
+    flex: 1;
+}
+
+.subtask-list .checkbox-container {
+    flex-shrink: 0;
 }
 
 .bottom-container p {

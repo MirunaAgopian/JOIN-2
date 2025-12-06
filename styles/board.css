@@ -571,6 +571,14 @@ main {
         width: 90%;
     }
 
+    #dialaogBoardTask {
+        padding: 16px;
+    }
+
+    .page-container {
+        margin-right: 0;
+    }
+
 }
 
 

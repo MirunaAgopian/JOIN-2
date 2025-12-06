@@ -76,10 +76,6 @@
     width: 30%;
 }
 .close-btn-container {
-    padding-top: 1px;
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-bottom: 3px;
     border-radius: 50px;
 }
 
@@ -88,6 +84,7 @@
     background-color: white;
     height: 20px;
     width: 20px;
+    font-size: 24px;
 }
 
 .close-btn-container button:hover {
@@ -135,6 +132,7 @@
         width: 100%;
         position: absolute;
         bottom: 40px;
+        left: 4px;
         gap: 2px;
     }
 }
