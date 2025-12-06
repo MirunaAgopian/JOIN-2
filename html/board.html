@@ -84,7 +84,7 @@
       <div class="boardHeader">
         <div class="title-btn">
         <h1>Board</h1>
-          <div class="btn-add-task-mobile">
+          <div onclick="showDialogAddTask('boardToDo')" class="btn-add-task-mobile">
                 <span class="btn-plus">+</span>
           </div>
         </div>
@@ -96,7 +96,7 @@
               <img id="search_img" src="../assets/img/search.svg" alt="search icon as magnifying glass">
             </div>
           </div>
-          <button class="btn-add-task" type="button">
+          <button onclick="showDialogAddTask('boardToDo')" class="btn-add-task" type="button">
             <span class="btn-text">Add task</span>
             <span class="btn-plus">+</span>
           </button>
@@ -143,7 +143,7 @@
         </section>
       </div>
     </div>
-    <dialog id="dialaogBoardTask">
+    <dialog class="add-task-dialog-board" id="dialaogBoardTask">
       <section class="main-DialogContent">
         <div class="header-show-task">
           <div id="taskCategory"></div>

@@ -53,10 +53,6 @@ select {
     display: none !important;
 }
 
-.taskHeader {
-    display: none;
-}
-
 .priority-stages {
     display: flex;
     width: 100%;
@@ -74,31 +70,31 @@ select {
     margin: 0 16px;
 }
 
-.header-show-task {
+/* .header-show-task {
     width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding-bottom: 16px;
-}
+} */
 
 .field-description input {
     width: 100%;
 }
 
-.close-btn-container {
+/* .close-btn-container {
     padding-top: 1px;
     padding-left: 8px;
     padding-right: 8px;
     padding-bottom: 3px;
     border-radius: 50px;
-}
+} */
 
-#dialaogBoardTask {
+/* #dialaogBoardTask {
     width: 525px;
     border: none;
     border-radius: 30px;
-}
+} */
 
 #taskPrirority {
     display: block;
@@ -193,14 +189,14 @@ button {
     align-items: center;
 }
 
-.main-DialogContent {
+/* .main-DialogContent {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
     max-width: 1440px;
-}
+} */
 
 .page-container {
     box-sizing: border-box;
@@ -210,11 +206,6 @@ button {
     color: black;
     font-family: 'Inter';
     width: 100%;
-}
-
-
-#dialaogBoardTask {
-    width: 525px;
 }
 
 textarea {
@@ -313,14 +304,14 @@ textarea {
 }
 
 @media (max-width: 650px) {
-    #dialaogBoardTask {
+    /* #dialaogBoardTask {
         margin-left: 8px;
         margin-right: 8px;
         width: auto;
         padding: 24px;
         left: 16px;
         right: 16px;
-    }
+    } */
 
     .dropdown,
     .contacts-list,
@@ -338,9 +329,9 @@ textarea {
         margin-bottom: 16px !important;
     }
 
-    .priority-stages{
+    /* .priority-stages{
 
-    }
+    } */
 
     .priority-stages .txt-img{
         margin: 0 2px;

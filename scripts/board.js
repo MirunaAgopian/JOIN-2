@@ -164,7 +164,7 @@ function setProgress(subtasks) {
  * @param {string} column - The name of the column (status) where the task will be created.
  */
 function showDialogAddTask(column) {
-    clearTaskInput()
+    clearTaskInput();
     getCssTheme('cssAddTask');
     document.getElementById('btnDialogLeftContent').innerHTML = "Cancel";
     document.getElementById("btnDialogLeft").onclick = closeDialog;
