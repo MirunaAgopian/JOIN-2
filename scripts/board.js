@@ -369,13 +369,13 @@ function getAssignedUser() {
  * @param {Object} contact name and color of the actual Contact
  * @returns html Tag of the actual contact
  */
-function renderAssignedUser(contact){
+function renderAssignedUser(contact) {
 
-    return  `<div class="assignedUser">
+    return `<div class="assignedUser">
                 <div class="contactAvater" style="background-color:${contact.color}"> 
                     ${getUserItem(contact.name)} </div>
                     <div class="userName">${contact.name}</div>
-                </div>`;  
+                </div>`;
 }
 
 //################ Mobile Move Overlay ###############
@@ -443,7 +443,19 @@ async function addDialogTask() {
         .catch((err) => {
             console.error("Upload failed:", err);
         });
+    addTaskOverlay();
     onloadFuncBoard();
+}
+
+/**
+ * overlay with information that task have been created
+ */
+function addTaskOverlay() {
+    let container = document.getElementById('overlay_container');
+    container.innerHTML = getRedirectTemplate();
+    setTimeout(() => {
+        container.innerHTML = '';
+    }, 1500);
 }
 
 /**
