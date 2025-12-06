@@ -1,7 +1,5 @@
-.main-content h1 {
-    align-self: flex-start;
-    margin: 20px 0;
-    font-size: 64px;
+.add-task-dialog-board::-webkit-scrollbar {
+    display: none;
 }
 
 .field-description,
@@ -13,7 +11,7 @@
     gap: 8px;
 }
 
-/*
+
 input,
 textarea,
 select {
@@ -24,7 +22,7 @@ select {
     border: none;
     cursor: default;
     width: 100%;
-}*/
+}
 
 .dropdown,
 .contacts-list,
@@ -32,6 +30,47 @@ select {
     width: 100%;
     font-size: 24px;
     color: #2A3647;
+}
+
+
+.add-task-dialog-board {
+    border: none;
+    position: fixed;    
+    top: 0;
+    right: 0;
+    transform: translateX(100%); 
+    transition: transform 125ms ease-in-out;
+    z-index: 1000;
+}
+
+.header-show-task {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+}
+
+.taskHeader {
+    display: none;
+}
+
+.close-btn-container button {
+    border: none;
+    background-color: white;
+    height: 30px;
+    width: 30px;
+    font-size: 24px;
+    margin-left: auto;
+}
+
+.close-btn-container {
+    margin-left: auto;
+}
+
+.close-btn-container button:hover {
+    background-color: #EEEEEE;
+    border-radius: 50%;
 }
 
 .txt-img {
@@ -43,6 +82,10 @@ select {
     justify-content: space-evenly;
     align-items: center;
     cursor: default;
+}
+
+.txt-img span {
+    font-size: 24px;
 }
 
 .bottom-container p {
@@ -70,31 +113,11 @@ select {
     margin: 0 16px;
 }
 
-/* .header-show-task {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding-bottom: 16px;
-} */
 
 .field-description input {
     width: 100%;
 }
 
-/* .close-btn-container {
-    padding-top: 1px;
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-bottom: 3px;
-    border-radius: 50px;
-} */
-
-/* #dialaogBoardTask {
-    width: 525px;
-    border: none;
-    border-radius: 30px;
-} */
 
 #taskPrirority {
     display: block;
@@ -145,76 +168,15 @@ button {
     color: #2a3647;
 }
 
+
 .clear-btn {
     background-image: url(../assets/img/check.svg);
     display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-size: contain;
+    width: 28px;
+    height: 28px;
+    background-size: 28px 28px;
     background-repeat: no-repeat;
-    margin-right: 8px;
     vertical-align: middle;
-}
-
-.buttons {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-}
-
-.bottom-container {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end; /* Inhalte nach rechts */
-}
-
-
-.category {
-    display: none;
-}
-
-#taskCategory {
-    display: none;
-}
-
-.field-description {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-}
-
-.field-description span {
-    display: inline-flex;
-    align-items: center;
-}
-
-/* .main-DialogContent {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 1440px;
-} */
-
-.page-container {
-    box-sizing: border-box;
-    margin: 0;
-    scroll-behavior: smooth;
-    font-family: 'Cormorant Garamond';
-    color: black;
-    font-family: 'Inter';
-    width: 100%;
-}
-
-textarea {
-    width: 100%;
-    height: auto;
-    overflow: hidden;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    line-height: 1.4;
 }
 
 #btnDialogRight {
@@ -238,12 +200,65 @@ textarea {
 }
 
 #btnDialogLeft:hover {
-    background-color: #29abe2 !important;
+    background-color: #29abe2;
 }
 
 #btnDialogLeftContent {
     color: white;
 }
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+}
+
+.bottom-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end; 
+}
+
+
+.category {
+    display: none;
+}
+
+#taskCategory {
+    display: none;
+}
+
+.field-description {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.field-description span {
+    display: inline-flex;
+    align-items: center;
+}
+
+.page-container {
+    box-sizing: border-box;
+    margin: 0;
+    scroll-behavior: smooth;
+    font-family: 'Cormorant Garamond';
+    color: black;
+    font-family: 'Inter';
+    width: 100%;
+}
+
+textarea {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    line-height: 1.4;
+}
+
 
 #taskPriority {
     display: none;
@@ -261,16 +276,8 @@ textarea {
     display: none;
 }
 
-.close-btn {
-    /* position: absolute;
-    top: 10px;
-    right: 10px;
-    background: transparent; */
-    border: none;
-    font-size: 20px;
-    font-weight: lighter;
-    cursor: pointer;
-    padding: 0px;
+.dropdown {
+    padding: 10px 8px;
 }
 
 .contacts-icons {
@@ -303,16 +310,15 @@ textarea {
     margin-top: 32px;
 }
 
-@media (max-width: 650px) {
-    /* #dialaogBoardTask {
-        margin-left: 8px;
-        margin-right: 8px;
-        width: auto;
-        padding: 24px;
-        left: 16px;
-        right: 16px;
-    } */
 
+@media(max-width: 950px) {
+    .txt-img span,
+    .dropdown span {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 650px) {
     .dropdown,
     .contacts-list,
     .category-list,
@@ -329,17 +335,45 @@ textarea {
         margin-bottom: 16px !important;
     }
 
-    /* .priority-stages{
-
-    } */
-
     .priority-stages .txt-img{
         margin: 0 2px;
         height: 48px;
-        font-size: 12px;
     }
 
     .notForShow {
     margin-top: 16px;
+    }
+}
+
+@media(max-width: 500px) {
+    .add-task-dialog-board .priority-stages {
+        gap: 2px
+    }
+
+    .add-task-dialog-board .txt-img {
+        padding: 10px 2px;
+        margin: 0;
+    }
+
+    .add-task-dialog-board .txt-img span {
+        font-size: 16px;
+    }
+
+    .add-task-dialog-board .prio-img {
+        height: 16px;
+        width: 14px;
+    }
+
+    .dropdown span {
+        font-size: 18px;
+    }
+}
+
+@media(max-width: 420px) {
+   .add-task-dialog-board .priority-stages {
+        gap: 2px;
+    }
+    .priority-stages .txt-img {
+        gap: 2px;
     }
 }
