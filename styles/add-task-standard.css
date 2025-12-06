@@ -289,3 +289,7 @@
     background-color: #D1D1D1;
     border-radius: 2px;
 }
+
+body:has(dialog[open]){
+    overflow: hidden;
+}
