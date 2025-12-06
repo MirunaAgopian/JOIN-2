@@ -324,6 +324,26 @@ function getSubTaskDone(subtasks) {
 }
 
 /**
+ * get Array of actual status of all subtaks of the actual Task
+ * @param {Array} subtasks all Subtask of the actual Task
+ * @returns {Array} Status of Subtasks
+ */
+function getSubtaskStatus(subtasks) {
+    if (subtasks == null) {
+        return null;
+    }
+
+    let subtaskStatus = [];
+
+    for (let index = 0; index < subtasks.length; index++) {
+        const subtask = subtasks[index];
+        subtaskStatus[index] = !!(subtask && "checked" in subtask && subtask.checked === true);
+    }
+
+    return subtaskStatus;
+}
+
+/**
  * Renders all assigned users of the current task into the dialog.
  */
 function getAssignedUser() {
@@ -337,15 +357,25 @@ function getAssignedUser() {
         const contact = contactUser[actualToDo.assignedTo[index]];
         if (!contact) continue;
 
-        output += `<div class="assignedUser">
-                    <div class="contactAvater" style="background-color:${contact.color}"> 
-                      ${getUserItem(contact.name)} </div>
-                    <div class="userName">${contact.name}</div>
-                    </div>`;
+        output += renderAssignedUser(contact);
     }
 
     contactRev.classList.remove('d-none');
     contactRev.innerHTML = output;
+}
+
+/**
+ * Renders all assigned users of the current task into the dialog.
+ * @param {Object} contact name and color of the actual Contact
+ * @returns html Tag of the actual contact
+ */
+function renderAssignedUser(contact){
+
+    return  `<div class="assignedUser">
+                <div class="contactAvater" style="background-color:${contact.color}"> 
+                    ${getUserItem(contact.name)} </div>
+                    <div class="userName">${contact.name}</div>
+                </div>`;  
 }
 
 //################ Mobile Move Overlay ###############
@@ -419,13 +449,17 @@ async function addDialogTask() {
 /**
  * Updates the currently selected task with dialog input and saves changes to the database.
  */
+
 async function editDialogTask() {
     let task = getTaskInput();
+    let subtaskStatus = getSubtaskStatus(actualToDo.subtasks);
 
-    if (!checkIfTaskIsValid(task)) {
-        return;
+    if (!checkIfTaskIsValid(task)) { return; }
+    if (subtaskStatus != null) {
+        for (let index = 0; index < subtaskStatus.length; index++) {
+            task.subtasks[index].checked = subtaskStatus[index];
+        }
     }
-
     dialogBoardTaskRev.dialog.close()
     await patchData('tasks/' + currentDraggedElement, task);
     onloadFuncBoard();
