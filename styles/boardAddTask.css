@@ -118,6 +118,7 @@ dialog{
     }
     .page-container {
         flex-direction: column;
+        margin-right: 0;
     }
 
     .main-DialogContent  {

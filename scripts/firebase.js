@@ -96,8 +96,7 @@ async function patchData(path = '', data = {}) {
   }
 }
 
-// Functions copied from from Board.js in order to see if data 
-//is being passed to summary.html
+// Transferred from board.js
 let currentDraggedElement = null;
 let contactUser = {};
 let startStatusColumn = "";
@@ -231,3 +230,92 @@ function getUserData(usersObj) {
     return USERS;
 }
 
+// Transferred from add-task.js
+
+/** 
+ * Array storing all created tasks. 
+ * Each task is represented as an object with title, description, date, priority, assigned contacts, category, and subtasks.
+ */
+let tasks = [];
+
+
+/**
+ * Uploads a task object to Firebase using a POST request.
+ * @async
+ * @param {string} [path=""] - The database path where the task should be stored.
+ * @param {Object} [task={}] - The task object to upload.
+ * @returns {Promise<Object>} A promise resolving to the Firebase response JSON.
+ */
+async function uploadTaskToFirebase(path = "", task = {}) {
+  let response = await fetch(BASE_URL + path + ".json", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(task),
+  });
+  let responseAsJson = await response.json();
+  return responseAsJson;
+}
+
+/**
+ * Shows the list of contacts on the page.
+ * First it empties the contact area, then it finds out who is logged in
+ * and organizes the contacts so the current user appears first.
+ * Finally, it adds each contact with their initials and highlights
+ * whether they are the logged-in user.
+ * @async
+ */
+
+async function showContactList() {
+  let container = document.getElementById("contact_ul");
+  container.innerHTML = "";
+  const { loggedInUser, sortedContacts } = checkForLoggedInUser();
+  sortedContacts.forEach((contact) => {
+    let initials = getUserItem(contact.name);
+    const isCurrentUser =
+      loggedInUser &&
+      contact.mail.toLowerCase() === loggedInUser.mail.toLowerCase();
+    container.innerHTML += getContactList(contact, initials, isCurrentUser);
+  });
+}
+
+
+/**
+ * Retrieves the logged-in user from session storage and sorts contacts.
+ * Ensures the logged-in user appears first in the list.
+ * @returns {{loggedInUser: Object|null, sortedContacts: Object[]}}
+ * An object containing the logged-in user (or null) and the sorted contacts array.
+ */
+function checkForLoggedInUser() {
+  const userData = sessionStorage.getItem("loggedInUser");
+  const loggedInUser = userData ? JSON.parse(userData) : null;
+  const sortedContacts = [...joinContacts].sort((a, b) => {
+    if (loggedInUser && a.mail === loggedInUser.mail) return -1;
+    if (loggedInUser && b.mail === loggedInUser.mail) return 1;
+    return 0;
+  });
+
+  return { loggedInUser, sortedContacts };
+}
+
+/**
+ * Adds a new task if valid.
+ * Collects input, validates, uploads to Firebase, clears the form, and redirects the user to the board page.
+ */
+function addTask() {
+  let task = getTaskInput();
+  if (!checkIfTaskIsValid(task)) {
+    return;
+  }
+  tasks.push(task);
+  uploadTaskToFirebase("tasks", task)
+    .then((res) => {
+      console.log("Task uploaded with ID:", res.name);
+      clearTaskInput();
+    })
+    .catch((err) => {
+      console.error("Upload failed:", err);
+    });
+  redirectUser();
+}
