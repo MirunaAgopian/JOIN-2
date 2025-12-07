@@ -279,3 +279,43 @@ async function showContactList() {
     container.innerHTML += getContactList(contact, initials, isCurrentUser);
   });
 }
+
+
+/**
+ * Retrieves the logged-in user from session storage and sorts contacts.
+ * Ensures the logged-in user appears first in the list.
+ * @returns {{loggedInUser: Object|null, sortedContacts: Object[]}}
+ * An object containing the logged-in user (or null) and the sorted contacts array.
+ */
+function checkForLoggedInUser() {
+  const userData = sessionStorage.getItem("loggedInUser");
+  const loggedInUser = userData ? JSON.parse(userData) : null;
+  const sortedContacts = [...joinContacts].sort((a, b) => {
+    if (loggedInUser && a.mail === loggedInUser.mail) return -1;
+    if (loggedInUser && b.mail === loggedInUser.mail) return 1;
+    return 0;
+  });
+
+  return { loggedInUser, sortedContacts };
+}
+
+/**
+ * Adds a new task if valid.
+ * Collects input, validates, uploads to Firebase, clears the form, and redirects the user to the board page.
+ */
+function addTask() {
+  let task = getTaskInput();
+  if (!checkIfTaskIsValid(task)) {
+    return;
+  }
+  tasks.push(task);
+  uploadTaskToFirebase("tasks", task)
+    .then((res) => {
+      console.log("Task uploaded with ID:", res.name);
+      clearTaskInput();
+    })
+    .catch((err) => {
+      console.error("Upload failed:", err);
+    });
+  redirectUser();
+}
