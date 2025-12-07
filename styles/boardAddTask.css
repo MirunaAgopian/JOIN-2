@@ -40,23 +40,12 @@
     width: 100%;
 }
 
-dialog{
-    position: fixed;    
-    top: 0;
-    left: 0;
-    transform: translate(200%, 0px);
-}
 
 .add-task-dialog-board {
     border: none;
-    /* transition: transform 125ms ease-in-out; */
     z-index: 1000;
 }
 
-/* .add-task-dialog-board.open {
-  transform: translateX(0);
-} */
-/* in order for this to apply we need <div>s instead of <dialog>s */
 
 .main-DialogContent {
     display: flex;

@@ -32,17 +32,9 @@ select {
     color: #2A3647;
 }
 
-dialog{
-    position: fixed;    
-    top: 0;
-    left: 0;
-    transform: translate(200%, 0px);
-}
 
 .add-task-dialog-board {
     border: none;
-    /* transform: translateX(100%); 
-    transition: transform 125ms ease-in-out; */
     z-index: 1000;
 }
 
