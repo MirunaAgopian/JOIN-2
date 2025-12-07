@@ -2,46 +2,21 @@ let users = [];
 let todos = [];
 const BASE_URL = 'https://remotestorage-162fc-default-rtdb.europe-west1.firebasedatabase.app/';
 
-async function onloadFunc(){
-    console.log('test');
-    // loadData('/name/type');
-    // postData('/name',{"type" : "strawberry", "eatable" : "yes"});
-    // deleteData('/name/-OZDY6sjSSy--kHVzl9s');
-    // putData('/name',{"type" : "strawberry", "eatable" : "yes"});
-    // addEditSingleUser();
-
-    let userResponse = await loadData('/namen');
-    let userKeysArr = Object.keys(userResponse);
-    for (let index = 0; index < userKeysArr.length; index++) {
-        users.push(
-            {
-                id : userKeysArr[index],
-                user : userResponse[userKeysArr[index]] 
-            }
-        );
-    }
-    await addEditSingleUser(users[1].id, {"name":"Henri"});
-    //await addEditSingleUser(id=55, {"name" : "Batzolein"});
-    console.log(users);
-}
-
 /** loads all useres that are stored in the database
  * @param {string} path ky of the first Level of database
  * @returns json of the reqest  */
 async function loadData(path = ''){
     let response = await fetch(BASE_URL + path + '.json');
     let responseAtJson = await response.json();
-   // console.log(responseAtJson);
     return responseAtJson;
 }
 
-async function getAllUsers(path = ''){
-    let response = await fetch(BASE_URL + path + '.json');
-    let responseAtJson = await response.json();
-   // console.log(responseAtJson);
-    return responseAtJson;
-}
-
+/**
+ * This function uses the POST method and is used for editing contacts in contact list
+ * 
+ * @param {String} path - includes the url for firebase to find the correct contact 
+ * @param {Object} data - includes the new data of contact 
+ */
 async function postData(path='', data={}){
     let response = await fetch(BASE_URL + path + '.json', {
         method : "POST",
@@ -50,9 +25,14 @@ async function postData(path='', data={}){
         },
         body : JSON.stringify(data)
     });
-    // return responseToJson = await response.json();
 }
 
+/**
+ * This function uses the DELETE method for deleting datas in firebase
+ * 
+ * @param {String} path - includes the url for the correct data object in firebase 
+ * @returns - a json object with filled data of request
+ */
 async function deleteData(path=''){
     let response = await fetch(BASE_URL + path + '.json', {
         method : "DELETE"
@@ -60,6 +40,12 @@ async function deleteData(path=''){
     return resonseToJson = await response.json();
 }
 
+/**
+ * This function uses the PUT method for firebase to create a new user in signup or ceates a new contact in contact list
+ * 
+ * @param {String} path - includes the url for put the new object in firebase 
+ * @param {Object} data - includes the data object filled with new data 
+ */
 async function putData(path='', data = {}){
     await fetch(BASE_URL + path + '.json', {
         method : "PUT",
@@ -70,8 +56,16 @@ async function putData(path='', data = {}){
     });
 }
 
-async function addEditSingleUser(id=44, user={"name" : "Herbert"}){
-    putData(`/namen/${id}`, user);
+/**
+ * This function is used to load all signed users of firebase
+ * 
+ * @param {String} path - includes the firebase url of users object in firebase
+ * @returns - a json object filled with data of request
+ */
+async function getAllUsers(path = ''){
+    let response = await fetch(BASE_URL + path + '.json');
+    let responseAtJson = await response.json();
+    return responseAtJson;
 }
 
 async function loadData1(path=''){
