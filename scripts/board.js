@@ -171,6 +171,7 @@ function showDialogAddTask(column) {
     document.getElementById('btnDialogRightContent').innerHTML = "Create Task";
     document.getElementById("btnDialogRight").onclick = addDialogTask;
     dialogBoardTaskRev.dialog.showModal();
+    dialogBoardTaskRev.dialog.classList.add('addTaskDialogOpened');
     startStatusColumn = column;
 }
 
@@ -189,9 +190,10 @@ function showDialogTask(id) {
 
     currentDraggedElement = id;
     dialogBoardTaskRev.dialog.showModal();
+    dialogBoardTaskRev.dialog.classList.add('taskDialogOpened');
     dialogBoardTaskRev.task_title.value = actualToDo.title;
     dialogBoardTaskRev.task_description.value = actualToDo.description;
-    // autoResizeTextarea(dialogBoardTaskRev.task_description);
+    autoResizeTextarea(dialogBoardTaskRev.task_description);
     dialogBoardTaskRev.due_date.value = actualToDo.date;
 
     getAllSubtask(actualToDo.subtasks);
@@ -228,12 +230,27 @@ function showDialogEdit() {
 }
 
 /** close the dialog and re render the board */
-function closeDialog() {
+async function closeDialog() {
     isShowTaskActive = false;
     changeDOMIfShowTaskIsOpen(actualToDo);
+    checkTheDialog();
+    await timeout(600);
     dialogBoardTaskRev.dialog.close();
+    dialogBoardTaskRev.dialog.classList.remove('taskDialogOpened');
+    dialogBoardTaskRev.dialog.classList.remove('taskDialogClosed');
+    dialogBoardTaskRev.dialog.classList.remove('addTaskDialogOpened');
+    dialogBoardTaskRev.dialog.classList.remove('addTaskDialogClosed');
     getCssTheme('');
     onloadFuncBoard();
+}
+
+function checkTheDialog(){
+    let isClassActive = !document.getElementById('cssShowTask').disabled;
+    if(isClassActive){
+        dialogBoardTaskRev.dialog.classList.add('taskDialogClosed');
+    }else{
+        dialogBoardTaskRev.dialog.classList.add('addTaskDialogClosed');
+    }
 }
 
 //################### Subtasks ###################
@@ -661,4 +678,14 @@ function getCssTheme(theme) {
 function autoResizeTextarea(element) {
     element.style.height = "auto";
     element.style.height = element.scrollHeight + 3 + "px";
+}
+
+/**
+ * This function is used to let the dialog open for x ms 
+ * 
+ * @param {number} ms - Waiting time in ms 
+ * @returns 
+ */
+async function timeout(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
