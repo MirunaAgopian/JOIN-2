@@ -68,13 +68,6 @@ async function getAllUsers(path = ''){
     return responseAtJson;
 }
 
-async function loadData1(path=''){
-    let response = await fetch(BASE_URL + path + '.json');
-    let responseToJson = await response.json();
-
-    return responseToJson;
-}
-
 /**
  * Updates specific fields of a record in the database using HTTP PATCH.
  * Only the provided keys in the data object will be modified, 
