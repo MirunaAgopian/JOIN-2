@@ -1,11 +1,3 @@
-//  joinUsers
-userObj = {
-    "name" : "Benjamin",
-    "mail" : "benjamin@test.de",
-    "password" : "Ben123"
-};
-
-
 /** Logot the current USer from seassion and fowerd to the login Page */
 function logOut(){
     sessionStorage.clear();
