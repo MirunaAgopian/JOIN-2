@@ -15,6 +15,7 @@ function changeImgOfSearchIcon(action, idFrame, idImg){
 function changeDOMIfShowTaskIsOpen(arrSubtasks){
     changeDOMIndication('task_title', 'title_indication');
     changeDOMIndication('due_date', 'date_indication');
+    changeDOMIndication('task_description', 'description_indication');
     changeDateFormat('date_indication');
     hiddenInputFieldSubtask();
     hiddenCheckboxSubtask(arrSubtasks);

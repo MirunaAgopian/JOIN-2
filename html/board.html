@@ -166,7 +166,8 @@
             <div class="field-description">
               <label for="task_description" class="notForShow">Description</label>
               <textarea onfocus="handleTextarea(true)" onblur="handleTextarea(false)" name="description"
-                id="task_description" placeholder="Enter a description"></textarea>
+                id="task_description" placeholder="Enter a description" style="display: block;"></textarea>
+              <span id="description_indication" class="description-indication" style="display: none;"></span>
             </div>
             <div class="field-description">
               <label class="color-description" for="due_date">Due date:<span class="required">*</span></label>
