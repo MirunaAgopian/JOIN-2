@@ -1,5 +1,12 @@
 let isShowTaskActive = false;
 
+/**
+ * This function is used to change the img icon and the color of input frame on mouse hover event
+ * 
+ * @param {String} action - includes the mouse action (onmouseover, onmouseout) 
+ * @param {String} idFrame - includes the id of the complete div container (input frame) 
+ * @param {String} idImg - includes the id of the img 
+ */
 function changeImgOfSearchIcon(action, idFrame, idImg){
     const contentFrameRef = document.getElementById(idFrame);
     const contentImgRef = document.getElementById(idImg);
@@ -12,6 +19,11 @@ function changeImgOfSearchIcon(action, idFrame, idImg){
     }
 }
 
+/**
+ * This function changes the DOM elements and deactivates unnecessary css classes for show task dialog
+ * 
+ * @param {Object} arrSubtasks - includes the object with filled tasks data from firebase 
+ */
 function changeDOMIfShowTaskIsOpen(arrSubtasks){
     changeDOMIndication('task_title', 'title_indication');
     changeDOMIndication('due_date', 'date_indication');
@@ -25,6 +37,12 @@ function changeDOMIfShowTaskIsOpen(arrSubtasks){
     disableCssClass('cssAddTaskInteractions');
 }
 
+/**
+ * This subfunction of changeDOMIfShowTaskIsOpen() copied the values of input fields and paste it to the indication elements
+ * 
+ * @param {String} idInput - includes the id of input field 
+ * @param {String} idSpan - includes the id of span tag 
+ */
 function changeDOMIndication(idInput, idSpan){
     let inputDOMRef = document.getElementById(idInput);
     let spanDOMRef = document.getElementById(idSpan);
@@ -38,6 +56,11 @@ function changeDOMIndication(idInput, idSpan){
     }
 }
 
+/**
+ * This function changes the date format
+ * 
+ * @param {String} idSpan - includes the id of span tag where the date will indicate 
+ */
 function changeDateFormat(idSpan){
     let date = document.getElementById(idSpan);
     let spanContent = date.textContent.trim();
@@ -46,6 +69,10 @@ function changeDateFormat(idSpan){
     date.textContent = newDateFormat;
 }
 
+/**
+ * This function hides unnecessary tags on show task dialog
+ * 
+ */
 function hiddenInputFieldSubtask(){
     let inputSubtask = document.getElementById('subtask');
     if(isShowTaskActive){
@@ -55,29 +82,60 @@ function hiddenInputFieldSubtask(){
     }
 }
 
+/**
+ * This function is used to hide the checkboxes tags of subtasks and shows the img for subtasks boxes
+ * 
+ * @param {Object} arrSub - includes the object with filled tasks data from firebase
+ */
 function hiddenCheckboxSubtask(arrSub){
     if(arrSub != null){
-        let amountOfSubtasks;
-        if(arrSub.subtasks != undefined){
-            amountOfSubtasks = arrSub.subtasks.length;
-        }else{
-            amountOfSubtasks = 0;
-        }
+        let amountOfSubtasks = checkIfSubtasksInObjectExist(arrSub);
         let isClassActive = !document.getElementById('cssAddTask').disabled;
         for (let index = 0; index < amountOfSubtasks; index++) {
-            if(isShowTaskActive){
-                document.getElementById(`subtask_${index}`).style = "display:none;";
-                document.getElementById(`subtask_${index}`).classList.remove('subtask-checkbox');
-            }else{
-                if(isClassActive == false){
-                    document.getElementById(`subtask_${index}`).style = "display:block;";
-                    document.getElementById(`subtask_${index}`).classList.add('subtask-checkbox');
-                }
-            }
+            deactivateCheckboxesIfShowTaskIsOpen(index, isClassActive);
         }
     }
 }
 
+/**
+ * This function checks the object of the task if are subtasks created
+ * 
+ * @param {Object} arrSub - includes the object with filled tasks data from firebase
+ * @returns - returns the amount of subtasks implemtented in the task
+ */
+function checkIfSubtasksInObjectExist(arrSub){
+    let amountOfSubtasks;
+    if(arrSub.subtasks != undefined){
+        amountOfSubtasks = arrSub.subtasks.length;
+    }else{
+        amountOfSubtasks = 0;
+    }
+    return amountOfSubtasks;
+}
+
+/**
+ * This function hides the checkboxes of subtasks in a clicked task 
+ * 
+ * @param {Number} index - number of subtask in task 
+ * @param {String} cssClass - id of css class AddTask 
+ */
+function deactivateCheckboxesIfShowTaskIsOpen(index, cssClass){
+    if(isShowTaskActive){
+        document.getElementById(`subtask_${index}`).style = "display:none;";
+        document.getElementById(`subtask_${index}`).classList.remove('subtask-checkbox');
+    }else{
+        if(cssClass == false){
+            document.getElementById(`subtask_${index}`).style = "display:block;";
+            document.getElementById(`subtask_${index}`).classList.add('subtask-checkbox');
+        }
+    }
+}
+
+/**
+ * This function checks the value of the inputfield checkbox of subtask and changes the img of checkbox 
+ * 
+ * @param {String} indexSubtask - includes the number of subtask from clicked task 
+ */
 async function controlCheckbox(indexSubtask){
     let checkbox = document.getElementById(`subtask_${indexSubtask}`);
     let checkboxImg = document.getElementById(`checkbox_${indexSubtask}`);
@@ -94,14 +152,14 @@ async function controlCheckbox(indexSubtask){
     await updateSubTask(indexSubtask);
 }
 
+/**
+ * This function checks the implemented subtasks of tasks and customizes the img value during onload of show task dialog
+ * 
+ * @param {Object} arrSub - includes the object of filled data from task 
+ */
 function loadCheckedCheckboxes(arrSub){
     if(arrSub != null){
-        let amountOfSubtasks;
-        if(arrSub.subtasks != undefined){
-            amountOfSubtasks = arrSub.subtasks.length;
-        }else{
-            amountOfSubtasks = 0;
-        }
+        let amountOfSubtasks = checkIfSubtasksInObjectExist(arrSub);
         let isClassActive = !document.getElementById('cssAddTask').disabled;
         if(isClassActive == false){
             for (let index = 0; index < amountOfSubtasks; index++) {
@@ -114,6 +172,10 @@ function loadCheckedCheckboxes(arrSub){
     }
 }
 
+/**
+ * This function changes the img of control buttons on show task dialog
+ * 
+ */
 function changeCtrlButtons(){
     let dialogButtons = document.getElementById('buttons_dialog');
     let showTaskButtons = document.getElementById('task_ctrl_box');
@@ -126,6 +188,11 @@ function changeCtrlButtons(){
     }
 }
 
+/**
+ * This function changes the images of control buttons if mouse on over
+ * 
+ * @param {String} id - includes the id of control button 
+ */
 function changeTaskImgHover(id){
     let contentImgRef = document.getElementById(id);
     if(id == 'btn_edit_task'){
@@ -135,6 +202,11 @@ function changeTaskImgHover(id){
     }
 }
 
+/**
+ * This function changes the images of control button if mouse out event is active
+ * 
+ * @param {String} id - includes id of control button 
+ */
 function changeTaskImgOut(id){
     const contentImgRef = document.getElementById(id);
     if(id == 'btn_edit_task'){
@@ -144,6 +216,11 @@ function changeTaskImgOut(id){
     }
 }
 
+/**
+ * This function is used to disable unnecessary css classes during show task dialog is open
+ * 
+ * @param {String} id - includes the id of css class 
+ */
 function disableCssClass(id){
     if(isShowTaskActive){
         document.getElementById(id).disabled = true;
