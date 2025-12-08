@@ -3,7 +3,7 @@ JOIN
 _A Kanban board application designed to track tasks and subtasks and assign them to contacts. Create your own account, log in, save your contacts and create and manage tasks in your team._
 
 **Features**
-- Test out application as a guest or sign up to enjoy the full features
+- Test out the application as a guest or sign up to enjoy the full features
 - Get a quick overwiew in the summary page about the tasks in board
 - Add contacts and manage your contact list in the dedicated section
 - Create tasks, move them across stages (To Do, In Progress, Awaiting feedback, Done)
@@ -30,6 +30,18 @@ JOIN
 ├── index.html
 ├── script.js
 ├── style.css
+├── html/
+    └── add-task.html
+    └── board.html
+    └── contacts.html
+    └── help.html
+    └── legal-notice-login.html
+    └── legal-notice.html
+    └── login.html
+    └── privacy-policy-login.html
+    └── privacy-policy.html
+    └── signup.html
+    └── summary.html
 ├── styles/
     └── add-task-interactions.css
     └── add-task-standard.css
