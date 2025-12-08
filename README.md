@@ -24,6 +24,7 @@ You'll need:
 git clone https://github.com/MirunaAgopian/JOIN-2
 
 **Project structure**
+
 JOIN
 ```
 ├── index.html
@@ -73,7 +74,9 @@ JOIN
 └── README.md
 ```
 **License**
+
 This project is licensed under the MIT License — see the LICENSE file for details.
 
 **Acknowledgements**
+
 This project was built as a team project from a group of three Frontend-Developers studying ad the Developer Akademie. 
