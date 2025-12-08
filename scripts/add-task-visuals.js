@@ -127,12 +127,10 @@ function toggleContactList() {
   const dropdown = document.getElementById("assigned_to");
   const arrow = document.getElementById("dropdown_arrow");
   const icons = document.getElementById("contact_icons");
-
   list.classList.toggle("d-none");
   dropdown.classList.toggle("active");
   arrow.classList.toggle("active");
   icons.classList.toggle("d-none", !list.classList.contains("d-none"));
-
   if (!list.classList.contains("d-none")) {
     setTimeout(() => document.addEventListener("click", outsideClick));
   } else {
