@@ -184,3 +184,150 @@ function getAddedTasks(text){
 }
 
 // ------------Template functions for Board --------------//
+/**
+ * Aktualisiert die HTML-Darstellung aller Aufgabenbereiche.
+ * Wird beim Laden der Seite aufgerufen.
+ */
+function updateHTML() {
+    renderTodos('boardToDo');
+    renderTodos('boardProgress');
+    renderTodos('boardFeedback');
+    renderTodos('boardDone');
+}
+
+/**
+ * render all task to related task/Board column
+ * @param {string} status - Categorie .
+ */
+function renderTodos(status) {
+    const container = document.getElementById(status);
+    const filtered = todos.filter(t => t.status === status)
+        .sort((a, b) => a.pos - b.pos);
+
+    if (filtered.length > 0) {
+        container.innerHTML = "";
+        for (const todo of filtered) {
+            container.innerHTML += renderTask(todo, status);
+        }
+        container.innerHTML += `<div draggable="false" id="Preview-${status}" 
+            class="previewTask" style="display:none;height:42px;">Preview</div>`;
+    } else {
+        container.innerHTML = `<div draggable="false" id="noEntry-${status}" 
+            class="noEntry">no Entry</div>
+            <div draggable="false" id="Preview-${status}" 
+            class="previewTask" style="display:none;height:42px;">Preview</div>`;
+    }
+}
+
+/**
+ * Generate HTML Tag for every task in board.
+ * @param {Object} todo Task Object.
+ * @param {String} status Status bzw Colum of the board
+ * @returns {string} HTML-Tag.
+ */
+function renderTask(todo, status) {
+    return `<div draggable="true" id="toDo${todo.id}" onclick="showDialogTask('${todo.id}')" ondragstart="startDragging('${todo.id}', '${todo.status}')" ondragend="stopDragging('${todo.id}')" class="todo">
+                <div class="boardMoveToIcon onlyMobile" onclick="openBoardMoveToOverlay(event)">
+                    <img src="../assets/img/swap_horiz.svg" alt="Move To Icon">
+                </div>
+
+                ${renderMobileMoveAction(todo, status)}
+
+                <div class="taskStatus ${todo.category.toLowerCase().replace(/ /g, "-")}">${todo.category}</div>
+                <div class="taskTitle"> ${todo.title}</div>
+                <div class="taskDescription"> ${todo.description}</div>
+                <div class="subtasks"> ${setProgress(todo.subtasks)}</div>
+                <div class="taskFooter">
+                    ${assignedUserAvatar(todo.assignedTo)} <img src="../assets/img/prio_${todo.priority}.svg">
+                </div>
+            </div>`;
+}
+
+/**
+ * render the button for the overlay move display in mobile view
+ * @param {String} todoId Database ID of the selected Task
+ * @param {String} targetStatus Status bzw Colum of the target
+ * @param {String} icon icon for the button (up or down)
+ * @param {String} altText alternative Text for the button Image
+ * @returns {String} html tag for the button
+ */
+function renderMoveButton(todoId, targetStatus, icon, altText) {
+    return `<p class="boardMoveToButtonContent"
+        onclick="event.stopPropagation(); changeBoardStatus('${todoId}', '${targetStatus}')">
+        <img src="../assets/img/${icon}" alt="${altText}">
+        ${getMobileDisplayMoveStatus(targetStatus)}
+    </p>`;
+}
+
+/**
+ * generate the html Tag for the Progress Bar of an Subtask for an task
+ * @param {Object} subtasks 
+ * @returns the render html Tag of the Progress
+ */
+function setProgress(subtasks) {
+    if (subtasks == null) { return ""; }
+    let subTotal = subtasks.length;
+    let subDone = getSubTaskDone(subtasks); //"1";
+
+
+    if (subTotal == null) {
+        return `no subtasks`;
+    }
+
+    return `<div class="processBarContainer">
+                <div class="progress">
+                    <div class="progressBar" style="width: ${(subDone / subTotal) * 100}%"></div>
+                </div>
+                <span class="progressLabel">${subDone}/${subTotal} Subtasks</span>
+            </div> `;
+}
+
+/**
+ * Generates the HTML markup for a single user avatar.
+ * Used to visually represent an assigned contact with their color and initials.
+ *
+ * @param {Object} contact - The contact object containing user details.
+ * @param {string} contact.name - The display name of the contact.
+ * @param {string} contact.color - The background color associated with the contact.
+ * @returns {string} HTML string representing the avatar element.
+ */
+function renderAvatar(contact) {
+    return `<div class="contactAvater" style="background-color:${contact.color}">
+                ${getUserItem(contact.name)}
+            </div>`;
+}
+
+/**
+ * Render the subtask for shown task
+ * @param {String} text shown display description of subtask  
+ * @param {Integer} index index of the subtask of the array subtasks
+ * @returns rendered html Tag
+ */
+function renderSubtaskToDo(text, index){
+    return `
+    <input id="subtask_${index}" type="checkbox" onchange="updateSubTask(${index})" ${actualToDo.subtasks[index].checked ? "checked" : ""} class="subtask-checkbox"
+    style="display:block;">
+    <div id="checkbox_${index}" class="checkbox-container" onclick="controlCheckbox(${index})" style="display:block;"></div>
+    <span class="subtask-text">${text}</span>
+    <div class="subtask-element-img-wrapper">
+      <button onclick="openEditingEnvironment(this)" class="subtask-edit-btn" title="Edit"></button>
+      <div class="subtask-btn-divider-secondary"></div>
+      <button onclick="deleteAddedSubtask(this)" class="subtask-delete-btn" title="Delete"></button>
+    </div>
+  `;
+}
+
+/**
+ * add Listitem to the dialog for editing a Subtask
+ * @returns  rendered html Tag
+ */
+function renderSubtaskToDoEdit(){
+    return `
+      <span class="subtask-edit" contenteditable="true"></span>
+      <div class="subtask-edit-btn-wrapper">
+        <button onclick="deleteAddedSubtask(this)" class="subtask-delete-btn-secondary" title="Delete"></button>
+        <div class="subtask-btn-divider-tertiary"></div>
+        <button onclick="saveEditedSubtask(this)" class="subtask-save-btn" title="Save"></button>
+      </div>
+    `;
+}
