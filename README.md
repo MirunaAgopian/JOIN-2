@@ -24,7 +24,8 @@ You'll need:
 git clone https://github.com/MirunaAgopian/JOIN-2
 
 **Project structure**
-JOIN/
+JOIN
+```
 ├── index.html
 ├── script.js
 ├── style.css
@@ -70,7 +71,7 @@ JOIN/
 └── License
 └── gitignore
 └── README.md
-
+```
 **License**
 This project is licensed under the MIT License — see the LICENSE file for details.
 
