@@ -1,6 +1,6 @@
 JOIN
 
-_A Kanban board application designed to track tasks and subtasks, assign them to contacts. Create your own account, log in, save your contacts and create and manage tasks in your team._
+_A Kanban board application designed to track tasks and subtasks and assign them to contacts. Create your own account, log in, save your contacts and create and manage tasks in your team._
 
 **Features**
 - Test out application as a guest or sign up to enjoy the full features
