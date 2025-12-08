@@ -79,4 +79,4 @@ This project is licensed under the MIT License — see the LICENSE file for deta
 
 **Acknowledgements**
 
-This project was built as a team project from a group of three Frontend-Developers studying ad the Developer Akademie. 
+This project was built as a team project from a group of three Frontend-Developers studying at the Developer Akademie. 
