@@ -155,6 +155,21 @@ function addSubtask(){
 }
 
 /**
+ * Adds an event listener to the "subtask" input field.
+ * When the user presses the Enter key while typing in the input:
+ * - Prevents the default action (like submitting a form).
+ * - Calls addSubtask() to create and append a new subtask.
+ * @param {KeyboardEvent} e - The keydown event triggered when a key is pressed.
+ */
+
+document.getElementById('subtask').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    addSubtask();
+  }
+});
+
+/**
  * Clears the subtask input field.
  * Empties the text box and turns off the active state.
  */

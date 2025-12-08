@@ -121,18 +121,22 @@ function resetCheckboxesAndPriorityVisuals(){
  * Toggles the contact list via CSS classes, making it visible or hidden
  * it also adds visuals to the dropdown arrow in the input
  */
+
 function toggleContactList() {
-  let list = document.getElementById("contact_list");
-  let dropdown = document.getElementById("assigned_to");
-  let arrow = document.getElementById("dropdown_arrow");
-  let icons = document.getElementById("contact_icons");
+  const list = document.getElementById("contact_list");
+  const dropdown = document.getElementById("assigned_to");
+  const arrow = document.getElementById("dropdown_arrow");
+  const icons = document.getElementById("contact_icons");
+
   list.classList.toggle("d-none");
   dropdown.classList.toggle("active");
   arrow.classList.toggle("active");
-  if (list.classList.contains("d-none")) {
-    icons.classList.remove("d-none");
+  icons.classList.toggle("d-none", !list.classList.contains("d-none"));
+
+  if (!list.classList.contains("d-none")) {
+    setTimeout(() => document.addEventListener("click", outsideClick));
   } else {
-    icons.classList.add("d-none");
+    document.removeEventListener("click", outsideClick);
   }
   showContactList();
 }
@@ -149,8 +153,33 @@ function toggleCategories(){
   list.classList.toggle('d-none');
   arrow.classList.toggle('active');
   dropdown.classList.toggle('active');
-  if (!list.classList.contains('d-none')) {
-    placeholder.textContent = 'Select task category';
+  if (!list.classList.contains("d-none")) {
+    placeholder.textContent = "Select task category";
+    setTimeout(() => document.addEventListener("click", outsideClick));
+  } else {
+    document.removeEventListener("click", outsideClick);
+  }
+}
+
+/**
+ * This function closes the dropdwon whenever the user clicks outside it
+ * @param {MouseEvent} e - The click event triggered when the user clicks anywhere on the page. 
+ */
+
+function outsideClick(e) {
+  const contactList = document.getElementById("contact_list");
+  const contactDropdown = document.getElementById("assigned_to");
+  const categoryList = document.getElementById("category_list");
+  const categoryDropdown = document.getElementById("category_dropdown");
+  if (contactList && !contactList.classList.contains("d-none")) {
+    if (!contactList.contains(e.target) && !contactDropdown.contains(e.target)) {
+      toggleContactList();
+    }
+  }
+  if (categoryList && !categoryList.classList.contains("d-none")) {
+    if (!categoryList.contains(e.target) && !categoryDropdown.contains(e.target)) {
+      toggleCategories();
+    }
   }
 }
 
