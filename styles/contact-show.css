@@ -70,6 +70,10 @@
     color: #007CEE;
 }
 
+.mail-info-box:hover{
+    font-size: 17px;
+}
+
 .phone-info-box{
     font-size: 16px;
     font-weight: 400;
