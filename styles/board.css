@@ -40,7 +40,7 @@ main {
 .board-content-main {
     display: flex;
     flex-grow: 1;
-    align-items: flex-start; 
+    align-items: flex-start;
     width: 100%;
     height: 100%;
     padding: 16px 0;
@@ -57,7 +57,7 @@ main {
 }
 
 .column:last-child {
-  margin-right: 0;
+    margin-right: 0;
 }
 
 .columnHeader {
@@ -437,41 +437,42 @@ dialog {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     inset: 40px;
     overflow: auto;
-     transform: translate(200%, 0px);
+    transform: translate(200%, 0px);
+    max-width: 1300px;
 }
 
 
-.taskDialogOpened{
+.taskDialogOpened {
     transform: translateX(0px) translateY(0px);
     transition: all 0.3s ease-in;
 }
 
-.taskDialogClosed{
+.taskDialogClosed {
     transform: translateX(300%) translateY(0px);
     transition: all 0.2s ease-in;
 }
 
-.addTaskDialogOpened{
+.addTaskDialogOpened {
     transform: translateX(0px) translateY(0px);
     transition: all 0.3s ease-in;
 }
 
-.addTaskDialogClosed{
+.addTaskDialogClosed {
     transform: translateX(200%) translateY(0px);
     transition: all 0.2s ease-in;
 }
 
-dialog::backdrop{
+dialog::backdrop {
     opacity: 0;
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-.taskDialogOpened::backdrop{
+.taskDialogOpened::backdrop {
     opacity: 1;
     transition: all 0.25s ease-in;
 }
 
-.addTaskDialogOpened::backdrop{
+.addTaskDialogOpened::backdrop {
     opacity: 1;
     transition: all 0.25s ease-in;
 }
@@ -484,17 +485,17 @@ dialog::backdrop{
     height: auto !important;
 }
 
-.hidden{
+.hidden {
     display: none;
 }
 
 
 @media(max-width: 1920px) {
-  .mainContent {
-    margin-left: 220px;
-    width: calc(100% - 220px); 
-    box-sizing: border-box;
-  }
+    .mainContent {
+        margin-left: 220px;
+        width: calc(100% - 220px);
+        box-sizing: border-box;
+    }
 }
 
 @media (max-width: 1620px) {
@@ -527,28 +528,28 @@ dialog::backdrop{
         margin-right: 0;
         flex: none;
         align-self: flex-start;
-        height: auto;  
-  }
+        height: auto;
+    }
 
     .drag-area {
-        display: flex;      
-        flex-direction: row;  
+        display: flex;
+        flex-direction: row;
         flex: none;
         flex-wrap: nowrap;
         align-items: flex-start;
         overflow-x: auto;
         overflow-y: hidden;
-        gap: 16px;        
+        gap: 16px;
         height: auto;
         min-height: 0;
         margin-top: 0;
         width: 100%;
-  }
+    }
 
-  .todo {
-    flex: 0 0 300px;
-    box-sizing: border-box;
-}
+    .todo {
+        flex: 0 0 300px;
+        box-sizing: border-box;
+    }
 
     .noEntry {
         height: 48px;
