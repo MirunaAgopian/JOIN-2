@@ -366,7 +366,6 @@ input::placeholder{
     .btn-close-container-top{
         display: flex;
         justify-content: end;
-        /* padding-bottom: 24px; */
     }
 
     .btn-close-box-top{
@@ -430,10 +429,6 @@ input::placeholder{
         min-height: 100%;
         gap: 0px;
     }
-
-    /* #btn_close_edit{
-        padding-bottom: 24px !important;
-    } */
 
     .dialog-contact{
         transform:translate(-50%, 100%);
