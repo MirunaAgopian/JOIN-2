@@ -92,6 +92,7 @@ function getSubtaskStatus(subtasks) {
 function getAssignedUser() {
     let contactRev = document.getElementById('contact_icons');
     let output = "";
+    if (actualToDo.assignedTo == undefined) {return;}
     if (actualToDo.assignedTo.length == null) { return; }
 
     for (let index = 0; index < actualToDo.assignedTo.length; index++) {
@@ -101,7 +102,6 @@ function getAssignedUser() {
 
         output += renderAssignedUser(contact);
     }
-
     contactRev.classList.remove('d-none');
     contactRev.innerHTML = output;
 }
