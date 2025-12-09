@@ -38,7 +38,7 @@ function getTemplateShowContact(obj, initials){
                 <span class="bold-line">Email</span>
                 <span id="mail_data" class="mail-info-box">${obj.mail}</span>
                 <span class="bold-line">Phone</span>
-                <span class="phone-info-box">${obj.phone}</span>
+                <a href="tel:${obj.phone}"><span class="phone-info-box">${obj.phone}</span></a>
             </div>`;
 }
 

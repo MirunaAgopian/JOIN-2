@@ -75,6 +75,10 @@
     font-weight: 400;
 }
 
+.phone-info-box:hover{
+    font-size: 17px;
+}
+
 .ctrl-edit-mobile-container{
     position: fixed;
     bottom: 130px;
