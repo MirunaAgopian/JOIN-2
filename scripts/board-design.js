@@ -1,3 +1,7 @@
+/**
+ * This variable gives an information if the dialog show task is open
+ * 
+ */
 let isShowTaskActive = false;
 
 /**

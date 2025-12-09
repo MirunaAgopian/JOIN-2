@@ -1,5 +1,10 @@
 let users = [];
 let todos = [];
+
+/**
+ * This variable includes the url of firebase where the datas of project are stored
+ * 
+ */
 const BASE_URL = 'https://remotestorage-162fc-default-rtdb.europe-west1.firebasedatabase.app/';
 
 /** loads all useres that are stored in the database

@@ -1,8 +1,22 @@
+/**
+ * This array is used to store all contacts loaded from firebase
+ * 
+ */
 let joinContacts = [];
+
+/**
+ * This array filled with pre defined colors is used to get a color if a new contact is created
+ * 
+ */
 const colorContacts = ['#FF7A00', '#9327FF' , '#FF745E', '#FFC701', '#FFE62B',
     '#FF5EB3', '#00BEE8', '#FFA35E', '#0038FF', '#FF4646',
     '#6E52FF', '#1FD7C1', '#FC71FF', '#C3FF2B', '#FFBB2B'
 ];
+
+/**
+ * This variable gives an information which contact of contact list is clicked
+ * 
+ */
 let activatedContact = 0;
 
 /**

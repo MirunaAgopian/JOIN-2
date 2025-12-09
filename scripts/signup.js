@@ -1,5 +1,19 @@
+/**
+ * This variable gives an iformation if the accept policy checkbox on signup is checked
+ * 
+ */
 let policyAccepted = false;
+
+/**
+ * This array includes all registered user in join, loaded from firebase
+ * 
+ */
 let joinUsers = [];
+
+/**
+ * This variable gives an information if password and confirm password are equal on signup
+ * 
+ */
 let passwordConfirmed = false;
 
 /**
@@ -111,9 +125,8 @@ function clearInputs(){
  * @param {Array} userArr - An array with all user objects of firebase 
  */
 async function checkNewUser(userObj, userArr){
-    let amountOfUsers = userArr.length;
     let userExistance = false;
-    for (let index = 0; index < amountOfUsers; index++) {
+    for (let index = 0; index < userArr.length; index++) {
         if(userArr[index].mail == userObj.mail){
             clearInputs();
             userExistance = true;
