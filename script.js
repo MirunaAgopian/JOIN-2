@@ -77,3 +77,16 @@ function showOrientationWarning(isLandscape){
     }
 }
 
+let whitelist = [
+   "/html/login.html",
+   "/html/signup.html",
+   "/html/privacy-policy-login.html",
+    "/html/legal-notice-login.html"
+];
+
+if (
+  !sessionStorage.getItem('loggedInUser') &&
+  !whitelist.includes(window.location.pathname)
+) {
+  window.location.href = '/html/login.html';
+}
