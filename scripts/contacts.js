@@ -1,12 +1,10 @@
 /**
  * This array is used to store all contacts loaded from firebase
- * 
  */
 let joinContacts = [];
 
 /**
  * This array filled with pre defined colors is used to get a color if a new contact is created
- * 
  */
 const colorContacts = ['#FF7A00', '#9327FF' , '#FF745E', '#FFC701', '#FFE62B',
     '#FF5EB3', '#00BEE8', '#FFA35E', '#0038FF', '#FF4646',
@@ -15,7 +13,6 @@ const colorContacts = ['#FF7A00', '#9327FF' , '#FF745E', '#FFC701', '#FFE62B',
 
 /**
  * This variable gives an information which contact of contact list is clicked
- * 
  */
 let activatedContact = 0;
 
@@ -160,7 +157,7 @@ async function showClickedContact(mail){
  * This subfunction of showClickedContact() renders the contact on page if the clicked contact wasd found on array
  * 
  * @param {Object} contactObj - includes data of clicked contact 
- * @param {*} joinContacts - array filled with all contacts from firebase
+ * @param {Array} joinContacts - array filled with all contacts from firebase
  */
 function displayContact(contactObj, joinContacts){
     if(contactObj.mail != ''){
@@ -195,7 +192,7 @@ function goBackToContactsList(){
     let contentContactslistRef = document.getElementById('contacts_list');
     contentContactRef.style = "display:none";
     contentContactslistRef.classList.remove('hidden');
-    window.location.reload();
+    showActivatedContactInList(joinContacts, activatedContact=0);
 }
 
 /**
@@ -277,19 +274,22 @@ function renderEditDialog(mail, initials){
  * @param {String} mail - includes the mail address of edited person
  */
 async function saveChangedData(mail){
+    let mailAddress = mail;
     let contactChanged = false;
     let contactsResponse = await getAllUsers('/contacts');
     let contactsKeysArr = Object.keys(contactsResponse);
     for (let index = 0; index < contactsKeysArr.length; index++) {
-        if(contactsResponse[contactsKeysArr[index]].mail == mail){
+        if(contactsResponse[contactsKeysArr[index]].mail == mailAddress){
             let changedObj = getInputFieldsEditDialog();
+            mailAddress = changedObj.mail;
             changedObj.color = contactsResponse[contactsKeysArr[index]].color;
             await putData(`contacts/${contactsKeysArr[index]}`, changedObj);
             contactChanged = true;
             break;
         }
     }
-    closeDialogIfDataChanged(contactChanged);
+    await closeDialogIfDataChanged(contactChanged);
+    showClickedContact(mailAddress);
 }
 
 /**
@@ -297,13 +297,14 @@ async function saveChangedData(mail){
  * 
  * @param {Boolean} isChanged - result of succesfully contact changes in firebase 
  */
-function closeDialogIfDataChanged(isChanged){
+async function closeDialogIfDataChanged(isChanged){
     let contactChanged = isChanged;
     if(contactChanged){
         let dialog = document.getElementById('edit_contact_dialog');
         dialog.close();
         dialog.classList.remove('dialogOpened');
-        window.location.reload();
+        // window.location.reload();
+        await onloadFuncContact();
     }
 }
 
