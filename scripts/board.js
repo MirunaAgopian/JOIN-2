@@ -64,22 +64,23 @@ function showDialogAddTask(column) {
  * Shows the dialog with the values of the selected task.
  * @param {string} id - The ID of the task in the database.
  */
-function showDialogTask(id) {
+async function showDialogTask(id) {
     isShowTaskActive = true;
     actualToDo = todos.find(t => t.id === id);
     currentDraggedElement = id;
 
-    prepareDialogForTask();
+    await prepareDialogForTask();
     fillDialogFields(actualToDo);
     renderDialogActions();
     getAssignedUser();
 }
 
 /** Prepares dialog appearance and resets inputs */
-function prepareDialogForTask() {
+async function prepareDialogForTask() {
     getCssTheme('cssShowTask');
     clearTaskInput();
     dialogBoardTaskRev.dialog.showModal();
+    await timeout(200);
     dialogBoardTaskRev.dialog.classList.add('taskDialogOpened');
 }
 
@@ -103,7 +104,8 @@ function fillDialogFields(task) {
     dialogBoardTaskRev.due_date.value = task.date;
 
     getAllSubtask(task.subtasks);
-    changeDOMIfShowTaskIsOpen(task);
+    changeDOMIfShowTaskIsOpen(actualToDo);
+    
 
     selectedPriority = task.priority;
     document.getElementById("taskPriority").innerHTML =
@@ -140,10 +142,10 @@ function showDialogEdit() {
 /** close the dialog and re render the board */
 async function closeDialog() {
     isShowTaskActive = false;
-    changeDOMIfShowTaskIsOpen(actualToDo);
     checkTheDialog();
     await timeout(600);
     dialogBoardTaskRev.dialog.close();
+    changeDOMIfShowTaskIsOpen(actualToDo);
     dialogBoardTaskRev.dialog.classList.remove('taskDialogOpened');
     dialogBoardTaskRev.dialog.classList.remove('taskDialogClosed');
     dialogBoardTaskRev.dialog.classList.remove('addTaskDialogOpened');

@@ -449,7 +449,7 @@ dialog {
 
 .taskDialogClosed {
     transform: translateX(300%) translateY(0px);
-    transition: all 0.2s ease-in;
+    transition: all 0.3s ease-in;
 }
 
 .addTaskDialogOpened {
@@ -459,7 +459,7 @@ dialog {
 
 .addTaskDialogClosed {
     transform: translateX(200%) translateY(0px);
-    transition: all 0.2s ease-in;
+    transition: all 0.3s ease-in;
 }
 
 dialog::backdrop {
