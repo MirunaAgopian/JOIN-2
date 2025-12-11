@@ -154,7 +154,7 @@ main{
     min-height: 68px;
 }
 
-#add_name, #add_phone{
+#add_name, #add_phone, #edit_name, #edit_phone{
     margin-bottom: 16px;
 }
 
