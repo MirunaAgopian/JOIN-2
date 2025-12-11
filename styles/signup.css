@@ -89,7 +89,7 @@ form{
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 32px;
+    gap: 10px;
 }
 
 input::placeholder{
@@ -272,6 +272,14 @@ footer{
     transition: all 0.25s ease-in;
 }
 
+#create_name, #create_pw{
+    margin-bottom: 17px;
+}
+
+.input-container{
+    min-height: 68px;
+}
+
 .info-input{
     padding-left: 8px;
     font-size: 14px;
@@ -344,5 +352,11 @@ footer{
     .input-container{
         display: flex;
         flex-direction: column;
+    }
+}
+
+@media(max-width:400px){
+    .info-input{
+        font-size: 12px;
     }
 }
