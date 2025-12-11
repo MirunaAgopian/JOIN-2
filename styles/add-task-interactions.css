@@ -26,6 +26,10 @@ textarea:focus {
     color: red;
 }
 
+.alert-container {
+    height: 1em;;
+}
+
 /* Hover effects and boxes styling */
 
 .txt-img:hover {
@@ -179,10 +183,6 @@ textarea.active {
 @media(max-width: 1500px) {
     .buttons {
         width: 30%;
-    }
-
-    .bottom-container{
-        margin-top: 32px;
     }
 }
 

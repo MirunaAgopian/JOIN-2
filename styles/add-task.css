@@ -99,6 +99,11 @@ select {
     border: 1px solid #D1D1D1;
     padding: 8px 0;
     border-radius: 10px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 10;
 }
 
 .category-list ul {
@@ -130,7 +135,7 @@ select {
     justify-content: space-between;
     width: 100%;
     font-size: 20px;
-    margin-top: 80px;
+    margin-top: 110px;
     margin-right: 20px;
 }
 

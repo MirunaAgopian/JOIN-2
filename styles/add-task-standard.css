@@ -80,11 +80,20 @@
 }
 
 /* === Contacts list section === */
+.assigned-to {
+    position: relative;
+}
+
 .contacts-list {
     background-color: white;
     border: 1px solid #D1D1D1;
     padding: 8px 0;
     border-radius: 10px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 10;
 }
 
 .contacts-list ul {
@@ -153,6 +162,7 @@
     justify-content: flex-start;
     width: 100%;
     gap: 8px;
+    position: relative;
 }
 
 #subtask {
@@ -192,6 +202,20 @@
 
 .added-tasks ul {
     padding-left: 0;
+}
+
+.added-tasks {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    left: 0;
+    z-index: 10;
+    overflow-y: scroll;
+    height: 100px;
+}
+
+.added-tasks::-webkit-scrollbar {
+    display: none;
 }
 
 .subtask-list {
