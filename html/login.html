@@ -1,130 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JOIN</title>
-    <link
-      rel="shortcut icon"
-      href="../assets/img/join_logo.svg"
-      type="image/x-icon"
-    />
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="../styles/login.css" />
-    <link rel="stylesheet" href="../style.css" />
-    <!-- JS files -->
-    <script src="../script.js" defer></script>
-    <script src="../scripts/firebase.js" defer></script>
-    <script src="../scripts/login.js" defer></script>
-  </head>
-  <body onload="onloadFunc()">
-    <!-- Splash-Logo -->
-    <div class="maxWidth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JOIN</title>
+  <link rel="shortcut icon" href="../assets/img/join_logo.svg" type="image/x-icon" />
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../styles/login.css" />
+  <link rel="stylesheet" href="../style.css" />
+  <!-- JS files -->
+  <script src="../script.js" defer></script>
+  <script src="../scripts/firebase.js" defer></script>
+  <script src="../scripts/login.js" defer></script>
+</head>
+
+<body onload="onloadFunc()">
+  <!-- Splash-Logo -->
+  <div class="maxWidth">
+    <div class="splashWrapper">
       <div class="logoSplash">
-        <img
-          src="../assets/img/join_logo.svg"
-          alt="Join Logo"
-          class="logoSplashImg onlyDesktop"
-        />
-        <img
-          src="../assets/img/join_logo_white.svg"
-          alt="Join Logo"
-          class="logoSplashImg onlyMobile"
-        />
+        <img src="../assets/img/join_logo.svg" alt="Join Logo" class="logoSplashImg onlyDesktop" />
+        <img src="../assets/img/join_logo_white.svg" alt="Join Logo" class="logoSplashImg onlyMobile" />
       </div>
     </div>
-    <!-- Main content, firstly hidden-->
-    <div id="pageContent" class="d-None">
-      <header class="headerContent">
-        <div class="logo">
-          <img src="../assets/img/join_logo.svg" alt="Join Logo" class="logo" />
+  </div>
+  <!-- Main content, firstly hidden-->
+  <div id="pageContent" class="d-None">
+    <header class="headerContent">
+      <div class="logo">
+        <img id="headerLogo" src="../assets/img/join_logo.svg" alt="Join Logo" class="logo" />
+      </div>
+      <div class="signUp onlyDesktop">
+        <span class="lblSignUp">Not a Join user?</span>
+        <button type="button" class="btn btnPrimary" onclick="window.location.href='./signup.html'">
+          Sign up
+        </button>
+      </div>
+    </header>
+    <main class="mainContent">
+      <div class="loginContent">
+        <div class="title-divider">
+          <h1 class="loginTitle">Log in</h1>
+          <hr class="headline-underline" />
         </div>
-        <div class="signUp onlyDesktop">
-          <span class="lblSignUp">Not a Join user?</span>
-          <button
-            type="button"
-            class="btn btnPrimary"
-            onclick="window.location.href='./signup.html'"
-          >
-            Sign up
-          </button>
-        </div>
-      </header>
-      <main class="mainContent">
-        <div class="loginContent">
-          <div class="title-divider">
-            <h1 class="loginTitle">Log in</h1>
-            <hr class="headline-underline" />
+        <form onsubmit="userLogin()" id="loginForm">
+          <div class="mail-wrapper">
+            <input id="txtEMail" type="email" placeholder="Email" required class="inputLogin" />
+            <span class="formMailIcon"></span>
           </div>
-          <form onsubmit="userLogin()" id="loginForm">
-            <div class="mail-wrapper">
-                <input
-                  id="txtEMail"
-                  type="email"
-                  placeholder="Email"
-                  required
-                  class="inputLogin"
-                />
-                <span class="formMailIcon"></span>
-              </div>
-              <div class="password-wrapper">
-                <input
-                  id="txtPassword"
-                  type="password"
-                  placeholder="Password"
-                  required
-                  class="inputLogin formPassIcon"
-                />
-                <span id="togglePassword" class="toggle-icon"></span>
-              </div>
-            <!-- </div> -->
+          <div class="password-wrapper">
+            <input id="txtPassword" type="password" placeholder="Password" required class="inputLogin formPassIcon" />
+            <span id="togglePassword" class="toggle-icon"></span>
+          </div>
+          <!-- </div> -->
 
-            <div id="loginStatus">&nbsp;</div>
-            <div class="btnLoginContent">
-              <button
-                type="button"
-                id="btnLogin"
-                onclick="userLogin()"
-                class="btn btnPrimary"
-              >
-                Login
-              </button>
-              <button
-                type="button"
-                id="btnGuestLogin"
-                onclick="userGuestLogin()"
-                class="btn btnSecondary"
-              >
-                Guest Login
-              </button>
-            </div>
-          </form>
-        </div>
-        <div class="signUp onlyMobile">
-          <span class="lblSignUp">Not a Join user?</span>
-          <button
-            type="button"
-            class="btn btnPrimary"
-            onclick="window.location.href='./signup.html'"
-          >
-            Sign up
-          </button>
-        </div>
-      </main>
-      <footer>
-        <div class="loginFooter">
-          <a href="privacy-policy-login.html"> Privacy Policy</a>
-          <a href="legal-notice-login.html">Legal notice</a>
-        </div>
-      </footer>
-    </div>
-    <div id="orientation_warning" class="landscape-view-warning d-none">
-      <p>JOIN works best in portrait mode. Please rotate your device!</p>
-      <img
-        class="device-icon"
-        src="../assets/img/device_landscape.svg"
-        alt="A tablet positioned in landscape view"
-      />
-    </div>
-  </body>
+          <div id="loginStatus">&nbsp;</div>
+          <div class="btnLoginContent">
+            <button type="button" id="btnLogin" onclick="userLogin()" class="btn btnPrimary">
+              Login
+            </button>
+            <button type="button" id="btnGuestLogin" onclick="userGuestLogin()" class="btn btnSecondary">
+              Guest Login
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="signUp onlyMobile">
+        <span class="lblSignUp">Not a Join user?</span>
+        <button type="button" class="btn btnPrimary" onclick="window.location.href='./signup.html'">
+          Sign up
+        </button>
+      </div>
+    </main>
+    <footer>
+      <div class="loginFooter">
+        <a href="privacy-policy-login.html"> Privacy Policy</a>
+        <a href="legal-notice-login.html">Legal notice</a>
+      </div>
+    </footer>
+  </div>
+  <div id="orientation_warning" class="landscape-view-warning d-none">
+    <p>JOIN works best in portrait mode. Please rotate your device!</p>
+    <img class="device-icon" src="../assets/img/device_landscape.svg" alt="A tablet positioned in landscape view" />
+  </div>
+</body>
+
 </html>

@@ -55,18 +55,67 @@ async function onloadFunc() {
     animateLogo();
 }
 
-function animateLogo() {
-    elementLoginRev.splashLogo.classList.add('animate');
-    document.body.classList.add("mobileBodyStart");
-
-    elementLoginRev.splashLogo.addEventListener('transitionend', () => {
-        setTimeout(() => {
-            elementLoginRev.splashLogo.classList.add('d-None');
-            elementLoginRev.pageContent.classList.remove('d-None');
-            document.body.classList.remove("mobileBodyStart");
-        }, 200);
-    }, { once: true });
+/**
+ * Make the page content visible for layout calculation but hidden to the user.
+ * @param {HTMLElement} pageContent - The container with the rest of the page content
+ */
+function preparePageContent(pageContent) {
+  pageContent.classList.remove('d-None');
+  pageContent.classList.add('invisible');
 }
+
+/**
+ * Get the bounding rectangle of the header logo.
+ * @param {HTMLElement} headerLogo - The logo element inside the header
+ * @returns {DOMRect} - Position and size of the header logo
+ */
+function getHeaderRect(headerLogo) {
+  return headerLogo.getBoundingClientRect();
+}
+
+/**
+ * Apply CSS variables for the splash logo target position and size.
+ * @param {HTMLElement} splashLogo - The splash logo container
+ * @param {DOMRect} rect - Target coordinates of the header logo
+ */
+function setSplashTargetVars(splashLogo, rect) {
+  splashLogo.style.setProperty('--target-top', `${rect.top}px`);
+  splashLogo.style.setProperty('--target-left', `${rect.left}px`);
+  splashLogo.style.setProperty('--target-width', `${rect.width}px`);
+  splashLogo.style.setProperty('--target-height', `${rect.height}px`);
+}
+
+/**
+ * Run the splash logo animation and reveal the page content afterwards.
+ * @param {HTMLElement} splashLogo - The splash logo container
+ * @param {HTMLElement} pageContent - The container with the rest of the page content
+ */
+function runSplashAnimation(splashLogo, pageContent) {
+  splashLogo.classList.add('animate');
+  splashLogo.addEventListener('transitionend', () => {
+    splashLogo.classList.add('d-None');
+    pageContent.classList.remove('invisible');
+    document.body.classList.remove("mobileBodyStart");
+  }, { once: true });
+}
+
+/**
+ * Main function: animate splash logo into header logo position.
+ */
+function animateLogo() {
+  const splashLogo = elementLoginRev.splashLogo;
+  const pageContent = elementLoginRev.pageContent;
+  const headerLogo = document.getElementById('headerLogo');
+
+  document.body.classList.add("mobileBodyStart");
+
+  preparePageContent(pageContent);
+  const rect = getHeaderRect(headerLogo);
+  setSplashTargetVars(splashLogo, rect);
+  runSplashAnimation(splashLogo, pageContent);
+}
+
+
 
 /**  start of Login Seassion  */
 function userLogin() {
