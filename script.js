@@ -52,17 +52,21 @@ function renderActiveAvatar() {
 
 /**
  * Detects the device view based on the orientation
- * Shows a warning in landscape mode
- * @param {MediaQueryListEvent} e - The event triggered when orientation changes.
+ * Shows a warning in landscape mode but hides the waring on desktop devices
  */
-window.matchMedia("(orientation: portrait)").addEventListener('change', e => {
-    const portrait = e.matches;
-    if(portrait) {
+
+function checkOrientation() {
+    const portrait = window.matchMedia("(orientation: portrait)").matches;
+    if(window.innerWidth >= 850) {
+        showOrientationWarning(false);
+        return;
+    }
+    if(portrait){
         showOrientationWarning(false);
     } else {
         showOrientationWarning(true);
     }
-});
+}
 
 /**
  * Changes the visibility of the overlay via adding and removing CSS classes
@@ -76,6 +80,12 @@ function showOrientationWarning(isLandscape){
         container.classList.add('d-none');
     }
 }
+
+/**
+ * Triggers the orientation warning only on portrait mode and on viewport resize
+ */
+window.matchMedia("(orientation: portrait)").addEventListener('change', checkOrientation);
+window.addEventListener('resize', checkOrientation);
 
 let whitelist = [
    "/html/login.html",
