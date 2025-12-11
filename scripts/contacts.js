@@ -275,22 +275,35 @@ function renderEditDialog(mail, initials){
  * @param {String} mail - includes the mail address of edited person
  */
 async function saveChangedData(mail){
-    let mailAddress = mail;
-    let contactChanged = false;
-    let contactsResponse = await getAllUsers('/contacts');
-    let contactsKeysArr = Object.keys(contactsResponse);
+    let dataObj = await createChangedDataObj(mail);
+    let contactsKeysArr = Object.keys(dataObj.contactsResponse);
     for (let index = 0; index < contactsKeysArr.length; index++) {
-        if(contactsResponse[contactsKeysArr[index]].mail == mailAddress){
+        if(dataObj.contactsResponse[contactsKeysArr[index]].mail == dataObj.mailAddress){
             let changedObj = getInputFieldsEditDialog();
-            mailAddress = changedObj.mail;
-            changedObj.color = contactsResponse[contactsKeysArr[index]].color;
+            dataObj.mailAddress = changedObj.mail;
+            changedObj.color = dataObj.contactsResponse[contactsKeysArr[index]].color;
             await putData(`contacts/${contactsKeysArr[index]}`, changedObj);
-            contactChanged = true;
+            dataObj.contactChanged = true;
             break;
         }
     }
-    await closeDialogIfDataChanged(contactChanged);
-    showClickedContact(mailAddress);
+    await closeDialogIfDataChanged(dataObj.contactChanged);
+    showClickedContact(dataObj.mailAddress);
+}
+
+/**
+ * This subfunction of saveChangedData() creates an object for customize data object on firebase
+ * 
+ * @param {String} mail - includes the mail address of person which datas are customized 
+ * @returns - an object for handle customized data on firebase
+ */
+async function createChangedDataObj(mail){
+    let dataObj = {
+        "mailAddress" : mail,
+        "contactChanged" : false,
+        "contactsResponse" : await getAllUsers('/contacts') 
+    };
+    return dataObj;
 }
 
 /**
@@ -304,7 +317,6 @@ async function closeDialogIfDataChanged(isChanged){
         let dialog = document.getElementById('edit_contact_dialog');
         dialog.close();
         dialog.classList.remove('dialogOpened');
-        // window.location.reload();
         await onloadFuncContact();
     }
 }
@@ -376,27 +388,4 @@ function changeIconMobile(id){
     }else if(id == 'img_delete_mobile'){
         document.getElementById(id).src = '../assets/img/delete_contact_hover.svg';
     }
-}
-
-/**
- * This function is used to get the correct contact data of choosed contact and render the edit dialog in mobile view.
- * Also the img of edit button will changed to inactive img
- * 
- */
-function showEditDialogMobile(){
-    let name = document.getElementById('name_data').innerText;
-    let mail = document.getElementById('mail_data').innerText;
-    let initials = getUserItem(name);
-    document.getElementById('img_edit_mobile').src = '../assets/img/edit_contact.svg';
-    renderEditDialog(mail, initials);
-}
-
-/**
- * This function changes the delete img in edit container (mobile view) back to inactive and deletes the contact in firebase
- * 
- */
-function deleteContactMobileView(){
-    let mail = document.getElementById('mail_data').innerText;
-    document.getElementById('img_delete_mobile').src = '../assets/img/delete_contact.svg';
-    deleteContact(mail);
 }

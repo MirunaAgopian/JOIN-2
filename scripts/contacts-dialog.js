@@ -263,3 +263,26 @@ function fieldMailOnFocus(idInput, idInfo, idButton){
     mailInfo.classList.add('hidden');
     formButton.disabled = false;
 }
+
+/**
+ * This function is used to get the correct contact data of choosed contact and render the edit dialog in mobile view.
+ * Also the img of edit button will changed to inactive img
+ * 
+ */
+function showEditDialogMobile(){
+    let name = document.getElementById('name_data').innerText;
+    let mail = document.getElementById('mail_data').innerText;
+    let initials = getUserItem(name);
+    document.getElementById('img_edit_mobile').src = '../assets/img/edit_contact.svg';
+    renderEditDialog(mail, initials);
+}
+
+/**
+ * This function changes the delete img in edit container (mobile view) back to inactive and deletes the contact in firebase
+ * 
+ */
+function deleteContactMobileView(){
+    let mail = document.getElementById('mail_data').innerText;
+    document.getElementById('img_delete_mobile').src = '../assets/img/delete_contact.svg';
+    deleteContact(mail);
+}
