@@ -209,6 +209,17 @@ function setCheckMark(element, mail) {
 }
 
 /**
+ * Identifies the list element that needs to be checked
+ * @param {HTMLElement} li - the <li> list element from the HTML
+ * @param {string} mail - the e-mail address of the contact
+ */
+
+function findCheckBox(li, mail){
+  const checkbox = li.querySelector('.checkbox');
+  setCheckMark(checkbox, mail);
+}
+
+/**
  * Turns on the subtask input area.
  * Highlights the field and shows the action buttons.
  */

@@ -1,23 +1,24 @@
 /**
  * This function returns the html tag with information for operator
- * 
+ *
  * @param {string} text - info string
  * @returns - span tag with info for operator
  */
-function getDialogMsgTemplate(text){
-    return `<span>${text}</span>`;}
+function getDialogMsgTemplate(text) {
+  return `<span>${text}</span>`;
+}
 
 // ------------Template functions for Contacts --------------//
 
 /**
  * This function ist used to show the the contact data on contacts.html if a contact is clicked on list
- * 
- * @param {object} obj - includes the data object of clicked contact person 
- * @param {string} initials - includes the first characters of name and last name of clicked person 
+ *
+ * @param {object} obj - includes the data object of clicked contact person
+ * @param {string} initials - includes the first characters of name and last name of clicked person
  * @returns - html tags for render function
  */
-function getTemplateShowContact(obj, initials){
-    return `<div class="contact-head">
+function getTemplateShowContact(obj, initials) {
+  return `<div class="contact-head">
                 <div class="contact-circle" style="background-color:${obj.color}">
                     <span>${initials}</span>
                 </div>
@@ -44,13 +45,13 @@ function getTemplateShowContact(obj, initials){
 
 /**
  * This function includes the html code for the edit dialog, if the edit button is clicked on indicated contact
- * 
- * @param {object} obj - includes the data object of showed contact person 
- * @param {*} initials - includes the first characters of name and last name of showed person 
+ *
+ * @param {object} obj - includes the data object of showed contact person
+ * @param {*} initials - includes the first characters of name and last name of showed person
  * @returns - html tags for render function
  */
-function getTemplateEditDialog(obj, initials){
-    return `<div class="add-contact-container">
+function getTemplateEditDialog(obj, initials) {
+  return `<div class="add-contact-container">
                 <section class="add-contact-left-box">
                     <div class="left-box-content">
                         <div id="btn_close_edit" class="btn-close-container-top">
@@ -99,7 +100,7 @@ function getTemplateEditDialog(obj, initials){
                         </form>
                     </div>
                 </section>
-            </div>`
+            </div>`;
 }
 
 // ------------Template functions for Add Task --------------//
@@ -107,14 +108,14 @@ function getTemplateEditDialog(obj, initials){
 /** This function displays an alert message if the user does not type in a requested input field
  * @returns {string} - HTML string containing a span with the alert message
  */
-function getAlert(){
+function getAlert() {
   return `<span class='alert'>This field is required</span>`;
 }
 
 /**This function displays an overlay containing a confirmation message after the task has been added to the board
  * @returns {string} - HTML string containing a div with the confirmation message
  */
-function getRedirectTemplate(){
+function getRedirectTemplate() {
   return `<div class="add-task-overlay">
             <div class="overlay-img-text">
               <span>Task added to board</span>
@@ -131,15 +132,15 @@ function getRedirectTemplate(){
  * @returns {string} - HTML string containing the contact list and the name initials
  */
 function getContactList(contact, initials, isCurrentUser = false) {
-   const isChecked = selectedContacts.has(contact.mail);
-  return `<li>
+  const isChecked = selectedContacts.has(contact.mail);
+  return `<li onclick='findCheckBox(this, "${contact.mail}")'>
               <div class='username'>
                 <span class='contact-circle' style='background-color:${
                   contact.color
                 }'>${initials}</span>
                 <span>${contact.name}${isCurrentUser ? " (You)" : ""}</span> 
               </div>  
-                <div onclick='setCheckMark(this, "${contact.mail}")' 
+                <div
                 class='checkbox ${isChecked ? "checked" : ""}'></div>
             </li>`;
 }
@@ -164,7 +165,7 @@ function getContactAvatar(contact, initials) {
  * @returns {string} - HTML string containing two <li> elements:
  * one for subtask diplay and one for editing each subtask
  */
-function getAddedTasks(text){
+function getAddedTasks(text) {
   return `<li class="subtask-list">
               <span class='subtask-text'>${text}</span>
               <div class='subtask-element-img-wrapper'>
@@ -189,10 +190,10 @@ function getAddedTasks(text){
  * Wird beim Laden der Seite aufgerufen.
  */
 function updateHTML() {
-    renderTodos('boardToDo');
-    renderTodos('boardProgress');
-    renderTodos('boardFeedback');
-    renderTodos('boardDone');
+  renderTodos("boardToDo");
+  renderTodos("boardProgress");
+  renderTodos("boardFeedback");
+  renderTodos("boardDone");
 }
 
 /**
@@ -200,23 +201,24 @@ function updateHTML() {
  * @param {string} status - Categorie .
  */
 function renderTodos(status) {
-    const container = document.getElementById(status);
-    const filtered = todos.filter(t => t.status === status)
-        .sort((a, b) => a.pos - b.pos);
+  const container = document.getElementById(status);
+  const filtered = todos
+    .filter((t) => t.status === status)
+    .sort((a, b) => a.pos - b.pos);
 
-    if (filtered.length > 0) {
-        container.innerHTML = "";
-        for (const todo of filtered) {
-            container.innerHTML += renderTask(todo, status);
-        }
-        container.innerHTML += `<div draggable="false" id="Preview-${status}" 
+  if (filtered.length > 0) {
+    container.innerHTML = "";
+    for (const todo of filtered) {
+      container.innerHTML += renderTask(todo, status);
+    }
+    container.innerHTML += `<div draggable="false" id="Preview-${status}" 
             class="previewTask" style="display:none;height:42px;">Preview</div>`;
-    } else {
-        container.innerHTML = `<div draggable="false" id="noEntry-${status}" 
+  } else {
+    container.innerHTML = `<div draggable="false" id="noEntry-${status}" 
             class="noEntry">no Entry</div>
             <div draggable="false" id="Preview-${status}" 
             class="previewTask" style="display:none;height:42px;">Preview</div>`;
-    }
+  }
 }
 
 /**
@@ -226,19 +228,27 @@ function renderTodos(status) {
  * @returns {string} HTML-Tag.
  */
 function renderTask(todo, status) {
-    return `<div draggable="true" id="toDo${todo.id}" onclick="showDialogTask('${todo.id}')" ondragstart="startDragging('${todo.id}', '${todo.status}')" ondragend="stopDragging('${todo.id}')" class="todo">
+  return `<div draggable="true" id="toDo${todo.id}" onclick="showDialogTask('${
+    todo.id
+  }')" ondragstart="startDragging('${todo.id}', '${
+    todo.status
+  }')" ondragend="stopDragging('${todo.id}')" class="todo">
                 <div class="boardMoveToIcon onlyMobile" onclick="openBoardMoveToOverlay(event)">
                     <img src="../assets/img/swap_horiz.svg" alt="Move To Icon">
                 </div>
 
                 ${renderMobileMoveAction(todo, status)}
 
-                <div class="taskStatus ${todo.category.toLowerCase().replace(/ /g, "-")}">${todo.category}</div>
+                <div class="taskStatus ${todo.category
+                  .toLowerCase()
+                  .replace(/ /g, "-")}">${todo.category}</div>
                 <div class="taskTitle"> ${todo.title}</div>
                 <div class="taskDescription"> ${todo.description}</div>
                 <div class="subtasks"> ${setProgress(todo.subtasks)}</div>
                 <div class="taskFooter">
-                    ${assignedUserAvatar(todo.assignedTo)} <img src="../assets/img/prio_${todo.priority}.svg">
+                    ${assignedUserAvatar(
+                      todo.assignedTo
+                    )} <img src="../assets/img/prio_${todo.priority}.svg">
                 </div>
             </div>`;
 }
@@ -252,7 +262,7 @@ function renderTask(todo, status) {
  * @returns {String} html tag for the button
  */
 function renderMoveButton(todoId, targetStatus, icon, altText) {
-    return `<p class="boardMoveToButtonContent"
+  return `<p class="boardMoveToButtonContent"
         onclick="event.stopPropagation(); changeBoardStatus('${todoId}', '${targetStatus}')">
         <img src="../assets/img/${icon}" alt="${altText}">
         ${getMobileDisplayMoveStatus(targetStatus)}
@@ -261,22 +271,25 @@ function renderMoveButton(todoId, targetStatus, icon, altText) {
 
 /**
  * generate the html Tag for the Progress Bar of an Subtask for an task
- * @param {Object} subtasks 
+ * @param {Object} subtasks
  * @returns the render html Tag of the Progress
  */
 function setProgress(subtasks) {
-    if (subtasks == null) { return ""; }
-    let subTotal = subtasks.length;
-    let subDone = getSubTaskDone(subtasks); //"1";
+  if (subtasks == null) {
+    return "";
+  }
+  let subTotal = subtasks.length;
+  let subDone = getSubTaskDone(subtasks); //"1";
 
+  if (subTotal == null) {
+    return `no subtasks`;
+  }
 
-    if (subTotal == null) {
-        return `no subtasks`;
-    }
-
-    return `<div class="processBarContainer">
+  return `<div class="processBarContainer">
                 <div class="progress">
-                    <div class="progressBar" style="width: ${(subDone / subTotal) * 100}%"></div>
+                    <div class="progressBar" style="width: ${
+                      (subDone / subTotal) * 100
+                    }%"></div>
                 </div>
                 <span class="progressLabel">${subDone}/${subTotal} Subtasks</span>
             </div> `;
@@ -292,20 +305,22 @@ function setProgress(subtasks) {
  * @returns {string} HTML string representing the avatar element.
  */
 function renderAvatar(contact) {
-    return `<div class="contactAvater" style="background-color:${contact.color}">
+  return `<div class="contactAvater" style="background-color:${contact.color}">
                 ${getUserItem(contact.name)}
             </div>`;
 }
 
 /**
  * Render the subtask for shown task
- * @param {String} text shown display description of subtask  
+ * @param {String} text shown display description of subtask
  * @param {Integer} index index of the subtask of the array subtasks
  * @returns rendered html Tag
  */
-function renderSubtaskToDo(text, index){
-    return `
-    <input id="subtask_${index}" type="checkbox" onchange="updateSubTask(${index})" ${actualToDo.subtasks[index].checked ? "checked" : ""} class="subtask-checkbox"
+function renderSubtaskToDo(text, index) {
+  return `
+    <input id="subtask_${index}" type="checkbox" onchange="updateSubTask(${index})" ${
+    actualToDo.subtasks[index].checked ? "checked" : ""
+  } class="subtask-checkbox"
     style="display:block;">
     <div id="checkbox_${index}" class="checkbox-container" onclick="controlCheckbox(${index})" style="display:block;"></div>
     <span class="subtask-text">${text}</span>
@@ -321,8 +336,8 @@ function renderSubtaskToDo(text, index){
  * add Listitem to the dialog for editing a Subtask
  * @returns  rendered html Tag
  */
-function renderSubtaskToDoEdit(){
-    return `
+function renderSubtaskToDoEdit() {
+  return `
       <span class="subtask-edit" contenteditable="true"></span>
       <div class="subtask-edit-btn-wrapper">
         <button onclick="deleteAddedSubtask(this)" class="subtask-delete-btn-secondary" title="Delete"></button>

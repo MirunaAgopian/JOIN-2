@@ -122,6 +122,7 @@ select {
 
 .contacts-icons {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .bottom-container {
