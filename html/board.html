@@ -204,11 +204,11 @@
               </div>
             </section>
             <section class="assigned">
-              <div id="assigned_box" class="field-description">
+              <div id="assigned_box" class="field-description assigned-to">
                 <span class="color-description">Assigned to:</span>
-                <div class="dropdown" id="assigned_to">
+                <div onclick="toggleContactList()"  class="dropdown" id="assigned_to">
                   <span>Select contacts to assign</span>
-                  <button onclick="toggleContactList()">
+                  <button>
                     <span id="dropdown_arrow" class="dropdown-arrow"></span>
                   </button>
                 </div>
@@ -219,11 +219,11 @@
               </div>
             </section>
             <section class="category">
-              <div class="field-description">
+              <div class="field-description assigned-to">
                 <span>Category<span class="required">*</span></span>
-                <div id="category_dropdown" class="dropdown">
+                <div onclick="toggleCategories()" id="category_dropdown" class="dropdown">
                   <span id="selected_category">Select task category</span>
-                  <button onclick="toggleCategories()">
+                  <button>
                     <span id="category_dropdown_arrow" class="dropdown-arrow"></span>
                   </button>
                 </div>
