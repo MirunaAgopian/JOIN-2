@@ -129,7 +129,7 @@ form{
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 32px;
+    gap: 10px;
 }
 
 input::placeholder{
@@ -465,6 +465,10 @@ input::placeholder{
 
     .overlay-center{
         gap: 12px;
+    }
+
+    .mail-info{
+        min-height: 55px;
     }
 }
 

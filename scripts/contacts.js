@@ -102,7 +102,7 @@ async function postContactInDatabse(dataObj){
     let contactFirebaseObj = createFirebaseObj(dataObj);
     await postData('/contacts', contactFirebaseObj);
     await openContactMsgDialog('Contact succesfully created');
-    onloadFuncContact();
+    await onloadFuncContact();
     showClickedContact(contactFirebaseObj.mail);
 }
 
