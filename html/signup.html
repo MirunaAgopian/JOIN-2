@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,10 +11,11 @@
     <link rel="stylesheet" href="../styles/signup.css">
     <!-- JS files -->
     <script src="../scripts/firebase.js"></script>
-    <script src="../scripts/templates.js"></script>
-    <script src="../scripts/signup.js"></script>
-    <script src="../script.js"></script>
+    <script src="../scripts/templates.js" defer></script>
+    <script src="../scripts/signup.js" defer></script>
+    <script src="../script.js" defer></script>
 </head>
+
 <body>
     <header>
         <img src="../assets/img/join_logo.svg" alt="join logo">
@@ -25,7 +27,8 @@
                 <div class="btn-arrow-container">
                     <div class="btn-arrow-left">
                         <a href="../index.html">
-                            <img class="img-arrow-left" src="../assets/img/arrow_left_line_default.svg" alt="blue arrow button">
+                            <img class="img-arrow-left" src="../assets/img/arrow_left_line_default.svg"
+                                alt="blue arrow button">
                         </a>
                     </div>
                 </div>
@@ -39,15 +42,23 @@
             <form onsubmit="createUser(); return false" autocomplete="off">
                 <input type="text" required placeholder="Name" class="bg-input bg-img-name" id="create_name">
                 <div class="input-container">
-                    <input type="mail" required placeholder="Email" class="bg-input bg-img-mail" id="create_mail" onclick="clearBorderClass('create_mail', 'mail_info')" onblur="checkMailInput()">
+                    <input type="mail" required placeholder="Email" class="bg-input bg-img-mail" id="create_mail"
+                        onclick="clearBorderClass('create_mail', 'mail_info')" onblur="checkMailInput()">
                     <span id="mail_info" class="info-input invisible">Invalid mail</span>
                 </div>
-                <input type="password" required placeholder="Password" class="bg-input bg-img-lock" id="create_pw"
-                    onfocus="toggleType('create_pw')" onclick="toggleType('create_pw')" onblur="changeIcon('create_pw')">
                 <div class="input-container">
-                    <input type="password" required placeholder="Confirm Password" class="bg-input bg-img-lock" id="create_confirm_pw"
-                        onfocus="toggleType('create_confirm_pw'); clearBorderClass('create_confirm_pw', 'confirm_pw_info')" onclick="toggleType('create_confirm_pw')" onblur="changeIcon('create_confirm_pw'); checkPassword()">
-                    <span id="confirm_pw_info" class="info-input invisible">Your passwords don't match. Try again.</span>
+                    <input type="password" required placeholder="Password" class="bg-input bg-img-lock" id="create_pw">
+                    <span id="togglePassword" class="toggle-icon "></span>
+                </div>
+                <div class="input-container">
+                    <div class="input-container">
+                    <input type="password" required placeholder="Confirm Password" class="bg-input bg-img-lock"
+                        id="create_confirm_pw"
+                        onfocus="clearBorderClass('create_confirm_pw', 'confirm_pw_info')" onblur="checkPassword()">
+                        <span id="toggleConfirmPassword" class="toggle-icon "></span>
+                     </div>   
+                    <span id="confirm_pw_info" class="info-input invisible">Your passwords don't match. Try
+                        again.</span>
                 </div>
 
                 <div class="check-policy-container">
@@ -58,7 +69,7 @@
                 <div class="btn-box">
                     <button id="btn_signup" class="btn-signup" disabled>Sign up</button>
                 </div>
-            </form> 
+            </form>
         </div>
     </main>
     <footer>
@@ -72,4 +83,5 @@
         <img class="device-icon" src="../assets/img/device_landscape.svg" alt="A tablet positioned in landscape view">
     </div>
 </body>
+
 </html>

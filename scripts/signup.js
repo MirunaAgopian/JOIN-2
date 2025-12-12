@@ -17,16 +17,58 @@ let joinUsers = [];
 let passwordConfirmed = false;
 
 /**
+ * html DOM definition
+ */
+let elementSignupRev = {
+    password: document.getElementById("create_pw"),
+    togglePassword: document.getElementById("togglePassword"),
+    confirmPassword: document.getElementById("create_confirm_pw"),
+    toggleConfirmPassword: document.getElementById("toggleConfirmPassword")
+}
+
+/**
+ * EventListener for toggle icon of password
+ */
+elementSignupRev.togglePassword.addEventListener("click", () => {
+    const isHidden = elementSignupRev.password.type === "password";
+    elementSignupRev.password.type = isHidden ? "text" : "password";
+    elementSignupRev.password.classList.remove("bg-img-lock");
+    if (isHidden) {
+        elementSignupRev.password.classList.remove("bg-img-invisible");
+        elementSignupRev.password.classList.add("bg-img-visible");
+    } else {
+        elementSignupRev.password.classList.remove("bg-img-visible");
+        elementSignupRev.password.classList.add("bg-img-invisible");
+    }
+});
+
+/**
+ * EventListener for toggle icon of confirm password
+ */
+elementSignupRev.toggleConfirmPassword.addEventListener("click", () => {
+    const isHidden = elementSignupRev.confirmPassword.type === "password";
+    elementSignupRev.confirmPassword.type = isHidden ? "text" : "password";
+    elementSignupRev.confirmPassword.classList.remove("bg-img-lock");
+    if (isHidden) {
+        elementSignupRev.confirmPassword.classList.remove("bg-img-invisible");
+        elementSignupRev.confirmPassword.classList.add("bg-img-visible");
+    } else {
+        elementSignupRev.confirmPassword.classList.remove("bg-img-visible");
+        elementSignupRev.confirmPassword.classList.add("bg-img-invisible");
+    }
+});
+
+/**
  * This function set the accepted policy and change the background image 
  * 
  */
-function acceptPolicy(){
-    if(policyAccepted == false){
+function acceptPolicy() {
+    if (policyAccepted == false) {
         document.getElementById('checkbox').classList.remove('checkbox-unchecked');
         document.getElementById('checkbox').classList.add('checkbox-checked');
         policyAccepted = true;
         document.getElementById('btn_signup').disabled = false;
-    }else{
+    } else {
         document.getElementById('checkbox').classList.remove('checkbox-checked');
         document.getElementById('checkbox').classList.add('checkbox-unchecked');
         policyAccepted = false;
@@ -39,8 +81,8 @@ function acceptPolicy(){
  * This function checks the new User in firebase of existance and create a new object in database 
  * 
  */
-async function createUser(){
-    if(passwordConfirmed){
+async function createUser() {
+    if (passwordConfirmed) {
         let userData = getInput();
         await createArrayOfUsers();
         await checkNewUser(userData, joinUsers);
@@ -52,7 +94,7 @@ async function createUser(){
  * 
  * @returns - returns an user object, filled with user data
  */
-function getInput(){
+function getInput() {
     let name = document.getElementById('create_name').value;
     let mail = document.getElementById('create_mail').value;
     let passw = document.getElementById('create_pw').value;
@@ -69,11 +111,11 @@ function getInput(){
  * @param {string} password - includes the checked password of input fields password and confirm password 
  * @returns - returns the filled object
  */
-function createObj(name, mail, password){
+function createObj(name, mail, password) {
     let userObj = {
-        "name" : name,
-        "mail" : mail,
-        "password" : password
+        "name": name,
+        "mail": mail,
+        "password": password
     };
     return userObj;
 }
@@ -82,7 +124,7 @@ function createObj(name, mail, password){
  *  These function reads all of user objects from firebase an creates a new array of objects
  * 
  */
-async function createArrayOfUsers(){
+async function createArrayOfUsers() {
     let userResponse = await getAllUsers('/joinUsers');
     let userKeysArr = Object.keys(userResponse);
     fillArrayOfUsers(userKeysArr, userResponse);
@@ -94,15 +136,15 @@ async function createArrayOfUsers(){
  * @param {Array} objKeysArr - An array filled with object keys from loaded data of firebase 
  * @param {object} usersObj - Filled object with complete objects of users from firebase 
  */
-function fillArrayOfUsers(objKeysArr, usersObj){
+function fillArrayOfUsers(objKeysArr, usersObj) {
     joinUsers = [];
     let keysArr = objKeysArr;
     let amountOfUsers = objKeysArr.length;
     for (let index = 0; index < amountOfUsers; index++) {
         joinUsers.push({
-            "name" : `${usersObj[keysArr[index]].name}`,
-            "mail" : `${usersObj[keysArr[index]].mail}`,
-            "password" : `${usersObj[keysArr[index]].password}`
+            "name": `${usersObj[keysArr[index]].name}`,
+            "mail": `${usersObj[keysArr[index]].mail}`,
+            "password": `${usersObj[keysArr[index]].password}`
         });
     }
 }
@@ -111,7 +153,7 @@ function fillArrayOfUsers(objKeysArr, usersObj){
  * This function is used to clear the input fields
  * 
  */
-function clearInputs(){
+function clearInputs() {
     document.getElementById('create_name').value = '';
     document.getElementById('create_mail').value = '';
     document.getElementById('create_pw').value = '';
@@ -124,19 +166,19 @@ function clearInputs(){
  * @param {object} userObj - These object includes the data of the input fields
  * @param {Array} userArr - An array with all user objects of firebase 
  */
-async function checkNewUser(userObj, userArr){
+async function checkNewUser(userObj, userArr) {
     let userExistance = false;
     for (let index = 0; index < userArr.length; index++) {
-        if(userArr[index].mail == userObj.mail){
+        if (userArr[index].mail == userObj.mail) {
             clearInputs();
             userExistance = true;
             break;
         }
     }
-    if(userExistance == false){
+    if (userExistance == false) {
         await postUserInDatabase(userObj);
         clearInputs();
-    }else{
+    } else {
         await openSignupDialog('User already exists');
     }
 }
@@ -146,7 +188,7 @@ async function checkNewUser(userObj, userArr){
  * 
  * @param {object} newUserObj - An object with checked new user data to post it in firebase 
  */
-async function postUserInDatabase(newUserObj){
+async function postUserInDatabase(newUserObj) {
     await postData('/joinUsers', newUserObj);
     await openSignupDialog('You Signed Up successfully');
 }
@@ -156,7 +198,7 @@ async function postUserInDatabase(newUserObj){
  * 
  * @param {string} text - This text is the content of dialog 
  */
-async function openSignupDialog(text){
+async function openSignupDialog(text) {
     const contentDialogRef = document.getElementById('signupDialog');
     contentDialogRef.innerHTML = '';
     contentDialogRef.innerHTML = getDialogMsgTemplate(text);
@@ -171,7 +213,7 @@ async function openSignupDialog(text){
  * 
  * @param {element} element includes the html element where the dialog container will be rendered 
  */
-function closeSignupDialog(element){
+function closeSignupDialog(element) {
     const contentDialogRef = element;
     contentDialogRef.close();
     contentDialogRef.classList.remove('opened');
@@ -184,7 +226,7 @@ function closeSignupDialog(element){
  * @param {number} ms - Waiting time in ms 
  * @returns 
  */
-async function timeout(ms){
+async function timeout(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -193,7 +235,7 @@ async function timeout(ms){
  * 
  * @param {string} id - The Id name of the input field 
  */
-function toggleType(id){
+function toggleType(id) {
     let inputField = document.getElementById(id);
     changeIconIfActive(inputField);
     changeType(inputField);
@@ -205,8 +247,8 @@ function toggleType(id){
  * 
  * @param {element} inputField - the html element of input field 
  */
-function changeIconIfActive(inputField){
-    if(document.activeElement == inputField){
+function changeIconIfActive(inputField) {
+    if (document.activeElement == inputField) {
         inputField.classList.remove('bg-img-lock');
         inputField.classList.add('bg-img-invisible');
     }
@@ -217,13 +259,13 @@ function changeIconIfActive(inputField){
  * 
  * @param {element} inputField - the html element of input field  
  */
-function changeType(inputField){
-    if((document.activeElement == inputField) && (inputField.value != '')){
-        if(inputField.type == "password"){
+function changeType(inputField) {
+    if ((document.activeElement == inputField) && (inputField.value != '')) {
+        if (inputField.type == "password") {
             inputField.type = "text";
             inputField.classList.remove('bg-img-invisible');
             inputField.classList.add('bg-img-visible');
-        }else{
+        } else {
             inputField.type = "password";
             inputField.classList.remove('bg-img-visible');
             inputField.classList.add('bg-img-invisible');
@@ -236,7 +278,7 @@ function changeType(inputField){
  * 
  * @param {string} id Id name of input field 
  */
-function setCursor(id){
+function setCursor(id) {
     inputField = document.getElementById(id);
     inputField.focus();
     inputField.setSelectionRange(inputField.value.length, inputField.value.length);
@@ -247,31 +289,31 @@ function setCursor(id){
  * 
  * @param {string} id - Id name of input field 
  */
-function changeIcon(id){
+function changeIcon(id) {
     let inputField = document.getElementById(id);
-    if((inputField.type == "password") && (inputField.value == '')){
+    if ((inputField.type == "password") && (inputField.value == '')) {
         inputField.classList.remove('bg-img-invisible');
         inputField.classList.add('bg-img-lock');
-    }else if((inputField.type == "text") && (inputField.value == '')){
+    } else if ((inputField.type == "text") && (inputField.value == '')) {
         inputField.type = 'password';
         inputField.classList.remove('bg-img-visible');
         inputField.classList.add('bg-img-lock');
-    }else if((inputField.type == "text") && (inputField.value != '')){
+    } else if ((inputField.type == "text") && (inputField.value != '')) {
         inputField.type = "password";
         inputField.classList.remove('bg-img-visible');
         inputField.classList.add('bg-img-invisible');
-    }   
+    }
 }
 
 /**
  * This function checks the input mail if it is valid and gives a feedback if its invalid
  * 
  */
-function checkMailInput(){
+function checkMailInput() {
     let mailInput = document.getElementById('create_mail');
     let mailInfo = document.getElementById('mail_info');
     let mailValid = checkValidEmail(String(mailInput.value));
-    if((mailValid == false) && (mailInput.value != '')){
+    if ((mailValid == false) && (mailInput.value != '')) {
         mailInput.classList.add('bg-invalid-input');
         mailInfo.classList.remove('invisible');
         mailInfo.classList.add('visible');
@@ -295,7 +337,7 @@ function checkValidEmail(email) {
  * @param {string} idInput - Id name of input field
  * @param {string} idInfo - Id name of info container 
  */
-function clearBorderClass(idInput, idInfo){
+function clearBorderClass(idInput, idInfo) {
     document.getElementById(idInput).classList.remove('bg-invalid-input');
     document.getElementById(idInfo).classList.remove('visible');
     document.getElementById(idInfo).classList.add('invisible');
@@ -305,16 +347,16 @@ function clearBorderClass(idInput, idInfo){
  * This function is used to check the content of input fields of type password an set the global variable passwordConfirmed
  * 
  */
-function checkPassword(){
+function checkPassword() {
     passwordConfirmed = false;
     let password = document.getElementById('create_pw');
     let confirmPassword = document.getElementById('create_confirm_pw');
     let passwordInfo = document.getElementById('confirm_pw_info');
-    if(password.value != confirmPassword.value){
+    if (password.value != confirmPassword.value) {
         confirmPassword.classList.add('bg-invalid-input');
         passwordInfo.classList.remove('invisible');
         passwordInfo.classList.add('visible');
-    }else{
+    } else {
         passwordConfirmed = true;
     }
 }
