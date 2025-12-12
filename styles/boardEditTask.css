@@ -123,10 +123,6 @@ select {
     display: block;
 }
 
-.alert-container {
-    display: none;
-}
-
 label {
     white-space: nowrap;
 }
