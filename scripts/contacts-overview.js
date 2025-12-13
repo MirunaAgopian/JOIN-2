@@ -102,9 +102,9 @@ function renderContactInfo(user, id) {
         <div class="contactAvater" style="background-color: ${user.color}">
             ${getUserItem(user.name)}
         </div>
-        <div class="contact-entry">
+        <div>
             <span id="spanId_${id}" class="contact-name">${user.name}</span><br>
-            <span class="contact-email">${user.mail}</span>
+            <span class="contact-email contact-entry">${user.mail}</span>
         </div>
     </div>
   `;

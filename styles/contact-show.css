@@ -13,8 +13,8 @@
 }
 
 .contact-circle{
-    height: 120px;
-    width: 120px;
+    min-height: 120px;
+    min-width: 120px;
     border: 2px solid white;
     border-radius: 70px;
     display: flex;
@@ -29,8 +29,9 @@
 }
 
 .name-line{
-    font-size: 47px;
+    font-size: 40px;
     font-weight: 500;
+    word-break: break-word;
 }
 
 .contact-box{
@@ -120,8 +121,8 @@
     }
 
     .contact-circle{
-        height: 80px;
-        width: 80px;
+        min-height: 80px;
+        min-width: 80px;
         border-radius: 50px;
     }
 
@@ -141,8 +142,8 @@
     }
 
     .contact-circle{
-        height: 64px;
-        width: 64px;
+        min-height: 64px;
+        min-width: 64px;
     }
 
     .contact-circle span{

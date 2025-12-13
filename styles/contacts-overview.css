@@ -1,10 +1,7 @@
-.contactlist-content{
-    padding-top: 120px;
-}
-
 .contactID {
     display: flex;
     gap: 18px;
+    align-items: center;
     cursor: pointer;
     border-radius: 10px;
     background-color: #ffff;
@@ -23,8 +20,8 @@
 }
 
 .contactAvater {
-    width: 42px;
-    aspect-ratio: 1/1;
+    min-width: 42px;
+    min-height: 42px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -35,6 +32,7 @@
 
 .contact-name{
     color: black;
+    word-break: break-word;
 }
 
 .contact-name-override{
@@ -47,7 +45,7 @@
 
 .contact-entry {
   display: inline-block;      
-  width: 25ch;                 
+  width: 18ch;                 
   white-space: nowrap;         
   overflow: hidden;            
   text-overflow: ellipsis;     
@@ -105,8 +103,8 @@ h5{
     }
 
     .contactAvater{
-        width: 36px;
-        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
         font-size: 14px;
     }
 
@@ -125,8 +123,8 @@ h5{
     }
 
     .contactAvater{
-        width: 42px;
-        height: 42px;
+        min-width: 42px;
+        min-height: 42px;
         font-size: 16px;
     }
 
