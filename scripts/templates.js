@@ -81,9 +81,9 @@ function getTemplateEditDialog(obj, initials) {
                             <span class="edit-initials">${initials}</span>
                         </div>
                         <form onsubmit="saveChangedData('${obj.mail}'); return false" autocomplete="off">
-                            <input type="text" required placeholder="Name" class="bg-input bg-img-name" id="edit_name" value='${obj.name}'>
+                            <input type="text" required placeholder="Name" maxlength="25" class="bg-input bg-img-name" id="edit_name" value='${obj.name}'>
                             <div class="mail-info">
-                                <input type="text" required placeholder="Email" class="bg-input bg-img-mail" id="edit_mail" value='${obj.mail}'
+                                <input type="text" required placeholder="Email" maxlength="25" class="bg-input bg-img-mail" id="edit_mail" value='${obj.mail}'
                                 onfocus="fieldMailOnFocus('edit_mail', 'edit_span', 'btn_edit_form')" onblur="checkMailOnDialog('edit_mail', 'edit_span', 'btn_edit_form')">
                                 <span id="edit_span" class="info-span hidden">Invalid mail</span>
                             </div>
