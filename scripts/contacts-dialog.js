@@ -242,7 +242,7 @@ function checkMailOnDialog(idInput, idInfo, idButton){
     let formButton = document.getElementById(idButton);
     let validMail = checkValidEmail(String(mailInput.value));
     if((validMail == false) && (mailInput.value != '')){
-        mailInput.classList.add('invalid-mail');
+        mailInput.classList.add('invalid-input');
         mailInfo.classList.remove('hidden');
         formButton.disabled = true;
     }
@@ -259,7 +259,7 @@ function fieldMailOnFocus(idInput, idInfo, idButton){
     let mailInput = document.getElementById(idInput);
     let mailInfo = document.getElementById(idInfo);
     let formButton = document.getElementById(idButton);
-    mailInput.classList.remove('invalid-mail');
+    mailInput.classList.remove('invalid-input');
     mailInfo.classList.add('hidden');
     formButton.disabled = false;
 }
@@ -285,4 +285,31 @@ function deleteContactMobileView(){
     let mail = document.getElementById('mail_data').innerText;
     document.getElementById('img_delete_mobile').src = '../assets/img/delete_contact.svg';
     deleteContact(mail);
+}
+
+function checkTelOnDialog(idInput, idInfo, idButton){
+    let telInput = document.getElementById(idInput);
+    let telInfo = document.getElementById(idInfo);
+    let formButton = document.getElementById(idButton);
+    let validTel = checkValidTel(String(telInput.value));
+    if((validTel == false) && (telInput.value != '')){
+        telInput.classList.add('invalid-input');
+        telInfo.classList.remove('hidden');
+        formButton.disabled = true;
+    }
+}
+
+function fieldTelOnFocus(idInput, idInfo, idButton){
+    let telInput = document.getElementById(idInput);
+    let telInfo = document.getElementById(idInfo);
+    let formButton = document.getElementById(idButton);
+    telInput.classList.remove('invalid-input');
+    telInfo.classList.add('hidden');
+    formButton.disabled = false;
+}
+
+function checkValidTel(phoneString){
+    let telString = phoneString;
+    let isValidTel = /^\+?[0-9 ]+$/.test(telString);
+    return isValidTel;
 }

@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="../styles/contacts-overview.css">
     <link rel="stylesheet" href="../styles/contact-show.css">
     <link rel="stylesheet" href="../styles/contacts-dialog.css">
-    <!-- JS files -->
+    <!-- JS files -->  
     <script src="../script.js" defer></script>
     <script src="../scripts/firebase.js"></script>
     <script src="../scripts/templates.js"></script>
@@ -172,7 +172,11 @@
                   onblur="checkMailOnDialog('add_mail', 'mail_span', 'btn_contact_form')">
                   <span id="mail_span" class="info-span hidden">Invalid mail</span>
                 </div>
-                <input type="tel" required placeholder="Phone" class="bg-input bg-img-phone" id="add_phone">
+                <div class="mail-info">
+                  <input type="tel" required placeholder="Phone" class="bg-input bg-img-phone" id="add_phone" onblur="checkTelOnDialog('add_phone', 'tel_span', 'btn_contact_form')"
+                  onfocus="fieldTelOnFocus('add_phone', 'tel_span', 'btn_contact_form')">
+                  <span id="tel_span" class="info-span hidden">Invalid phone number</span>
+                </div>
                 <div class="form-ctrl-container">
                   <div id="btn_cancel" class="btn-cancel" onmouseover="changeColorHover()" onmouseout="changeColorOut()"
                   onmousedown="changeColorDown()" onclick="closeDialogAddContact()">

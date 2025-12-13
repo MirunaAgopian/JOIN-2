@@ -155,7 +155,7 @@ main{
     min-height: 68px;
 }
 
-#add_name, #add_phone, #edit_name, #edit_phone{
+#add_name, #edit_name, #edit_phone{
     margin-bottom: 16px;
 }
 
@@ -165,7 +165,7 @@ main{
     color: #E60026;
 }
 
-.invalid-mail{
+.invalid-input{
     border: 1px solid #E60026 !important;
 }
 
