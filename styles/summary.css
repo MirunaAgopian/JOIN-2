@@ -406,11 +406,6 @@ h4 {
         gap: 8px;
     }
 
-    .middle-icon-wrapper {
-        height: 48px;
-        width: 62px;
-    }
-
     .middle-icon, .edit-icon {
         height: 30px;
         width: 30px;
@@ -426,6 +421,18 @@ h4 {
     }
 }
 
+@media(max-width: 360px) {
+    .middle-icon-wrapper {
+        height: 46px;
+        width: 60px;
+    }
+}
+
+@media(max-width: 320px) {
+    .middle-icon-wrapper {
+        height: 42px;
+    }
+}
 
 
 

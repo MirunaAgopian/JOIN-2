@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../styles/summary.css" />
     <link rel="stylesheet" href="../styles/navigation.css" />
     <link rel="stylesheet" href="../styles/add-task.css" />
-    <link rel="stylesheet" href="../styles/add-task-standard.css">
+    <link rel="stylesheet" href="../styles/add-task-standard.css" />
     <link rel="stylesheet" href="../styles/add-task-interactions.css" />
     <!-- JS files -->
     <script src="../scripts/navigation.js" defer></script>
@@ -154,7 +154,7 @@
               <label for="task_title">
                 Title
                 <span class="required">*</span>
-                </label>
+              </label>
               <input
                 onfocus="handleFocus(event)"
                 oninput="handleInput(event)"
@@ -163,6 +163,7 @@
                 id="task_title"
                 required
                 placeholder="Enter a title"
+                maxlength="100"
               />
               <div class="alert-container"></div>
             </div>
@@ -212,20 +213,28 @@
             </div>
             <div class="field-description assigned-to">
               <span>Assigned to</span>
-              <div onclick="toggleContactList()" class="dropdown" id="assigned_to">
+              <div
+                onclick="toggleContactList()"
+                class="dropdown"
+                id="assigned_to"
+              >
                 <span>Select contacts to assign</span>
                 <button>
                   <span id="dropdown_arrow" class="dropdown-arrow"></span>
                 </button>
+                <div id="contact_list" class="contacts-list">
+                  <ul id="contact_ul"></ul>
+                </div>
               </div>
-              <div id="contact_icons" class="contacts-icons d-none"></div>
-              <div id="contact_list" class="contacts-list d-none">
-                <ul id="contact_ul"></ul>
-              </div>
+              <div id="contact_icons" class="contacts-icons"></div>
             </div>
-            <div class="field-description assigned-to">
+            <div class="field-description category">
               <span>Category<span class="required">*</span></span>
-              <div onclick="toggleCategories()" id="category_dropdown" class="dropdown">
+              <div
+                onclick="toggleCategories()"
+                id="category_dropdown"
+                class="dropdown"
+              >
                 <span id="selected_category">Select task category</span>
                 <button>
                   <span
@@ -233,13 +242,14 @@
                     class="dropdown-arrow"
                   ></span>
                 </button>
+                <div id="category_list" class="category-list">
+                  <ul id="categories">
+                    <li onclick="selectCategory(this)">Technical task</li>
+                    <li onclick="selectCategory(this)">User story</li>
+                  </ul>
+                </div>
               </div>
-              <div id="category_list" class="category-list d-none">
-                <ul id="categories">
-                  <li onclick="selectCategory(this)">Technical task</li>
-                  <li onclick="selectCategory(this)">User story</li>
-                </ul>
-              </div>
+              <div class="alert-container"></div>
             </div>
             <div class="subtask-field-description">
               <label for="subtask">Subtasks</label>
@@ -274,8 +284,9 @@
             </div>
           </section>
         </section>
+        <!-- TO BE CONTINUED TOMORROW -->
+        <p><span class="required">*</span>This field is required</p>
         <section class="bottom-container">
-          <p><span class="required">*</span>This field is required</p>
           <div class="buttons">
             <button onclick="clearTaskInput()">
               Clear

@@ -127,17 +127,25 @@ function toggleContactList() {
   const dropdown = document.getElementById("assigned_to");
   const arrow = document.getElementById("dropdown_arrow");
   const icons = document.getElementById("contact_icons");
-  list.classList.toggle("d-none");
+  list.classList.toggle("open");
   dropdown.classList.toggle("active");
   arrow.classList.toggle("active");
-  icons.classList.toggle("d-none", !list.classList.contains("d-none"));
-  if (!list.classList.contains("d-none")) {
-    setTimeout(() => document.addEventListener("click", outsideClick));
+  icons.classList.toggle("d-none", list.classList.contains("open"));
+  if (list.classList.contains("open")) {
+    document.addEventListener("click", outsideClick);
   } else {
     document.removeEventListener("click", outsideClick);
   }
   showContactList();
 }
+
+/**
+ * Stops the click event to to propagate inise the contacts list elements
+ * so that multiple contacts can be added at once
+ */
+document.getElementById("contact_list").addEventListener("click", e => {
+  e.stopPropagation(); // prevents toggleContactList from firing
+});
 
 /**
  * Opens or closes the category list.
@@ -148,16 +156,24 @@ function toggleCategories(){
   let arrow = document.getElementById('category_dropdown_arrow');
   let dropdown = document.getElementById('category_dropdown');
   let placeholder = document.getElementById('selected_category');
-  list.classList.toggle('d-none');
+  list.classList.toggle('open');
   arrow.classList.toggle('active');
   dropdown.classList.toggle('active');
-  if (!list.classList.contains("d-none")) {
+  if (list.classList.contains("open")) {
     placeholder.textContent = "Select task category";
-    setTimeout(() => document.addEventListener("click", outsideClick));
+    document.addEventListener("click", outsideClick);
   } else {
     document.removeEventListener("click", outsideClick);
   }
 }
+
+/**
+ * Stops the click event to to propagate inise the category list elements
+ * so that multiple contacts can be added at once
+ */
+document.getElementById("category_list").addEventListener("click", e => {
+  e.stopPropagation();
+});
 
 /**
  * This function closes the dropdwon whenever the user clicks outside it
@@ -169,12 +185,12 @@ function outsideClick(e) {
   const contactDropdown = document.getElementById("assigned_to");
   const categoryList = document.getElementById("category_list");
   const categoryDropdown = document.getElementById("category_dropdown");
-  if (contactList && !contactList.classList.contains("d-none")) {
+  if (contactList && contactList.classList.contains("open")) {
     if (!contactList.contains(e.target) && !contactDropdown.contains(e.target)) {
       toggleContactList();
     }
   }
-  if (categoryList && !categoryList.classList.contains("d-none")) {
+  if (categoryList && categoryList.classList.contains("open")) {
     if (!categoryList.contains(e.target) && !categoryDropdown.contains(e.target)) {
       toggleCategories();
     }

@@ -149,7 +149,7 @@
         </section>
       </div>
     </div>
-    <dialog class="add-task-dialog-board" id="dialaogBoardTask">
+     <dialog class="add-task-dialog-board" id="dialaogBoardTask">
       <section class="main-DialogContent">
         <div class="header-show-task">
           <div id="taskCategory"></div>
@@ -163,7 +163,7 @@
             <div class="field-description">
               <label for="task_title" class="notForShow">Title<span class="required">*</span></label>
               <input onfocus="handleFocus(event)" oninput="handleInput(event)" onblur="handleBlur(event)" type="text"
-                id="task_title" required placeholder="Enter a title" style="display: block;"/>
+                id="task_title" required placeholder="Enter a title" maxlength="100" style="display: block;"/>
               <span id="title_indication" class="title-indication" style="display: none;"></span>
               <div class="alert-container"></div>
             </div>
@@ -185,7 +185,7 @@
           <div class="priority-container">
             <section class="priority">
               <div class="field-description">
-                <span class="color-description">Priority:</span>
+                <span class="color-description">Priority</span>
                 <span id="taskPriority" class="task-priority"></span>
                 <div class="priority-stages">
                   <div onclick="setPrioColor(this)" class="txt-img urgent">
@@ -205,17 +205,17 @@
             </section>
             <section class="assigned">
               <div id="assigned_box" class="field-description assigned-to">
-                <span class="color-description">Assigned to:</span>
+                <span class="color-description">Assigned to</span>
                 <div onclick="toggleContactList()"  class="dropdown" id="assigned_to">
                   <span>Select contacts to assign</span>
                   <button>
                     <span id="dropdown_arrow" class="dropdown-arrow"></span>
                   </button>
+                    <div id="contact_list" class="contacts-list">
+                      <ul id="contact_ul"></ul>
+                    </div>
                 </div>
-                <div id="contact_icons" class="contacts-icons d-none"></div>
-                <div id="contact_list" class="contacts-list d-none">
-                  <ul id="contact_ul"></ul>
-                </div>
+                <div id="contact_icons" class="contacts-icons"></div>
               </div>
             </section>
             <section class="category">
@@ -226,13 +226,14 @@
                   <button>
                     <span id="category_dropdown_arrow" class="dropdown-arrow"></span>
                   </button>
+                  <div id="category_list" class="category-list">
+                    <ul id="categories">
+                      <li onclick="selectCategory(this)">Technical task</li>
+                      <li onclick="selectCategory(this)">User story</li>
+                    </ul>
+                  </div>
                 </div>
-                <div id="category_list" class="category-list d-none">
-                  <ul id="categories">
-                    <li onclick="selectCategory(this)">Technical task</li>
-                    <li onclick="selectCategory(this)">User story</li>
-                  </ul>
-                </div>
+                <div class="alert-container"></div>
               </div>
             </section>
             <section class="subtask">

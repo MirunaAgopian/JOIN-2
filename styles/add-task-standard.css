@@ -3,11 +3,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #D1D1D1;
+    border: 2px solid #D1D1D1;
     padding: 4px 8px;
     border-radius: 10px;
     background-color: white;
     cursor: pointer;
+    position: relative;
 }
 
 .dropdown button {
@@ -58,11 +59,14 @@
     flex-direction: column;
     justify-content: flex-start;
     width: 100%;
-    gap: 8px;
+}
+
+.field-description > :first-child {
+    margin-bottom: 8px;
 }
 
 .field-description input {
-    border: 1px solid #D1D1D1;
+    border: 2px solid #D1D1D1;
     padding: 10px 8px;
     border-radius: 10px;
     font-size: 24px;
@@ -70,7 +74,7 @@
 }
 
 .field-description textarea {
-    border: 1px solid #D1D1D1;
+    border: 2px solid #D1D1D1;
     padding: 20px 8px;
     border-radius: 10px;
     font-size: 24px;
@@ -81,12 +85,16 @@
 
 /* === Contacts list section === */
 .assigned-to {
+    min-height: 140px;
+}
+
+.category {
     position: relative;
 }
 
 .contacts-list {
     background-color: white;
-    border: 1px solid #D1D1D1;
+    border: 2px solid #D1D1D1;
     padding: 8px 0;
     border-radius: 10px;
     position: absolute;
@@ -94,6 +102,21 @@
     left: 0;
     width: 100%;
     z-index: 10;
+    margin-top: 2px;
+    transform-origin: top;
+    transform: scaleY(0);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 125ms ease, opacity 125ms ease;
+    
+}
+
+.contacts-list.open {
+    max-height: 220px;
+    opacity: 1;
+    transform: scaleY(1);
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .contacts-list ul {
@@ -139,7 +162,7 @@
 }
 
 .subtask-input {
-    border: 1px solid #D1D1D1;
+    border: 2px solid #D1D1D1;
     padding: 10px 8px;
     border-radius: 10px;
     font-size: 24px;
