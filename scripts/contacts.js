@@ -252,7 +252,8 @@ async function deleteContact(mail){
         }
     }
     if(contactDeleted){
-        window.location.reload();
+        document.getElementById('contact_container').innerHTML = '';
+        await onloadFuncContact();
     }
 }
 

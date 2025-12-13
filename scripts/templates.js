@@ -19,28 +19,28 @@ function getDialogMsgTemplate(text) {
  */
 function getTemplateShowContact(obj, initials) {
   return `<div class="contact-head">
-                <div class="contact-circle" style="background-color:${obj.color}">
-                    <span>${initials}</span>
+              <div class="contact-circle" style="background-color:${obj.color}">
+                  <span>${initials}</span>
+              </div>
+              <div class="contact-box">
+                <span id="name_data" class="name-line">${obj.name}</span>
+                <div class="contact-visibility">
+                  <div class="contact-ctrl-box">
+                    <img id="btn_edit" class="btn-contact-ctrl" src="../assets/img/edit_contact.svg" alt="edit button with pen icon"
+                    onmouseover="changeImgHover('btn_edit')" onmouseout="changeImgOut('btn_edit')" onclick="renderEditDialog('${obj.mail}', '${initials}')">
+                    <img id="btn_delete" class="btn-contact-ctrl" src="../assets/img/delete_contact.svg" alt="delete button with trash icon"
+                    onmouseover="changeImgHover('btn_delete')" onmouseout="changeImgOut('btn_delete')" onclick="deleteContact('${obj.mail}')">
+                  </div>
                 </div>
-                <div class="contact-box">
-                    <span id="name_data" class="name-line">${obj.name}</span>
-                    <div class="contact-visibility">
-                        <div class="contact-ctrl-box">
-                            <img id="btn_edit" class="btn-contact-ctrl" src="../assets/img/edit_contact.svg" alt="edit button with pen icon"
-                            onmouseover="changeImgHover('btn_edit')" onmouseout="changeImgOut('btn_edit')" onclick="renderEditDialog('${obj.mail}', '${initials}')">
-                            <img id="btn_delete" class="btn-contact-ctrl" src="../assets/img/delete_contact.svg" alt="delete button with trash icon"
-                            onmouseover="changeImgHover('btn_delete')" onmouseout="changeImgOut('btn_delete')" onclick="deleteContact('${obj.mail}')">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <span class="contact-info-span">Contact Information</span>
-            <div class="contact-data-container">
-                <span class="bold-line">Email</span>
-                <a href="mailto:${obj.mail}"><span id="mail_data" class="mail-info-box">${obj.mail}</span></a>
-                <span class="bold-line">Phone</span>
-                <a href="tel:${obj.phone}"><span class="phone-info-box">${obj.phone}</span></a>
-            </div>`;
+              </div>
+          </div>
+          <span class="contact-info-span">Contact Information</span>
+          <div class="contact-data-container">
+            <span class="bold-line">Email</span>
+            <a href="mailto:${obj.mail}"><span id="mail_data" class="mail-info-box">${obj.mail}</span></a>
+            <span class="bold-line">Phone</span>
+            <a href="tel:${obj.phone}"><span class="phone-info-box">${obj.phone}</span></a>
+          </div>`;
 }
 
 /**
