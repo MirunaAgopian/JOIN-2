@@ -173,32 +173,6 @@ function displayContact(contactObj, joinContacts){
 }
 
 /**
- * This function is used to display the contact content in mobile view 
- * 
- */
-function displayContactsContentContainer(){
-    let contentContactRef = document.getElementById('contacts_content');
-    let contentContactslistRef = document.getElementById('contacts_list');
-    let displayValue = window.getComputedStyle(contentContactRef).display;
-    if(displayValue == 'none'){
-        contentContactslistRef.classList.add('hidden');
-        contentContactRef.style = "display:block;"
-    }
-}
-
-/**
- * This function is used to close the contact view and go back to contact list in mobile view
- * 
- */
-function goBackToContactsList(){
-    let contentContactRef = document.getElementById('contacts_content');
-    let contentContactslistRef = document.getElementById('contacts_list');
-    contentContactRef.style = "display:none";
-    contentContactslistRef.classList.remove('hidden');
-    showActivatedContactInList(joinContacts, activatedContact=0);
-}
-
-/**
  * This subfunction creates initials of clicked contact and renders the data in contact container
  * 
  * @param {Object} contactObj - includes the clicked contact data 
@@ -238,28 +212,6 @@ function changeImgOut(id){
 }
 
 /**
- * This function is used to delete a contact in firebase and reload the window
- * 
- * @param {String} mail - includes mail address from contact  
- */
-async function deleteContact(mail){
-    let contactDeleted = false;
-    let contactsResponse = await getAllUsers('/contacts');
-    let contactsKeysArr = Object.keys(contactsResponse);
-    for (let index = 0; index < contactsKeysArr.length; index++) {
-        if((contactsResponse[contactsKeysArr[index]].mail) == mail){
-            await deleteData(`/contacts/${contactsKeysArr[index]}`);
-            contactDeleted = true;
-            break;
-        }
-    }
-    if(contactDeleted){
-        document.getElementById('contact_container').innerHTML = '';
-        await onloadFuncContact();
-    }
-}
-
-/**
  * This function renders the edit dialog with contact data
  * 
  * @param {String} mail - includes mail address from edit person 
@@ -278,22 +230,55 @@ function renderEditDialog(mail, initials){
  * @param {String} mail - includes the mail address of edited person
  */
 async function saveChangedData(mail){
-    if(isMailValid && isTelValid){
-        let dataObj = await createChangedDataObj(mail);
-        let contactsKeysArr = Object.keys(dataObj.contactsResponse);
-        for (let index = 0; index < contactsKeysArr.length; index++) {
-            if(dataObj.contactsResponse[contactsKeysArr[index]].mail == dataObj.mailAddress){
-                let changedObj = getInputFieldsEditDialog();
-                dataObj.mailAddress = changedObj.mail;
-                changedObj.color = dataObj.contactsResponse[contactsKeysArr[index]].color;
-                await putData(`contacts/${contactsKeysArr[index]}`, changedObj);
-                dataObj.contactChanged = true;
-                break;
-            }
-        }
-        await closeDialogIfDataChanged(dataObj.contactChanged);
-        showClickedContact(dataObj.mailAddress);
+    let editDataObj = await checkIfDataChanged(mail);
+    let areDataChanged = editDataObj.isChanged;
+    if((isMailValid && isTelValid) || (areDataChanged)){
+      await saveDataInStore(editDataObj);  
     }
+}
+
+async function saveDataInStore(dataObjStruct){
+    let dataObj = dataObjStruct.data;
+    let contactsKeysArr = dataObjStruct.keys;
+    for (let index = 0; index < contactsKeysArr.length; index++) {
+        if(dataObj.contactsResponse[contactsKeysArr[index]].mail == dataObj.mailAddress){
+            let changedObj = getInputFieldsEditDialog();
+            dataObj.mailAddress = changedObj.mail;
+            changedObj.color = dataObj.contactsResponse[contactsKeysArr[index]].color;
+            await putData(`contacts/${contactsKeysArr[index]}`, changedObj);
+            dataObj.contactChanged = true;
+            break;
+        }
+    }
+    await closeDialogIfDataChanged(dataObj.contactChanged);
+    showClickedContact(dataObj.mailAddress);
+}
+
+async function checkIfDataChanged(mail){
+    let dataObj = await createChangedDataObj(mail);
+    let contactsKeysArr = Object.keys(dataObj.contactsResponse);
+    let editDataObj = {
+        "data" : dataObj,
+        "keys" : contactsKeysArr,
+        "isChanged" : false
+    };
+    editDataObj = checkEditInputData(editDataObj);
+    return editDataObj;
+}
+
+function checkEditInputData(editDataObj){
+    for (let index = 0; index < editDataObj.keys.length; index++) {
+        if(editDataObj.data.contactsResponse[editDataObj.keys[index]].mail == editDataObj.data.mailAddress){
+            let changedObj = getInputFieldsEditDialog();
+            if((editDataObj.data.contactsResponse[editDataObj.keys[index]].name != changedObj.name) ||
+                (editDataObj.data.contactsResponse[editDataObj.keys[index]].mail != changedObj.mail) ||
+                (editDataObj.data.contactsResponse[editDataObj.keys[index]].phone != changedObj.phone)){
+                    editDataObj.isChanged = true;
+            }
+            break;
+        }
+    }
+    return editDataObj;
 }
 
 /**

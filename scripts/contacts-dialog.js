@@ -237,17 +237,14 @@ function closeDialogAndReloadWindow(id, cssClass){
  * 
  * @param {String} idInput - includes id name of input field 
  * @param {String} idInfo - includes id name of span tag
- * @param {String} idButton - includes id name of button tag 
  */
-function checkMailOnDialog(idInput, idInfo, idButton){
+function checkMailOnDialog(idInput, idInfo){
     let mailInput = document.getElementById(idInput);
     let mailInfo = document.getElementById(idInfo);
-    let formButton = document.getElementById(idButton);
     isMailValid = checkValidEmail(String(mailInput.value));
     if((isMailValid == false) && (mailInput.value != '')){
         mailInput.classList.add('invalid-input');
         mailInfo.classList.remove('hidden');
-        // formButton.disabled = true;
     }
 }
 
@@ -255,16 +252,13 @@ function checkMailOnDialog(idInput, idInfo, idButton){
  * This function removes all classes and disable settings if the mail input field is on focus
  * 
  * @param {String} idInput - includes id name of input field 
- * @param {String} idInfo - includes id name of span tag 
- * @param {String} idButton - includes id name of button tag  
+ * @param {String} idInfo - includes id name of span tag  
  */
-function fieldMailOnFocus(idInput, idInfo, idButton){
+function fieldMailOnFocus(idInput, idInfo){
     let mailInput = document.getElementById(idInput);
     let mailInfo = document.getElementById(idInfo);
-    let formButton = document.getElementById(idButton);
     mailInput.classList.remove('invalid-input');
     mailInfo.classList.add('hidden');
-    // formButton.disabled = false;
 }
 
 /**
@@ -290,10 +284,15 @@ function deleteContactMobileView(){
     deleteContact(mail);
 }
 
-function checkTelOnDialog(idInput, idInfo, idButton){
+/**
+ * This function checks the input tel if it is valid and gives a feedback if its invalid
+ * 
+ * @param {String} idInput - includes the id of input field 
+ * @param {String} idInfo - includes the id of the info span 
+ */
+function checkTelOnDialog(idInput, idInfo){
     let telInput = document.getElementById(idInput);
     let telInfo = document.getElementById(idInfo);
-    let formButton = document.getElementById(idButton);
     isTelValid = checkValidTel(String(telInput.value));
     if((isTelValid == false) && (telInput.value != '')){
         telInput.classList.add('invalid-input');
@@ -301,16 +300,49 @@ function checkTelOnDialog(idInput, idInfo, idButton){
     }
 }
 
-function fieldTelOnFocus(idInput, idInfo, idButton){
+/**
+ * This function removes all classes and disable settings if the tel input field is on focus
+ * 
+ * @param {String} idInput - includes the id of input field  
+ * @param {String} idInfo - includes the id of the info span
+ */
+function fieldTelOnFocus(idInput, idInfo){
     let telInput = document.getElementById(idInput);
     let telInfo = document.getElementById(idInfo);
-    let formButton = document.getElementById(idButton);
     telInput.classList.remove('invalid-input');
     telInfo.classList.add('hidden');
 }
 
+/**
+ * This function is used to check the value of tel input field if a real number is located
+ * 
+ * @param {String} phoneString - includes the input value  
+ * @returns a boolean if the value of input is true
+ */
 function checkValidTel(phoneString){
     let telString = phoneString;
     let isValidTel = /^\+?[0-9 ]+$/.test(telString);
     return isValidTel;
+}
+
+/**
+ * This function is used to delete a contact in firebase and update the window
+ * 
+ * @param {String} mail - includes mail address from contact  
+ */
+async function deleteContact(mail){
+    let contactDeleted = false;
+    let contactsResponse = await getAllUsers('/contacts');
+    let contactsKeysArr = Object.keys(contactsResponse);
+    for (let index = 0; index < contactsKeysArr.length; index++) {
+        if((contactsResponse[contactsKeysArr[index]].mail) == mail){
+            await deleteData(`/contacts/${contactsKeysArr[index]}`);
+            contactDeleted = true;
+            break;
+        }
+    }
+    if(contactDeleted){
+        document.getElementById('contact_container').innerHTML = '';
+        await onloadFuncContact();
+    }
 }

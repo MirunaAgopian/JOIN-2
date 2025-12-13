@@ -149,3 +149,29 @@ function findArrIndexOfUser(user, arrOfContacts){
     }
     return id;
 }
+
+/**
+ * This function is used to display the contact content in mobile view 
+ * 
+ */
+function displayContactsContentContainer(){
+    let contentContactRef = document.getElementById('contacts_content');
+    let contentContactslistRef = document.getElementById('contacts_list');
+    let displayValue = window.getComputedStyle(contentContactRef).display;
+    if(displayValue == 'none'){
+        contentContactslistRef.classList.add('hidden');
+        contentContactRef.style = "display:block;"
+    }
+}
+
+/**
+ * This function is used to close the contact view and go back to contact list in mobile view
+ * 
+ */
+function goBackToContactsList(){
+    let contentContactRef = document.getElementById('contacts_content');
+    let contentContactslistRef = document.getElementById('contacts_list');
+    contentContactRef.style = "display:none";
+    contentContactslistRef.classList.remove('hidden');
+    showActivatedContactInList(joinContacts, activatedContact=0);
+}
