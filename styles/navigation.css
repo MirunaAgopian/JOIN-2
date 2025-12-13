@@ -61,6 +61,10 @@ nav p {
     font-size: 20px;
     background-color: white;
     border: 3px solid #2a3647;
+        display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
 }
 
 .nav-user-btn:hover {
