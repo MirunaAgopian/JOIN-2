@@ -83,11 +83,15 @@ function getTemplateEditDialog(obj, initials) {
                         <form onsubmit="saveChangedData('${obj.mail}'); return false" autocomplete="off">
                             <input type="text" required placeholder="Name" maxlength="25" class="bg-input bg-img-name" id="edit_name" value='${obj.name}'>
                             <div class="mail-info">
-                                <input type="text" required placeholder="Email" maxlength="25" class="bg-input bg-img-mail" id="edit_mail" value='${obj.mail}'
-                                onfocus="fieldMailOnFocus('edit_mail', 'edit_span', 'btn_edit_form')" onblur="checkMailOnDialog('edit_mail', 'edit_span', 'btn_edit_form')">
-                                <span id="edit_span" class="info-span hidden">Invalid mail</span>
+                              <input type="text" required placeholder="Email" maxlength="25" class="bg-input bg-img-mail" id="edit_mail" value='${obj.mail}'
+                              onfocus="fieldMailOnFocus('edit_mail', 'edit_span', 'btn_edit_form')" onblur="checkMailOnDialog('edit_mail', 'edit_span', 'btn_edit_form')">
+                              <span id="edit_span" class="info-span hidden">Invalid mail</span>
                             </div>
-                            <input type="tel" required placeholder="Phone" class="bg-input bg-img-phone" id="edit_phone" value='${obj.phone}'>
+                            <div class="mail-info">
+                              <input type="tel" required placeholder="Phone" class="bg-input bg-img-phone" id="edit_phone" value='${obj.phone}'
+                              onfocus="fieldTelOnFocus('edit_phone', 'edit_span_tel', 'btn_edit_form')" onblur="checkTelOnDialog('edit_phone', 'edit_span_tel', 'btn_edit_form')"">
+                              <span id="edit_span_tel" class="info-span hidden">Invalid phone number</span>
+                            </div>
                             <div class="form-ctrl-container">
                                 <div class="btn-delete" onclick="deleteContactOnDialog('${obj.mail}')">
                                     <span>Delete</span>

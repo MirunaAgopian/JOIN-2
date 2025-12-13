@@ -1,3 +1,6 @@
+let isMailValid = false;
+let isTelValid = false;
+
 /**
  * This function is used to open the dialog "add contact"
  * 
@@ -240,11 +243,11 @@ function checkMailOnDialog(idInput, idInfo, idButton){
     let mailInput = document.getElementById(idInput);
     let mailInfo = document.getElementById(idInfo);
     let formButton = document.getElementById(idButton);
-    let validMail = checkValidEmail(String(mailInput.value));
-    if((validMail == false) && (mailInput.value != '')){
+    isMailValid = checkValidEmail(String(mailInput.value));
+    if((isMailValid == false) && (mailInput.value != '')){
         mailInput.classList.add('invalid-input');
         mailInfo.classList.remove('hidden');
-        formButton.disabled = true;
+        // formButton.disabled = true;
     }
 }
 
@@ -261,7 +264,7 @@ function fieldMailOnFocus(idInput, idInfo, idButton){
     let formButton = document.getElementById(idButton);
     mailInput.classList.remove('invalid-input');
     mailInfo.classList.add('hidden');
-    formButton.disabled = false;
+    // formButton.disabled = false;
 }
 
 /**
@@ -291,11 +294,10 @@ function checkTelOnDialog(idInput, idInfo, idButton){
     let telInput = document.getElementById(idInput);
     let telInfo = document.getElementById(idInfo);
     let formButton = document.getElementById(idButton);
-    let validTel = checkValidTel(String(telInput.value));
-    if((validTel == false) && (telInput.value != '')){
+    isTelValid = checkValidTel(String(telInput.value));
+    if((isTelValid == false) && (telInput.value != '')){
         telInput.classList.add('invalid-input');
         telInfo.classList.remove('hidden');
-        formButton.disabled = true;
     }
 }
 
@@ -305,7 +307,6 @@ function fieldTelOnFocus(idInput, idInfo, idButton){
     let formButton = document.getElementById(idButton);
     telInput.classList.remove('invalid-input');
     telInfo.classList.add('hidden');
-    formButton.disabled = false;
 }
 
 function checkValidTel(phoneString){

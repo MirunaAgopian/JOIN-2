@@ -21,9 +21,11 @@ let activatedContact = 0;
  * 
  */
 async function createContact(){
-    let contactData = getInputFields();
-    await createArrayOfContacts();
-    await checkNewContact(contactData, joinContacts);
+    if(isMailValid && isTelValid){
+        let contactData = getInputFields();
+        await createArrayOfContacts();
+        await checkNewContact(contactData, joinContacts);
+    }
 }
 
 /**
@@ -276,20 +278,22 @@ function renderEditDialog(mail, initials){
  * @param {String} mail - includes the mail address of edited person
  */
 async function saveChangedData(mail){
-    let dataObj = await createChangedDataObj(mail);
-    let contactsKeysArr = Object.keys(dataObj.contactsResponse);
-    for (let index = 0; index < contactsKeysArr.length; index++) {
-        if(dataObj.contactsResponse[contactsKeysArr[index]].mail == dataObj.mailAddress){
-            let changedObj = getInputFieldsEditDialog();
-            dataObj.mailAddress = changedObj.mail;
-            changedObj.color = dataObj.contactsResponse[contactsKeysArr[index]].color;
-            await putData(`contacts/${contactsKeysArr[index]}`, changedObj);
-            dataObj.contactChanged = true;
-            break;
+    if(isMailValid && isTelValid){
+        let dataObj = await createChangedDataObj(mail);
+        let contactsKeysArr = Object.keys(dataObj.contactsResponse);
+        for (let index = 0; index < contactsKeysArr.length; index++) {
+            if(dataObj.contactsResponse[contactsKeysArr[index]].mail == dataObj.mailAddress){
+                let changedObj = getInputFieldsEditDialog();
+                dataObj.mailAddress = changedObj.mail;
+                changedObj.color = dataObj.contactsResponse[contactsKeysArr[index]].color;
+                await putData(`contacts/${contactsKeysArr[index]}`, changedObj);
+                dataObj.contactChanged = true;
+                break;
+            }
         }
+        await closeDialogIfDataChanged(dataObj.contactChanged);
+        showClickedContact(dataObj.mailAddress);
     }
-    await closeDialogIfDataChanged(dataObj.contactChanged);
-    showClickedContact(dataObj.mailAddress);
 }
 
 /**
