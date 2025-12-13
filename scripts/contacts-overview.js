@@ -103,7 +103,7 @@ function renderContactInfo(user, id) {
             ${getUserItem(user.name)}
         </div>
         <div>
-            <span id="spanId_${id}" class="contact-name">${user.name}</span><br>
+            <span id="spanId_${id}" class="contact-name contact-entry">${user.name}</span><br>
             <span class="contact-email contact-entry">${user.mail}</span>
         </div>
     </div>
