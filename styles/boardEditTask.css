@@ -33,14 +33,15 @@ select {
 }
 
 .added-tasks {
-  position: relative;
-  overflow-y: auto;
-  max-height: 100px;
+    position: relative;
+    overflow-y: auto;
+    max-height: 100px;
 }
 
 .add-task-dialog-board {
     border: none;
     z-index: 1000;
+    overflow: hidden;
 }
 
 .header-show-task {
@@ -211,9 +212,9 @@ button {
 }
 
 .bottom-container {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end; 
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
 }
 
 
@@ -244,6 +245,7 @@ button {
     color: black;
     font-family: 'Inter';
     width: 100%;
+    
 }
 
 textarea {
@@ -298,7 +300,7 @@ textarea {
     width: 32px
 }
 
-.color-description{
+.color-description {
     display: block;
     font-weight: 400;
     font-size: 20px;
@@ -307,6 +309,7 @@ textarea {
 }
 
 @media(max-width: 950px) {
+
     .txt-img span,
     .dropdown span {
         font-size: 20px;
@@ -314,11 +317,19 @@ textarea {
 }
 
 @media (max-width: 650px) {
+
     .dropdown,
     .contacts-list,
     .category-list,
     .page-container {
         font-size: 16px;
+    }
+
+    .page-container {
+        flex: 1;
+        overflow-y: scroll;
+        padding-bottom: 200px;
+        height: 100vh;
     }
 
     .field-description textarea {
@@ -327,16 +338,28 @@ textarea {
     }
 
     .bottom-container {
-        margin-bottom: 16px !important;
+        margin-bottom: 1px !important;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        padding: 0;
+        background: #fff;
+        border-top: 0;
+        box-shadow: none;
+        z-index: 1000;
+        flex-shrink: 0; 
     }
 
-    .priority-stages .txt-img{
+    .priority-stages .txt-img {
         margin: 0 2px;
         height: 48px;
     }
 
     .notForShow {
-    margin-top: 16px;
+        margin-top: 16px;
     }
 }
 
@@ -365,9 +388,10 @@ textarea {
 }
 
 @media(max-width: 420px) {
-   .add-task-dialog-board .priority-stages {
+    .add-task-dialog-board .priority-stages {
         gap: 2px;
     }
+
     .priority-stages .txt-img {
         gap: 2px;
     }
