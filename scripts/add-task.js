@@ -68,6 +68,22 @@ function clearTaskInput() {
   resetBasicFields();
   resetCheckboxesAndPriorityVisuals();
   resetAllSubtasks();
+  resetAllFieldVisuals();
+}
+
+/**
+ * Removed the alert messages and the .alert CSS class
+ * from the title and datum input and from the category
+ * which are marked as required fields
+ */
+function resetAllFieldVisuals() {
+  document.querySelectorAll('.field-description').forEach(field => {
+    field.classList.remove('alert', 'active');
+    const alertContainer = field.querySelector('.alert-container');
+    if (alertContainer) {
+      alertContainer.innerHTML = '';
+    }
+  });
 }
 
 /**
@@ -100,15 +116,72 @@ function resetAllSubtasks(){
  * @returns {boolean} True if valid, false otherwise.
  */
 function checkIfTaskIsValid(task) {
-  if (!task.title) {
+  const titleValid = checkIfTitleIsValid(task.title);
+  const dateValid = checkIfDatumIsValid(task.date);
+  const categoryValid = checkIfCategoryIsValid(task.category);
+  return titleValid && dateValid && categoryValid;
+}
+
+/**
+ * Check if the title field is valid.
+ * If the title is empty, show an alert message and add the red border.
+ * If the title has text, clear the alert and remove the red border.
+ *
+ * @param {string} title - The text entered in the title input.
+ * @returns {boolean} True if the title is valid, false if it is empty.
+ */
+function checkIfTitleIsValid(title) {
+  const titleField = document.getElementById('task_title').closest('.field-description');
+  const titleAlert = titleField.querySelector('.alert-container');
+  if (!title) {
+    titleAlert.innerHTML = getAlert();
+    titleField.classList.add('alert');
     return false;
   }
-  if (!task.date) {
+  titleAlert.innerHTML = '';
+  titleField.classList.remove('alert');
+  return true;
+}
+
+/**
+ * Check if the due date field is valid.
+ * If the date is missing, show an alert message and add the red border.
+ * If the date is filled, clear the alert and remove the red border.
+ *
+ * @param {string} date - The value entered in the due date input.
+ * @returns {boolean} True if the date is valid, false if it is empty.
+ */
+function checkIfDatumIsValid(date) {
+  const dateField = document.getElementById('due_date').closest('.field-description');
+  const dateAlert = dateField.querySelector('.alert-container');
+  if (!date) {
+    dateAlert.innerHTML = getAlert();
+    dateField.classList.add('alert');
     return false;
   }
-  if (!task.category) {
+  dateAlert.innerHTML = '';
+  dateField.classList.remove('alert');
+  return true;
+}
+
+/**
+ * Check if the category field is valid.
+ * If no category is chosen (or the placeholder is still shown),
+ * display an alert message and add the red border.
+ * If a category is selected, clear the alert and remove the red border.
+ *
+ * @param {string} category - The selected category text.
+ * @returns {boolean} True if a category is chosen, false if not.
+ */
+function checkIfCategoryIsValid(category) {
+  const { field, alert, placeholder } = getCategoryField();
+  if (!category || category === "Select task category") {
+    alert.innerHTML = getAlert();
+    field.classList.add('alert');
     return false;
   }
+  alert.innerHTML = '';
+  field.classList.remove('alert');
   return true;
 }
 

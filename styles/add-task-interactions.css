@@ -146,7 +146,16 @@ textarea:focus {
 }
 
 .field-description.alert input {
-    border: 1px solid red;
+    border: 2px solid red;
+}
+
+/* Category dropdown field */
+.field-description.active .dropdown {
+  border: 2px solid #29abe2;
+}
+
+.field-description.alert .dropdown {
+  border: 2px solid red;
 }
 
 textarea.active {

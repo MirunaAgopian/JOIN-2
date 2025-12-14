@@ -46,11 +46,13 @@ function selectPriority(element) {
  * the alert state and non-alert state are being styled via CSS classes
  * @param {FocusEvent} event - The focus event triggered when the user clicks on an input field.
  */
-function handleFocus(event){
-  let fieldDescription = event.target.closest('.field-description');
-  let alertContainer = fieldDescription.querySelector('.alert-container');
-  alertContainer.innerHTML = getAlert();
-  fieldDescription.classList.add('alert');
+
+function handleFocus(event) {
+  const fieldDescription = event.target.closest('.field-description');
+  const alertContainer = fieldDescription.querySelector('.alert-container');
+  alertContainer.innerHTML = '';
+  fieldDescription.classList.remove('alert');
+  fieldDescription.classList.add('active');
 }
 
 /**
@@ -61,9 +63,10 @@ function handleFocus(event){
  * Both states are styled via CSS classes.
  * @param {InputEvent} event - The input event triggered when the user types into a form field.
  */
-function handleInput(event){
-  let fieldDescription = event.target.closest('.field-description');
-  let alertContainer = fieldDescription.querySelector('.alert-container');
+
+function handleInput(event) {
+  const fieldDescription = event.target.closest('.field-description');
+  const alertContainer = fieldDescription.querySelector('.alert-container');
   if (event.target.value.trim() !== '') {
     alertContainer.innerHTML = '';
     fieldDescription.classList.remove('alert');
@@ -79,11 +82,18 @@ function handleInput(event){
  * Removes the CSS styling of the input field once the user has left the input field
  * @param {FocusEvent} event - The blur event triggered when the user leaves a form field.
  */
-function handleBlur(event){
-  let fieldDescription = event.target.closest('.field-description');
-  let alertContainer = fieldDescription.querySelector('.alert-container');
-  alertContainer.innerHTML = '';
-  fieldDescription.classList.remove('alert', 'active');
+
+function handleBlur(event) {
+  const fieldDescription = event.target.closest('.field-description');
+  const alertContainer = fieldDescription.querySelector('.alert-container');
+  if (event.target.value.trim() === '') {
+    alertContainer.innerHTML = getAlert();
+    fieldDescription.classList.remove('active');
+    fieldDescription.classList.add('alert');
+  } else {
+    alertContainer.innerHTML = '';
+    fieldDescription.classList.remove('alert', 'active');
+  }
 }
 
 /**
@@ -151,19 +161,20 @@ document.getElementById("contact_list").addEventListener("click", e => {
  * Opens or closes the category list.
  * Switches the dropdown and arrow on or off and shows a placeholder text when the list is opened.
  */
-function toggleCategories(){
-  let list = document.getElementById('category_list');
-  let arrow = document.getElementById('category_dropdown_arrow');
-  let dropdown = document.getElementById('category_dropdown');
-  let placeholder = document.getElementById('selected_category');
+function toggleCategories() {
+  const { field, alert, placeholder, list, arrow } = getCategoryField();
   list.classList.toggle('open');
   arrow.classList.toggle('active');
-  dropdown.classList.toggle('active');
   if (list.classList.contains("open")) {
+    clearAlert(field, alert);
+    field.classList.add('active'); 
     placeholder.textContent = "Select task category";
     document.addEventListener("click", outsideClick);
   } else {
     document.removeEventListener("click", outsideClick);
+    placeholder.textContent === "Select task category"
+      ? showAlert(field, alert)
+      : resetField(field, alert);
   }
 }
 
@@ -179,34 +190,85 @@ document.getElementById("category_list").addEventListener("click", e => {
  * This function closes the dropdwon whenever the user clicks outside it
  * @param {MouseEvent} e - The click event triggered when the user clicks anywhere on the page. 
  */
-
 function outsideClick(e) {
   const contactList = document.getElementById("contact_list");
   const contactDropdown = document.getElementById("assigned_to");
   const categoryList = document.getElementById("category_list");
   const categoryDropdown = document.getElementById("category_dropdown");
-  if (contactList && contactList.classList.contains("open")) {
-    if (!contactList.contains(e.target) && !contactDropdown.contains(e.target)) {
-      toggleContactList();
-    }
+  if (contactList?.classList.contains("open") &&
+      !contactList.contains(e.target) &&
+      !contactDropdown.contains(e.target)) {
+    toggleContactList();
   }
-  if (categoryList && categoryList.classList.contains("open")) {
-    if (!categoryList.contains(e.target) && !categoryDropdown.contains(e.target)) {
-      toggleCategories();
-    }
+  if (categoryList?.classList.contains("open") &&
+      !categoryList.contains(e.target) &&
+      !categoryDropdown.contains(e.target)) {
+    toggleCategories();
   }
 }
-
 /**
  * Chooses a category from the list.
  * Updates the placeholder text with the chosen category and then closes the dropdown.
  *  @param {HTMLElement} item - The category element that was clicked,
  * containing the text to display as the selected category.
  */
-function selectCategory(item){
-  let placeholder = document.getElementById('selected_category');
+function selectCategory(item) {
+  const { field, alert, placeholder } = getCategoryField();
   placeholder.textContent = item.textContent;
+  clearAlert(field, alert);
   toggleCategories();
+}
+
+/**
+ * Get all key elements related to the category dropdown.
+ * @returns {Object} An object with references to the field container,
+ *alert box, placeholder text, list of categories, and the dropdown arrow.
+ */
+function getCategoryField() {
+  const dropdown = document.getElementById('category_dropdown');
+  return {
+    field: dropdown.closest('.field-description.category'),
+    alert: dropdown.closest('.field-description.category')
+                  .querySelector('.alert-container'),
+    placeholder: document.getElementById('selected_category'),
+    list: document.getElementById('category_list'),
+    arrow: document.getElementById('category_dropdown_arrow')
+  };
+}
+
+/**
+ * Show an alert message for the category field.
+ * Removes the "active" class and adds the "alert" class.
+ * @param {HTMLElement} field - The category field container.
+ * @param {HTMLElement} alertContainer - The element where the alert message is shown.
+ */
+function showAlert(field, alertContainer) {
+  alertContainer.innerHTML = getAlert();
+  field.classList.remove('active');
+  field.classList.add('alert');
+}
+
+/**
+ * Clear any alert message and mark the field as active.
+ * Removes the "alert" class and adds the "active" class.
+ * @param {HTMLElement} field - The category field container.
+ * @param {HTMLElement} alertContainer - The element where the alert message is shown.
+ */
+function clearAlert(field, alertContainer) {
+  alertContainer.innerHTML = '';
+  field.classList.remove('alert');
+  field.classList.add('active');
+}
+
+/**
+ * Reset the field back to its default state.
+ * Removes both "alert" and "active" classes and clears messages.
+ * @param {HTMLElement} field - The category field container.
+ * @param {HTMLElement} alertContainer - The element where the alert message is shown.
+ */
+function resetField(field, alertContainer) {
+  alertContainer.innerHTML = '';
+  field.classList.remove('alert', 'active');
 }
 
 /**
