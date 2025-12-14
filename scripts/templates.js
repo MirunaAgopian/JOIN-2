@@ -170,10 +170,10 @@ function getContactAvatar(contact, initials) {
  * one for subtask diplay and one for editing each subtask
  */
 function getAddedTasks(text) {
-  return `<li class="subtask-list">
+  return `<li onclick='openEditingEnvironment(this)' class="subtask-list">
               <span class='subtask-text'>${text}</span>
               <div class='subtask-element-img-wrapper'>
-                <button onclick='openEditingEnvironment(this)' class='subtask-edit-btn' title="Edit"></button>
+                <button class='subtask-edit-btn' title="Edit"></button>
                 <div class='subtask-btn-divider-secondary'></div>
                 <button onclick='deleteAddedSubtask(this)' class='subtask-delete-btn' title="Delete"></button>
               </div>
