@@ -121,6 +121,10 @@
         height: 100px;
     }
 
+    .required-desktop {
+        display: none;
+    }
+
     .page-container {
         width: 100%;
         height: calc(80vh - 100px);
