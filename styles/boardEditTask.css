@@ -308,6 +308,9 @@ textarea {
     color: #2a3647;
     margin-top: 32px;
 }
+.required-mobile{
+    display: none;
+}
 
 @media(max-width: 950px) {
 

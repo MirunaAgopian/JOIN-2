@@ -21,7 +21,7 @@
     vertical-align: middle;
 }
 
-#btnDialogRight{
+#btnDialogRight {
     width: auto;
 }
 
@@ -29,7 +29,7 @@
     display: block;
 }
 
-#taskPriority{
+#taskPriority {
     display: none;
 }
 
@@ -64,9 +64,11 @@
     align-items: center;
     padding-bottom: 16px;
 }
+
 .add-task-dialog-board .buttons {
     width: 30%;
 }
+
 .close-btn-container {
     border-radius: 50px;
 }
@@ -91,8 +93,8 @@
 
 @media(max-width: 1230px) {
     .add-task-dialog-board .buttons {
-    width: 40%;
-}
+        width: 40%;
+    }
 }
 
 @media(max-width: 900px) {
@@ -101,7 +103,7 @@
     }
 }
 
-@media(max-width: 850px) {
+@media(max-width: 1220px) {
     .bottom-container {
         margin-bottom: 1px !important;
         position: fixed;
@@ -116,23 +118,23 @@
         box-shadow: none;
         z-index: 1000;
         flex-shrink: 0;
+        height: 100px;
     }
 
     .page-container {
-    width: 100%;
-    height: 80vh;
-    overflow-y: scroll;
-}
+        width: 100%;
+        height: calc(80vh - 100px);
+        overflow-y: scroll;
+        flex-direction: column;
+        margin-right: 0;
+        padding-bottom: 200px;
+    }
 
     .taskHeader {
         font-size: 40px;
     }
-    .page-container {
-        flex-direction: column;
-        margin-right: 0;
-    }
 
-    .main-DialogContent  {
+    .main-DialogContent {
         position: relative;
         padding-bottom: 0;
     }
@@ -152,10 +154,11 @@
     }
 }
 
-@media(max-width: 420px){
-     #dialaogBoardTask {
+@media(max-width: 420px) {
+    #dialaogBoardTask {
         padding: 12px !important;
     }
+
     .add-task-dialog-board .txt-img {
         padding: 10px 2px;
         font-size: 15px;
