@@ -215,7 +215,7 @@ async function deleteContactOnDialog(mail){
         }
     }
     if(contactDeleted){
-        closeDialogAndReloadWindow('edit_contact_dialog', 'dialogOpened');
+        await closeDialogAndUpdatePage('edit_contact_dialog', 'dialogOpened');
     }
 }
 
@@ -225,11 +225,12 @@ async function deleteContactOnDialog(mail){
  * @param {string} id - id of dialog 
  * @param {string} cssClass - removes the css class from dialog needed for slide in effect during opening dialog 
  */
-function closeDialogAndReloadWindow(id, cssClass){
+async function closeDialogAndUpdatePage(id, cssClass){
     let dialog = document.getElementById(id);
     dialog.close();
     dialog.classList.remove(cssClass);
-    window.location.reload();
+    document.getElementById('contact_container').innerHTML = '';
+    await onloadFuncContact();
 }
 
 /**

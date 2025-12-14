@@ -234,6 +234,8 @@ async function saveChangedData(mail){
     let areDataChanged = editDataObj.isChanged;
     if((isMailValid && isTelValid) || (areDataChanged)){
       await saveDataInStore(editDataObj);  
+    }else{
+        closeDialogEditContact();
     }
 }
 
