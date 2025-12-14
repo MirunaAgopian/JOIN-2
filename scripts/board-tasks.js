@@ -29,7 +29,7 @@ function addTaskOverlay() {
     }, 1500);
     setTimeout(() => {
         onloadFuncBoard();
-    }, 0);
+    }, 100);
 }
 
 /**
