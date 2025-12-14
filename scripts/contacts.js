@@ -235,9 +235,7 @@ async function saveChangedData(mail){
     if((isMailValid && isTelValid) || (areDataChanged)){
       await saveDataInStore(editDataObj);  
     }else if(!areDataChanged){
-        if(isMailValid && isTelValid){
-            closeDialogEditContact();
-        }
+        if(isMailValid && isTelValid){closeDialogEditContact();}
     }
 }
 
@@ -284,8 +282,8 @@ async function checkIfDataChanged(mail){
 /**
  * This subfunction of checkIfDataChanged compares the data of input fields and compares it with data of firebase and checks validation
  * 
- * @param {*} editDataObj 
- * @returns 
+ * @param {Object} editDataObj - includes all neceesary data for update the data of person
+ * @returns - the filled data object, including info if data are changed
  */
 function checkEditInputData(editDataObj){
     for (let index = 0; index < editDataObj.keys.length; index++) {
