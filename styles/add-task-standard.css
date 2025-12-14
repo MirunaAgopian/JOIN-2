@@ -242,9 +242,15 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    padding: 8px 8px 8px 1.5em;
+    padding: 4px 4px 4px 1.5em;
     border-radius: 10px;
     position: relative;
+}
+
+.subtask-text {
+    flex: 1; 
+    white-space: normal;
+    word-break: break-word; 
 }
 
 .subtask-list::before {
@@ -296,6 +302,12 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+}
+
+.subtask-edit {
+    flex: 1;         
+    white-space: normal;
+    word-break: break-word; 
 }
 
 .subtask-edit-btn-wrapper {

@@ -231,12 +231,6 @@ textarea.active {
     }
 }
 
-@media(max-width: 850px) {
-    .bottom-container {
-        margin-bottom: 150px;
-    }
-}
-
 @media(max-width: 950px) {
     .main-content h1 {
         font-size: 54px;
@@ -270,15 +264,38 @@ textarea.active {
     }
 }
 
-@media(max-width:650px){
-    .page-container {
-        flex-direction: column;
+@media(max-width: 850px) {
+    .required-desktop {
+        display: none;
+    }
+
+    .required-mobile {
+        display: block;
+        margin-bottom: 80px;
     }
 
     .bottom-container {
-        margin-bottom: 150px;
+    position: fixed;
+    bottom: 96px;
+    left: 0;
+    width: 100%;
+    background-color: #f6f7f8; 
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.15);
+    z-index: 20;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+}
+
+@media(max-width:650px){
+    .page-container {
         flex-direction: column;
-        gap: 18px;
     }
 
     .buttons:nth-child(2){

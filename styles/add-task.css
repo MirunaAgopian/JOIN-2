@@ -161,6 +161,18 @@ select {
     color: black;
 }
 
+.required-mobile {
+    display: none;
+    width: 100%;
+    color: black;
+    margin-top: 85px;
+}
+
+.required-mobile span {
+    color: red;
+    vertical-align: super;
+}
+
 .buttons {
     display: flex;
     justify-content: space-between;
