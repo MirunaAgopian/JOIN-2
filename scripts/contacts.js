@@ -237,6 +237,11 @@ async function saveChangedData(mail){
     }
 }
 
+/**
+ * This function customizes the data of contact person on firebase
+ * 
+ * @param {Object} dataObjStruct - includes all neceesary data for update the data of person 
+ */
 async function saveDataInStore(dataObjStruct){
     let dataObj = dataObjStruct.data;
     let contactsKeysArr = dataObjStruct.keys;
@@ -254,6 +259,12 @@ async function saveDataInStore(dataObjStruct){
     showClickedContact(dataObj.mailAddress);
 }
 
+/**
+ * This function loads the contact data of all contacts from firebase, searches the right person and cheks if data are changed
+ * 
+ * @param {String} mail - includes mail address of contact person which should be customized 
+ * @returns 
+ */
 async function checkIfDataChanged(mail){
     let dataObj = await createChangedDataObj(mail);
     let contactsKeysArr = Object.keys(dataObj.contactsResponse);
@@ -266,14 +277,20 @@ async function checkIfDataChanged(mail){
     return editDataObj;
 }
 
+/**
+ * This subfunction of checkIfDataChanged compares the data of input fields and compares it with data of firebase and checks validation
+ * 
+ * @param {*} editDataObj 
+ * @returns 
+ */
 function checkEditInputData(editDataObj){
     for (let index = 0; index < editDataObj.keys.length; index++) {
         if(editDataObj.data.contactsResponse[editDataObj.keys[index]].mail == editDataObj.data.mailAddress){
             let changedObj = getInputFieldsEditDialog();
-            if((editDataObj.data.contactsResponse[editDataObj.keys[index]].name != changedObj.name) ||
-                (editDataObj.data.contactsResponse[editDataObj.keys[index]].mail != changedObj.mail) ||
-                (editDataObj.data.contactsResponse[editDataObj.keys[index]].phone != changedObj.phone)){
-                    editDataObj.isChanged = true;
+            if((editDataObj.data.contactsResponse[editDataObj.keys[index]].name != changedObj.name) ||(editDataObj.data.contactsResponse[editDataObj.keys[index]].mail != changedObj.mail) ||(editDataObj.data.contactsResponse[editDataObj.keys[index]].phone != changedObj.phone)){
+                    isMailValid = checkValidEmail(changedObj.mail);
+                    isTelValid = checkValidTel(changedObj.phone);
+                    if(isMailValid && isTelValid){editDataObj.isChanged = true;}
             }
             break;
         }
