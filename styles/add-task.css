@@ -161,7 +161,6 @@ select {
     color: black;
 }
 
-/* New code */
 .required-mobile {
     display: none;
     width: 100%;
@@ -173,8 +172,6 @@ select {
     color: red;
     vertical-align: super;
 }
-
-/* New code */
 
 .buttons {
     display: flex;

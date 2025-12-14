@@ -247,6 +247,12 @@
     position: relative;
 }
 
+.subtask-text {
+    flex: 1; 
+    white-space: normal;
+    word-break: break-word; 
+}
+
 .subtask-list::before {
    content: "•";
    position: absolute;
@@ -296,6 +302,12 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+}
+
+.subtask-edit {
+    flex: 1;         
+    white-space: normal;
+    word-break: break-word; 
 }
 
 .subtask-edit-btn-wrapper {
