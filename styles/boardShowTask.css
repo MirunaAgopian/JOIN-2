@@ -308,6 +308,7 @@ textarea {
 .title-indication{
     font-size: 60px;
     font-weight: bold;
+    word-break: break-word;
 }
 
 .task-priority{
@@ -387,8 +388,14 @@ textarea {
     cursor: pointer;
 }
 
+.subtask-text{
+    cursor: pointer;
+    word-break: break-word;
+}
+
 .description-indication{
     color: black;
+    word-break: break-word;
 }
 
 @media(max-width:650px){
