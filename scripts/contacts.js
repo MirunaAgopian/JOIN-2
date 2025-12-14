@@ -234,8 +234,10 @@ async function saveChangedData(mail){
     let areDataChanged = editDataObj.isChanged;
     if((isMailValid && isTelValid) || (areDataChanged)){
       await saveDataInStore(editDataObj);  
-    }else{
-        closeDialogEditContact();
+    }else if(!areDataChanged){
+        if(isMailValid && isTelValid){
+            closeDialogEditContact();
+        }
     }
 }
 
@@ -289,10 +291,10 @@ function checkEditInputData(editDataObj){
     for (let index = 0; index < editDataObj.keys.length; index++) {
         if(editDataObj.data.contactsResponse[editDataObj.keys[index]].mail == editDataObj.data.mailAddress){
             let changedObj = getInputFieldsEditDialog();
+            isMailValid = checkValidEmail(changedObj.mail);
+            isTelValid = checkValidTel(changedObj.phone);
             if((editDataObj.data.contactsResponse[editDataObj.keys[index]].name != changedObj.name) ||(editDataObj.data.contactsResponse[editDataObj.keys[index]].mail != changedObj.mail) ||(editDataObj.data.contactsResponse[editDataObj.keys[index]].phone != changedObj.phone)){
-                    isMailValid = checkValidEmail(changedObj.mail);
-                    isTelValid = checkValidTel(changedObj.phone);
-                    if(isMailValid && isTelValid){editDataObj.isChanged = true;}
+                if(isMailValid && isTelValid){editDataObj.isChanged = true;}
             }
             break;
         }
