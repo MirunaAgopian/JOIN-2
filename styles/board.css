@@ -13,6 +13,10 @@ h2 {
     max-height: 320px;
 }
 
+.todo:hover {
+    transform: scale(1.01);
+}
+
 
 main {
     display: flex;
