@@ -27,7 +27,9 @@ function addTaskOverlay() {
     setTimeout(() => {
         container.innerHTML = '';
     }, 1500);
-    onloadFuncBoard();
+    setTimeout(() => {
+        onloadFuncBoard();
+    }, 0);
 }
 
 /**
