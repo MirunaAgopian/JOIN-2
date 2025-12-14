@@ -73,7 +73,7 @@ main{
 
 .contacts-content{
     padding-top: 150px;
-    padding-left: 360px;
+    padding-left: 0px;
 }
 
 .head-container{
@@ -167,6 +167,12 @@ main{
 
 .invalid-input{
     border: 1px solid #E60026 !important;
+}
+
+@media(max-width:1700px){
+    .contacts-content{
+        padding-left: 360px;
+    }
 }
 
 @media(max-width:1440px){
