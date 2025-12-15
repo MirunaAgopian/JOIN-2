@@ -91,7 +91,7 @@
     margin-right: 8px;
 }
 
-@media(max-width: 1230px) {
+@media(max-width: 1290px) {
     .add-task-dialog-board .buttons {
         width: 40%;
     }
@@ -119,6 +119,7 @@
         z-index: 1000;
         flex-shrink: 0;
         height: 100px;
+        overflow-x: hidden;
     }
 
     .required-desktop {

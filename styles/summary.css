@@ -248,9 +248,22 @@ h4 {
 }
 
 /* Media queries */
+@media (max-width: 1900px){
+   .main-content {
+    padding-left: 20px;
+   }
+}
+
+@media (max-width: 1850px){
+   .main-content {
+    padding-left: 40px;
+   }
+}
+
+
 @media (max-width: 1800px){
    .main-content {
-    margin-left: 200px;
+    margin-left: 220px;
     padding-left: 20px;
    }
 }
@@ -261,7 +274,7 @@ h4 {
     }
 
     .main-content {
-        margin-top: 100px;
+        margin-top: 110px;
     }
 }
 

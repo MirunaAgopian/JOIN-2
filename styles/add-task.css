@@ -178,6 +178,7 @@ select {
     justify-content: space-between;
     align-items: center;
     width: 20%;
+    padding: 0 8px;
 } 
 
 button {

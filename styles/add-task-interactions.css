@@ -191,7 +191,8 @@ textarea.active {
 
 @media(max-width: 1500px) {
     .buttons {
-        width: 30%;
+        width: 40%;
+        padding-right: 8px;
     }
 }
 
@@ -256,6 +257,10 @@ textarea.active {
 
    .buttons button {
         padding: 12px;
+    }
+
+    .buttons {
+        width: 45%;
     }
 
     .prio-img {
