@@ -11,6 +11,10 @@ body {
     background-color: #f6f7f8;
 }
 
+body::-webkit-scrollbar {
+    display: none;
+}
+
 @font-face {
   font-display: swap;
   font-family: 'Inter';
