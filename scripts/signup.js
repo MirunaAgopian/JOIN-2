@@ -166,6 +166,7 @@ async function openSignupDialog(text) {
     closeSignupDialog(contentDialogRef);
 }
 
+
 /**
  * These subfunction of openSignupDialog will close the dialog
  * 

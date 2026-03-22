@@ -16,7 +16,6 @@ window.onload = async () => {
   renderActiveAvatar();
 };
 
-
 /**
  * Collects and returns the current task input values from the form.
  * Extracts title, description, due date, priority, assigned contacts, category, and subtasks.
@@ -28,21 +27,23 @@ window.onload = async () => {
  * @returns {string|null} return.priority - The selected priority level ("urgent", "medium", "low"), or null if none selected.
  * @returns {string[]} return.assignedTo - Array of contact identifiers (e.g., email addresses) assigned to the task.
  * @returns {string} return.category - The selected category label for the task.
- * @returns {string[]} return.subtasks - Array of subtasks, each represented as a trimmed string. 
+ * @returns {string[]} return.subtasks - Array of subtasks, each represented as a trimmed string.
  */
 function getTaskInput() {
-  const subtaskElements = document.querySelectorAll('#subtask_list .subtask-text');
+  const subtaskElements = document.querySelectorAll(
+    "#subtask_list .subtask-text",
+  );
   const subtasks = Array.from(subtaskElements).map((el, index) => {
     return { task: el.textContent.trim() };
   });
   return {
     title: document.getElementById("task_title").value.trim(),
     description: document.getElementById("task_description").value.trim(),
-    date: document.getElementById('due_date').value.trim(),
+    date: document.getElementById("due_date").value.trim(),
     priority: selectedPriority,
     assignedTo: Array.from(selectedContacts),
     category: document.getElementById("selected_category").textContent.trim(),
-    subtasks: subtasks
+    subtasks: subtasks,
   };
 }
 
@@ -57,8 +58,7 @@ function setDateStart() {
   const today = new Date();
   const todayISO = today.toISOString().split("T")[0];
   dueDateInput.setAttribute("min", todayISO);
-};
-
+}
 
 /**
  * Clears all task input fields and resets form state.
@@ -77,11 +77,11 @@ function clearTaskInput() {
  * which are marked as required fields
  */
 function resetAllFieldVisuals() {
-  document.querySelectorAll('.field-description').forEach(field => {
-    field.classList.remove('alert', 'active');
-    const alertContainer = field.querySelector('.alert-container');
+  document.querySelectorAll(".field-description").forEach((field) => {
+    field.classList.remove("alert", "active");
+    const alertContainer = field.querySelector(".alert-container");
     if (alertContainer) {
-      alertContainer.innerHTML = '';
+      alertContainer.innerHTML = "";
     }
   });
 }
@@ -90,13 +90,14 @@ function resetAllFieldVisuals() {
  * Resets basic task form fields to their default values.
  * Clears text inputs, category, contact icons, and selected contacts.
  */
-function resetBasicFields(){
+function resetBasicFields() {
   document.getElementById("task_title").value = "";
   document.getElementById("task_description").value = "";
   document.getElementById("due_date").value = "";
   document.getElementById("assigned_to").value = "";
   document.getElementById("contact_icons").innerHTML = "";
-  document.getElementById("selected_category").textContent = "Select task category";
+  document.getElementById("selected_category").textContent =
+    "Select task category";
   document.getElementById("subtask").value = "";
   selectedContacts.clear();
 }
@@ -104,7 +105,7 @@ function resetBasicFields(){
 /**
  *  Clears all subtasks from the subtask list.
  */
-function resetAllSubtasks(){
+function resetAllSubtasks() {
   const subtaskList = document.getElementById("subtask_list");
   subtaskList.innerHTML = "";
 }
@@ -131,15 +132,17 @@ function checkIfTaskIsValid(task) {
  * @returns {boolean} True if the title is valid, false if it is empty.
  */
 function checkIfTitleIsValid(title) {
-  const titleField = document.getElementById('task_title').closest('.field-description');
-  const titleAlert = titleField.querySelector('.alert-container');
+  const titleField = document
+    .getElementById("task_title")
+    .closest(".field-description");
+  const titleAlert = titleField.querySelector(".alert-container");
   if (!title) {
     titleAlert.innerHTML = getAlert();
-    titleField.classList.add('alert');
+    titleField.classList.add("alert");
     return false;
   }
-  titleAlert.innerHTML = '';
-  titleField.classList.remove('alert');
+  titleAlert.innerHTML = "";
+  titleField.classList.remove("alert");
   return true;
 }
 
@@ -152,15 +155,17 @@ function checkIfTitleIsValid(title) {
  * @returns {boolean} True if the date is valid, false if it is empty.
  */
 function checkIfDatumIsValid(date) {
-  const dateField = document.getElementById('due_date').closest('.field-description');
-  const dateAlert = dateField.querySelector('.alert-container');
+  const dateField = document
+    .getElementById("due_date")
+    .closest(".field-description");
+  const dateAlert = dateField.querySelector(".alert-container");
   if (!date) {
     dateAlert.innerHTML = getAlert();
-    dateField.classList.add('alert');
+    dateField.classList.add("alert");
     return false;
   }
-  dateAlert.innerHTML = '';
-  dateField.classList.remove('alert');
+  dateAlert.innerHTML = "";
+  dateField.classList.remove("alert");
   return true;
 }
 
@@ -177,25 +182,24 @@ function checkIfCategoryIsValid(category) {
   const { field, alert, placeholder } = getCategoryField();
   if (!category || category === "Select task category") {
     alert.innerHTML = getAlert();
-    field.classList.add('alert');
+    field.classList.add("alert");
     return false;
   }
-  alert.innerHTML = '';
-  field.classList.remove('alert');
+  alert.innerHTML = "";
+  field.classList.remove("alert");
   return true;
 }
 
 /**
  * Redirects the user to the board page once the task has been added to FireBase
  */
-function redirectUser(){
-  let container = document.getElementById('overlay_container');
+function redirectUser() {
+  let container = document.getElementById("overlay_container");
   container.innerHTML = getRedirectTemplate();
   setTimeout(() => {
-    window.location.href = './board.html'
+    window.location.href = "./board.html";
   }, 1500);
 }
-
 
 /**
  * Shows the avatars of selected contacts.
@@ -216,13 +220,18 @@ function showContactAvatar() {
  * Adds a new subtask to the list.
  * Takes the text from the input field, creates a new item, clears the input, and resets the field state.
  */
-function addSubtask(){
-  let input = document.getElementById('subtask');
-  let list = document.getElementById('subtask_list');
-  let inputValue = input.value.trim();
-  if (inputValue !== '') {
-    list.innerHTML += getAddedTasks(inputValue);
-    input.value = '';
+
+function addSubtask() {
+  const input = document.getElementById("subtask");
+  const list = document.getElementById("subtask_list");
+  const inputValue = input.value.trim();
+
+  if (inputValue !== "") {
+    list.insertAdjacentHTML("beforeend", getAddedTasks());
+    const allSubtasks = list.querySelectorAll(".subtask-text");
+    const lastSubtaskText = allSubtasks[allSubtasks.length - 1];
+    lastSubtaskText.textContent = inputValue;
+    input.value = "";
   }
   clearSubtaskInput();
 }
@@ -235,8 +244,8 @@ function addSubtask(){
  * @param {KeyboardEvent} e - The keydown event triggered when a key is pressed.
  */
 
-document.getElementById('subtask').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') {
+document.getElementById("subtask").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
     e.preventDefault();
     addSubtask();
   }
@@ -247,8 +256,8 @@ document.getElementById('subtask').addEventListener('keydown', function(e) {
  * Empties the text box and turns off the active state.
  */
 function clearSubtaskInput() {
-  let input = document.getElementById('subtask');
-  input.value = '';
+  let input = document.getElementById("subtask");
+  input.value = "";
   deactivateSubtask();
 }
 
@@ -257,19 +266,18 @@ function clearSubtaskInput() {
  * Removes the chosen subtask item and its paired edit item if present.
  * @param {HTMLElement} button - The delete button inside the subtask item.
  */
-function deleteAddedSubtask(button){
-  let li = button.closest('li');
-  if (li.classList.contains('subtask-list')) {
+function deleteAddedSubtask(button) {
+  let li = button.closest("li");
+  if (li.classList.contains("subtask-list")) {
     let editLi = li.nextElementSibling;
     li.remove();
-    if (editLi && editLi.classList.contains('subtask-edit-list')) {
+    if (editLi && editLi.classList.contains("subtask-edit-list")) {
       editLi.remove();
     }
-  }
-  else if (li.classList.contains('subtask-edit-list')) {
+  } else if (li.classList.contains("subtask-edit-list")) {
     let normalLi = li.previousElementSibling;
     li.remove();
-    if (normalLi && normalLi.classList.contains('subtask-list')) {
+    if (normalLi && normalLi.classList.contains("subtask-list")) {
       normalLi.remove();
     }
   }
@@ -281,14 +289,14 @@ function deleteAddedSubtask(button){
  * copies the current text into it, and places the cursor at the end.
  * @param {HTMLElement} button - The edit button inside the subtask item.
  */
-function openEditingEnvironment(button){
-  let normalLi = button.closest('.subtask-list');
+function openEditingEnvironment(button) {
+  let normalLi = button.closest(".subtask-list");
   let editLi = normalLi.nextElementSibling;
-  let textSpan = normalLi.querySelector('.subtask-text');
-  let editSpan = editLi.querySelector('.subtask-edit');
+  let textSpan = normalLi.querySelector(".subtask-text");
+  let editSpan = editLi.querySelector(".subtask-edit");
   editSpan.textContent = textSpan.textContent;
-  normalLi.classList.add('d-none');
-  editLi.classList.remove('d-none');
+  normalLi.classList.add("d-none");
+  editLi.classList.remove("d-none");
   editSpan.focus();
   placeCaretAtEnd(editSpan);
 }
@@ -300,8 +308,10 @@ function openEditingEnvironment(button){
  */
 function placeCaretAtEnd(el) {
   el.focus();
-  if (typeof window.getSelection != "undefined"
-    && typeof document.createRange != "undefined") {
+  if (
+    typeof window.getSelection != "undefined" &&
+    typeof document.createRange != "undefined"
+  ) {
     let range = document.createRange();
     range.selectNodeContents(el);
     range.collapse(false);
@@ -317,12 +327,12 @@ function placeCaretAtEnd(el) {
  * hides the edit field, and shows the updated subtask item.
  * @param {HTMLElement} button - The save button inside the edited subtask item.
  */
-function saveEditedSubtask(button){
-  let editLi = button.closest('.subtask-edit-list');
+function saveEditedSubtask(button) {
+  let editLi = button.closest(".subtask-edit-list");
   let normalLi = editLi.previousElementSibling;
-  let editSpan = editLi.querySelector('.subtask-edit');
-  let textSpan = normalLi.querySelector('.subtask-text');
+  let editSpan = editLi.querySelector(".subtask-edit");
+  let textSpan = normalLi.querySelector(".subtask-text");
   textSpan.textContent = editSpan.textContent;
-  editLi.classList.add('d-none');
-  normalLi.classList.remove('d-none');
+  editLi.classList.add("d-none");
+  normalLi.classList.remove("d-none");
 }

@@ -17,6 +17,7 @@ function getDialogMsgTemplate(text) {
  * @param {string} initials - includes the first characters of name and last name of clicked person
  * @returns - html tags for render function
  */
+
 function getTemplateShowContact(obj, initials) {
   return `<div class="contact-head">
               <div class="contact-circle" style="background-color:${obj.color}">
@@ -42,6 +43,7 @@ function getTemplateShowContact(obj, initials) {
             <a href="tel:${obj.phone}"><span class="phone-info-box">${obj.phone}</span></a>
           </div>`;
 }
+
 
 /**
  * This function includes the html code for the edit dialog, if the edit button is clicked on indicated contact
@@ -165,13 +167,12 @@ function getContactAvatar(contact, initials) {
 /**
  * This function generates the subtask added by the user in the dedicated input field
  * includes both the display view and the editable view
- * @param {string} text - the user's input in the subtask field
  * @returns {string} - HTML string containing two <li> elements:
  * one for subtask diplay and one for editing each subtask
  */
-function getAddedTasks(text) {
+function getAddedTasks() {
   return `<li onclick='openEditingEnvironment(this)' class="subtask-list">
-              <span class='subtask-text'>${text}</span>
+              <span class='subtask-text'></span>
               <div class='subtask-element-img-wrapper'>
                 <button class='subtask-edit-btn' title="Edit"></button>
                 <div class='subtask-btn-divider-secondary'></div>
@@ -251,7 +252,7 @@ function renderTask(todo, status) {
                 <div class="subtasks"> ${setProgress(todo.subtasks)}</div>
                 <div class="taskFooter">
                     ${assignedUserAvatar(
-                      todo.assignedTo
+                      todo.assignedTo,
                     )} <img src="../assets/img/prio_${todo.priority}.svg">
                 </div>
             </div>`;
@@ -322,7 +323,8 @@ function renderAvatar(contact) {
  */
 function renderSubtaskToDo(text, index) {
   return `<input id="subtask_${index}" type="checkbox" onchange="updateSubTask(${index})" ${
-          actualToDo.subtasks[index].checked ? "checked" : ""} class="subtask-checkbox" style="display:block;">
+    actualToDo.subtasks[index].checked ? "checked" : ""
+  } class="subtask-checkbox" style="display:block;">
           <div id="checkbox_${index}" class="checkbox-container" onclick="controlCheckbox(${index})" style="display:block;"></div>
           <span class="subtask-text" onclick="controlCheckbox(${index})">${text}</span>
           <div class="subtask-element-img-wrapper">

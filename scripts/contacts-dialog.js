@@ -129,6 +129,7 @@ async function openContactMsgDialog(text){
     await closeContactMsgDialog(contentDialogRef);
 }
 
+
 /**
  * This subfunction of openCantactMsgDialog() closes the message dialog with slide effect automaticly after 1 sec of show 
  * 
