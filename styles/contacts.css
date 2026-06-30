@@ -28,6 +28,7 @@ main{
     top: 96px;
     left: 200px;
     max-width: 352px;
+    padding-bottom: 40px;
 }
 
 .btn-add-contact-container{
