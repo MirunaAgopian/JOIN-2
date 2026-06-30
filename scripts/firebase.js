@@ -100,6 +100,7 @@ let currentDraggedElement = null;
 let contactUser = {};
 let startStatusColumn = "";
 let boardPos = {
+    boardTriage: {},
     boardToDo: {},
     boardProgress: {},
     boardFeedback: {},
@@ -178,7 +179,7 @@ function checkStatus(value) {
         return value.status;
     }
     else {
-        return "boardToDo";
+        return "boardTriage";
     }
 }
 
@@ -197,20 +198,7 @@ function checkPosition(value, statusValue) {
     }
 }
 
-/**
- * Determines the position of a task within its status column.
- * @param {Object} value - Task object.
- * @param {string} statusValue - The status column name.
- * @returns {number} Position index within the column.
- */
-function checkPosition(value, statusValue) {
-    if (value.hasOwnProperty("pos")) {
-        return value.pos;
-    }
-    else {
-        return Object.keys(boardPos[statusValue]).length;
-    }
-}
+
 
 /**
  * get all User who are assigned to the task and get their name and Avatar Color from database according to theri email adress and

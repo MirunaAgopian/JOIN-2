@@ -109,10 +109,20 @@
         </div>
       </div>
       <div class="board-content-main" id="board-Content">
+         <section id="triage" class="column">
+          <div class="columnHeader">
+            <h2>Triage</h2>
+            <!-- <button onclick="showDialogAddTask('boardTriage')">+</button> -->
+          </div>
+          <div class="drag-area" id="boardTriage" ondrop="moveTo('boardTriage', event)"
+            ondragleave="removePreview('boardTriage', event)" ondragenter="renderTaskPreview(event)"
+            ondragover="allowDrop(event, 'boardTriage')">
+          </div>
+        </section>
         <section id="toDo" class="column">
           <div class="columnHeader">
             <h2>To do</h2>
-            <button onclick="showDialogAddTask('boardToDo')">+</button>
+            <!-- <button onclick="showDialogAddTask('boardToDo')">+</button> -->
           </div>
           <div class="drag-area" id="boardToDo" ondrop="moveTo('boardToDo', event)"
             ondragleave="removePreview('boardToDo', event)" ondragenter="renderTaskPreview(event)"
@@ -122,7 +132,7 @@
         <section id="inProgress" class="column">
           <div class="columnHeader">
             <h2>In progress</h2>
-            <button onclick="showDialogAddTask('boardProgress')">+</button>
+            <!-- <button onclick="showDialogAddTask('boardProgress')">+</button> -->
           </div>
           <div class="drag-area" id="boardProgress" ondrop="moveTo('boardProgress', event)"
             ondragleave="removePreview('boardProgress', event)" ondragenter="renderTaskPreview(event)"
@@ -132,7 +142,7 @@
         <section id="Feedback" class="column">
           <div class="columnHeader">
             <h2>Await Feedback</h2>
-            <button onclick="showDialogAddTask('boardFeedback')">+</button>
+            <!-- <button onclick="showDialogAddTask('boardFeedback')">+</button> -->
           </div>
           <div class="drag-area" id="boardFeedback" ondrop="moveTo('boardFeedback', event)"
             ondragleave="removePreview('boardFeedback', event)" ondragenter="renderTaskPreview(event)"

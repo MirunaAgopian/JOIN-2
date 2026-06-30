@@ -195,6 +195,7 @@ function getAddedTasks() {
  * Wird beim Laden der Seite aufgerufen.
  */
 function updateHTML() {
+  renderTodos("boardTriage");
   renderTodos("boardToDo");
   renderTodos("boardProgress");
   renderTodos("boardFeedback");

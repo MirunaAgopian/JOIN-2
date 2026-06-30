@@ -11,6 +11,8 @@ h2 {
     margin: 10px 0;
     cursor: grab;
     max-height: 320px;
+    width: 100%;
+    max-width: 250px;
 }
 
 .todo:hover {
@@ -57,7 +59,8 @@ main {
     width: 256px;
     height: 100%;
     min-width: 250px;
-    margin-right: 64px;
+    max-width: 1fr;
+    margin-right: 40px;
 }
 
 .column:last-child {
@@ -507,11 +510,11 @@ dialog::backdrop {
 @media (max-width: 1620px) {
     .column {
         gap: 8px;
-        margin-right: 16px;
+        margin-right: 4px;
     }
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1500px) {
     .mainContent {
         height: auto;
         align-items: stretch;

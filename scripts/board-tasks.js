@@ -4,7 +4,7 @@
 async function addDialogTask() {
     let task = getTaskInput();
     if (!checkIfTaskIsValid(task)) { return; }
-    task.status = startStatusColumn;
+    task.status = 'boardTriage';
     dialogBoardTaskRev.dialog.close()
     uploadTaskToFirebase("tasks", task)
         .then((res) => {
@@ -68,8 +68,10 @@ async function deleteTask() {
  */
 function getMobileDisplayMoveStatusColumn(status) {
     switch (status) {
+        case 'boardTriage':
+            return {moveTaskUp: null, moveTaskDown: 'boardToDo'}
         case 'boardToDo':
-            return { moveTaskUp: null, moveTaskDown: 'boardProgress' }
+            return { moveTaskUp: 'boardTriage', moveTaskDown: 'boardProgress' }
         case 'boardProgress':
             return { moveTaskUp: 'boardToDo', moveTaskDown: 'boardFeedback' }
         case 'boardFeedback':
@@ -86,6 +88,8 @@ function getMobileDisplayMoveStatusColumn(status) {
  */
 function getMobileDisplayMoveStatus(status) {
     switch (status) {
+        case 'boardTriage':
+            return 'Triage'
         case 'boardToDo':
             return 'To Do'
         case 'boardProgress':
