@@ -163,6 +163,7 @@
       <section class="main-DialogContent">
         <div class="header-show-task">
           <div id="taskCategory"></div>
+          <img id="ai_label" class="ai-label " src="../assets/img/AI_generated_label.svg" alt="label stating that the ticket was generated using AI">
           <h1 class="taskHeader">Add Task</h1>
           <div class="close-btn-container">
             <button id="closeDialogBtn" class="close-btn" onclick="closeDialog()">x</button>
@@ -183,6 +184,17 @@
                 id="task_description" placeholder="Enter a description" style="display: block;"></textarea>
               <span id="description_indication" class="description-indication" style="display: none;"></span>
             </div>
+            <div class="creator-label">
+              <img id="creator_badge" src="../assets/img/member_badge.svg" alt="badge showing from who the ticket comes: member or extern">
+                <div class="creator-data">
+                  <p id="creator-lbl">Creator:</p>
+                  <p id="creator_name">Miruna Agopian</p>
+                  <div class="contact-creator-data">
+                    <img id="creator_contact" src="../assets/img/person.svg" alt="an icon to contact the task creator">
+                    <p id="creator_contact_label">Profile</p>
+                  </div>
+                </div>
+              </div>
             <div class="field-description">
               <label class="color-description" for="due_date">Due date:<span class="required">*</span></label>
               <input onfocus="handleFocus(event)" oninput="handleInput(event)" onblur="handleBlur(event)" type="date"
@@ -195,7 +207,7 @@
           <div class="priority-container">
             <section class="priority">
               <div class="field-description">
-                <span class="color-description">Priority</span>
+                <span class="color-description">Priority:</span>
                 <span id="taskPriority" class="task-priority"></span>
                 <div class="priority-stages">
                   <div onclick="setPrioColor(this)" class="txt-img urgent">
@@ -215,7 +227,7 @@
             </section>
             <section class="assigned">
               <div id="assigned_box" class="field-description assigned-to">
-                <span class="color-description">Assigned to</span>
+                <span class="color-description">Assigned to:</span>
                 <div onclick="toggleContactList()"  class="dropdown" id="assigned_to">
                   <span>Select contacts to assign</span>
                   <button>
@@ -248,7 +260,7 @@
             </section>
             <section class="subtask">
               <div class="subtask-field-description">
-                <label class="color-description" for="subtask">Subtasks</label>
+                <label class="color-description" for="subtask">Subtasks:</label>
                 <div id="subtask_wrapper" class="subtask-wrapper">
                   <input id="subtask" class="subtask-input" type="text" placeholder="Add new subtask"
                     onfocus="activateSubtask()" onblur="deactivateSubtask(event)" style="display: block;"/>

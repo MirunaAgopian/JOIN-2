@@ -17,6 +17,44 @@ body:has(dialog[open]){
     gap: 8px;
 }
 
+.creator-label {
+    margin-bottom: 8px;
+}
+
+.creator-data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+}
+
+.creator-data p {
+    color: black;
+}
+
+#creator-lbl {
+    color: #42526E;
+}
+
+.contact-creator-data {
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.contact-creator-data:hover {
+    background-color: #2a3647;
+}
+
+.contact-creator-data:hover p {
+    color: white;
+}
+
+
 input,
 textarea,
 select {
@@ -407,7 +445,7 @@ textarea {
         margin-left: 8px;
         margin-right: 8px;
         width: auto;
-        padding: 24px;
+        padding: 16px;
         left: 16px;
         right: 16px;
     }
@@ -429,5 +467,9 @@ textarea {
 
     .task-priority{
         padding-left: 42px;
+    }
+
+    .ai-label {
+        width: 120px;
     }
 }

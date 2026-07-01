@@ -221,7 +221,7 @@ function renderTodos(status) {
             class="previewTask" style="display:none;height:42px;">Preview</div>`;
   } else {
     container.innerHTML = `<div draggable="false" id="noEntry-${status}" 
-            class="noEntry">no Entry</div>
+            class="noEntry">No entry</div>
             <div draggable="false" id="Preview-${status}" 
             class="previewTask" style="display:none;height:42px;">Preview</div>`;
   }
