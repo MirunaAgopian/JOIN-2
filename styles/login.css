@@ -351,23 +351,33 @@ footer {
 }
 
 .welcome-section {
-  position: absolute;
   background-color: #2a3647;
-  height: 100vh;
+  min-height: 100svh;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
   z-index: 200;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 600ms ease-in-out;
+}
+
+.welcome-section.visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .main-container {
   background-color: white;
   width: 100%;
   max-width: 600px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
   padding: 40px 32px;
   border-radius: 16px;
+  margin: 0 8px;
+  box-sizing: border-box;
 }
 
 .header-bar {
@@ -420,6 +430,7 @@ footer {
 
 .buttons-container button:hover {
   scale: 1.1;
+  transition: 225ms ease-in-out;
 }
 
 .create-req-btn {
@@ -432,7 +443,6 @@ footer {
   background-color: inherit;
   border: 1px solid black;
 }
-
 
 @media (max-width: 768px) {
   .onlyMobile {
@@ -494,5 +504,17 @@ footer {
 @media (max-width: 450px) {
   .inputLogin {
     font-size: 16px;
+  }
+
+  .buttons-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .txt-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }

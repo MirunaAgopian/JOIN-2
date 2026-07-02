@@ -91,11 +91,16 @@ function setSplashTargetVars(splashLogo, rect) {
  * @param {HTMLElement} pageContent - The container with the rest of the page content
  */
 function runSplashAnimation(splashLogo, pageContent) {
+    let welcomeSection = document.getElementById('welcome_section');
   splashLogo.classList.add('animate');
   splashLogo.addEventListener('transitionend', () => {
     splashLogo.classList.add('d-None');
     pageContent.classList.remove('invisible');
     document.body.classList.remove("mobileBodyStart");
+
+    setTimeout(() => {
+        welcomeSection.classList.add('visible');
+    }, 150);
   }, { once: true });
 }
 
