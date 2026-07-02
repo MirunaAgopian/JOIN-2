@@ -1,0 +1,144 @@
+.page-content {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1440px;
+  padding: 0 20px;
+}
+
+
+
+.upper-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40px 100px;
+}
+
+.upper-section img {
+  cursor: pointer;
+}
+
+.upper-section span {
+  display: flex;
+  gap: 4px;
+}
+
+.upper-section span,
+p {
+  color: #29abe2;
+  font-size: 19px;
+}
+
+h1 {
+  text-align: center;
+  font-weight: bold;
+  color: #2a3647;
+  margin-bottom: 40px;
+}
+
+.middle-section p, h2 {
+  color: #2a3647;
+}
+
+.img-mobile {
+    display: none;
+}
+
+.middle-section h2 {
+    font-size: 24px;
+    font-weight: 200;
+    margin-bottom: 20px;
+}
+
+.middle-section {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.txt-photo {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.main-btn {
+    cursor: pointer;
+    background-color: #29ABE2;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 16px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.main-btn:hover {
+    background-color: #2a3647;
+}
+
+.warning {
+    background-color: #FFD2D285;
+    padding: 8px 16px;
+    border-radius: 10px;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+  position: unset;
+  transform: unset;
+  width: 300px;
+  margin: 0 auto;
+  padding: 40px 0;
+  gap: 24px;
+}
+
+footer a {
+    color: #A8A8A8;
+}
+
+footer a:hover {
+    color: #29ABE2;
+}
+
+/* Media queries */
+
+@media(max-width: 850px) {
+    .upper-section {
+        margin: 40px;
+    }
+
+    .img-mobile {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .img-pc {
+        display: none;
+    }
+   
+    .subtext {
+        margin-bottom: 40px;
+    }
+}
+
+@media(max-width: 450px) {
+    .upper-section {
+        margin: 20px 0;
+    }
+
+    .img-mobile {
+        width: 250px;
+        height: 250px;
+    }
+
+    .upper-section span, p {
+        font-size: 16px;
+    }
+}

@@ -100,8 +100,13 @@ function runSplashAnimation(splashLogo, pageContent) {
 
     setTimeout(() => {
         welcomeSection.classList.add('visible');
-    }, 150);
+    }, 50);
   }, { once: true });
+}
+
+function goToLogin(){
+    let welcomeSection = document.getElementById('welcome_section');
+    welcomeSection.classList.remove('visible');
 }
 
 /**

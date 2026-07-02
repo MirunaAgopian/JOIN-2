@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JOIN</title>
+    <link
+      rel="shortcut icon"
+      href="../assets/img/join_logo.svg"
+      type="image/x-icon"
+    />
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../styles/login.css" />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="/styles/create-request.css" />
+    <!-- JS files -->
+    <script src="../script.js" defer></script>
+    <script src="../scripts/firebase.js" defer></script>
+  </head>
+  <body>
+    <section class="page-content">
+      <header class="headerContent">
+        <div class="logo">
+          <img
+            id="headerLogo"
+            src="../assets/img/join_logo.svg"
+            alt="Join Logo"
+            class="logo"
+          />
+        </div>
+      </header>
+      <main class="main-content">
+        <section class="upper-section">
+          <a href="login.html"
+            ><img
+              src="../assets/img/arrow_left_line_default.svg"
+              alt="an arrow pointing to the left, go back arrow"
+          /></a>
+
+          <span
+            ><p>0?</p>
+            of 10 requestst used today</span
+          >
+        </section>
+        <h1>Welcome</h1>
+        <section class="middle-section">
+          <div class="txt-photo">
+            <div class="subtext">
+              <h2>
+                Easily create a ticket by sending an email — no extra steps
+                needed.
+              </h2>
+              <img
+                class="img-mobile"
+                src="../assets/img/woman_schedule.svg"
+                alt="image of a woman checking a schedule"
+              />
+              <p>
+                On this platform, you can submit your feature requests via
+                email. Our AI system will automatically generate a ticket with a
+                deadline and priority level. A total of 10 requests can be
+                created per day. After this limit, emails can still be sent, but
+                they will be manually reviewed by our team instead of generating
+                AI tickets.
+              </p>
+            </div>
+            <img
+              class="img-pc"
+              src="../assets/img/woman_schedule.svg"
+              alt="image of a woman checking a schedule"
+            />
+          </div>
+          <button class="main-btn">
+            Create e-mail request
+            <img src="../assets/img/check.svg" alt="check mark" />
+          </button>
+        </section>
+
+        <section class="middle-section d-none">
+          <div class="txt-photo">
+            <div class="subtext">
+              <h2 class="warning">
+                The daily 10-request limit has been reached!
+              </h2>
+              <img
+              class="img-mobile"
+                src="../assets/img/man_schedule.svg"
+                alt="image of a man checking a schedule"
+              />
+              <p>
+                Need more? No worries — you can still send emails, but our team
+                will review them manually instead of using AI to create tickets.
+              </p>
+            </div>
+            <img
+            class="img-pc"
+              src="../assets/img/man_schedule.svg"
+              alt="image of a man checking a schedule"
+            />
+          </div>
+          <button class="main-btn">
+            Send an e-mail
+            <img src="../assets/img/check.svg" alt="check mark" />
+          </button>
+        </section>
+      </main>
+      <footer>
+        <a href="privacy-policy-login.html">Privacy policy</a>
+        <a href="legal-notice-login.html">Legal notice</a>
+      </footer>
+    </section>
+    <div id="orientation_warning" class="landscape-view-warning d-none">
+      <p>JOIN works best in portrait mode. Please rotate your device!</p>
+      <img
+        class="device-icon"
+        src="../assets/img/device_landscape.svg"
+        alt="A tablet positioned in landscape view"
+      />
+    </div>
+  </body>
+</html>
