@@ -159,6 +159,10 @@ main {
     background: #1fd7c1;
 }
 
+.taskStatus.bug {
+    background: rgb(245, 74, 103);
+}
+
 
 .taskStatus {
     display: inline-flex;

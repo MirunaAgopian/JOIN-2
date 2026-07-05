@@ -16,6 +16,7 @@
     <!-- JS files -->
     <script src="../script.js" defer></script>
     <script src="../scripts/firebase.js" defer></script>
+    <script src="../scripts/create-request.js"></script>
   </head>
   <body>
     <section class="page-content">
@@ -70,10 +71,10 @@
               alt="image of a woman checking a schedule"
             />
           </div>
-          <button class="main-btn">
-            Create e-mail request
-            <img src="../assets/img/check.svg" alt="check mark" />
-          </button>
+            <button class="main-btn" onclick="openGmail()">
+              Create e-mail request
+              <img src="../assets/img/check.svg" alt="check mark" />
+            </button>
         </section>
 
         <section class="middle-section d-none">
@@ -83,7 +84,7 @@
                 The daily 10-request limit has been reached!
               </h2>
               <img
-              class="img-mobile"
+                class="img-mobile"
                 src="../assets/img/man_schedule.svg"
                 alt="image of a man checking a schedule"
               />
@@ -93,7 +94,7 @@
               </p>
             </div>
             <img
-            class="img-pc"
+              class="img-pc"
               src="../assets/img/man_schedule.svg"
               alt="image of a man checking a schedule"
             />
