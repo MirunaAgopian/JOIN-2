@@ -1,0 +1,564 @@
+{
+  "name": "JOIN",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -624,
+        -16
+      ],
+      "id": "36cd76b6-b716-4f9c-aa31-cf8140f99b9f",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "mgMjU7jIFClmDgXL",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const staticData = $getWorkflowStaticData('global');\nconst today = new Date().toISOString().split('T')[0];\n\nstaticData.emailCounter ??= {};\nstaticData.emailCounter[today] ??= 0;\nstaticData.emailCounter[today]++;\n\nreturn [\n  {\n    json: {\n      today,\n      count: staticData.emailCounter[today],\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -416,
+        -16
+      ],
+      "id": "22de649c-ba82-4142-bc75-b78a53f36f30",
+      "name": "Set daily e-mails limit"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "015533f0-29d7-4825-b727-f28da9653931",
+              "leftValue": "={{ $json.count }}",
+              "rightValue": 10,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -208,
+        -16
+      ],
+      "id": "f4929106-aba6-41e5-91d2-e9c6591f4a3d",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $node[\"Gmail Trigger\"].json[\"From\"].match(/<(.+)>/)[1] }}",
+        "subject": "Daily limit reached",
+        "message": "<p>Hi! You have reached your daily limit. Please try again tomorrow!</p><br/><br/><p>Your JOIN AI-assistant</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        80
+      ],
+      "id": "e2c98b4c-b548-4576-84b1-d69d2c9044b6",
+      "name": "Send a message",
+      "webhookId": "9b5377e3-aea6-4c89-95ed-6fbd756821e7",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "mgMjU7jIFClmDgXL",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $node[\"Gmail Trigger\"].json[\"id\"] }}",
+        "labelIds": [
+          "Label_4385848114994939172"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        80
+      ],
+      "id": "35c49430-0356-4cdf-9e44-826b3fc8b20d",
+      "name": "Add label \"Zu bearbeiten\" to message",
+      "webhookId": "016af86d-579b-4c4a-83f4-36af788b9ceb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "mgMjU7jIFClmDgXL",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "removeLabels",
+        "messageId": "={{ $node[\"Gmail Trigger\"].json[\"id\"] }}",
+        "labelIds": [
+          "INBOX"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        80
+      ],
+      "id": "50de4cbd-cd25-493a-bbd7-eb1ba2247628",
+      "name": "Remove label \"INBOX\" from message",
+      "webhookId": "ce1f5f35-1942-4775-ad97-4afd1fc87333",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "mgMjU7jIFClmDgXL",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cf738c03-a690-43be-b67c-27cd90d252ad",
+              "name": "from",
+              "value": "={{$node[\"Gmail Trigger\"].json[\"From\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "ddf24e23-45a9-4321-86f0-e2679d79ae41",
+              "name": "subject",
+              "value": "={{$node[\"Gmail Trigger\"].json[\"Subject\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "ca6ff120-624f-4bea-a005-73b1d5fa5a6b",
+              "name": "body",
+              "value": "={{ Buffer.from($node[\"Gmail Trigger\"].json[\"payload\"][\"parts\"][0][\"body\"][\"data\"], \"base64\").toString(\"utf8\") }}",
+              "type": "string"
+            },
+            {
+              "id": "82b60c34-a1e8-4895-83fd-f8e1c3abc170",
+              "name": "senderEmailOnly",
+              "value": "={{$node[\"Gmail Trigger\"].json[\"From\"].match(/<(.+)>/)[1]}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        -112
+      ],
+      "id": "a316a9f9-095c-48e3-80e8-f496d46003c8",
+      "name": "Edit Fields - Extract email data"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analyze the following email and generate a structured JSON object compatible with the JOIN task creation API.\n\nEmail:\nSender: {{ $json.senderEmailOnly }}\nSubject: {{ $json.subject }}\nBody: {{ $json.body }}\n\nYour tasks:\n\n1. Determine the issue category:\n   - \"user story\" → new functionality or user story\n   - \"bug\" → malfunction, error, unexpected behavior\n   - \"technical\" → refactoring, maintenance, internal technical work\n\n2. Generate a short, clear, meaningful title for the ticket.\n\n3. Determine the priority based on keywords:\n   - \"urgent\" → contains words like: urgent, critical, blocked, ASAP, immediately\n   - \"medium\" → normal requests without time pressure\n   - \"low\" → nice-to-have, optional, improvement suggestions\n\n4. Extract a deadline if present in the email.\n   - Format: YYYY-MM-DD\n\n5. IMPORTANT RULE:\n   All tickets MUST have a deadline.\n   If the email does not contain a deadline, infer a reasonable one:\n   - Default: 14 days from today\n   - Format: YYYY-MM-DD\n\n6. Create a full ticket description:\n   - Summarize the email content\n   - Add the note: \"This ticket was AI-generated.\"\n\n7. Determine the creator of the ticket:\n   - Use the extracted sender email: {{ $json.senderEmailOnly }}\n   - Extract the sender’s name from the email header if present.\n     If no name is present, infer a reasonable placeholder like \"Unknown Sender\".\n\n8. Set the ticket status:\n   - Always return \"Triage\" as the initial status.\n\n9. Mark the ticket as AI-generated:\n   - Always return aiGenerated = true.\n\nReturn ONLY the following JSON structure:\n\n{\n  \"category\": \"...\",\n  \"title\": \"...\",\n  \"priority\": \"...\",\n  \"deadline\": \"...\",\n  \"description\": \"...\",\n  \"creator\": \"{{ $json.senderEmailOnly }}\",\n  \"creatorName\": \"...\",\n  \"status\": \"Triage\",\n  \"aiGenerated\": true\n}\n",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        272,
+        -288
+      ],
+      "id": "2077f58f-0052-46bf-af90-9f988d50d27e",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        -112
+      ],
+      "id": "ae1253a8-ec29-4ee0-afa7-f7a201d8a8c0",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "qvXuBOfPieplpxIU",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "1533cbe3-6f7c-4b27-8055-7f24f2c6aeda",
+              "leftValue": "={{ $json.category }} ",
+              "rightValue": "\"user story\"",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        944,
+        -272
+      ],
+      "id": "d8082a8c-722d-4eab-89b0-badc092baf87",
+      "name": "If2 - User story"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "71b15023-298c-4da9-87f2-47b22e10c9ac",
+              "leftValue": "={{ $json.category }}",
+              "rightValue": "\"bug\"",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        640,
+        -288
+      ],
+      "id": "9bca6f90-7adb-41d8-bb55-ea2a24fb9ba9",
+      "name": "If1 - Bug"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b802cf5b-e349-4d6c-9042-ce5da94113b5",
+              "leftValue": "={{ $json.category }}",
+              "rightValue": "\"technical task\"",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1248,
+        -256
+      ],
+      "id": "442e2d6e-8b28-49ec-8616-14d65dc3804f",
+      "name": "If3 - Technical task"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"title\": \"{{$json.response.output.title}}\",\n  \"description\": \"{{$json.response.output.description}}\",\n  \"category\": \"{{$json.response.output.category}}\",\n  \"priority\": \"{{$json.response.output.priority}}\",\n  \"date\": \"{{$json.response.output.deadline}}\",\n  \"status\": \"{{$json.response.output.status}}\",\n  \"aiGenerated\": \"{{$json.response.output.aiGenerated}}\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        784,
+        -448
+      ],
+      "id": "f053569e-da2b-45aa-ab05-021704b2b322",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"title\": \"{{$json.response.output.title}}\",\n  \"description\": \"{{$json.response.output.description}}\",\n  \"category\": \"{{$json.response.output.category}}\",\n  \"priority\": \"{{$json.response.output.priority}}\",\n  \"date\": \"{{$json.response.output.deadline}}\",\n  \"status\": \"{{$json.response.output.status}}\",\n  \"aiGenerated\": \"{{$json.response.output.aiGenerated}}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1088,
+        -448
+      ],
+      "id": "d48af8ca-031a-4db6-bfad-89d9d5b9aa9c",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"title\": \"{{$json.response.output.title}}\",\n  \"description\": \"{{$json.response.output.description}}\",\n  \"category\": \"{{$json.response.output.category}}\",\n  \"priority\": \"{{$json.response.output.priority}}\",\n  \"date\": \"{{$json.response.output.deadline}}\",\n  \"status\": \"{{$json.response.output.status}}\",\n  \"aiGenerated\": \"{{$json.response.output.aiGenerated}}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1376,
+        -448
+      ],
+      "id": "609e29f7-e098-405c-a77e-2e17983060e2",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"category\": { \"type\": \"string\", \"description\": \"Ticket category: feature, bug, or technical\" },\n    \"title\": { \"type\": \"string\", \"description\": \"Short, clear title for the JOIN task\" },\n    \"description\": { \"type\": \"string\", \"description\": \"Full description including 'This ticket was AI-generated.'\" },\n    \"priority\": { \"type\": \"string\", \"description\": \"Priority level: urgent, medium, or low\" },\n    \"deadline\": { \"type\": \"string\", \"description\": \"Due date in YYYY-MM-DD format\" },\n    \"creator\": { \"type\": \"string\", \"description\": \"Email address of the ticket creator\" },\n    \"creatorName\": { \"type\": \"string\", \"description\": \"Full name of the ticket creator\" },\n    \"status\": { \"type\": \"string\", \"description\": \"Column where the ticket should appear, default 'Triage'\" },\n    \"aiGenerated\": { \"type\": \"boolean\", \"description\": \"True if created via AI automation\" }\n  },\n  \"required\": [\n    \"category\",\n    \"title\",\n    \"description\",\n    \"priority\",\n    \"deadline\",\n    \"creator\",\n    \"creatorName\",\n    \"status\",\n    \"aiGenerated\"\n  ]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        464,
+        -112
+      ],
+      "id": "ffb5e045-f5fb-4027-b4d6-94972e1183d8",
+      "name": "Structured Output Parser"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set daily e-mails limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set daily e-mails limit": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields - Extract email data",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Add label \"Zu bearbeiten\" to message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add label \"Zu bearbeiten\" to message": {
+      "main": [
+        [
+          {
+            "node": "Remove label \"INBOX\" from message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields - Extract email data": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "If1 - Bug",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1 - Bug": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If2 - User story",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2 - User story": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If3 - Technical task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3 - Technical task": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "fc9fd28d-cbfb-46a4-a0f7-bad43d5986a0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "fe409a81daabdb6ca1d5f4e52f3e01e2218bb3b89727d965240d5a05df823d4e"
+  },
+  "nodeGroups": [],
+  "id": "HoszaL2vmVMb5ofz",
+  "tags": []
+}
