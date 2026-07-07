@@ -3,38 +3,12 @@
   "nodes": [
     {
       "parameters": {
-        "pollTimes": {
-          "item": [
-            {
-              "mode": "everyMinute"
-            }
-          ]
-        },
-        "filters": {}
-      },
-      "type": "n8n-nodes-base.gmailTrigger",
-      "typeVersion": 1.4,
-      "position": [
-        -624,
-        -16
-      ],
-      "id": "36cd76b6-b716-4f9c-aa31-cf8140f99b9f",
-      "name": "Gmail Trigger",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "mgMjU7jIFClmDgXL",
-          "name": "Gmail account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "jsCode": "const staticData = $getWorkflowStaticData('global');\nconst today = new Date().toISOString().split('T')[0];\n\nstaticData.emailCounter ??= {};\nstaticData.emailCounter[today] ??= 0;\nstaticData.emailCounter[today]++;\n\nreturn [\n  {\n    json: {\n      today,\n      count: staticData.emailCounter[today],\n    },\n  },\n];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -416,
+        -544,
         -16
       ],
       "id": "22de649c-ba82-4142-bc75-b78a53f36f30",
@@ -67,7 +41,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -208,
+        -304,
         -16
       ],
       "id": "f4929106-aba6-41e5-91d2-e9c6591f4a3d",
@@ -75,31 +49,8 @@
     },
     {
       "parameters": {
-        "sendTo": "={{ $node[\"Gmail Trigger\"].json[\"From\"].match(/<(.+)>/)[1] }}",
-        "subject": "Daily limit reached",
-        "message": "<p>Hi! You have reached your daily limit. Please try again tomorrow!</p><br/><br/><p>Your JOIN AI-assistant</p>",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        0,
-        80
-      ],
-      "id": "e2c98b4c-b548-4576-84b1-d69d2c9044b6",
-      "name": "Send a message",
-      "webhookId": "9b5377e3-aea6-4c89-95ed-6fbd756821e7",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "mgMjU7jIFClmDgXL",
-          "name": "Gmail account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "operation": "addLabels",
-        "messageId": "={{ $node[\"Gmail Trigger\"].json[\"id\"] }}",
+        "messageId": "={{ $json.id }}",
         "labelIds": [
           "Label_4385848114994939172"
         ]
@@ -107,7 +58,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        208,
+        464,
         80
       ],
       "id": "35c49430-0356-4cdf-9e44-826b3fc8b20d",
@@ -115,7 +66,7 @@
       "webhookId": "016af86d-579b-4c4a-83f4-36af788b9ceb",
       "credentials": {
         "gmailOAuth2": {
-          "id": "mgMjU7jIFClmDgXL",
+          "id": "tJQVLmj7sY2V8QWH",
           "name": "Gmail account"
         }
       }
@@ -123,7 +74,7 @@
     {
       "parameters": {
         "operation": "removeLabels",
-        "messageId": "={{ $node[\"Gmail Trigger\"].json[\"id\"] }}",
+        "messageId": "={{ $json.id }}",
         "labelIds": [
           "INBOX"
         ]
@@ -131,7 +82,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        416,
+        704,
         80
       ],
       "id": "50de4cbd-cd25-493a-bbd7-eb1ba2247628",
@@ -139,7 +90,7 @@
       "webhookId": "ce1f5f35-1942-4775-ad97-4afd1fc87333",
       "credentials": {
         "gmailOAuth2": {
-          "id": "mgMjU7jIFClmDgXL",
+          "id": "tJQVLmj7sY2V8QWH",
           "name": "Gmail account"
         }
       }
@@ -150,26 +101,38 @@
           "assignments": [
             {
               "id": "cf738c03-a690-43be-b67c-27cd90d252ad",
-              "name": "from",
-              "value": "={{$node[\"Gmail Trigger\"].json[\"From\"]}}",
+              "name": "senderEmailOnly",
+              "value": "={{ \n  $('Email Trigger (IMAP)').item.json.metadata[\"from\"] \n    ? $('Email Trigger (IMAP)').item.json.metadata[\"from\"].replace(/<|>/g, '') \n    : (\n        $('Email Trigger (IMAP)').item.json.metadata[\"sender\"] \n          ? $('Email Trigger (IMAP)').item.json.metadata[\"sender\"].replace(/<|>/g, '') \n          : (\n              $('Email Trigger (IMAP)').item.json.metadata[\"reply-to\"] \n                ? $('Email Trigger (IMAP)').item.json.metadata[\"reply-to\"].replace(/<|>/g, '') \n                : $('Email Trigger (IMAP)').item.json.metadata[\"return-path\"].replace(/<|>/g, '')\n            )\n      )\n}}\n",
               "type": "string"
             },
             {
               "id": "ddf24e23-45a9-4321-86f0-e2679d79ae41",
+              "name": "senderName",
+              "value": "={{ $json.senderEmailOnly.split('@')[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "82b60c34-a1e8-4895-83fd-f8e1c3abc170",
               "name": "subject",
-              "value": "={{$node[\"Gmail Trigger\"].json[\"Subject\"]}}",
+              "value": "={{ $('Email Trigger (IMAP)').item.json.subject }}",
               "type": "string"
             },
             {
               "id": "ca6ff120-624f-4bea-a005-73b1d5fa5a6b",
               "name": "body",
-              "value": "={{ Buffer.from($node[\"Gmail Trigger\"].json[\"payload\"][\"parts\"][0][\"body\"][\"data\"], \"base64\").toString(\"utf8\") }}",
+              "value": "={{ $('Email Trigger (IMAP)').item.json.textPlain }}",
               "type": "string"
             },
             {
-              "id": "82b60c34-a1e8-4895-83fd-f8e1c3abc170",
-              "name": "senderEmailOnly",
-              "value": "={{$node[\"Gmail Trigger\"].json[\"From\"].match(/<(.+)>/)[1]}}",
+              "id": "95de41ef-75b9-4da0-ab1c-df5718b8e4f1",
+              "name": "bodyHTML",
+              "value": "={{ $('Email Trigger (IMAP)').item.json.textHtml }}",
+              "type": "string"
+            },
+            {
+              "id": "0bf375a4-7f3b-4dd7-a1fa-0a500517026a",
+              "name": "date",
+              "value": "={{ $('Email Trigger (IMAP)').item.json.metadata.received }}",
               "type": "string"
             }
           ]
@@ -188,7 +151,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Analyze the following email and generate a structured JSON object compatible with the JOIN task creation API.\n\nEmail:\nSender: {{ $json.senderEmailOnly }}\nSubject: {{ $json.subject }}\nBody: {{ $json.body }}\n\nYour tasks:\n\n1. Determine the issue category:\n   - \"user story\" → new functionality or user story\n   - \"bug\" → malfunction, error, unexpected behavior\n   - \"technical\" → refactoring, maintenance, internal technical work\n\n2. Generate a short, clear, meaningful title for the ticket.\n\n3. Determine the priority based on keywords:\n   - \"urgent\" → contains words like: urgent, critical, blocked, ASAP, immediately\n   - \"medium\" → normal requests without time pressure\n   - \"low\" → nice-to-have, optional, improvement suggestions\n\n4. Extract a deadline if present in the email.\n   - Format: YYYY-MM-DD\n\n5. IMPORTANT RULE:\n   All tickets MUST have a deadline.\n   If the email does not contain a deadline, infer a reasonable one:\n   - Default: 14 days from today\n   - Format: YYYY-MM-DD\n\n6. Create a full ticket description:\n   - Summarize the email content\n   - Add the note: \"This ticket was AI-generated.\"\n\n7. Determine the creator of the ticket:\n   - Use the extracted sender email: {{ $json.senderEmailOnly }}\n   - Extract the sender’s name from the email header if present.\n     If no name is present, infer a reasonable placeholder like \"Unknown Sender\".\n\n8. Set the ticket status:\n   - Always return \"Triage\" as the initial status.\n\n9. Mark the ticket as AI-generated:\n   - Always return aiGenerated = true.\n\nReturn ONLY the following JSON structure:\n\n{\n  \"category\": \"...\",\n  \"title\": \"...\",\n  \"priority\": \"...\",\n  \"deadline\": \"...\",\n  \"description\": \"...\",\n  \"creator\": \"{{ $json.senderEmailOnly }}\",\n  \"creatorName\": \"...\",\n  \"status\": \"Triage\",\n  \"aiGenerated\": true\n}\n",
+        "text": "=Analyze the following email and generate a structured JSON object compatible with the JOIN task creation API.\n\nEmail:\nSender: {{ $json.senderEmailOnly }}\nSender Name: {{ $json.senderName }}\nSubject: {{ $json.subject }}\nBody: {{ $json.body }}\n\nYour tasks:\n\n1. Determine the issue category:\n   - \"user story\" → new functionality or user story\n   - \"bug\" → malfunction, error, unexpected behavior\n   - \"technical\" → refactoring, maintenance, internal technical work\n\n2. Generate a short, clear, meaningful title for the ticket.\n\n3. Determine the priority based on keywords:\n   - \"urgent\" → contains words like: urgent, critical, blocked, ASAP, immediately\n   - \"medium\" → normal requests without time pressure\n   - \"low\" → nice-to-have, optional, improvement suggestions\n\n4. Extract a deadline if present in the email.\n   - Format: YYYY-MM-DD\n\n5. IMPORTANT RULE:\n   All tickets MUST have a deadline.\n   If the email does not contain a deadline, infer a reasonable one:\n   - Default: 14 days from today\n   - Format: YYYY-MM-DD\n\n6. Create a full ticket description:\n   - Summarize the email content\n   - Add the note: \"This ticket was AI-generated.\"\n\n7. Determine the creator of the ticket:\n   - Use the extracted sender email: {{ $json.senderEmailOnly }}\n   - Use the extracted sender name: {{ $json.senderName }}\n\n8. Set the ticket status:\n   - Always return \"Triage\" as the initial status.\n\n9. Mark the ticket as AI-generated:\n   - Always return aiGenerated = true.\n\nReturn ONLY the following JSON structure:\n\n{\n  \"category\": \"...\",\n  \"title\": \"...\",\n  \"priority\": \"...\",\n  \"deadline\": \"...\",\n  \"description\": \"...\",\n  \"creator\": \"{{ $json.senderEmailOnly }}\",\n  \"creatorName\": \"{{ $json.senderName }}\",\n  \"status\": \"Triage\",\n  \"aiGenerated\": true\n}",
         "hasOutputParser": true,
         "options": {}
       },
@@ -233,7 +196,7 @@
           "conditions": [
             {
               "id": "1533cbe3-6f7c-4b27-8055-7f24f2c6aeda",
-              "leftValue": "={{ $json.category }} ",
+              "leftValue": "={{ $json.response.output.category }}",
               "rightValue": "\"user story\"",
               "operator": {
                 "type": "string",
@@ -267,7 +230,7 @@
           "conditions": [
             {
               "id": "71b15023-298c-4da9-87f2-47b22e10c9ac",
-              "leftValue": "={{ $json.category }}",
+              "leftValue": "={{ $json.response.output.category }}",
               "rightValue": "\"bug\"",
               "operator": {
                 "type": "string",
@@ -301,7 +264,7 @@
           "conditions": [
             {
               "id": "b802cf5b-e349-4d6c-9042-ce5da94113b5",
-              "leftValue": "={{ $json.category }}",
+              "leftValue": "={{ $json.response.output.category }}",
               "rightValue": "\"technical task\"",
               "operator": {
                 "type": "string",
@@ -379,7 +342,7 @@
     },
     {
       "parameters": {
-        "jsonSchemaExample": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"category\": { \"type\": \"string\", \"description\": \"Ticket category: feature, bug, or technical\" },\n    \"title\": { \"type\": \"string\", \"description\": \"Short, clear title for the JOIN task\" },\n    \"description\": { \"type\": \"string\", \"description\": \"Full description including 'This ticket was AI-generated.'\" },\n    \"priority\": { \"type\": \"string\", \"description\": \"Priority level: urgent, medium, or low\" },\n    \"deadline\": { \"type\": \"string\", \"description\": \"Due date in YYYY-MM-DD format\" },\n    \"creator\": { \"type\": \"string\", \"description\": \"Email address of the ticket creator\" },\n    \"creatorName\": { \"type\": \"string\", \"description\": \"Full name of the ticket creator\" },\n    \"status\": { \"type\": \"string\", \"description\": \"Column where the ticket should appear, default 'Triage'\" },\n    \"aiGenerated\": { \"type\": \"boolean\", \"description\": \"True if created via AI automation\" }\n  },\n  \"required\": [\n    \"category\",\n    \"title\",\n    \"description\",\n    \"priority\",\n    \"deadline\",\n    \"creator\",\n    \"creatorName\",\n    \"status\",\n    \"aiGenerated\"\n  ]\n}"
+        "jsonSchemaExample": "{\n  \"category\": \"string\",\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"priority\": \"string\",\n  \"deadline\": \"string\",\n  \"creator\": \"string\",\n  \"creatorName\": \"string\",\n  \"status\": \"string\",\n  \"aiGenerated\": true\n}\n"
       },
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
@@ -389,21 +352,78 @@
       ],
       "id": "ffb5e045-f5fb-4027-b4d6-94972e1183d8",
       "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2.1,
+      "position": [
+        -800,
+        -16
+      ],
+      "id": "d0ab803d-dde4-445c-b72c-15e92636900c",
+      "name": "Email Trigger (IMAP)",
+      "credentials": {
+        "imap": {
+          "id": "IRQHUDNYg9nzvIgF",
+          "name": "IMAP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "join.notification@gmail.com",
+        "toEmail": "={{ $('Email Trigger (IMAP)').item.json.from.replace(/.*<|>.*/g, '') }}",
+        "subject": "Daily limit reached",
+        "emailFormat": "text",
+        "text": "=Hello,\n\nYou have reached today's limit of 10 feature requests.\nYou can submit new requests again tomorrow.\n\nBest regards,\nYour Join Automation Team\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        -96,
+        80
+      ],
+      "id": "b6c7b746-41ed-4290-9dfd-c6fed28ae014",
+      "name": "Send an Email",
+      "webhookId": "c7cbc835-f6a3-4758-bbba-e32b97189fb9",
+      "credentials": {
+        "smtp": {
+          "id": "f6OMU30o3YMTv0pv",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 1,
+        "filters": {
+          "q": "=rfc822msgid:{{ $('Email Trigger (IMAP)').item.json.metadata[\"message-id\"] }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        80
+      ],
+      "id": "d1011951-3ac4-481e-a644-e5232785ba11",
+      "name": "Get e-mail id",
+      "webhookId": "688a4699-3cd0-466d-960c-8a7ed303f8b5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tJQVLmj7sY2V8QWH",
+          "name": "Gmail account"
+        }
+      }
     }
   ],
   "pinData": {},
   "connections": {
-    "Gmail Trigger": {
-      "main": [
-        [
-          {
-            "node": "Set daily e-mails limit",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Set daily e-mails limit": {
       "main": [
         [
@@ -426,18 +446,7 @@
         ],
         [
           {
-            "node": "Send a message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Send a message": {
-      "main": [
-        [
-          {
-            "node": "Add label \"Zu bearbeiten\" to message",
+            "node": "Send an Email",
             "type": "main",
             "index": 0
           }
@@ -545,6 +554,44 @@
           }
         ]
       ]
+    },
+    "Email Trigger (IMAP)": {
+      "main": [
+        [
+          {
+            "node": "Set daily e-mails limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send an Email": {
+      "main": [
+        [
+          {
+            "node": "Get e-mail id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove label \"INBOX\" from message": {
+      "main": [
+        []
+      ]
+    },
+    "Get e-mail id": {
+      "main": [
+        [
+          {
+            "node": "Add label \"Zu bearbeiten\" to message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
@@ -553,7 +600,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "fc9fd28d-cbfb-46a4-a0f7-bad43d5986a0",
+  "versionId": "95e72365-891f-4ecb-b2bc-506ed8cdc124",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "fe409a81daabdb6ca1d5f4e52f3e01e2218bb3b89727d965240d5a05df823d4e"
