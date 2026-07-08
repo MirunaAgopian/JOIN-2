@@ -30,7 +30,7 @@
               "rightValue": 10,
               "operator": {
                 "type": "number",
-                "operation": "lt"
+                "operation": "equals"
               }
             }
           ],
@@ -108,7 +108,7 @@
             {
               "id": "ddf24e23-45a9-4321-86f0-e2679d79ae41",
               "name": "senderName",
-              "value": "={{ $json.senderEmailOnly.split('@')[0] }}",
+              "value": "={{ $json.senderEmailOnly ? $json.senderEmailOnly.split('@')[0] : '' }}",
               "type": "string"
             },
             {
@@ -196,8 +196,8 @@
           "conditions": [
             {
               "id": "1533cbe3-6f7c-4b27-8055-7f24f2c6aeda",
-              "leftValue": "={{ $json.response.output.category }}",
-              "rightValue": "\"user story\"",
+              "leftValue": "={{ $json.category.toLowerCase().trim() }}\n\n",
+              "rightValue": "user story",
               "operator": {
                 "type": "string",
                 "operation": "equals",
@@ -212,7 +212,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        944,
+        1088,
         -272
       ],
       "id": "d8082a8c-722d-4eab-89b0-badc092baf87",
@@ -230,8 +230,8 @@
           "conditions": [
             {
               "id": "71b15023-298c-4da9-87f2-47b22e10c9ac",
-              "leftValue": "={{ $json.response.output.category }}",
-              "rightValue": "\"bug\"",
+              "leftValue": "={{ $json.category.toLowerCase().trim() }}",
+              "rightValue": "bug",
               "operator": {
                 "type": "string",
                 "operation": "equals",
@@ -246,7 +246,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        640,
+        832,
         -288
       ],
       "id": "9bca6f90-7adb-41d8-bb55-ea2a24fb9ba9",
@@ -264,8 +264,8 @@
           "conditions": [
             {
               "id": "b802cf5b-e349-4d6c-9042-ce5da94113b5",
-              "leftValue": "={{ $json.response.output.category }}",
-              "rightValue": "\"technical task\"",
+              "leftValue": "={{ $json.category.toLowerCase().trim() }}\n",
+              "rightValue": "technical task",
               "operator": {
                 "type": "string",
                 "operation": "equals",
@@ -280,7 +280,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        1248,
+        1344,
         -256
       ],
       "id": "442e2d6e-8b28-49ec-8616-14d65dc3804f",
@@ -292,14 +292,14 @@
         "url": "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"title\": \"{{$json.response.output.title}}\",\n  \"description\": \"{{$json.response.output.description}}\",\n  \"category\": \"{{$json.response.output.category}}\",\n  \"priority\": \"{{$json.response.output.priority}}\",\n  \"date\": \"{{$json.response.output.deadline}}\",\n  \"status\": \"{{$json.response.output.status}}\",\n  \"aiGenerated\": \"{{$json.response.output.aiGenerated}}\"\n}\n",
+        "jsonBody": "=={\n  \"title\": \"{{$json.title}}\",\n  \"description\": \"{{$json.description}}\",\n  \"category\": \"{{$json.category}}\",\n  \"priority\": \"{{$json.priority}}\",\n  \"date\": \"{{$json.deadline}}\",\n  \"status\": \"{{$json.status}}\",\n  \"aiGenerated\": \"{{$json.aiGenerated}}\"\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        784,
-        -448
+        992,
+        -464
       ],
       "id": "f053569e-da2b-45aa-ab05-021704b2b322",
       "name": "HTTP Request"
@@ -310,13 +310,13 @@
         "url": "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"title\": \"{{$json.response.output.title}}\",\n  \"description\": \"{{$json.response.output.description}}\",\n  \"category\": \"{{$json.response.output.category}}\",\n  \"priority\": \"{{$json.response.output.priority}}\",\n  \"date\": \"{{$json.response.output.deadline}}\",\n  \"status\": \"{{$json.response.output.status}}\",\n  \"aiGenerated\": \"{{$json.response.output.aiGenerated}}\"\n}",
+        "jsonBody": "=={\n  \"title\": \"{{$json.title}}\",\n  \"description\": \"{{$json.description}}\",\n  \"category\": \"{{$json.category}}\",\n  \"priority\": \"{{$json.priority}}\",\n  \"date\": \"{{$json.deadline}}\",\n  \"status\": \"{{$json.status}}\",\n  \"aiGenerated\": \"{{$json.aiGenerated}}\"\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1088,
+        1248,
         -448
       ],
       "id": "d48af8ca-031a-4db6-bfad-89d9d5b9aa9c",
@@ -328,13 +328,13 @@
         "url": "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"title\": \"{{$json.response.output.title}}\",\n  \"description\": \"{{$json.response.output.description}}\",\n  \"category\": \"{{$json.response.output.category}}\",\n  \"priority\": \"{{$json.response.output.priority}}\",\n  \"date\": \"{{$json.response.output.deadline}}\",\n  \"status\": \"{{$json.response.output.status}}\",\n  \"aiGenerated\": \"{{$json.response.output.aiGenerated}}\"\n}",
+        "jsonBody": "=={\n  \"title\": \"{{$json.title}}\",\n  \"description\": \"{{$json.description}}\",\n  \"category\": \"{{$json.category}}\",\n  \"priority\": \"{{$json.priority}}\",\n  \"date\": \"{{$json.deadline}}\",\n  \"status\": \"{{$json.status}}\",\n  \"aiGenerated\": \"{{$json.aiGenerated}}\"\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1376,
+        1520,
         -448
       ],
       "id": "609e29f7-e098-405c-a77e-2e17983060e2",
@@ -420,6 +420,19 @@
           "name": "Gmail account"
         }
       }
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $json.output.category.toLowerCase().trim();\nlet normalized = 'user story';\n\nif (raw.includes('tech')) normalized = 'technical task';\nif (raw.includes('bug')) normalized = 'bug';\nif (raw.includes('story')) normalized = 'user story';\n\nreturn {\n  json: {\n    ...$json.output,\n    category: normalized\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        624,
+        -288
+      ],
+      "id": "2d814aa3-8cad-49e1-965a-3b12265e6177",
+      "name": "normalize category names"
     }
   ],
   "pinData": {},
@@ -490,7 +503,7 @@
       "main": [
         [
           {
-            "node": "If1 - Bug",
+            "node": "normalize category names",
             "type": "main",
             "index": 0
           }
@@ -592,6 +605,17 @@
           }
         ]
       ]
+    },
+    "normalize category names": {
+      "main": [
+        [
+          {
+            "node": "If1 - Bug",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
@@ -600,7 +624,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "95e72365-891f-4ecb-b2bc-506ed8cdc124",
+  "versionId": "306fcad7-5d5c-4925-b429-a08ed5006b44",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "fe409a81daabdb6ca1d5f4e52f3e01e2218bb3b89727d965240d5a05df823d4e"
