@@ -3,91 +3,92 @@ let todos = [];
 
 /**
  * This variable includes the url of firebase where the datas of project are stored
- * 
+ *
  */
-const BASE_URL = 'https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/';
+const BASE_URL =
+  "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/";
 
 /** loads all useres that are stored in the database
  * @param {string} path ky of the first Level of database
  * @returns json of the reqest  */
-async function loadData(path = ''){
-    let response = await fetch(BASE_URL + path + '.json');
-    let responseAtJson = await response.json();
-    return responseAtJson;
+async function loadData(path = "") {
+  let response = await fetch(BASE_URL + path + ".json");
+  let responseAtJson = await response.json();
+  return responseAtJson;
 }
 
 /**
  * This function uses the POST method and is used for editing contacts in contact list
- * 
- * @param {String} path - includes the url for firebase to find the correct contact 
- * @param {Object} data - includes the new data of contact 
+ *
+ * @param {String} path - includes the url for firebase to find the correct contact
+ * @param {Object} data - includes the new data of contact
  */
-async function postData(path='', data={}){
-    let response = await fetch(BASE_URL + path + '.json', {
-        method : "POST",
-        header : {
-            "Content-type" : "application/json"
-        },
-        body : JSON.stringify(data)
-    });
+async function postData(path = "", data = {}) {
+  let response = await fetch(BASE_URL + path + ".json", {
+    method: "POST",
+    header: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 }
 
 /**
  * This function uses the DELETE method for deleting datas in firebase
- * 
- * @param {String} path - includes the url for the correct data object in firebase 
+ *
+ * @param {String} path - includes the url for the correct data object in firebase
  * @returns - a json object with filled data of request
  */
-async function deleteData(path=''){
-    let response = await fetch(BASE_URL + path + '.json', {
-        method : "DELETE"
-    });
-    return resonseToJson = await response.json();
+async function deleteData(path = "") {
+  let response = await fetch(BASE_URL + path + ".json", {
+    method: "DELETE",
+  });
+  return (resonseToJson = await response.json());
 }
 
 /**
  * This function uses the PUT method for firebase to create a new user in signup or ceates a new contact in contact list
- * 
- * @param {String} path - includes the url for put the new object in firebase 
- * @param {Object} data - includes the data object filled with new data 
+ *
+ * @param {String} path - includes the url for put the new object in firebase
+ * @param {Object} data - includes the data object filled with new data
  */
-async function putData(path='', data = {}){
-    await fetch(BASE_URL + path + '.json', {
-        method : "PUT",
-        header : {
-            "Content-type" : "application/json"
-        },
-        body : JSON.stringify(data)
-    });
+async function putData(path = "", data = {}) {
+  await fetch(BASE_URL + path + ".json", {
+    method: "PUT",
+    header: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 }
 
 /**
  * This function is used to load all signed users of firebase
- * 
+ *
  * @param {String} path - includes the firebase url of users object in firebase
  * @returns - a json object filled with data of request
  */
-async function getAllUsers(path = ''){
-    let response = await fetch(BASE_URL + path + '.json');
-    let responseAtJson = await response.json();
-    return responseAtJson;
+async function getAllUsers(path = "") {
+  let response = await fetch(BASE_URL + path + ".json");
+  let responseAtJson = await response.json();
+  return responseAtJson;
 }
 
 /**
  * Updates specific fields of a record in the database using HTTP PATCH.
- * Only the provided keys in the data object will be modified, 
+ * Only the provided keys in the data object will be modified,
  * leaving all other fields of the record unchanged.
  *
- * @param {string} path - The relative path in the database 
- * @param {Object} data - Key-value pairs to update 
+ * @param {string} path - The relative path in the database
+ * @param {Object} data - Key-value pairs to update
  * @returns {Promise<void>} - Resolves when the update request has completed.
  */
-async function patchData(path = '', data = {}) {
+async function patchData(path = "", data = {}) {
   try {
-    await fetch(BASE_URL + path + '.json', {
+    await fetch(BASE_URL + path + ".json", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
   } catch (err) {
     console.error("patchData Error:", err);
@@ -99,11 +100,11 @@ let currentDraggedElement = null;
 let contactUser = {};
 let startStatusColumn = "";
 let boardPos = {
-    boardTriage: {},
-    boardToDo: {},
-    boardProgress: {},
-    boardFeedback: {},
-    boardDone: {}
+  boardTriage: {},
+  boardToDo: {},
+  boardProgress: {},
+  boardFeedback: {},
+  boardDone: {},
 };
 let actualToDo = null;
 let desiredPos = null;
@@ -113,12 +114,12 @@ let desiredPos = null;
  * and renders the UI.
  */
 async function onloadFuncBoard() {
-    const ALL_TASKS = await loadData('tasks');
-    todos = getTaskArr(ALL_TASKS);
-    const ALL_USER = await loadData("contacts");
-    contactUser = getUserData(ALL_USER);
-    updateHTML();
-    renderActiveAvatar();
+  const ALL_TASKS = await loadData("tasks");
+  todos = getTaskArr(ALL_TASKS);
+  const ALL_USER = await loadData("contacts");
+  contactUser = getUserData(ALL_USER);
+  updateHTML();
+  renderActiveAvatar();
 }
 
 /**
@@ -126,19 +127,22 @@ async function onloadFuncBoard() {
  * Filters tasks if the search string has not enought characters.
  */
 async function processChanges() {
-    const ALL_TASKS = await loadData('tasks');
-    const searchValue = document.getElementById("searchBoard").value.toLowerCase();
+  const ALL_TASKS = await loadData("tasks");
+  const searchValue = document
+    .getElementById("searchBoard")
+    .value.toLowerCase();
 
-    if (searchValue.length > 2) {
-        const allTodos = getTaskArr(ALL_TASKS);
-        todos = allTodos.filter(todo =>
-            todo.title.toLowerCase().includes(searchValue) ||
-            todo.description.toLowerCase().includes(searchValue)
-        );
-    } else {
-        todos = getTaskArr(ALL_TASKS);
-    }
-    updateHTML();
+  if (searchValue.length > 2) {
+    const allTodos = getTaskArr(ALL_TASKS);
+    todos = allTodos.filter(
+      (todo) =>
+        todo.title.toLowerCase().includes(searchValue) ||
+        todo.description.toLowerCase().includes(searchValue),
+    );
+  } else {
+    todos = getTaskArr(ALL_TASKS);
+  }
+  updateHTML();
 }
 
 /**
@@ -147,25 +151,27 @@ async function processChanges() {
  * @returns {Array<Object>} Array of task objects.
  */
 function getTaskArr(ALL_TASKS) {
-    const arr = [];
-    for (const [key, value] of Object.entries(ALL_TASKS)) {
-        let statusValue = checkStatus(value);
-        let posValue = checkPosition(value, statusValue);
-        arr.push({
-            id: key,
-            title: value.title,
-            description: value.description,
-            category: value.category,
-            date: value.date,
-            pos: posValue,
-            priority: value.priority,
-            subtasks: value.subtasks,
-            assignedTo: value.assignedTo,
-            status: statusValue
-        });
-        boardPos[statusValue][key] = posValue;
-    }
-    return arr;
+  const arr = [];
+  for (const [key, value] of Object.entries(ALL_TASKS)) {
+    // let statusValue = checkStatus(value);
+    let statusValue = normalizeStatus(value.status);
+    let posValue = checkPosition(value, statusValue);
+    arr.push({
+      id: key,
+      title: value.title,
+      description: value.description,
+      category: value.category,
+      date: value.date,
+      pos: posValue,
+      priority: value.priority,
+      subtasks: value.subtasks,
+      assignedTo: value.assignedTo,
+      status: statusValue,
+      aiGenerated: value.aiGenerated
+    });
+    boardPos[statusValue][key] = posValue;
+  }
+  return arr;
 }
 
 /**
@@ -174,12 +180,11 @@ function getTaskArr(ALL_TASKS) {
  * @returns {string} Status column name.
  */
 function checkStatus(value) {
-    if (value.hasOwnProperty("status")) {
-        return value.status;
-    }
-    else {
-        return "boardTriage";
-    }
+  if (value.hasOwnProperty("status")) {
+    return value.status;
+  } else {
+    return "boardTriage";
+  }
 }
 
 /**
@@ -189,15 +194,14 @@ function checkStatus(value) {
  * @returns {number} Position index within the column.
  */
 function checkPosition(value, statusValue) {
-    if (value.hasOwnProperty("pos")) {
-        return value.pos;
-    }
-    else {
-        return Object.keys(boardPos[statusValue]).length;
-    }
+  if (value.hasOwnProperty("pos")) {
+    return value.pos;
+  }
+  if (!boardPos[statusValue]) {
+    boardPos[statusValue] = {};
+  }
+  return Object.keys(boardPos[statusValue]).length;
 }
-
-
 
 /**
  * get all User who are assigned to the task and get their name and Avatar Color from database according to theri email adress and
@@ -205,25 +209,24 @@ function checkPosition(value, statusValue) {
  * @returns {Object} Map of users keyed by email with name and color.
  */
 function getUserData(usersObj) {
-    const USERS_ARRAY = Object.values(usersObj);
-    const USERS = {};
-    for (const user of USERS_ARRAY) {
-        USERS[user.mail] = {
-            name: user.name,
-            color: user.color
-        };
-    }
-    return USERS;
+  const USERS_ARRAY = Object.values(usersObj);
+  const USERS = {};
+  for (const user of USERS_ARRAY) {
+    USERS[user.mail] = {
+      name: user.name,
+      color: user.color,
+    };
+  }
+  return USERS;
 }
 
 // Transferred from add-task.js
 
-/** 
- * Array storing all created tasks. 
+/**
+ * Array storing all created tasks.
  * Each task is represented as an object with title, description, date, priority, assigned contacts, category, and subtasks.
  */
 let tasks = [];
-
 
 /**
  * Uploads a task object to Firebase using a POST request.
@@ -266,7 +269,6 @@ async function showContactList() {
   });
 }
 
-
 /**
  * Retrieves the logged-in user from session storage and sorts contacts.
  * Ensures the logged-in user appears first in the list.
@@ -305,3 +307,26 @@ function addTask() {
     });
   redirectUser();
 }
+
+/**
+ * Transforms the name of the status to match the key in firebase
+ */
+function normalizeStatus(status) {
+  if (!status) return "boardTriage";
+  const s = status.toLowerCase();
+
+  if (s === "boardtriage") return "boardTriage";
+  if (s === "boardtodo") return "boardToDo";
+  if (s === "boardprogress") return "boardProgress";
+  if (s === "boardfeedback") return "boardFeedback";
+  if (s === "boarddone") return "boardDone";
+
+  if (s === "triage") return "boardTriage";
+  if (s === "todo") return "boardTriage";
+  if (s === "progress") return "boardTriage";
+  if (s === "feedback") return "boardTriage";
+  if (s === "done") return "boardTriage";
+
+  return "boardTriage";
+}
+

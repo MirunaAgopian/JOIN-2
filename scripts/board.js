@@ -70,6 +70,7 @@ async function showDialogTask(id) {
 
   await prepareDialogForTask();
   fillDialogFields(actualToDo);
+  showAILabel(actualToDo);
   renderDialogActions();
   getAssignedUser();
 }
@@ -257,6 +258,20 @@ function autoResizeTextarea(element) {
  */
 async function timeout(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+
+function showAILabel(task) {
+    const label = document.getElementById("ai_label");
+    if (!label) return;
+
+    const isAI = task.aiGenerated === "true";
+
+    if (isAI) {
+        label.classList.remove("d-none");
+    } else {
+        label.classList.add("d-none");
+    }
 }
 
 
