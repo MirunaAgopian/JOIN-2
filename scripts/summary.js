@@ -31,6 +31,8 @@ function countTask(){
     let countInProgress = 0;
     let countAwaitingFeedback = 0;
     let countUrgentTasks = 0;
+    let countAITasks = 0;
+    let countTriage = 0;
     for(let index = 0; index < todos.length; index++){
         if(todos[index].status == 'boardToDo'){
             countToDo++;
@@ -40,12 +42,17 @@ function countTask(){
             countInProgress++;
         } else if(todos[index].status == 'boardFeedback') {
             countAwaitingFeedback++;
+        } else if(todos[index].status == 'boardTriage') {
+            countTriage++;
         }
         if(todos[index].priority == 'urgent' && todos[index].status !== 'boardDone'){
             countUrgentTasks++;
         }
+        if(todos[index].aiGenerated == "true") {
+            countAITasks ++;
+        }
     }
-    return returnNumberOfTasks(countToDo, countDone, countInProgress, countAwaitingFeedback, countUrgentTasks);
+    return returnNumberOfTasks(countToDo, countDone, countInProgress, countAwaitingFeedback, countUrgentTasks, countAITasks, countTriage);
 }
 
 /**
@@ -55,16 +62,20 @@ function countTask(){
  * @param {number} inProgress - number of tasks with the status 'boardProgress'
  * @param {number} awaitingFeedback - number of tasks with the status 'boardFeedback'
  * @param {number} urgent - number of tasks with the priority 'urgent'
+ * @param {number} triage - number of tasks wit the status 'boardTriage'
+ * @param {boolean} AITask - number or task created from n8n AI
  * @returns {Object} - Object containing the number of tasks for each category and their total
  */
-function returnNumberOfTasks(toDo, done, inProgress, awaitingFeedback, urgent){
+function returnNumberOfTasks(toDo, done, inProgress, awaitingFeedback, urgent, AITask, triage){
     return {
         toDo: toDo,
         done: done,
         inProgress: inProgress,
         awaitingFeedback: awaitingFeedback,
         urgent: urgent,
-        total: toDo + done + inProgress + awaitingFeedback
+        triage: triage,
+        AITask: AITask,
+        total: toDo + done + inProgress + awaitingFeedback + triage
     };
 }
 
@@ -80,6 +91,7 @@ function insertNumbers(){
     let awaitingFeedback = document.getElementById('awaiting_feedback');
     let urgentTasks = document.getElementById('urgent_tasks_number');
     let total = document.getElementById('total');
+    let aiTasks = document.getElementById('ai_tasks');
     let numbers = countTask();
     toDo.innerHTML = `${numbers.toDo}`;
     done.innerHTML = `${numbers.done}`;
@@ -87,6 +99,7 @@ function insertNumbers(){
     awaitingFeedback.innerHTML = `${numbers.awaitingFeedback}`;
     urgentTasks.innerHTML = `${numbers.urgent}`
     total.innerHTML = `${numbers.total}`
+    aiTasks.innerHTML = `${numbers.AITask}`
 }
 
 /**

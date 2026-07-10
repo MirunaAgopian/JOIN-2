@@ -153,7 +153,6 @@ async function processChanges() {
 function getTaskArr(ALL_TASKS) {
   const arr = [];
   for (const [key, value] of Object.entries(ALL_TASKS)) {
-    // let statusValue = checkStatus(value);
     let statusValue = normalizeStatus(value.status);
     let posValue = checkPosition(value, statusValue);
     arr.push({

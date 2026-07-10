@@ -260,18 +260,57 @@ async function timeout(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+//added now!!
 
 function showAILabel(task) {
-    const label = document.getElementById("ai_label");
-    if (!label) return;
+  const label = document.getElementById("ai_label");
+  if (!label) return;
 
-    const isAI = task.aiGenerated === "true";
+  const isAI = task.aiGenerated === "true";
 
-    if (isAI) {
-        label.classList.remove("d-none");
-    } else {
-        label.classList.add("d-none");
-    }
+  if (isAI) {
+    label.classList.remove("d-none");
+    changeCreatorBadge();
+  } else {
+    label.classList.add("d-none");
+    resetCreatorBadge();
+  }
+
+   changeCreatorName(task);
 }
 
+function changeCreatorBadge(task) {
+  const badge = document.getElementById("creator_badge");
+  const creatorProfileIcon = document.getElementById("creator_contact");
+  const creatorLabel = document.getElementById("creator_contact_label");
 
+  badge.src = "../assets/img/extern_badge.svg";
+  creatorProfileIcon.src = "../assets/img/attach_email.svg";
+  creatorLabel.innerText = "E-mail";
+  const creatorEmail = task.creatorEmail || "unknown@example.com";
+  creatorProfileIcon.onclick = () => {
+    window.location.href = `mailto:${creatorEmail}`;
+  };
+}
+
+function changeCreatorName(task) {
+  const creatorNameContainer = document.getElementById("creator_name");
+  const name =
+    task.creatorName && task.creatorName.trim()
+      ? task.creatorName
+      : "Unknown user";
+
+  creatorNameContainer.innerText = name;
+}
+
+function resetCreatorBadge() {
+  const badge = document.getElementById("creator_badge");
+  const creatorProfileIcon = document.getElementById("creator_contact");
+  const creatorLabel = document.getElementById("creator_contact_label");
+
+  badge.src = "../assets/img/member_badge.svg";
+  creatorProfileIcon.src = "../assets/img/person.svg";
+  creatorLabel.innerText = "Profile";
+
+  creatorProfileIcon.onclick = null;
+}
