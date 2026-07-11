@@ -145,6 +145,7 @@ async function processChanges() {
   updateHTML();
 }
 
+
 /**
  * Converts a user object into an array of task objects with status and position.
  * @param {Object} ALL_TASKS - Object containing tasks keyed by ID.
@@ -166,7 +167,9 @@ function getTaskArr(ALL_TASKS) {
       subtasks: value.subtasks,
       assignedTo: value.assignedTo,
       status: statusValue,
-      aiGenerated: value.aiGenerated
+      aiGenerated: value.aiGenerated,
+      creatorEmail: value.creatorEmail || null,
+      creatorName: value.creatorName || null
     });
     boardPos[statusValue][key] = posValue;
   }

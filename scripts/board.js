@@ -59,6 +59,20 @@ function showDialogAddTask(column) {
   startStatusColumn = column;
 }
 
+//added now!!!!!!
+function resolveAssignedContacts(task, contacts) {
+  if (typeof task.assignedTo === "string") {
+    const name = task.assignedTo.trim();
+    const match = contacts.find((c) => c.name === name);
+    return match ? [match.mail] : [];
+  }
+  if (Array.isArray(task.assignedTo)) {
+    return task.assignedTo;
+  }
+  return [];
+}
+//added now!!!!!!
+
 /**
  * Shows the dialog with the values of the selected task.
  * @param {string} id - The ID of the task in the database.
@@ -67,6 +81,7 @@ async function showDialogTask(id) {
   isShowTaskActive = true;
   actualToDo = todos.find((t) => t.id === id);
   currentDraggedElement = id;
+  // actualToDo.assignedTo = resolveAssignedContacts(actualToDo, contacts);
 
   await prepareDialogForTask();
   fillDialogFields(actualToDo);
@@ -265,18 +280,15 @@ async function timeout(ms) {
 function showAILabel(task) {
   const label = document.getElementById("ai_label");
   if (!label) return;
-
   const isAI = task.aiGenerated === "true";
-
   if (isAI) {
     label.classList.remove("d-none");
-    changeCreatorBadge();
+    changeCreatorBadge(task);
   } else {
     label.classList.add("d-none");
     resetCreatorBadge();
   }
-
-   changeCreatorName(task);
+  changeCreatorName(task);
 }
 
 function changeCreatorBadge(task) {
@@ -289,7 +301,7 @@ function changeCreatorBadge(task) {
   creatorLabel.innerText = "E-mail";
   const creatorEmail = task.creatorEmail || "unknown@example.com";
   creatorProfileIcon.onclick = () => {
-    window.location.href = `mailto:${creatorEmail}`;
+    window.location.href = `mailto:${creatorEmail}`, "_blank";
   };
 }
 
