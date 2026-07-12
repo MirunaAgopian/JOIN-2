@@ -145,7 +145,6 @@ async function processChanges() {
   updateHTML();
 }
 
-
 /**
  * Converts a user object into an array of task objects with status and position.
  * @param {Object} ALL_TASKS - Object containing tasks keyed by ID.
@@ -169,7 +168,7 @@ function getTaskArr(ALL_TASKS) {
       status: statusValue,
       aiGenerated: value.aiGenerated,
       creatorEmail: value.creatorEmail || null,
-      creatorName: value.creatorName || null
+      creatorName: value.creatorName || null,
     });
     boardPos[statusValue][key] = posValue;
   }
@@ -295,6 +294,8 @@ function checkForLoggedInUser() {
  */
 function addTask() {
   let task = getTaskInput();
+  getCreatorContact(task);
+
   if (!checkIfTaskIsValid(task)) {
     return;
   }
@@ -308,6 +309,19 @@ function addTask() {
       console.error("Upload failed:", err);
     });
   redirectUser();
+}
+
+/**
+ * Selects the name of the contact creating the ticket
+ * and assigns it into the ticket as creatorName
+ */
+function getCreatorContact(task) {
+  const loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
+  const contact = joinContacts.find((c) => c.mail === loggedInUser.mail);
+
+  task.creatorName = loggedInUser.name;
+  task.creatorEmail = loggedInUser.mail;
+  task.creatorContactId = contact ? contact.id : null;
 }
 
 /**
@@ -331,4 +345,3 @@ function normalizeStatus(status) {
 
   return "boardTriage";
 }
-

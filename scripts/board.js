@@ -279,31 +279,56 @@ async function timeout(ms) {
 
 function showAILabel(task) {
   const label = document.getElementById("ai_label");
+  changeCreatorName(task);
   if (!label) return;
   const isAI = task.aiGenerated === "true";
   if (isAI) {
     label.classList.remove("d-none");
-    changeCreatorBadge(task);
+    addExternalCreatorBadge(task);
   } else {
     label.classList.add("d-none");
-    resetCreatorBadge();
+    addInternalCreatorBadge(task);
   }
-  changeCreatorName(task);
 }
 
-function changeCreatorBadge(task) {
+function addExternalCreatorBadge(task) {
   const badge = document.getElementById("creator_badge");
   const creatorProfileIcon = document.getElementById("creator_contact");
   const creatorLabel = document.getElementById("creator_contact_label");
+  const creatorContainer = document.getElementById("container_contact_creator");
 
   badge.src = "../assets/img/extern_badge.svg";
   creatorProfileIcon.src = "../assets/img/attach_email.svg";
   creatorLabel.innerText = "E-mail";
+
   const creatorEmail = task.creatorEmail || "unknown@example.com";
-  creatorProfileIcon.onclick = () => {
-    window.location.href = `mailto:${creatorEmail}`, "_blank";
+
+  creatorContainer.onclick = () => {
+    ((window.location.href = `mailto:${creatorEmail}`), "_blank");
   };
 }
+
+function addInternalCreatorBadge(task) {
+  const badge = document.getElementById("creator_badge");
+  const creatorProfileIcon = document.getElementById("creator_contact");
+  const creatorLabel = document.getElementById("creator_contact_label");
+  const creatorContainer = document.getElementById("container_contact_creator");
+
+  badge.src = "../assets/img/member_badge.svg";
+  creatorProfileIcon.src = "../assets/img/person.svg";
+  creatorLabel.innerText = "Profile";
+
+  if (task.creatorContactId) {
+    creatorContainer.onclick = () => {
+      window.location.href = `contacts.html?id=${task.creatorContactId}`;
+    };
+  } else {
+    creatorContainer.onclick = () => {
+      window.location.href = "contacts.html";
+    };
+  }
+}
+
 
 function changeCreatorName(task) {
   const creatorNameContainer = document.getElementById("creator_name");
@@ -313,16 +338,4 @@ function changeCreatorName(task) {
       : "Unknown user";
 
   creatorNameContainer.innerText = name;
-}
-
-function resetCreatorBadge() {
-  const badge = document.getElementById("creator_badge");
-  const creatorProfileIcon = document.getElementById("creator_contact");
-  const creatorLabel = document.getElementById("creator_contact_label");
-
-  badge.src = "../assets/img/member_badge.svg";
-  creatorProfileIcon.src = "../assets/img/person.svg";
-  creatorLabel.innerText = "Profile";
-
-  creatorProfileIcon.onclick = null;
 }

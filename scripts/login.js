@@ -164,8 +164,6 @@ function rightUserLogin(selUser) {
     };
 
     sessionStorage.setItem("loggedInUser", JSON.stringify(ACTUAL_USER));
-
-    //sessionStorage.setItem("loggedInUser", selUser.name);
     window.location.href = './summary.html';
 }
 

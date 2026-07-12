@@ -63,6 +63,7 @@ function fillArrayOfContacts(objKeysArr, contactsObj) {
   let amountOfContacts = keysArr.length;
   for (let index = 0; index < amountOfContacts; index++) {
     joinContacts.push({
+      id:keysArr[index],
       name: `${contactsObj[keysArr[index]].name}`,
       mail: `${contactsObj[keysArr[index]].mail}`,
       phone: `${contactsObj[keysArr[index]].phone}`,

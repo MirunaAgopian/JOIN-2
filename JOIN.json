@@ -118,7 +118,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Analyze the following email and generate a structured JSON object compatible with the JOIN task creation API.\n\nEmail:\nSender: {{ $json.senderEmailOnly }}\nSender Name: {{ $json.senderName }}\nSubject: {{ $json.subject }}\nBody: {{ $json.body }}\n\nYour tasks:\n\n1. Determine the issue category:\n   - \"user story\" → new functionality or user story\n   - \"bug\" → malfunction, error, unexpected behavior\n   - \"technical\" → refactoring, maintenance, internal technical work\n\n2. Generate a short, clear, meaningful title for the ticket.\n\n3. Determine the priority based on keywords:\n   - \"urgent\" → contains words like: urgent, critical, blocked, ASAP, immediately\n   - \"medium\" → normal requests without time pressure\n   - \"low\" → nice-to-have, optional, improvement suggestions\n\n4. Extract a deadline if present in the email.\n   - Format: YYYY-MM-DD\n\n5. IMPORTANT RULE:\n   All tickets MUST have a deadline.\n   If the email does not contain a deadline, infer a reasonable one:\n   - Default: 14 days from today\n   - Format: YYYY-MM-DD\n\n6. Create a full ticket description:\n   - Summarize the email content\n   - Add the note: \"This ticket was AI-generated.\"\n\n7. Determine the creator of the ticket:\n   - Use the extracted sender email: {{ $json.senderEmailOnly }}\n   - Use the extracted sender name: {{ $json.senderName }}\n\n8. Set the ticket status:\n   - Always return \"Triage\" as the initial status.\n\n9. Mark the ticket as AI-generated:\n   - Always return aiGenerated = true.\n\nReturn ONLY the following JSON structure:\n\n{\n  \"category\": \"...\",\n  \"title\": \"...\",\n  \"priority\": \"...\",\n  \"deadline\": \"...\",\n  \"description\": \"...\",\n  \"creator\": \"{{ $json.senderEmailOnly }}\",\n  \"creatorName\": \"{{ $json.senderName }}\",\n  \"status\": \"Triage\",\n  \"aiGenerated\": true,\n  \"assignedTo\": \"...\"\n}",
+        "text": "=Analyze the following email and generate a structured JSON object compatible with the JOIN task creation API.\n\nEmail:\nSender: {{ $json.senderEmailOnly }}\nSender Name: {{ $json.senderName }}\nSubject: {{ $json.subject }}\nBody: {{ $json.body }}\n\nYour tasks:\n\n1. Determine the issue category:\n   - \"user story\" → new functionality or user story\n   - \"bug\" → malfunction, error, unexpected behavior\n   - \"technical\" → refactoring, maintenance, internal technical work\n\n2. Generate a short, clear, meaningful title for the ticket.\n\n3. Determine the priority based on keywords:\n   - \"urgent\" → contains words like: urgent, critical, blocked, ASAP, immediately\n   - \"medium\" → normal requests without time pressure\n   - \"low\" → nice-to-have, optional, improvement suggestions\n\n4. Extract a deadline if present in the email.\n   - Format: YYYY-MM-DD\n\n5. IMPORTANT RULE:\n   All tickets MUST have a deadline.\n   If the email does not contain a deadline, infer a reasonable one:\n   - Default: 14 days from today\n   - Format: YYYY-MM-DD\n\n6. Create a full ticket description:\n   - Summarize the email content\n   - Add the note: \"This ticket was AI-generated.\"\n\n7. Determine the creator of the ticket:\n   - Use the extracted sender email: {{ $json.senderEmailOnly }}\n   - Use the extracted sender name: {{ $json.senderName }}\n\n8. Set the ticket status:\n   - Always return \"Triage\" as the initial status.\n\n9. Mark the ticket as AI-generated:\n   - Always return aiGenerated = true.\n\n10. Extract subtasks:\n   - Look for bullet points, lists, requirements, or multiple actions in the email.\n   - Convert each item into a JOIN-compatible subtask object.\n   - Each subtask must have:\n       \"checked\": false,\n       \"task\": \"<short actionable description>\"\n   - If no subtasks are present, infer 1–2 meaningful subtasks based on the email content.\n\nReturn ONLY the following JSON structure:\n\n{\n  \"category\": \"...\",\n  \"title\": \"...\",\n  \"priority\": \"...\",\n  \"deadline\": \"...\",\n  \"description\": \"...\",\n  \"creator\": \"{{ $json.senderEmailOnly }}\",\n  \"creatorName\": \"{{ $json.senderName }}\",\n  \"status\": \"Triage\",\n  \"aiGenerated\": true,\n  \"assignedTo\": \"...\",\n  \"subtasks\": [\n    {\n      \"checked\": false,\n      \"task\": \"...\"\n    },\n    {\n      \"checked\": false,\n      \"task\": \"...\"\n    }\n  ]\n}",
         "hasOutputParser": true,
         "options": {}
       },
@@ -298,6 +298,10 @@
             {
               "name": "assignedTo",
               "value": "={{ $json.assignedTo }}"
+            },
+            {
+              "name": "subtasks",
+              "value": "={{ $json.subtasks }}"
             }
           ]
         },
@@ -359,6 +363,10 @@
             {
               "name": "assignedTo",
               "value": "={{ $json.assignedTo }}"
+            },
+            {
+              "name": "subtasks",
+              "value": "={{ $json.subtasks }}"
             }
           ]
         },
@@ -375,7 +383,7 @@
     },
     {
       "parameters": {
-        "jsonSchemaExample": "{\n  \"category\": \"string\",\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"priority\": \"string\",\n  \"deadline\": \"string\",\n  \"creator\": \"string\",\n  \"creatorName\": \"string\",\n  \"status\": \"string\",\n  \"aiGenerated\": true,\n  \"assignedTo\": \"string\"\n}\n"
+        "jsonSchemaExample": "{\n  \"category\": \"string\",\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"priority\": \"string\",\n  \"deadline\": \"string\",\n  \"creator\": \"string\",\n  \"creatorName\": \"string\",\n  \"status\": \"string\",\n  \"aiGenerated\": true,\n  \"assignedTo\": \"string\",\n  \"subtasks\": [\n    {\n      \"checked\": \"boolean\",\n      \"task\": \"string\"\n    }\n  ]\n}"
       },
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
@@ -500,6 +508,10 @@
             {
               "name": "assignedTo",
               "value": "={{ $json.assignedTo }}"
+            },
+            {
+              "name": "subtasks",
+              "value": "={{ $json.subtasks }}"
             }
           ]
         },
@@ -549,7 +561,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Extract contacts from all keys except \"output\"\nconst contacts = Object.fromEntries(\n  Object.entries($json).filter(([key]) => key !== 'output')\n);\n\n// 1. Normalize category name\nconst rawCategory = $json.output.category.toLowerCase().trim();\nlet normalizedCategory = 'User story';\n\nif (rawCategory.includes('tech')) normalizedCategory = 'Technical task';\nif (rawCategory.includes('bug')) normalizedCategory = 'Bug';\nif (rawCategory.includes('story')) normalizedCategory = 'User story';\n\n// 2. Normalize assignedTo (names → array)\nconst rawAssigned = $json.output.assignedTo || \"\";\nconst assignedNames = rawAssigned\n  .split(\",\")\n  .map(n => n.trim())\n  .filter(n => n.length > 0);\n\n// 3. Lookup emails from Firebase contacts\nconst assignedEmails = [];\n\nfor (const key in contacts) {\n  const contact = contacts[key];\n  if (assignedNames.includes(contact.name)) {\n    assignedEmails.push(contact.mail);\n  }\n}\n\n// 4. Return the full normalized JSON\nreturn {\n  json: {\n    ...$json.output,\n    category: normalizedCategory,\n    assignedTo: assignedEmails\n  }\n};"
+        "jsCode": "const contacts = Object.fromEntries(\n  Object.entries($json).filter(([key]) => key !== 'output')\n);\n\nconst rawCategory = $json.output.category.toLowerCase().trim();\nlet normalizedCategory = 'User story';\n\nif (rawCategory.includes('tech')) normalizedCategory = 'Technical task';\nif (rawCategory.includes('bug')) normalizedCategory = 'Bug';\nif (rawCategory.includes('story')) normalizedCategory = 'User story';\n\nconst rawAssigned = $json.output.assignedTo || \"\";\nconst assignedNames = rawAssigned\n  .split(\",\")\n  .map(n => n.trim())\n  .filter(n => n.length > 0);\n\nconst assignedEmails = [];\n\nfor (const key in contacts) {\n  const contact = contacts[key];\n  if (assignedNames.includes(contact.name)) {\n    assignedEmails.push(contact.mail);\n  }\n}\n\nreturn {\n  json: {\n    ...$json.output,\n    category: normalizedCategory,\n    assignedTo: assignedEmails\n  }\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -588,21 +600,6 @@
       ],
       "id": "b7c65628-fbdb-4000-b358-d9ae31b58b28",
       "name": "Merge data from AI agent and GET Node"
-    },
-    {
-      "parameters": {
-        "mode": "raw",
-        "jsonOutput": "  {\n    \"category\": \"Bug\",\n    \"title\": \"Improve API error-handling middleware consistency\",\n    \"description\": \"The API error-handling middleware needs improvement to ensure all services return consistent JSON error responses. Currently, some endpoints return HTML error pages, others partial stack traces, and some empty 500 responses. A unified structure is required, including error code, message, timestamp, and requestId. This involves refactoring and standardization, with no new features required. This ticket was AI-generated.\",\n    \"priority\": \"medium\",\n    \"deadline\": \"2026-08-25\",\n    \"creator\": \"mmanurim.agp@gmail.com\",\n    \"creatorName\": \"Miruna\",\n    \"status\": \"Triage\",\n    \"aiGenerated\": true,\n    \"assignedTo\": [\n      \"tatjana@mailtest.de\",\n      \"bauer@gmail.com\"\n    ]\n  }\n",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        800,
-        -688
-      ],
-      "id": "e930f0d3-513c-4b02-9428-54432e5397dd",
-      "name": "Edit Fields"
     }
   ],
   "pinData": {},
@@ -818,11 +815,6 @@
           }
         ]
       ]
-    },
-    "Edit Fields": {
-      "main": [
-        []
-      ]
     }
   },
   "active": true,
@@ -831,7 +823,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "12228cf8-cb0f-4702-90ec-0467e039365b",
+  "versionId": "8c6d3424-5694-4af9-bf3e-dd553174e026",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "fe409a81daabdb6ca1d5f4e52f3e01e2218bb3b89727d965240d5a05df823d4e"
