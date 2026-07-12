@@ -75,7 +75,7 @@
             {
               "id": "ddf24e23-45a9-4321-86f0-e2679d79ae41",
               "name": "senderName",
-              "value": "={{ $json.senderEmailOnly ? $json.senderEmailOnly.split('@')[0] : '' }}",
+              "value": "={{ $('Email Trigger (IMAP)').item.json.textPlain\n    .replace(/\\r?\\n/g, ' ')\n    .replace(/[^\\x00-\\x7F]/g, ' ')\n    .match(/(?:Kind regards|Best regards|Regards)[,\\s]+([A-Za-z ]+)/i)\n    ?. [1]\n    ?. trim()\n    || '' }}",
               "type": "string"
             },
             {
@@ -118,14 +118,14 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Analyze the following email and generate a structured JSON object compatible with the JOIN task creation API.\n\nEmail:\nSender: {{ $json.senderEmailOnly }}\nSender Name: {{ $json.senderName }}\nSubject: {{ $json.subject }}\nBody: {{ $json.body }}\n\nYour tasks:\n\n1. Determine the issue category:\n   - \"user story\" → new functionality or user story\n   - \"bug\" → malfunction, error, unexpected behavior\n   - \"technical\" → refactoring, maintenance, internal technical work\n\n2. Generate a short, clear, meaningful title for the ticket.\n\n3. Determine the priority based on keywords:\n   - \"urgent\" → contains words like: urgent, critical, blocked, ASAP, immediately\n   - \"medium\" → normal requests without time pressure\n   - \"low\" → nice-to-have, optional, improvement suggestions\n\n4. Extract a deadline if present in the email.\n   - Format: YYYY-MM-DD\n\n5. IMPORTANT RULE:\n   All tickets MUST have a deadline.\n   If the email does not contain a deadline, infer a reasonable one:\n   - Default: 14 days from today\n   - Format: YYYY-MM-DD\n\n6. Create a full ticket description:\n   - Summarize the email content\n   - Add the note: \"This ticket was AI-generated.\"\n\n7. Determine the creator of the ticket:\n   - Use the extracted sender email: {{ $json.senderEmailOnly }}\n   - Use the extracted sender name: {{ $json.senderName }}\n\n8. Set the ticket status:\n   - Always return \"Triage\" as the initial status.\n\n9. Mark the ticket as AI-generated:\n   - Always return aiGenerated = true.\n\nReturn ONLY the following JSON structure:\n\n{\n  \"category\": \"...\",\n  \"title\": \"...\",\n  \"priority\": \"...\",\n  \"deadline\": \"...\",\n  \"description\": \"...\",\n  \"creator\": \"{{ $json.senderEmailOnly }}\",\n  \"creatorName\": \"{{ $json.senderName }}\",\n  \"status\": \"Triage\",\n  \"aiGenerated\": true\n}",
+        "text": "=Analyze the following email and generate a structured JSON object compatible with the JOIN task creation API.\n\nEmail:\nSender: {{ $json.senderEmailOnly }}\nSender Name: {{ $json.senderName }}\nSubject: {{ $json.subject }}\nBody: {{ $json.body }}\n\nYour tasks:\n\n1. Determine the issue category:\n   - \"user story\" → new functionality or user story\n   - \"bug\" → malfunction, error, unexpected behavior\n   - \"technical\" → refactoring, maintenance, internal technical work\n\n2. Generate a short, clear, meaningful title for the ticket.\n\n3. Determine the priority based on keywords:\n   - \"urgent\" → contains words like: urgent, critical, blocked, ASAP, immediately\n   - \"medium\" → normal requests without time pressure\n   - \"low\" → nice-to-have, optional, improvement suggestions\n\n4. Extract a deadline if present in the email.\n   - Format: YYYY-MM-DD\n\n5. IMPORTANT RULE:\n   All tickets MUST have a deadline.\n   If the email does not contain a deadline, infer a reasonable one:\n   - Default: 14 days from today\n   - Format: YYYY-MM-DD\n\n6. Create a full ticket description:\n   - Summarize the email content\n   - Add the note: \"This ticket was AI-generated.\"\n\n7. Determine the creator of the ticket:\n   - Use the extracted sender email: {{ $json.senderEmailOnly }}\n   - Use the extracted sender name: {{ $json.senderName }}\n\n8. Set the ticket status:\n   - Always return \"Triage\" as the initial status.\n\n9. Mark the ticket as AI-generated:\n   - Always return aiGenerated = true.\n\nReturn ONLY the following JSON structure:\n\n{\n  \"category\": \"...\",\n  \"title\": \"...\",\n  \"priority\": \"...\",\n  \"deadline\": \"...\",\n  \"description\": \"...\",\n  \"creator\": \"{{ $json.senderEmailOnly }}\",\n  \"creatorName\": \"{{ $json.senderName }}\",\n  \"status\": \"Triage\",\n  \"aiGenerated\": true,\n  \"assignedTo\": \"...\"\n}",
         "hasOutputParser": true,
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        272,
+        208,
         -288
       ],
       "id": "2077f58f-0052-46bf-af90-9f988d50d27e",
@@ -139,7 +139,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1.1,
       "position": [
-        224,
+        144,
         -112
       ],
       "id": "ae1253a8-ec29-4ee0-afa7-f7a201d8a8c0",
@@ -179,7 +179,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        1088,
+        1264,
         -272
       ],
       "id": "d8082a8c-722d-4eab-89b0-badc092baf87",
@@ -201,8 +201,7 @@
               "rightValue": "bug",
               "operator": {
                 "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
+                "operation": "equals"
               }
             }
           ],
@@ -213,7 +212,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        832,
+        1024,
         -288
       ],
       "id": "9bca6f90-7adb-41d8-bb55-ea2a24fb9ba9",
@@ -247,7 +246,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        1344,
+        1472,
         -256
       ],
       "id": "442e2d6e-8b28-49ec-8616-14d65dc3804f",
@@ -258,14 +257,56 @@
         "method": "POST",
         "url": "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json",
         "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"title\": \"{{$json.title}}\",\n  \"description\": \"{{$json.description}}\",\n  \"category\": \"{{$json.category}}\",\n  \"priority\": \"{{$json.priority}}\",\n  \"date\": \"{{$json.deadline}}\",\n  \"status\": \"{{$json.status}}\",\n  \"aiGenerated\": \"{{$json.aiGenerated}}\"\n}",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "category",
+              "value": "={{ $json.category }}"
+            },
+            {
+              "name": "title",
+              "value": "={{ $json.title }}"
+            },
+            {
+              "name": "description",
+              "value": "={{ $json.description }}"
+            },
+            {
+              "name": "priority",
+              "value": "={{ $json.priority }}"
+            },
+            {
+              "name": "date",
+              "value": "={{ $json.deadline }}"
+            },
+            {
+              "name": "creator",
+              "value": "={{ $json.creator }}"
+            },
+            {
+              "name": "creatorName",
+              "value": "={{ $json.creatorName }}"
+            },
+            {
+              "name": "status",
+              "value": "={{ $json.status }}"
+            },
+            {
+              "name": "aiGenerated",
+              "value": "={{ $json.aiGenerated }}"
+            },
+            {
+              "name": "assignedTo",
+              "value": "={{ $json.assignedTo }}"
+            }
+          ]
+        },
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1248,
+        1440,
         -448
       ],
       "id": "d48af8ca-031a-4db6-bfad-89d9d5b9aa9c",
@@ -276,14 +317,57 @@
         "method": "POST",
         "url": "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json",
         "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"title\": \"{{$json.title}}\",\n  \"description\": \"{{$json.description}}\",\n  \"category\": \"{{$json.category}}\",\n  \"priority\": \"{{$json.priority}}\",\n  \"date\": \"{{$json.deadline}}\",\n  \"status\": \"{{$json.status}}\",\n  \"aiGenerated\": \"{{$json.aiGenerated}}\"\n}",
+        "contentType": "=json",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "category",
+              "value": "={{ $json.category }}"
+            },
+            {
+              "name": "=title",
+              "value": "={{ $json.title }}"
+            },
+            {
+              "name": "description",
+              "value": "={{ $json.description }}"
+            },
+            {
+              "name": "priority",
+              "value": "={{ $json.priority }}"
+            },
+            {
+              "name": "date",
+              "value": "={{ $json.deadline }}"
+            },
+            {
+              "name": "creator",
+              "value": "={{ $json.creator }}"
+            },
+            {
+              "name": "creatorName",
+              "value": "={{ $json.creatorName }}"
+            },
+            {
+              "name": "status",
+              "value": "={{ $json.status }}"
+            },
+            {
+              "name": "aiGenerated",
+              "value": "={{ $json.aiGenerated }}"
+            },
+            {
+              "name": "assignedTo",
+              "value": "={{ $json.assignedTo }}"
+            }
+          ]
+        },
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1520,
+        1680,
         -448
       ],
       "id": "609e29f7-e098-405c-a77e-2e17983060e2",
@@ -291,12 +375,12 @@
     },
     {
       "parameters": {
-        "jsonSchemaExample": "{\n  \"category\": \"string\",\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"priority\": \"string\",\n  \"deadline\": \"string\",\n  \"creator\": \"string\",\n  \"creatorName\": \"string\",\n  \"status\": \"string\",\n  \"aiGenerated\": true\n}\n"
+        "jsonSchemaExample": "{\n  \"category\": \"string\",\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"priority\": \"string\",\n  \"deadline\": \"string\",\n  \"creator\": \"string\",\n  \"creatorName\": \"string\",\n  \"status\": \"string\",\n  \"aiGenerated\": true,\n  \"assignedTo\": \"string\"\n}\n"
       },
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        464,
+        416,
         -112
       ],
       "id": "ffb5e045-f5fb-4027-b4d6-94972e1183d8",
@@ -372,30 +456,59 @@
     },
     {
       "parameters": {
-        "jsCode": "const raw = $json.output.category.toLowerCase().trim();\nlet normalized = 'user story';\n\nif (raw.includes('tech')) normalized = 'technical task';\nif (raw.includes('bug')) normalized = 'bug';\nif (raw.includes('story')) normalized = 'user story';\n\nreturn {\n  json: {\n    ...$json.output,\n    category: normalized\n  }\n};"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        624,
-        -288
-      ],
-      "id": "2d814aa3-8cad-49e1-965a-3b12265e6177",
-      "name": "normalize category names"
-    },
-    {
-      "parameters": {
         "method": "POST",
         "url": "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json",
         "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"title\": \"{{$json.title}}\",\n  \"description\": \"{{$json.description}}\",\n  \"category\": \"{{$json.category}}\",\n  \"priority\": \"{{$json.priority}}\",\n  \"date\": \"{{$json.deadline}}\",\n  \"status\": \"{{$json.status}}\",\n  \"aiGenerated\": \"{{$json.aiGenerated}}\"\n}",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "category",
+              "value": "={{ $json.category }}"
+            },
+            {
+              "name": "title",
+              "value": "={{ $json.title }}"
+            },
+            {
+              "name": "description",
+              "value": "={{ $json.description }}"
+            },
+            {
+              "name": "priority",
+              "value": "={{ $json.priority }}"
+            },
+            {
+              "name": "date",
+              "value": "={{ $json.deadline }}"
+            },
+            {
+              "name": "creator",
+              "value": "={{ $json.creator }}"
+            },
+            {
+              "name": "creatorName",
+              "value": "={{ $json.creatorName }}"
+            },
+            {
+              "name": "status",
+              "value": "={{ $json.status }}"
+            },
+            {
+              "name": "aiGenerated",
+              "value": "={{ $json.aiGenerated }}"
+            },
+            {
+              "name": "assignedTo",
+              "value": "={{ $json.assignedTo }}"
+            }
+          ]
+        },
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1008,
+        1184,
         -448
       ],
       "id": "cb7468ca-229a-464e-abe7-0736760b3f90",
@@ -433,6 +546,63 @@
       ],
       "id": "e9d9b19b-2dca-4410-9875-ab4bf4e4172f",
       "name": "If"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract contacts from all keys except \"output\"\nconst contacts = Object.fromEntries(\n  Object.entries($json).filter(([key]) => key !== 'output')\n);\n\n// 1. Normalize category name\nconst rawCategory = $json.output.category.toLowerCase().trim();\nlet normalizedCategory = 'User story';\n\nif (rawCategory.includes('tech')) normalizedCategory = 'Technical task';\nif (rawCategory.includes('bug')) normalizedCategory = 'Bug';\nif (rawCategory.includes('story')) normalizedCategory = 'User story';\n\n// 2. Normalize assignedTo (names → array)\nconst rawAssigned = $json.output.assignedTo || \"\";\nconst assignedNames = rawAssigned\n  .split(\",\")\n  .map(n => n.trim())\n  .filter(n => n.length > 0);\n\n// 3. Lookup emails from Firebase contacts\nconst assignedEmails = [];\n\nfor (const key in contacts) {\n  const contact = contacts[key];\n  if (assignedNames.includes(contact.name)) {\n    assignedEmails.push(contact.mail);\n  }\n}\n\n// 4. Return the full normalized JSON\nreturn {\n  json: {\n    ...$json.output,\n    category: normalizedCategory,\n    assignedTo: assignedEmails\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        864,
+        -288
+      ],
+      "id": "2d814aa3-8cad-49e1-965a-3b12265e6177",
+      "name": "Normalize category names and assignedTo contacts"
+    },
+    {
+      "parameters": {
+        "url": "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/contacts.json",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        512,
+        -496
+      ],
+      "id": "18c55f1e-d904-47b6-bc84-4da403d5ef36",
+      "name": "HTTP Request - GET Join contacts"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        656,
+        -288
+      ],
+      "id": "b7c65628-fbdb-4000-b358-d9ae31b58b28",
+      "name": "Merge data from AI agent and GET Node"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "  {\n    \"category\": \"Bug\",\n    \"title\": \"Improve API error-handling middleware consistency\",\n    \"description\": \"The API error-handling middleware needs improvement to ensure all services return consistent JSON error responses. Currently, some endpoints return HTML error pages, others partial stack traces, and some empty 500 responses. A unified structure is required, including error code, message, timestamp, and requestId. This involves refactoring and standardization, with no new features required. This ticket was AI-generated.\",\n    \"priority\": \"medium\",\n    \"deadline\": \"2026-08-25\",\n    \"creator\": \"mmanurim.agp@gmail.com\",\n    \"creatorName\": \"Miruna\",\n    \"status\": \"Triage\",\n    \"aiGenerated\": true,\n    \"assignedTo\": [\n      \"tatjana@mailtest.de\",\n      \"bauer@gmail.com\"\n    ]\n  }\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        800,
+        -688
+      ],
+      "id": "e930f0d3-513c-4b02-9428-54432e5397dd",
+      "name": "Edit Fields"
     }
   ],
   "pinData": {},
@@ -485,7 +655,12 @@
       "main": [
         [
           {
-            "node": "normalize category names",
+            "node": "Merge data from AI agent and GET Node",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "HTTP Request - GET Join contacts",
             "type": "main",
             "index": 0
           }
@@ -588,17 +763,6 @@
         ]
       ]
     },
-    "normalize category names": {
-      "main": [
-        [
-          {
-            "node": "If1 - Bug",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "If": {
       "main": [
         [
@@ -616,6 +780,49 @@
           }
         ]
       ]
+    },
+    "HTTP Request1": {
+      "main": [
+        []
+      ]
+    },
+    "Normalize category names and assignedTo contacts": {
+      "main": [
+        [
+          {
+            "node": "If1 - Bug",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request - GET Join contacts": {
+      "main": [
+        [
+          {
+            "node": "Merge data from AI agent and GET Node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge data from AI agent and GET Node": {
+      "main": [
+        [
+          {
+            "node": "Normalize category names and assignedTo contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        []
+      ]
     }
   },
   "active": true,
@@ -624,7 +831,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "f6693acd-6199-46b4-91b8-2ac8115bb2de",
+  "versionId": "12228cf8-cb0f-4702-90ec-0467e039365b",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "fe409a81daabdb6ca1d5f4e52f3e01e2218bb3b89727d965240d5a05df823d4e"
