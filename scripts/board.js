@@ -281,7 +281,7 @@ function showAILabel(task) {
   const label = document.getElementById("ai_label");
   changeCreatorName(task);
   if (!label) return;
-  const isAI = task.aiGenerated === "true";
+  const isAI = task.aiGenerated === true;
   if (isAI) {
     label.classList.remove("d-none");
     addExternalCreatorBadge(task);

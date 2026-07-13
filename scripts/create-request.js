@@ -20,15 +20,14 @@ function openGmail() {
  */
 async function loadTicketCounter() {
   const res = await fetch(
-    "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/usage/daily.json",
+    "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/usage/daily.json"
   );
   const data = await res.json();
-  const key = Object.keys(data)[0];
-  const savedDate = data[key].date;
-  const requestsToday = data[key].requestsToday;
+  const latestKey = Object.keys(data).sort().pop();
+  const savedDate = data[latestKey].date;
+  const requestsToday = data[latestKey].requestsToday;
   const today = new Date().toISOString().split("T")[0];
   const effectiveRequests = savedDate === today ? requestsToday : 0;
-
   updateSectionVisibility(effectiveRequests);
 }
 

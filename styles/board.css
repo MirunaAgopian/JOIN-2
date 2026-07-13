@@ -445,6 +445,7 @@ dialog {
   overflow: auto;
   transform: translate(300%, 0px);
   max-width: 1300px;
+
 }
 
 .taskDialogOpened {

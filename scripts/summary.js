@@ -48,7 +48,7 @@ function countTask(){
         if(todos[index].priority == 'urgent' && todos[index].status !== 'boardDone'){
             countUrgentTasks++;
         }
-        if(todos[index].aiGenerated == "true") {
+        if(todos[index].aiGenerated == true) {
             countAITasks ++;
         }
     }

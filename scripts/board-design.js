@@ -248,16 +248,26 @@ function disableCssClass(id) {
  * If either the Add‑Task Standard or Add‑Task Interactions stylesheet is enabled,
  * the creator label is hidden by adding the `d-none` class. Otherwise, it becomes visible.
  */
+
 function toggleCreatorLabelVisibility() {
   const creatorLabel = document.querySelector(".creator-label");
   const cssAddTaskStandard = document.getElementById("cssAddTaskStandard");
   const cssAddTaskInteractions = document.getElementById(
     "cssAddTaskInteractions",
   );
+  const cssAddTask = document.getElementById("cssAddTask");
+  const aiLabel = document.getElementById('ai_label');
 
-  if (!cssAddTaskStandard.disabled || !cssAddTaskInteractions.disabled) {
+  if (
+    !cssAddTaskStandard.disabled ||
+    !cssAddTaskInteractions.disabled ||
+    !cssAddTask.disabled
+  ) {
     creatorLabel.classList.add("d-none");
+    aiLabel.classList.add('d-none');
   } else {
     creatorLabel.classList.remove("d-none");
   }
 }
+
+

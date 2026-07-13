@@ -35,22 +35,26 @@ function addTaskOverlay() {
 /**
  * Updates the currently selected task with dialog input and saves changes to the database.
  */
-
 async function editDialogTask() {
     let task = getTaskInput();
     let subtaskStatus = getSubtaskStatus(actualToDo.subtasks);
 
-    if (!checkIfTaskIsValid(task)) { return; }
-    if (subtaskStatus != null) {
-        for (let index = 0; index < subtaskStatus.length; index++) {
-            task.subtasks[index].checked = subtaskStatus[index];
+    if (!checkIfTaskIsValid(task)) { 
+        return; 
+    }
+
+    if (subtaskStatus != null && task.subtasks) {
+        for (let index = 0; index < task.subtasks.length; index++) {
+            if (subtaskStatus[index] !== undefined) {
+                task.subtasks[index].checked = subtaskStatus[index];
+            }
         }
     }
-    dialogBoardTaskRev.dialog.close()
+
+    dialogBoardTaskRev.dialog.close();
     await patchData('tasks/' + currentDraggedElement, task);
     onloadFuncBoard();
 }
-
 /**
  * Deletes the currently selected task from the database, closes the dialog, and refreshes the board.
  */
