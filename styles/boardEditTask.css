@@ -1,6 +1,12 @@
-.add-task-dialog-board::-webkit-scrollbar {
+.page-container::-webkit-scrollbar {
     display: none;
 }
+
+.page-container {
+    scrollbar-width: none;  
+    -ms-overflow-style: none; 
+}
+
 
 .field-description,
 .subtask-field-description {

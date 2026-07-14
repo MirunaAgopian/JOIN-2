@@ -625,3 +625,9 @@ dialog::backdrop {
     display: none;
   }
 }
+
+@media(max-width: 370px){
+  .taskStatus {
+    padding: 4px;
+  }
+}

@@ -1,3 +1,11 @@
+.add-task-dialog-board::-webkit-scrollbar {
+    display: none;
+}
+
+.page-container::-webkit-scrollbar {
+    display: none;
+}
+
 .priority-stages {
     display: flex;
 }
