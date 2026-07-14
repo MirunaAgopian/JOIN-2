@@ -1,0 +1,36 @@
+{
+  "name": "JOIN - Ticket status changed",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "join-ticket-status-update",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f6302868-ff89-48d5-be04-54928f5ae5c3",
+      "name": "Webhook",
+      "webhookId": "574ff95e-a550-4efd-b39e-7a40ca9b916c"
+    }
+  ],
+  "pinData": {},
+  "connections": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "7e5ac720-54ca-4fd5-a92f-0caa0ffe0888",
+  "meta": {
+    "instanceId": "fe409a81daabdb6ca1d5f4e52f3e01e2218bb3b89727d965240d5a05df823d4e"
+  },
+  "nodeGroups": [],
+  "id": "qIVhGZ6wJqqWPqYx",
+  "tags": []
+}

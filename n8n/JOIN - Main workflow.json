@@ -1,5 +1,5 @@
 {
-  "name": "JOIN",
+  "name": "JOIN - Main workflow",
   "nodes": [
     {
       "parameters": {
@@ -8,59 +8,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -688,
+        -880,
         -16
       ],
       "id": "22de649c-ba82-4142-bc75-b78a53f36f30",
       "name": "Set daily e-mails limit"
-    },
-    {
-      "parameters": {
-        "operation": "addLabels",
-        "messageId": "={{ $json.id }}",
-        "labelIds": [
-          "Label_4385848114994939172"
-        ]
-      },
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        464,
-        80
-      ],
-      "id": "35c49430-0356-4cdf-9e44-826b3fc8b20d",
-      "name": "Add label \"Zu bearbeiten\" to message",
-      "webhookId": "016af86d-579b-4c4a-83f4-36af788b9ceb",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "tJQVLmj7sY2V8QWH",
-          "name": "Gmail account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "removeLabels",
-        "messageId": "={{ $json.id }}",
-        "labelIds": [
-          "INBOX"
-        ]
-      },
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        704,
-        80
-      ],
-      "id": "50de4cbd-cd25-493a-bbd7-eb1ba2247628",
-      "name": "Remove label \"INBOX\" from message",
-      "webhookId": "ce1f5f35-1942-4775-ad97-4afd1fc87333",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "tJQVLmj7sY2V8QWH",
-          "name": "Gmail account"
-        }
-      }
     },
     {
       "parameters": {
@@ -109,7 +61,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -96,
+        240,
         -144
       ],
       "id": "a316a9f9-095c-48e3-80e8-f496d46003c8",
@@ -125,7 +77,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        208,
+        528,
         -288
       ],
       "id": "2077f58f-0052-46bf-af90-9f988d50d27e",
@@ -139,7 +91,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1.1,
       "position": [
-        144,
+        464,
         -112
       ],
       "id": "ae1253a8-ec29-4ee0-afa7-f7a201d8a8c0",
@@ -148,6 +100,38 @@
         "googlePalmApi": {
           "id": "qvXuBOfPieplpxIU",
           "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"category\": \"string\",\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"priority\": \"string\",\n  \"deadline\": \"string\",\n  \"creator\": \"string\",\n  \"creatorName\": \"string\",\n  \"status\": \"string\",\n  \"aiGenerated\": true,\n  \"assignedTo\": \"string\",\n  \"subtasks\": [\n    {\n      \"checked\": false,\n      \"task\": \"string\"\n    }\n  ]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        736,
+        -112
+      ],
+      "id": "ffb5e045-f5fb-4027-b4d6-94972e1183d8",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2.1,
+      "position": [
+        -1072,
+        -16
+      ],
+      "id": "d0ab803d-dde4-445c-b72c-15e92636900c",
+      "name": "Email Trigger (IMAP)",
+      "credentials": {
+        "imap": {
+          "id": "IRQHUDNYg9nzvIgF",
+          "name": "IMAP account"
         }
       }
     },
@@ -162,13 +146,12 @@
           },
           "conditions": [
             {
-              "id": "1533cbe3-6f7c-4b27-8055-7f24f2c6aeda",
-              "leftValue": "={{ $json.category.toLowerCase().trim() }}",
-              "rightValue": "user story",
+              "id": "2dde531d-4921-48d4-9b5c-8b4ca22e4670",
+              "leftValue": "={{ $json.count }}",
+              "rightValue": 10,
               "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
+                "type": "number",
+                "operation": "lte"
               }
             }
           ],
@@ -179,78 +162,135 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        1264,
-        -272
+        -144,
+        -32
       ],
-      "id": "d8082a8c-722d-4eab-89b0-badc092baf87",
-      "name": "If2 - User story"
+      "id": "e9d9b19b-2dca-4410-9875-ab4bf4e4172f",
+      "name": "If"
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "71b15023-298c-4da9-87f2-47b22e10c9ac",
-              "leftValue": "={{ $json.category.toLowerCase().trim() }}",
-              "rightValue": "bug",
-              "operator": {
-                "type": "string",
-                "operation": "equals"
-              }
-            }
-          ],
-          "combinator": "or"
-        },
-        "options": {}
+        "jsCode": "const contacts = Object.fromEntries(\n  Object.entries($json).filter(([key]) => key !== 'output')\n);\n\nconst rawCategory = $json.output.category.toLowerCase().trim();\nlet normalizedCategory = 'User story';\n\nif (rawCategory.includes('tech')) normalizedCategory = 'Technical task';\nif (rawCategory.includes('bug')) normalizedCategory = 'Bug';\nif (rawCategory.includes('story')) normalizedCategory = 'User story';\n\nconst rawAssigned = $json.output.assignedTo || \"\";\nconst assignedNames = rawAssigned\n  .split(\",\")\n  .map(n => n.trim())\n  .filter(n => n.length > 0);\n\nconst assignedEmails = [];\n\nfor (const key in contacts) {\n  const contact = contacts[key];\n  if (assignedNames.includes(contact.name)) {\n    assignedEmails.push(contact.mail);\n  }\n}\n\nreturn {\n  json: {\n    ...$json.output,\n    category: normalizedCategory,\n    assignedTo: assignedEmails\n  }\n};"
       },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
-        1024,
+        1232,
         -288
       ],
-      "id": "9bca6f90-7adb-41d8-bb55-ea2a24fb9ba9",
-      "name": "If1 - Bug"
+      "id": "2d814aa3-8cad-49e1-965a-3b12265e6177",
+      "name": "Normalize category names and assignedTo contacts"
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "b802cf5b-e349-4d6c-9042-ce5da94113b5",
-              "leftValue": "={{ $json.category.toLowerCase().trim() }}",
-              "rightValue": "technical task",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
+        "url": "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/contacts.json",
         "options": {}
       },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
       "position": [
-        1472,
-        -256
+        848,
+        -496
       ],
-      "id": "442e2d6e-8b28-49ec-8616-14d65dc3804f",
-      "name": "If3 - Technical task"
+      "id": "18c55f1e-d904-47b6-bc84-4da403d5ef36",
+      "name": "HTTP Request - GET Join contacts"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1024,
+        -304
+      ],
+      "id": "b7c65628-fbdb-4000-b358-d9ae31b58b28",
+      "name": "Merge data from AI agent and GET Node"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/usage/daily.json",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"requestsToday\": {{$json.count}},\n  \"date\": \"{{$json.today}}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -624,
+        -160
+      ],
+      "id": "dcb3eb05-38a5-49b9-97e5-52116b424b53",
+      "name": "HTTP Request3 - POST count in Firebase"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch",
+        "useDataOfInput": 2
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -400,
+        -32
+      ],
+      "id": "26548606-8d3c-40be-85bb-8e96b5afdb20",
+      "name": "Merge - transfer data from set daily limit node"
+    },
+    {
+      "parameters": {
+        "fromEmail": "join.notification@gmail.com",
+        "toEmail": "={{ $json.creator }}",
+        "subject": "Ticket received — thank you! 😊",
+        "emailFormat": "text",
+        "text": "=Hello {{ $json.creatorName }},\n\nThank you for your ticket!\nOur team will review it and keep you updated about any changes.\n\nHave a nice day!\n\nYour\nJOIN Automation Team",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1648,
+        -288
+      ],
+      "id": "0849b012-f270-4ac3-a8d5-3a9123c8a963",
+      "name": "Send an confirmation E-Mail",
+      "webhookId": "6218cb19-ee32-4c4c-9383-64fa18f4c370",
+      "credentials": {
+        "smtp": {
+          "id": "f6OMU30o3YMTv0pv",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "join.notification@gmail.com",
+        "toEmail": "={{ $('Email Trigger (IMAP)').item.json.from.replace(/.*<|>.*/g, '') }}",
+        "subject": "Daily limit reached",
+        "emailFormat": "text",
+        "text": "=Hello,\n\nYou have reached today's limit of 10 feature requests.\nYou can submit new requests again tomorrow.\n\nBest regards,\nYour Join Automation Team\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        80
+      ],
+      "id": "b6c7b746-41ed-4290-9dfd-c6fed28ae014",
+      "name": "Send \"limit reached\" Email",
+      "webhookId": "c7cbc835-f6a3-4758-bbba-e32b97189fb9",
+      "credentials": {
+        "smtp": {
+          "id": "f6OMU30o3YMTv0pv",
+          "name": "SMTP account"
+        }
+      }
     },
     {
       "parameters": {
@@ -311,295 +351,10 @@
       "typeVersion": 4.4,
       "position": [
         1440,
-        -448
-      ],
-      "id": "d48af8ca-031a-4db6-bfad-89d9d5b9aa9c",
-      "name": "HTTP Request1"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json",
-        "sendBody": true,
-        "contentType": "=json",
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "category",
-              "value": "={{ $json.category }}"
-            },
-            {
-              "name": "=title",
-              "value": "={{ $json.title }}"
-            },
-            {
-              "name": "description",
-              "value": "={{ $json.description }}"
-            },
-            {
-              "name": "priority",
-              "value": "={{ $json.priority }}"
-            },
-            {
-              "name": "date",
-              "value": "={{ $json.deadline }}"
-            },
-            {
-              "name": "creator",
-              "value": "={{ $json.creator }}"
-            },
-            {
-              "name": "creatorName",
-              "value": "={{ $json.creatorName }}"
-            },
-            {
-              "name": "status",
-              "value": "={{ $json.status }}"
-            },
-            {
-              "name": "aiGenerated",
-              "value": "={{ $json.aiGenerated }}"
-            },
-            {
-              "name": "assignedTo",
-              "value": "={{ $json.assignedTo }}"
-            },
-            {
-              "name": "subtasks",
-              "value": "={{ $json.subtasks }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.4,
-      "position": [
-        1680,
-        -448
-      ],
-      "id": "609e29f7-e098-405c-a77e-2e17983060e2",
-      "name": "HTTP Request2"
-    },
-    {
-      "parameters": {
-        "jsonSchemaExample": "{\n  \"category\": \"string\",\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"priority\": \"string\",\n  \"deadline\": \"string\",\n  \"creator\": \"string\",\n  \"creatorName\": \"string\",\n  \"status\": \"string\",\n  \"aiGenerated\": true,\n  \"assignedTo\": \"string\",\n  \"subtasks\": [\n    {\n      \"checked\": \"boolean\",\n      \"task\": \"string\"\n    }\n  ]\n}"
-      },
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
-      "position": [
-        416,
-        -112
-      ],
-      "id": "ffb5e045-f5fb-4027-b4d6-94972e1183d8",
-      "name": "Structured Output Parser"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.emailReadImap",
-      "typeVersion": 2.1,
-      "position": [
-        -960,
-        -16
-      ],
-      "id": "d0ab803d-dde4-445c-b72c-15e92636900c",
-      "name": "Email Trigger (IMAP)",
-      "credentials": {
-        "imap": {
-          "id": "IRQHUDNYg9nzvIgF",
-          "name": "IMAP account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "fromEmail": "join.notification@gmail.com",
-        "toEmail": "={{ $('Email Trigger (IMAP)').item.json.from.replace(/.*<|>.*/g, '') }}",
-        "subject": "Daily limit reached",
-        "emailFormat": "text",
-        "text": "=Hello,\n\nYou have reached today's limit of 10 feature requests.\nYou can submit new requests again tomorrow.\n\nBest regards,\nYour Join Automation Team\n",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.emailSend",
-      "typeVersion": 2.1,
-      "position": [
-        -96,
-        80
-      ],
-      "id": "b6c7b746-41ed-4290-9dfd-c6fed28ae014",
-      "name": "Send an Email",
-      "webhookId": "c7cbc835-f6a3-4758-bbba-e32b97189fb9",
-      "credentials": {
-        "smtp": {
-          "id": "f6OMU30o3YMTv0pv",
-          "name": "SMTP account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "getAll",
-        "limit": 1,
-        "filters": {
-          "q": "=rfc822msgid:{{ $('Email Trigger (IMAP)').item.json.metadata[\"message-id\"] }}"
-        }
-      },
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        208,
-        80
-      ],
-      "id": "d1011951-3ac4-481e-a644-e5232785ba11",
-      "name": "Get e-mail id",
-      "webhookId": "688a4699-3cd0-466d-960c-8a7ed303f8b5",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "tJQVLmj7sY2V8QWH",
-          "name": "Gmail account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json",
-        "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "category",
-              "value": "={{ $json.category }}"
-            },
-            {
-              "name": "title",
-              "value": "={{ $json.title }}"
-            },
-            {
-              "name": "description",
-              "value": "={{ $json.description }}"
-            },
-            {
-              "name": "priority",
-              "value": "={{ $json.priority }}"
-            },
-            {
-              "name": "date",
-              "value": "={{ $json.deadline }}"
-            },
-            {
-              "name": "creator",
-              "value": "={{ $json.creator }}"
-            },
-            {
-              "name": "creatorName",
-              "value": "={{ $json.creatorName }}"
-            },
-            {
-              "name": "status",
-              "value": "={{ $json.status }}"
-            },
-            {
-              "name": "aiGenerated",
-              "value": "={{ $json.aiGenerated }}"
-            },
-            {
-              "name": "assignedTo",
-              "value": "={{ $json.assignedTo }}"
-            },
-            {
-              "name": "subtasks",
-              "value": "={{ $json.subtasks }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.4,
-      "position": [
-        1184,
-        -448
+        -288
       ],
       "id": "cb7468ca-229a-464e-abe7-0736760b3f90",
-      "name": "HTTP Request"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "2dde531d-4921-48d4-9b5c-8b4ca22e4670",
-              "leftValue": "={{ $json.count }}",
-              "rightValue": 10,
-              "operator": {
-                "type": "number",
-                "operation": "lte"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
-      "position": [
-        -400,
-        -16
-      ],
-      "id": "e9d9b19b-2dca-4410-9875-ab4bf4e4172f",
-      "name": "If"
-    },
-    {
-      "parameters": {
-        "jsCode": "const contacts = Object.fromEntries(\n  Object.entries($json).filter(([key]) => key !== 'output')\n);\n\nconst rawCategory = $json.output.category.toLowerCase().trim();\nlet normalizedCategory = 'User story';\n\nif (rawCategory.includes('tech')) normalizedCategory = 'Technical task';\nif (rawCategory.includes('bug')) normalizedCategory = 'Bug';\nif (rawCategory.includes('story')) normalizedCategory = 'User story';\n\nconst rawAssigned = $json.output.assignedTo || \"\";\nconst assignedNames = rawAssigned\n  .split(\",\")\n  .map(n => n.trim())\n  .filter(n => n.length > 0);\n\nconst assignedEmails = [];\n\nfor (const key in contacts) {\n  const contact = contacts[key];\n  if (assignedNames.includes(contact.name)) {\n    assignedEmails.push(contact.mail);\n  }\n}\n\nreturn {\n  json: {\n    ...$json.output,\n    category: normalizedCategory,\n    assignedTo: assignedEmails\n  }\n};"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        864,
-        -288
-      ],
-      "id": "2d814aa3-8cad-49e1-965a-3b12265e6177",
-      "name": "Normalize category names and assignedTo contacts"
-    },
-    {
-      "parameters": {
-        "url": "https://join-e397a-default-rtdb.europe-west1.firebasedatabase.app/contacts.json",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.4,
-      "position": [
-        512,
-        -496
-      ],
-      "id": "18c55f1e-d904-47b6-bc84-4da403d5ef36",
-      "name": "HTTP Request - GET Join contacts"
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "combineBy": "combineAll",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
-      "position": [
-        656,
-        -288
-      ],
-      "id": "b7c65628-fbdb-4000-b358-d9ae31b58b28",
-      "name": "Merge data from AI agent and GET Node"
+      "name": "HTTP Request - POST task to Firebase"
     }
   ],
   "pinData": {},
@@ -608,20 +363,14 @@
       "main": [
         [
           {
-            "node": "If",
+            "node": "HTTP Request3 - POST count in Firebase",
             "type": "main",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "Add label \"Zu bearbeiten\" to message": {
-      "main": [
-        [
+          },
           {
-            "node": "Remove label \"INBOX\" from message",
+            "node": "Merge - transfer data from set daily limit node",
             "type": "main",
-            "index": 0
+            "index": 1
           }
         ]
       ]
@@ -664,53 +413,6 @@
         ]
       ]
     },
-    "If1 - Bug": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "If2 - User story",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If2 - User story": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "If3 - Technical task",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If3 - Technical task": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Structured Output Parser": {
       "ai_outputParser": [
         [
@@ -733,33 +435,6 @@
         ]
       ]
     },
-    "Send an Email": {
-      "main": [
-        [
-          {
-            "node": "Get e-mail id",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Remove label \"INBOX\" from message": {
-      "main": [
-        []
-      ]
-    },
-    "Get e-mail id": {
-      "main": [
-        [
-          {
-            "node": "Add label \"Zu bearbeiten\" to message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "If": {
       "main": [
         [
@@ -771,23 +446,18 @@
         ],
         [
           {
-            "node": "Send an Email",
+            "node": "Send \"limit reached\" Email",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "HTTP Request1": {
-      "main": [
-        []
-      ]
-    },
     "Normalize category names and assignedTo contacts": {
       "main": [
         [
           {
-            "node": "If1 - Bug",
+            "node": "HTTP Request - POST task to Firebase",
             "type": "main",
             "index": 0
           }
@@ -815,6 +485,49 @@
           }
         ]
       ]
+    },
+    "HTTP Request3 - POST count in Firebase": {
+      "main": [
+        [
+          {
+            "node": "Merge - transfer data from set daily limit node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge - transfer data from set daily limit node": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send an confirmation E-Mail": {
+      "main": [
+        []
+      ]
+    },
+    "Send \"limit reached\" Email": {
+      "main": [
+        []
+      ]
+    },
+    "HTTP Request - POST task to Firebase": {
+      "main": [
+        [
+          {
+            "node": "Send an confirmation E-Mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
@@ -823,7 +536,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "8c6d3424-5694-4af9-bf3e-dd553174e026",
+  "versionId": "a5de53e0-1f1a-4510-91a9-ba6a5fc493e3",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "fe409a81daabdb6ca1d5f4e52f3e01e2218bb3b89727d965240d5a05df823d4e"

@@ -221,6 +221,22 @@ async function changeBoardStatus(id, targetColumn) {
   const task = todos.find((t) => t.id === id);
   if (!task) return;
   task.status = targetColumn;
+  //trigger webhoock for n8n
+  const oldStatus = task.status; 
+  fetch("https://stimulate-dish-upstairs.ngrok-free.dev/webhook/join-ticket-status-update", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      source: "webhook",
+      taskId: task.id,
+      oldStatus,
+      newStatus: targetColumn,
+      creatorEmail: task.creatorEmail,
+      creatorName: task.creatorName,
+      updatedBy: "TEAM"
+    })
+  });
+  //end trigger
   await putData("tasks/" + id, task);
   updateHTML();
 }
@@ -328,7 +344,6 @@ function addInternalCreatorBadge(task) {
     };
   }
 }
-
 
 function changeCreatorName(task) {
   const creatorNameContainer = document.getElementById("creator_name");

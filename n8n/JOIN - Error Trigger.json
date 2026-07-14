@@ -1,0 +1,104 @@
+{
+  "name": "JOIN - Error Trigger",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        -432,
+        16
+      ],
+      "id": "f955723f-445c-4dcd-9cda-357fb6ccbd3f",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "fromEmail": "=join.notification@gmail.com",
+        "toEmail": "={{ $json.creator }}",
+        "subject": "We received your email — processing failed ",
+        "emailFormat": "text",
+        "text": "=Hello {{ $json.creatorName }}, \n\nwe received your email but the automated processing failed. Our team will review it manually and contact you soon. \n\nYour, \nJOIN Automation System",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        -208,
+        16
+      ],
+      "id": "21bf4bcb-a145-4956-b972-207fb1b8bc37",
+      "name": "Send an Email",
+      "webhookId": "66b29af5-a581-4785-97a2-e6996357d63d",
+      "credentials": {
+        "smtp": {
+          "id": "f6OMU30o3YMTv0pv",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{$json.messageId}}",
+        "labelIds": [
+          "Label_4385848114994939172"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        16
+      ],
+      "id": "42da2303-4150-4ff4-b752-1f6d3220058f",
+      "name": "Add label to message",
+      "webhookId": "8e29ddda-55eb-464a-a555-1ceb34b26551",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tJQVLmj7sY2V8QWH",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send an Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send an Email": {
+      "main": [
+        [
+          {
+            "node": "Add label to message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "9c75cc27-78e5-4d98-849e-68fa23663093",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "fe409a81daabdb6ca1d5f4e52f3e01e2218bb3b89727d965240d5a05df823d4e"
+  },
+  "nodeGroups": [],
+  "id": "DkplEob2yoCEHJiN",
+  "tags": []
+}

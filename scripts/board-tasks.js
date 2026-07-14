@@ -2,67 +2,69 @@
  * Creates a new task from dialog input and saves it to the database.
  */
 async function addDialogTask() {
-    let task = getTaskInput();
-    if (!checkIfTaskIsValid(task)) { return; }
-    task.status = 'boardTriage';
-    dialogBoardTaskRev.dialog.close()
-    uploadTaskToFirebase("tasks", task)
-        .then((res) => {
-            console.log("Task uploaded with ID:", res.name);
-            clearTaskInput();
-        })
-        .catch((err) => {
-            console.error("Upload failed:", err);
-        });
-    addTaskOverlay();
-    onloadFuncBoard();
+  let task = getTaskInput();
+  if (!checkIfTaskIsValid(task)) {
+    return;
+  }
+  task.status = "boardTriage";
+  dialogBoardTaskRev.dialog.close();
+  uploadTaskToFirebase("tasks", task)
+    .then((res) => {
+      console.log("Task uploaded with ID:", res.name);
+      clearTaskInput();
+    })
+    .catch((err) => {
+      console.error("Upload failed:", err);
+    });
+  addTaskOverlay();
+  onloadFuncBoard();
 }
 
 /**
  * overlay with information that task have been created
  */
 function addTaskOverlay() {
-    let container = document.getElementById('overlay_container');
-    container.innerHTML = getRedirectTemplate();
-    setTimeout(() => {
-        container.innerHTML = '';
-    }, 1500);
-    setTimeout(() => {
-        onloadFuncBoard();
-    }, 100);
+  let container = document.getElementById("overlay_container");
+  container.innerHTML = getRedirectTemplate();
+  setTimeout(() => {
+    container.innerHTML = "";
+  }, 1500);
+  setTimeout(() => {
+    onloadFuncBoard();
+  }, 100);
 }
 
 /**
  * Updates the currently selected task with dialog input and saves changes to the database.
  */
 async function editDialogTask() {
-    let task = getTaskInput();
-    let subtaskStatus = getSubtaskStatus(actualToDo.subtasks);
+  let task = getTaskInput();
+  let subtaskStatus = getSubtaskStatus(actualToDo.subtasks);
 
-    if (!checkIfTaskIsValid(task)) { 
-        return; 
+  if (!checkIfTaskIsValid(task)) {
+    return;
+  }
+
+  if (subtaskStatus != null && task.subtasks) {
+    for (let index = 0; index < task.subtasks.length; index++) {
+      if (subtaskStatus[index] !== undefined) {
+        task.subtasks[index].checked = subtaskStatus[index];
+      }
     }
+  }
 
-    if (subtaskStatus != null && task.subtasks) {
-        for (let index = 0; index < task.subtasks.length; index++) {
-            if (subtaskStatus[index] !== undefined) {
-                task.subtasks[index].checked = subtaskStatus[index];
-            }
-        }
-    }
-
-    dialogBoardTaskRev.dialog.close();
-    await patchData('tasks/' + currentDraggedElement, task);
-    onloadFuncBoard();
+  dialogBoardTaskRev.dialog.close();
+  await patchData("tasks/" + currentDraggedElement, task);
+  onloadFuncBoard();
 }
 /**
  * Deletes the currently selected task from the database, closes the dialog, and refreshes the board.
  */
 async function deleteTask() {
-    await deleteData(`/tasks/${currentDraggedElement}`);
+  await deleteData(`/tasks/${currentDraggedElement}`);
 
-    closeDialog();
-    onloadFuncBoard();
+  closeDialog();
+  onloadFuncBoard();
 }
 
 /**
@@ -71,18 +73,18 @@ async function deleteTask() {
  * @returns {Object} An object with properties moveTaskUp and moveTaskDown.
  */
 function getMobileDisplayMoveStatusColumn(status) {
-    switch (status) {
-        case 'boardTriage':
-            return {moveTaskUp: null, moveTaskDown: 'boardToDo'}
-        case 'boardToDo':
-            return { moveTaskUp: 'boardTriage', moveTaskDown: 'boardProgress' }
-        case 'boardProgress':
-            return { moveTaskUp: 'boardToDo', moveTaskDown: 'boardFeedback' }
-        case 'boardFeedback':
-            return { moveTaskUp: 'boardProgress', moveTaskDown: 'boardDone' }
-        case 'boardDone':
-            return { moveTaskUp: 'boardFeedback', moveTaskDown: null }
-    }
+  switch (status) {
+    case "boardTriage":
+      return { moveTaskUp: null, moveTaskDown: "boardToDo" };
+    case "boardToDo":
+      return { moveTaskUp: "boardTriage", moveTaskDown: "boardProgress" };
+    case "boardProgress":
+      return { moveTaskUp: "boardToDo", moveTaskDown: "boardFeedback" };
+    case "boardFeedback":
+      return { moveTaskUp: "boardProgress", moveTaskDown: "boardDone" };
+    case "boardDone":
+      return { moveTaskUp: "boardFeedback", moveTaskDown: null };
+  }
 }
 
 /**
@@ -91,18 +93,18 @@ function getMobileDisplayMoveStatusColumn(status) {
  * @returns {string} The human-readable display name.
  */
 function getMobileDisplayMoveStatus(status) {
-    switch (status) {
-        case 'boardTriage':
-            return 'Triage'
-        case 'boardToDo':
-            return 'To Do'
-        case 'boardProgress':
-            return 'Progress'
-        case 'boardFeedback':
-            return 'Feedback'
-        case 'boardDone':
-            return 'Done'
-    }
+  switch (status) {
+    case "boardTriage":
+      return "Triage";
+    case "boardToDo":
+      return "To Do";
+    case "boardProgress":
+      return "Progress";
+    case "boardFeedback":
+      return "Feedback";
+    case "boardDone":
+      return "Done";
+  }
 }
 
 //############## Drag & Drop ###############
@@ -112,14 +114,14 @@ function getMobileDisplayMoveStatus(status) {
  * @param {string} columnName - The name of the column the task originates from.
  */
 function startDragging(id, columnName) {
-    currentDraggedElement = id;
-    startStatusColumn = columnName;
+  currentDraggedElement = id;
+  startStatusColumn = columnName;
 
-    const original = document.getElementById("toDo" + id);
-    if (!original) return;
+  const original = document.getElementById("toDo" + id);
+  if (!original) return;
 
-    original.classList.add("dragging");
-    original.style.setProperty("--task-transform", "rotate(5deg)");
+  original.classList.add("dragging");
+  original.style.setProperty("--task-transform", "rotate(5deg)");
 }
 
 /**
@@ -127,11 +129,11 @@ function startDragging(id, columnName) {
  * @param {string} id - Task ID.
  */
 function stopDragging(id) {
-    const original = document.getElementById("toDo" + id);
-    if (!original) return;
+  const original = document.getElementById("toDo" + id);
+  if (!original) return;
 
-    original.classList.remove("dragging");
-    original.style.removeProperty("--task-transform");
+  original.classList.remove("dragging");
+  original.style.removeProperty("--task-transform");
 }
 
 /**
@@ -140,19 +142,22 @@ function stopDragging(id) {
  * @param {string} columnId - The ID of the target column.
  */
 function allowDrop(ev, columnId) {
-    ev.preventDefault();
-    const container = document.getElementById(columnId);
-    const tasks = [...container.querySelectorAll(".todo:not(.dragging)")];
-    let index = tasks.length;
-    const y = ev.clientY ?? ev.touches?.[0]?.clientY;
-    for (let i = 0; i < tasks.length; i++) {
-        const rect = tasks[i].getBoundingClientRect();
-        if (y < rect.top + rect.height / 2) { index = i; break; }
+  ev.preventDefault();
+  const container = document.getElementById(columnId);
+  const tasks = [...container.querySelectorAll(".todo:not(.dragging)")];
+  let index = tasks.length;
+  const y = ev.clientY ?? ev.touches?.[0]?.clientY;
+  for (let i = 0; i < tasks.length; i++) {
+    const rect = tasks[i].getBoundingClientRect();
+    if (y < rect.top + rect.height / 2) {
+      index = i;
+      break;
     }
-    desiredPos = index;
-    const preview = document.getElementById("Preview-" + columnId);
-    if (preview) container.insertBefore(preview, tasks[index] || null);
-    preview.style.display = "block";
+  }
+  desiredPos = index;
+  const preview = document.getElementById("Preview-" + columnId);
+  if (preview) container.insertBefore(preview, tasks[index] || null);
+  preview.style.display = "block";
 }
 
 /**
@@ -161,15 +166,34 @@ function allowDrop(ev, columnId) {
  * @param {Event} ev - The drop event.
  */
 async function moveTo(targetColumn, ev) {
-    ev.preventDefault();
-    const idx = todos.findIndex(t => t.id == currentDraggedElement);
-    if (idx === -1) return;
-    todos[idx].status = targetColumn;
-    todos[idx].pos = desiredPos ?? todos.filter(t => t.status === targetColumn).length;
-    normalizePositions(targetColumn);
-    await putData('tasks/' + todos[idx].id, todos[idx]);
-    desiredPos = null;
-    updateHTML();
+  ev.preventDefault();
+  const idx = todos.findIndex((t) => t.id == currentDraggedElement);
+  if (idx === -1) return;
+  todos[idx].status = targetColumn;
+  todos[idx].pos =
+    desiredPos ?? todos.filter((t) => t.status === targetColumn).length;
+  normalizePositions(targetColumn);
+  // Trigger webhook for n8n
+
+  const task = todos[idx];
+  const oldStatus = task.status;
+  fetch("https://stimulate-dish-upstairs.ngrok-free.dev/webhook/join-ticket-status-update", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      source: "webhook",
+      taskId: task.id,
+      oldStatus,
+      newStatus: targetColumn,
+      creatorEmail: task.creatorEmail,
+      creatorName: task.creatorName,
+      updatedBy: "Team"
+    })
+  });
+  //end trigger
+  await putData("tasks/" + todos[idx].id, todos[idx]);
+  desiredPos = null;
+  updateHTML();
 }
 
 /**
@@ -177,8 +201,14 @@ async function moveTo(targetColumn, ev) {
  * @param {string} status - The status column whose tasks should be normalized.
  */
 function normalizePositions(status) {
-    const arr = todos.filter(t => t.status === status).sort((a, b) => a.pos - b.pos);
-    arr.forEach((t, i) => { t.pos = i; boardPos[status][t.id] = i; putData('tasks/' + t.id, t); });
+  const arr = todos
+    .filter((t) => t.status === status)
+    .sort((a, b) => a.pos - b.pos);
+  arr.forEach((t, i) => {
+    t.pos = i;
+    boardPos[status][t.id] = i;
+    putData("tasks/" + t.id, t);
+  });
 }
 
 /**
@@ -186,16 +216,18 @@ function normalizePositions(status) {
  * @param {Event} event - The drag event.
  */
 function renderTaskPreview(event) {
-    const targetColumn = event.currentTarget.id;
-    const TASK_ID = document.getElementById("toDo" + currentDraggedElement);
-    const previewElement = document.getElementById("Preview-" + targetColumn);
+  const targetColumn = event.currentTarget.id;
+  const TASK_ID = document.getElementById("toDo" + currentDraggedElement);
+  const previewElement = document.getElementById("Preview-" + targetColumn);
 
-    if (targetColumn == startStatusColumn) { return; }
+  if (targetColumn == startStatusColumn) {
+    return;
+  }
 
-    if (previewElement && TASK_ID) {
-        previewElement.style.display = "block";
-        previewElement.style.height = TASK_ID.offsetHeight + "px";
-    }
+  if (previewElement && TASK_ID) {
+    previewElement.style.display = "block";
+    previewElement.style.height = TASK_ID.offsetHeight + "px";
+  }
 }
 
 /**
@@ -204,14 +236,14 @@ function renderTaskPreview(event) {
  * @param {Event} ev - The dragleave or related event triggering the removal.
  */
 function removePreview(columnId, ev) {
-    const container = document.getElementById(columnId);
+  const container = document.getElementById(columnId);
 
-    if (ev.relatedTarget && container.contains(ev.relatedTarget)) {
-        return;
-    }
+  if (ev.relatedTarget && container.contains(ev.relatedTarget)) {
+    return;
+  }
 
-    const preview = container.querySelector(".previewTask");
-    if (preview) preview.style.display = "none";
+  const preview = container.querySelector(".previewTask");
+  if (preview) preview.style.display = "none";
 
-    container.classList.remove("drag-area-highlight");
+  container.classList.remove("drag-area-highlight");
 }

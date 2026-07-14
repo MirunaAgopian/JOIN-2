@@ -445,7 +445,6 @@ dialog {
   overflow: auto;
   transform: translate(300%, 0px);
   max-width: 1300px;
-
 }
 
 .taskDialogOpened {
@@ -512,6 +511,10 @@ dialog::backdrop {
 }
 
 @media (max-width: 1500px) {
+  .onlyMobile {
+    display: block;
+  }
+
   .mainContent {
     height: auto;
     align-items: stretch;
@@ -618,10 +621,6 @@ dialog::backdrop {
 }
 
 @media (max-width: 768px) {
-  .onlyMobile {
-    display: block;
-  }
-
   .onlyDesktop {
     display: none;
   }
