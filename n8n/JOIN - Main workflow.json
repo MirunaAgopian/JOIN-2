@@ -254,8 +254,8 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        1648,
-        -288
+        1456,
+        -96
       ],
       "id": "0849b012-f270-4ac3-a8d5-3a9123c8a963",
       "name": "Send an confirmation E-Mail",
@@ -460,6 +460,11 @@
             "node": "HTTP Request - POST task to Firebase",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Send an confirmation E-Mail",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -520,13 +525,7 @@
     },
     "HTTP Request - POST task to Firebase": {
       "main": [
-        [
-          {
-            "node": "Send an confirmation E-Mail",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     }
   },
@@ -536,7 +535,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "a5de53e0-1f1a-4510-91a9-ba6a5fc493e3",
+  "versionId": "c7259eaf-5da6-40fb-b4a0-2c266274e469",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "fe409a81daabdb6ca1d5f4e52f3e01e2218bb3b89727d965240d5a05df823d4e"

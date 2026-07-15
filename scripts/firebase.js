@@ -167,7 +167,7 @@ function getTaskArr(ALL_TASKS) {
       assignedTo: value.assignedTo,
       status: statusValue,
       aiGenerated: value.aiGenerated,
-      creatorEmail: value.creatorEmail || null,
+      creatorEmail: value.creator || null,
       creatorName: value.creatorName || null,
     });
     boardPos[statusValue][key] = posValue;

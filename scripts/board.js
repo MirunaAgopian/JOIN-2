@@ -233,7 +233,7 @@ async function changeBoardStatus(id, targetColumn) {
       newStatus: targetColumn,
       creatorEmail: task.creatorEmail,
       creatorName: task.creatorName,
-      updatedBy: "TEAM"
+      updatedBy: "JOIN TEAM"
     })
   });
   //end trigger

@@ -187,7 +187,7 @@ async function moveTo(targetColumn, ev) {
       newStatus: targetColumn,
       creatorEmail: task.creatorEmail,
       creatorName: task.creatorName,
-      updatedBy: "Team"
+      updatedBy: "JOIN Team"
     })
   });
   //end trigger

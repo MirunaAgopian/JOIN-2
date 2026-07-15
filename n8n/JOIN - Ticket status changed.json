@@ -5,29 +5,133 @@
       "parameters": {
         "httpMethod": "POST",
         "path": "join-ticket-status-update",
-        "options": {}
+        "responseMode": "responseNode",
+        "options": {
+          "rawBody": false
+        }
       },
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        0,
+        -464,
         0
       ],
       "id": "f6302868-ff89-48d5-be04-54928f5ae5c3",
       "name": "Webhook",
       "webhookId": "574ff95e-a550-4efd-b39e-7a40ca9b916c"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{ \"success\": true }",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -224,
+        0
+      ],
+      "id": "82665562-ad53-463b-85c1-9aa70b99fb6d",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Detect whether data is flat or nested\nconst root = items[0].json;\n\n// If webhook → data is under root.body\n// If test → data is directly under root\nconst data = root.body || root;\n\n// Map JOIN internal status → human-friendly label\nconst statusMap = {\n  boardToDo: \"To Do\",\n  boardProgress: \"In Progress\",\n  boardAwaitFeedback: \"Awaiting Feedback\",\n  boardDone: \"Done\",\n  boardTriage: \"Triage\"\n};\n\n// Normalize status\nconst normalizedStatus = statusMap[data.newStatus] || data.newStatus;\n\n// Output flattened + normalized fields\nreturn [\n  {\n    json: {\n      creatorEmail: data.creatorEmail,\n      creatorName: data.creatorName,\n      newStatus: normalizedStatus,\n      taskId: data.taskId\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        32,
+        0
+      ],
+      "id": "4ac56c76-16f6-4cd0-9ceb-d47148958caf",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "fromEmail": "join.notification@gmail.com",
+        "toEmail": "={{ $json.creatorEmail }}",
+        "subject": "Your ticket is being reviewed",
+        "emailFormat": "text",
+        "text": "=Hi  {{ $json.creatorName }}, \nYour ticket is being reviewed and has been moved to the section: {{ $json.newStatus }}.\n\nKind regards,\nYour JOIN Automation team",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        0
+      ],
+      "id": "7e17b30b-423a-4dcd-9a65-394217d2d0d2",
+      "name": "Send an Email",
+      "webhookId": "dbd1b8bc-286f-41d0-8d7d-2a22e814eac4",
+      "credentials": {
+        "smtp": {
+          "id": "f6OMU30o3YMTv0pv",
+          "name": "SMTP account"
+        }
+      }
     }
   ],
   "pinData": {},
-  "connections": {},
-  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send an Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "7e5ac720-54ca-4fd5-a92f-0caa0ffe0888",
+  "versionId": "60e5ca20-6a5c-4056-ab1e-85e8c3d5f7de",
   "meta": {
+    "templateCredsSetupCompleted": true,
     "instanceId": "fe409a81daabdb6ca1d5f4e52f3e01e2218bb3b89727d965240d5a05df823d4e"
   },
   "nodeGroups": [],
