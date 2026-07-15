@@ -3,7 +3,7 @@ JOIN
 _A Kanban board application designed to track tasks and subtasks and assign them to contacts. Create your own account, log in, save your contacts and create and manage tasks in your team._
 
 <div align="center">
-  <img src="assets/img/join_project__img.png" width="400" />
+  <img src="assets/img/join_project__img.png" width="600" />
 </div>
 
 **Features**
