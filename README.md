@@ -8,16 +8,20 @@ _A Kanban board application designed to track tasks and subtasks and assign them
 
 **Features**
 - Test out the application as a guest or sign up to enjoy the full features
-- Get a quick overwiew in the summary page about the tasks in board
+- Get a quick overview in the summary page about the tasks in board
 - Add contacts and manage your contact list in the dedicated section
 - Create tasks, move them across stages (To Do, In Progress, Awaiting feedback, Done)
 - Assign contacts for each task, add multiple subtasks and mark them as done
+- **Receive automated email notifications powered by N8N when a task changes status**
+- **Write an email to the JOIN automation inbox and automatically create a new ticket via AI analysis**
+- **Enjoy seamless backend automation for task updates, creator detection, and workflow triggers**
 
 **Technologies used**
 -  HTML
 -  CSS
 -  JavaScript
 -  Firebase
+-  N8N (workflow automation & e-mail notifications)
 
 **How to get started**
 You'll need:
@@ -85,6 +89,10 @@ JOIN
     └── signup.js
     └── summary.js
     └── templates.js
+├── n8n
+    └── JOIN - Error Trigger.json
+    └── JOIN - Main workflow.json
+    └── JOIN - Ticket status changed.json
 └── License
 └── gitignore
 └── README.md
