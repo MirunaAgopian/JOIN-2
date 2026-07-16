@@ -243,7 +243,7 @@ async function changeBoardStatus(id, targetColumn) {
   task.status = targetColumn;
   //trigger webhoock for n8n
   const oldStatus = task.status; 
-  fetch("https://stimulate-dish-upstairs.ngrok-free.dev/webhook/join-ticket-status-update", {
+   fetch("https://mirunaagopian.app.n8n.cloud/webhook/join-ticket-status-update", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

@@ -177,7 +177,7 @@ async function moveTo(targetColumn, ev) {
 
   const task = todos[idx];
   const oldStatus = task.status;
-  fetch("https://stimulate-dish-upstairs.ngrok-free.dev/webhook/join-ticket-status-update", {
+   fetch("https://mirunaagopian.app.n8n.cloud/webhook/join-ticket-status-update", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
