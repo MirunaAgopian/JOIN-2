@@ -167,6 +167,26 @@ async function closeDialog() {
   onloadFuncBoard();
 }
 
+
+/** closes the dialog when user clicks on backdrop
+ * and re-renders the board 
+ * */
+const dialog = document.getElementById('dialaogBoardTask');
+
+dialog.addEventListener('click', (event) => {
+  const rect = dialog.getBoundingClientRect();
+
+  const clickedInside =
+    event.clientX >= rect.left &&
+    event.clientX <= rect.right &&
+    event.clientY >= rect.top &&
+    event.clientY <= rect.bottom;
+
+  if (!clickedInside) {
+    closeDialog();
+  }
+});
+
 /**
  * Determines which dialog type is currently active (showTask or addTask) and applies the appropriate closing CSS class.
  */

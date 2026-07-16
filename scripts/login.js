@@ -107,6 +107,7 @@ function runSplashAnimation(splashLogo, pageContent) {
 function goToLogin(){
     let welcomeSection = document.getElementById('welcome_section');
     welcomeSection.classList.remove('visible');
+    document.body.classList.remove('no-scroll');
 }
 
 /**
