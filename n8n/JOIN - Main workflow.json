@@ -8,10 +8,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -880,
-        -16
+        -1728,
+        480
       ],
-      "id": "22de649c-ba82-4142-bc75-b78a53f36f30",
+      "id": "1931dfbd-8cf8-4795-8c9f-078f510faf83",
       "name": "Set daily e-mails limit"
     },
     {
@@ -61,26 +61,26 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        240,
-        -144
+        -608,
+        352
       ],
-      "id": "a316a9f9-095c-48e3-80e8-f496d46003c8",
+      "id": "33575183-6109-4cab-a040-bd6ef4a2da8e",
       "name": "Edit Fields - Extract email data"
     },
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Analyze the following email and generate a structured JSON object compatible with the JOIN task creation API.\n\nEmail:\nSender: {{ $json.senderEmailOnly }}\nSender Name: {{ $json.senderName }}\nSubject: {{ $json.subject }}\nBody: {{ $json.body }}\n\nYour tasks:\n\n1. Determine the issue category:\n   - \"user story\" → new functionality or user story\n   - \"bug\" → malfunction, error, unexpected behavior\n   - \"technical\" → refactoring, maintenance, internal technical work\n\n2. Generate a short, clear, meaningful title for the ticket.\n\n3. Determine the priority based on keywords:\n   - \"urgent\" → contains words like: urgent, critical, blocked, ASAP, immediately\n   - \"medium\" → normal requests without time pressure\n   - \"low\" → nice-to-have, optional, improvement suggestions\n\n4. Extract a deadline if present in the email.\n   - Format: YYYY-MM-DD\n\n5. IMPORTANT RULE:\n   All tickets MUST have a deadline.\n   If the email does not contain a deadline, infer a reasonable one:\n   - Default: 14 days from today\n   - Format: YYYY-MM-DD\n\n6. Create a full ticket description:\n   - Summarize the email content\n   - Add the note: \"This ticket was AI-generated.\"\n\n7. Determine the creator of the ticket:\n   - Use the extracted sender email: {{ $json.senderEmailOnly }}\n   - Use the extracted sender name: {{ $json.senderName }}\n\n8. Set the ticket status:\n   - Always return \"Triage\" as the initial status.\n\n9. Mark the ticket as AI-generated:\n   - Always return aiGenerated = true.\n\n10. Extract subtasks:\n   - Look for bullet points, lists, requirements, or multiple actions in the email.\n   - Convert each item into a JOIN-compatible subtask object.\n   - Each subtask must have:\n       \"checked\": false,\n       \"task\": \"<short actionable description>\"\n   - If no subtasks are present, infer 1–2 meaningful subtasks based on the email content.\n\nReturn ONLY the following JSON structure:\n\n{\n  \"category\": \"...\",\n  \"title\": \"...\",\n  \"priority\": \"...\",\n  \"deadline\": \"...\",\n  \"description\": \"...\",\n  \"creator\": \"{{ $json.senderEmailOnly }}\",\n  \"creatorName\": \"{{ $json.senderName }}\",\n  \"status\": \"Triage\",\n  \"aiGenerated\": true,\n  \"assignedTo\": \"...\",\n  \"subtasks\": [\n    {\n      \"checked\": false,\n      \"task\": \"...\"\n    },\n    {\n      \"checked\": false,\n      \"task\": \"...\"\n    }\n  ]\n}",
+        "text": "=Analyze the following email and generate a structured JSON object compatible with the JOIN task creation API.\n\nEmail:\nSender: {{ $json.senderEmailOnly }}\nSender Name: {{ $json.senderName }}\nSubject: {{ $json.subject }}\nBody: {{ $json.body }}\n\nYour tasks:\n\n1. Determine the issue category:\n   - \"user story\" → new functionality or user story\n   - \"bug\" → malfunction, error, unexpected behavior\n   - \"technical\" → refactoring, maintenance, internal technical work\n\n2. Generate a short, clear, meaningful title for the ticket.\n\n3. Determine the priority based on keywords:\n   - \"urgent\" → contains words like: urgent, critical, blocked, ASAP, immediately\n   - \"medium\" → normal requests without time pressure\n   - \"low\" → nice-to-have, optional, improvement suggestions\n\n4. Extract a deadline if present in the email.\n   - Format: YYYY-MM-DD\n\n5. IMPORTANT RULE:\n  Today's date is TODAY = {{ $now.toISODate() }}\n   All tickets MUST have a deadline.\n   If the email does not contain a deadline, infer a reasonable one:\n   - Default: 14 days from today\n   - Format: YYYY-MM-DD\n\n6. Create a full ticket description:\n   - Summarize the email content\n   - Add the note: \"This ticket was AI-generated.\"\n\n7. Determine the creator of the ticket:\n   - Use the extracted sender email: {{ $json.senderEmailOnly }}\n   - Use the extracted sender name: {{ $json.senderName }}\n\n8. Set the ticket status:\n   - Always return \"Triage\" as the initial status.\n\n9. Mark the ticket as AI-generated:\n   - Always return aiGenerated = true.\n\n10. Extract subtasks:\n   - Look for bullet points, lists, requirements, or multiple actions in the email.\n   - Convert each item into a JOIN-compatible subtask object.\n   - Each subtask must have:\n       \"checked\": false,\n       \"task\": \"<short actionable description>\"\n   - If no subtasks are present, infer 1–2 meaningful subtasks based on the email content.\n\nReturn ONLY the following JSON structure:\n\n{\n  \"category\": \"...\",\n  \"title\": \"...\",\n  \"priority\": \"...\",\n  \"deadline\": \"...\",\n  \"description\": \"...\",\n  \"creator\": \"{{ $json.senderEmailOnly }}\",\n  \"creatorName\": \"{{ $json.senderName }}\",\n  \"status\": \"Triage\",\n  \"aiGenerated\": true,\n  \"assignedTo\": \"...\",\n  \"subtasks\": [\n    {\n      \"checked\": false,\n      \"task\": \"...\"\n    },\n    {\n      \"checked\": false,\n      \"task\": \"...\"\n    }\n  ]\n}",
         "hasOutputParser": true,
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        528,
-        -288
+        -320,
+        208
       ],
-      "id": "2077f58f-0052-46bf-af90-9f988d50d27e",
+      "id": "ef7dee9a-3fe5-4898-b245-98efcad000a2",
       "name": "AI Agent"
     },
     {
@@ -91,14 +91,14 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1.1,
       "position": [
-        464,
-        -112
+        -384,
+        384
       ],
-      "id": "ae1253a8-ec29-4ee0-afa7-f7a201d8a8c0",
+      "id": "043a4bff-487a-425e-a3d5-1df1e69e972e",
       "name": "Google Gemini Chat Model",
       "credentials": {
         "googlePalmApi": {
-          "id": "qvXuBOfPieplpxIU",
+          "id": "qBkPcRAB9cTNJIjB",
           "name": "Google Gemini(PaLM) Api account"
         }
       }
@@ -110,27 +110,28 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        736,
-        -112
+        -112,
+        384
       ],
-      "id": "ffb5e045-f5fb-4027-b4d6-94972e1183d8",
+      "id": "3f2a1f60-93ad-48fd-b185-086ae0f886ea",
       "name": "Structured Output Parser"
     },
     {
       "parameters": {
+        "postProcessAction": "nothing",
         "options": {}
       },
       "type": "n8n-nodes-base.emailReadImap",
       "typeVersion": 2.1,
       "position": [
-        -1072,
-        -16
+        -1920,
+        480
       ],
-      "id": "d0ab803d-dde4-445c-b72c-15e92636900c",
+      "id": "4a52ee9a-2347-41f0-8218-58c0282fd240",
       "name": "Email Trigger (IMAP)",
       "credentials": {
         "imap": {
-          "id": "IRQHUDNYg9nzvIgF",
+          "id": "0Si5tHyCP6eB3bV2",
           "name": "IMAP account"
         }
       }
@@ -162,10 +163,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -144,
-        -32
+        -992,
+        464
       ],
-      "id": "e9d9b19b-2dca-4410-9875-ab4bf4e4172f",
+      "id": "9cc92eb0-29c6-457b-bf67-118e5216c092",
       "name": "If"
     },
     {
@@ -175,10 +176,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1232,
-        -288
+        384,
+        208
       ],
-      "id": "2d814aa3-8cad-49e1-965a-3b12265e6177",
+      "id": "06a62358-3b22-4b4f-b232-32a0327e7a85",
       "name": "Normalize category names and assignedTo contacts"
     },
     {
@@ -189,10 +190,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        848,
-        -496
+        0,
+        0
       ],
-      "id": "18c55f1e-d904-47b6-bc84-4da403d5ef36",
+      "id": "219ebfba-dee5-418f-9ad1-7e23661cf6ae",
       "name": "HTTP Request - GET Join contacts"
     },
     {
@@ -204,10 +205,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        1024,
-        -304
+        176,
+        192
       ],
-      "id": "b7c65628-fbdb-4000-b358-d9ae31b58b28",
+      "id": "97e3e90f-7272-4cd2-abff-a2582e1457f8",
       "name": "Merge data from AI agent and GET Node"
     },
     {
@@ -222,10 +223,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        -624,
-        -160
+        -1472,
+        336
       ],
-      "id": "dcb3eb05-38a5-49b9-97e5-52116b424b53",
+      "id": "b8485b62-b562-42bc-ae69-dafcf6bb6e6a",
       "name": "HTTP Request3 - POST count in Firebase"
     },
     {
@@ -236,10 +237,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        -400,
-        -32
+        -1248,
+        464
       ],
-      "id": "26548606-8d3c-40be-85bb-8e96b5afdb20",
+      "id": "802f5e96-5b6d-4ca2-b4eb-9fc6159ffc4f",
       "name": "Merge - transfer data from set daily limit node"
     },
     {
@@ -254,15 +255,15 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        1456,
-        -96
+        608,
+        400
       ],
-      "id": "0849b012-f270-4ac3-a8d5-3a9123c8a963",
+      "id": "de38ac64-97d4-4add-b8b3-163fbd1e428a",
       "name": "Send an confirmation E-Mail",
       "webhookId": "6218cb19-ee32-4c4c-9383-64fa18f4c370",
       "credentials": {
         "smtp": {
-          "id": "f6OMU30o3YMTv0pv",
+          "id": "Fc6wSFVHZxPqPt8z",
           "name": "SMTP account"
         }
       }
@@ -279,15 +280,15 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        240,
-        80
+        -608,
+        576
       ],
-      "id": "b6c7b746-41ed-4290-9dfd-c6fed28ae014",
+      "id": "13b4c86d-25a0-48a8-8ba0-a5f564bc66a1",
       "name": "Send \"limit reached\" Email",
       "webhookId": "c7cbc835-f6a3-4758-bbba-e32b97189fb9",
       "credentials": {
         "smtp": {
-          "id": "f6OMU30o3YMTv0pv",
+          "id": "Fc6wSFVHZxPqPt8z",
           "name": "SMTP account"
         }
       }
@@ -350,10 +351,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1440,
-        -288
+        592,
+        208
       ],
-      "id": "cb7468ca-229a-464e-abe7-0736760b3f90",
+      "id": "d64a7f22-6c06-4a7d-888f-52e4d5f92327",
       "name": "HTTP Request - POST task to Firebase"
     }
   ],
@@ -512,21 +513,6 @@
           }
         ]
       ]
-    },
-    "Send an confirmation E-Mail": {
-      "main": [
-        []
-      ]
-    },
-    "Send \"limit reached\" Email": {
-      "main": [
-        []
-      ]
-    },
-    "HTTP Request - POST task to Firebase": {
-      "main": [
-        []
-      ]
     }
   },
   "active": true,
@@ -535,12 +521,12 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "c7259eaf-5da6-40fb-b4a0-2c266274e469",
+  "versionId": "3a6df9f1-e648-473c-9193-eaca048151e3",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "fe409a81daabdb6ca1d5f4e52f3e01e2218bb3b89727d965240d5a05df823d4e"
+    "instanceId": "ea61d498cada008875b2e61edca74871766894db19b17428eff6de56f6a1df76"
   },
   "nodeGroups": [],
-  "id": "HoszaL2vmVMb5ofz",
+  "id": "VLMg5AsqIBynxXRH",
   "tags": []
 }
